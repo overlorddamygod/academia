@@ -1,0 +1,12 @@
+{
+  "name": "Academia",
+  "displayName": "Academia",
+  "expo": {
+    "name": "Academia",
+    "slug": "Academia",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
