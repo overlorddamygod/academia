@@ -8,10 +8,10 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
+import Header from "../components/Header";
 
-const AnnouncementScreen = () => {
+const AnnouncementScreen = ({navigation}) => {
   const [announcements, setAnnouncements] = useState(announcementsData);
-
   const [selectedTag, setSelectedTag] = useState("All Items");
 
   const items = [
@@ -24,6 +24,8 @@ const AnnouncementScreen = () => {
   ];
 
   return (
+    <>
+     <Header title="Announcement" navigation={navigation}/>
     <View style={{ flex: 1 }}>
       <View
         style={{ height: StatusBar.currentHeight, backgroundColor: "#4C367B" }}
@@ -58,7 +60,9 @@ const AnnouncementScreen = () => {
           )}
         />
       </View>
+      
     </View>
+    </>
   );
 };
 
