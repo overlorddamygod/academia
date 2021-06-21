@@ -48,28 +48,13 @@ const AnnouncementScreen = () => {
         </ScrollView>
       </View>
       <View style={{ marginTop: 30, flex: 1 }}>
-        {/* <ScrollView>
-                    {announcements.filter(announcement=> selectedTag == "All Items" ? true : announcement.tag == selectedTag).map(announcement=> {
-                        return <Announcement data={announcement} key={announcement.title}/>
-                    })}
-                    {announcements.filter(announcement=> selectedTag == "All Items" ? true : announcement.tag == selectedTag).map(announcement=> {
-                        return <Announcement data={announcement} key={announcement.title}/>
-                    })}
-                    {announcements.filter(announcement=> selectedTag == "All Items" ? true : announcement.tag == selectedTag).map(announcement=> {
-                        return <Announcement data={announcement} key={announcement.title}/>
-                    })}
-                </ScrollView> */}
         <FlatList
           data={announcements.filter((announcement) =>
             selectedTag == "All Items" ? true: announcement.tag == selectedTag
           )}
           keyExtractor={(item) => item.time}
           renderItem={({ item }) => (
-            <>
-                <Announcement data={item} key={item.title} />
-                <Announcement data={item} key={item.title} />
-                <Announcement data={item} key={item.title} />
-            </>
+            <Announcement data={item} key={item.title} />
           )}
         />
       </View>

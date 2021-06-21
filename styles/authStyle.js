@@ -1,20 +1,19 @@
-
 import {StyleSheet}  from "react-native";
+import COLORS from "./colors";
 
 export const authStyles = StyleSheet.create({
     upper:{
-        backgroundColor:'#4C367B',
-        padding:40,
-        height:250,
+        padding: 40,
+        marginVertical: 10,
         alignItems:'center'
     },
     maintext:{
-        color:"white",
+        color: COLORS.white,
         fontSize:33,
         textAlign:'center'
     },
     text:{
-        color:"white",
+        color: COLORS.white,
         fontSize:18,
     },
     input: {
@@ -22,27 +21,27 @@ export const authStyles = StyleSheet.create({
       margin: 12,
       padding:10,
       fontSize:18,
-      backgroundColor:'#CDD1EF',
+      backgroundColor: '#CDD1EF',
       color:'#444',
-      borderRadius:3
+      borderRadius: 6
     },
     lower:{
-        marginTop:-30,
         flex:1,
         backgroundColor:'#f5f5f5',
-        borderTopRightRadius:22,
-        borderTopLeftRadius:22,
+        borderTopRightRadius: 40,
+        borderTopLeftRadius: 40,
         padding:30,
-        
-
+        paddingVertical: 50,
+        // justifyContent: "center"
     },
     btn:{
-        height: 47,
+        height: 50,
         justifyContent:'center',
         alignItems:'center',
-        width:200,
-        backgroundColor:'#4F60F4',
-        borderRadius:4,
+        width: 200,
+        backgroundColor: COLORS.royalBlue,
+        borderRadius: 4,
+        marginVertical: 25
     }
   });
   
