@@ -2,15 +2,15 @@ import React from "react";
 import { View, Text ,TextInput,Image,TouchableOpacity,TouchableWithoutFeedback, Keyboard} from "react-native";
 import {authStyles} from '../styles/authStyle'
 import COLORS from "../styles/colors";
+import { Feather } from "@expo/vector-icons";
 
 const Login = ({navigation}) => {
   return (
-    <TouchableWithoutFeedback onPress={ Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
     <View style={{ flex: 1,backgroundColor: COLORS.main }}>
       <View style={authStyles.upper}>
         <View style={{alignItems:'center'}}>
-          <Text style={authStyles.maintext}>
-          Academia International College</Text>
+          <Text style={authStyles.maintext}>Academia International College</Text>
           <View style={{marginTop:5,height:5,width:200,backgroundColor:'#f9f9f9'}}></View>
         </View>
         <View style={{marginTop: 30}}>
@@ -22,11 +22,17 @@ const Login = ({navigation}) => {
           <View>
             <TextInput 
              placeholder="Email"
-            style={authStyles.input}/>
-            
-             <TextInput 
-             placeholder="Password"
-            style={authStyles.input}/>
+             autoCompleteType="email"
+             keyboardType="email-address"
+              style={authStyles.input}
+            />
+
+            <TextInput 
+              placeholder="Password"
+              autoCompleteType="password"
+              secureTextEntry={true}
+              style={authStyles.input}
+            />             
           </View>
           <View style={{justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={authStyles.btn}>

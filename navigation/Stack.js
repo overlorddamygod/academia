@@ -83,7 +83,7 @@ export function StudentStackScreen() {
         shadowOpacity: 0, // remove shadow on iOS
       },
       headerTintColor: "white",
-      headerTitleStyle: { alignSelf: "center" },
+      headerTitleAlign: "center"
     }}
     >
       <StudentStack.Screen name="Students" component={StudentList} />
@@ -101,7 +101,7 @@ export function TeacherStackScreen() {
           shadowOpacity: 0, // remove shadow on iOS
         },
         headerTintColor: "white",
-        headerTitleStyle: { alignSelf: "center" },
+        headerTitleAlign: "center"
       }}
     >
       <TeacherStack.Screen name="Teachers" component={TeacherList} />
@@ -172,8 +172,8 @@ export function MaterialStackScreen() {
 export function DrawerMenuStackScreen() {
   return (
     <DrawerMenu.Navigator
-        screenOptions={{
-          headerShown:false
+      screenOptions={{
+        headerShown: false
       }}
     >
        <DrawerMenu.Screen name="Settings" component={SettingStackScreen} />
