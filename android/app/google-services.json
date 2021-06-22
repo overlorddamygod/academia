@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1048000501046",
+    "project_id": "academia-cc640",
+    "storage_bucket": "academia-cc640.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048000501046:android:e506551579aa6a60b74f97",
+        "android_client_info": {
+          "package_name": "com.academia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfmnedAbZGkpXZD4ioRyrd0hRTvYii6co"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048000501046:android:84c46d3a6af661f1b74f97",
+        "android_client_info": {
+          "package_name": "com.academiacollege.academia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfmnedAbZGkpXZD4ioRyrd0hRTvYii6co"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

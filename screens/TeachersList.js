@@ -1,13 +1,13 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import {globalStyles} from '../styles/globalStyle'
+import React from "react";
+import { View, Text } from "react-native";
+import { globalStyles } from "../styles/globalStyle";
 
 const TeacherList = () => {
-    return (
+  return (
     <View style={globalStyles.container}>
-        <Text style={globalStyles.boldText}>Teacher List</Text>
+      <Text style={globalStyles.boldText}>Teacher List</Text>
     </View>
-    )
-}
+  );
+};
 
-export default TeacherList
+export default TeacherList;
