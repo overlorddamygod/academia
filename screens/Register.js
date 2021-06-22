@@ -14,17 +14,16 @@ import COLORS from "../styles/colors";
 
 const Register = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ flex: 1,justifyContent:"center" }}>
-      <KeyboardAvoidingView
-        style={{ flex: 1, alignItems: "center" }}
-        behavior="position"
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    // dismiss keyboard when touched outside of input text
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
           <View style={{ flex: 1, backgroundColor: COLORS.main }}>
             <View style={authStyles.upper}>
               <View style={{ alignItems: "center" }}>
                 <Text style={authStyles.maintext}>
-                  Academia International College
+                  Academia
+                </Text>
+                <Text style={authStyles.maintext}>
+                  International College
                 </Text>
                 <View
                   style={{
@@ -65,10 +64,10 @@ const Register = ({ navigation }) => {
                   <Text
                     style={{ color: "#666", fontWeight: "bold" }}
                     onPress={() => {
-                      navigation.popToTop();
+                      navigation.navigate('Login');
                     }}
                   >
-                    {" "}
+                   
                     Login
                   </Text>
                 </Text>
@@ -76,9 +75,8 @@ const Register = ({ navigation }) => {
             </View>
           </View>
         </TouchableWithoutFeedback>
-        {/* <View style={{ height: 100 }} /> */}
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+     
+  
   );
 };
 

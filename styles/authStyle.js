@@ -9,7 +9,7 @@ export const authStyles = StyleSheet.create({
     },
     maintext:{
         color: COLORS.white,
-        fontSize:33,
+        fontSize:27,
         textAlign:'center'
     },
     text:{
@@ -32,7 +32,7 @@ export const authStyles = StyleSheet.create({
         borderTopLeftRadius: 40,
         padding:30,
         paddingVertical: 50,
-        // justifyContent: "center"
+    
     },
     btn:{
         height: 50,

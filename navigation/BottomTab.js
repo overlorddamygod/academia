@@ -11,16 +11,13 @@ import {
   AnnounceStackScreen,
   NotificationsStackScreen,
   ModalStackScreen,
-  DrawerMenuStackScreen
-  
+  DrawerMenuStackScreen,
 } from "./Stack";
 import COLORS from "../styles/colors";
-
 
 const Tabs = createBottomTabNavigator();
 
 const BottomTab = () => {
-
   return (
     <>
       <Tabs.Navigator
@@ -78,7 +75,6 @@ const BottomTab = () => {
               </View>
             ),
           }}
-        
         />
 
         <Tabs.Screen
@@ -108,8 +104,6 @@ const BottomTab = () => {
           }}
         />
       </Tabs.Navigator>
-     
-      
     </>
   );
 };
