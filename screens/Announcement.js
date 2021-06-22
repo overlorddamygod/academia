@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -9,10 +9,23 @@ import {
   FlatList,
 } from "react-native";
 import Header from "../components/Header";
+import firestore from '@react-native-firebase/firestore';
 
 const AnnouncementScreen = ({navigation}) => {
-  const [announcements, setAnnouncements] = useState(announcementsData);
+  const [announcements, setAnnouncements] = useState([]);
   const [selectedTag, setSelectedTag] = useState("All Items");
+
+  useEffect(() => {
+    firestore().collection('announcement').get().then(snapshot=> {
+      setAnnouncements(snapshot.docs.map((announcement)=> {
+        const ann = announcement.data();
+        const date = new Date(ann.time.seconds * 1000)
+        ann.time = `${date.toLocaleTimeString()} ${date.toDateString()}`;
+        return ann
+      }))
+    })
+    console.log(announcements)
+  }, [])
 
   const items = [
     "All Items",

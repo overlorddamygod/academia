@@ -5,10 +5,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import Auth from "./navigation/Auth";
 import Main from "./navigation/Main";
 import DrawerTab from "./navigation/Drawer";
+import { useUserContext } from "./providers/user";
 
 export default function App() {
-  const [user, setUser] = useState("Pratham");
-
+  const { user } = useUserContext();
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />

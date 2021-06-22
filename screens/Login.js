@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text ,TextInput,Image,TouchableOpacity,TouchableWithoutFeedback, Keyboard} from "react-native";
 import {authStyles} from '../styles/authStyle'
 import COLORS from "../styles/colors";
 import { Feather } from "@expo/vector-icons";
+import auth from "@react-native-firebase/auth";
 
 const Login = ({navigation}) => {
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
+
+  const initLogin = () => {
+    auth()
+    .signInWithEmailAndPassword(email,password)
+    .then(() => {
+      console.log('User succesfully signed in');
+    })
+    .catch(error => {
+
+      console.error(error);
+    });
+  }
+
   return (
     <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
     <View style={{ flex: 1,backgroundColor: COLORS.main }}>
@@ -24,7 +40,9 @@ const Login = ({navigation}) => {
              placeholder="Email"
              autoCompleteType="email"
              keyboardType="email-address"
-              style={authStyles.input}
+            style={authStyles.input}
+              onChangeText={setEmail}
+              value={email}
             />
 
             <TextInput 
@@ -32,11 +50,13 @@ const Login = ({navigation}) => {
               autoCompleteType="password"
               secureTextEntry={true}
               style={authStyles.input}
+              onChangeText={setPassword}
+              value={password}
             />             
           </View>
           <View style={{justifyContent:'center',alignItems:'center'}}>
-            <TouchableOpacity style={authStyles.btn}>
-                <Text style={authStyles.text}>Login</Text>
+            <TouchableOpacity style={authStyles.btn} onPress={initLogin}>
+                <Text style={authStyles.text} >Login</Text>
             </TouchableOpacity>
             <Text style={{marginTop:5,fontSize:18}}>Already have account? 
               <Text style={{color:'#666',fontWeight:'bold'}} onPress={()=> {

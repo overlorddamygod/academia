@@ -6,8 +6,15 @@ import COLORS from "../styles/colors";
 import DrawerMenu from "../components/DrawerMenu";
 import { authStyles } from "../styles/authStyle";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
+import auth from "@react-native-firebase/auth"
+import { useUserContext } from "../providers/user";
 
 const DrawerContent = ({ navigation }) => {
+  const { user } = useUserContext();
+
+  const logout = () => {
+    auth().signOut();
+  }
   return (
     <View style={{ flex: 1, backgroundColor: "#414567" }}>
       <View
@@ -19,7 +26,7 @@ const DrawerContent = ({ navigation }) => {
       >
         <View style={{ flex: 1, zIndex: 20, padding: 30 }}>
           <View style={{ marginTop: 20 }}>
-            <Text style={globalStyles.txt}>Naruto Uzumaki</Text>
+            <Text style={globalStyles.txt}>{user.displayName}</Text>
             <Text style={{ color: "lightgray", fontSize: 18, lineHeight: 30 }}>
               3rd Semester
             </Text>
@@ -95,6 +102,7 @@ const DrawerContent = ({ navigation }) => {
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity
           activeOpacity={0.8}
+          onPress={logout}
           style={{ ...authStyles.btn, backgroundColor: COLORS.mainred }}
         >
           <Text style={globalStyles.txt}>Log Out</Text>

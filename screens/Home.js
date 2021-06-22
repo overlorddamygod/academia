@@ -11,8 +11,10 @@ import {
 import { globalStyles } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { Ionicons } from "@expo/vector-icons";
+import auth from "@react-native-firebase/auth";
 
 const Home = ({ navigation }) => {
+  // console.log(auth())
   return (
     <>
     
@@ -63,6 +65,18 @@ const Home = ({ navigation }) => {
             navigation.navigate("Chat", {
               screen: "Chat",
             });
+          }}
+        />
+        <Button
+          title="Go to Chat"
+          onPress={() => {
+            auth().currentUser.updateProfile({
+              displayName: "Pratham"
+            }).then(a=> {
+              alert("successss")
+            }).catch(err=> {
+              alert("err")
+            })
           }}
         />
       </View>
