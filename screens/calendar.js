@@ -81,9 +81,9 @@ const CalendarScreen = ({ navigation }) => {
           maxDate={"2030-01-01"}
           markedDates={events.reduce((acc, e) => {
             const _date = `${e.year}-${e.month < 10 ? `0${e.month}` : e.month}-${
-              e._date
+              e.date
             }`;
-            acc[date] = {
+            acc[_date] = {
               dotColor: tagColor[e.tag || "Holiday"],
               marked: true,
             };
