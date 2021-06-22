@@ -6,18 +6,17 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback
 } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { Ionicons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
+import { useUserContext } from "../providers/user";
 
 const Home = ({ navigation }) => {
-  // console.log(auth())
+  const { user } = useUserContext();
   return (
     <>
-    
       <View
         style={{
           height: 220,
@@ -27,7 +26,7 @@ const Home = ({ navigation }) => {
       >
         <View style={styles.upper}>
           <View style={{ position: "relative", flexDirection: "row" }}>
-            <Text style={globalStyles.txt}>Hello, Bishal</Text>
+            <Text style={globalStyles.txt}>Hello, {user.displayName}</Text>
             <TouchableOpacity
               style={{ position: "absolute", right: 0, top: -9 }}
               onPress={() => navigation.openDrawer()}
@@ -70,17 +69,19 @@ const Home = ({ navigation }) => {
         <Button
           title="Go to Chat"
           onPress={() => {
-            auth().currentUser.updateProfile({
-              displayName: "Pratham"
-            }).then(a=> {
-              alert("successss")
-            }).catch(err=> {
-              alert("err")
-            })
+            auth()
+              .currentUser.updateProfile({
+                displayName: "Pratham",
+              })
+              .then((a) => {
+                alert("successss");
+              })
+              .catch((err) => {
+                alert("err");
+              });
           }}
         />
       </View>
-      
     </>
   );
 };
@@ -102,6 +103,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     color: "#444",
     borderRadius: 24,
-    paddingRight:16
+    paddingRight: 16,
   },
 });

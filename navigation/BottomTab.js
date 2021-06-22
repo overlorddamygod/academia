@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Modal, Button, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Modal,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-import {Dialog} from 'react-native-ui-lib';
-
+import { Dialog } from "react-native-ui-lib";
 
 import {
   HomeStackScreen,
@@ -13,17 +19,15 @@ import {
   AnnounceStackScreen,
   NotificationsStackScreen,
   ModalStackScreen,
-  DrawerMenuStackScreen
-  
+  DrawerMenuStackScreen,
 } from "./Stack";
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
 
-
 const Tabs = createBottomTabNavigator();
 
 const BottomTab = (props) => {
-  const [ showDialog, setShowDialog ] = useState(false)
+  const [showDialog, setShowDialog] = useState(false);
 
   return (
     <>
@@ -73,9 +77,11 @@ const BottomTab = (props) => {
           component={ModalStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <TouchableOpacity onPress={()=> {
-                setShowDialog(true)
-              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowDialog(true);
+                }}
+              >
                 <View style={styles.middleIcon}>
                   <Feather
                     name="users"
@@ -86,7 +92,6 @@ const BottomTab = (props) => {
               </TouchableOpacity>
             ),
           }}
-        
         />
 
         <Tabs.Screen
@@ -121,16 +126,20 @@ const BottomTab = (props) => {
         useSafeArea
         bottom={true}
         panDirection={"Down"}
-        containerStyle={{backgroundColor:"#0E243F", justifyContent:"space-between",paddingVertical:20,addingHorizontal: 30}}
+        containerStyle={{
+          backgroundColor: "#0E243F",
+          justifyContent: "space-between",
+          paddingVertical: 20,
+          addingHorizontal: 30,
+        }}
         width="100%"
         visible={showDialog}
-        onDismiss={()=>setShowDialog(false)}
+        onDismiss={() => setShowDialog(false)}
       >
-        <View style={{paddingHorizontal: 30}}>
-            <ConnectModal setShowDialog={ setShowDialog} {...props}/>
+        <View style={{ paddingHorizontal: 30 }}>
+          <ConnectModal setShowDialog={setShowDialog} {...props} />
         </View>
       </Dialog>
-      
     </>
   );
 };

@@ -7,30 +7,37 @@ import { globalStyles } from "../styles/globalStyle";
 import { AntDesign } from "@expo/vector-icons";
 
 const iconProviderMap = {
-  "Feather": Feather,
-  "MaterialIcon": MaterialIcons,
-  "AntDesign": AntDesign
-}
+  Feather: Feather,
+  MaterialIcon: MaterialIcons,
+  AntDesign: AntDesign,
+};
 
-const DrawerMenu = ({ navigation,screen,background, title, iconProvider, iconName }) => {
-
-  const IconProvider = iconProviderMap[iconProvider]
+const DrawerMenu = ({
+  navigation,
+  screen,
+  background,
+  title,
+  iconProvider,
+  iconName,
+}) => {
+  const IconProvider = iconProviderMap[iconProvider];
 
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={() => {
-      navigation.navigate("Menu", {
-        screen: `${screen}`,
-      });
-    }}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() => {
+        navigation.navigate("Menu", {
+          screen: `${screen}`,
+        });
+      }}
+    >
       <View style={{ backgroundColor: `${background}`, ...styles.menus }}>
-          <IconProvider
-            name={iconName}
-            size={25}
-            color="white"
-          />
-        <Text style={{...globalStyles.txt, marginTop: 10, fontSize: 16}}>{title}</Text>
+        <IconProvider name={iconName} size={25} color="white" />
+        <Text style={{ ...globalStyles.txt, marginTop: 10, fontSize: 16 }}>
+          {title}
+        </Text>
       </View>
-  </TouchableOpacity>
+    </TouchableOpacity>
   );
 };
 
@@ -42,6 +49,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginHorizontal: 4,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
 });

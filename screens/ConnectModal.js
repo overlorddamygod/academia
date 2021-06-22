@@ -11,7 +11,7 @@ function ConnectModal({ navigation, setShowDialog }) {
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
-              setShowDialog(false)
+              setShowDialog(false);
               navigation.navigate("Teacher");
             }}
           >
@@ -23,7 +23,7 @@ function ConnectModal({ navigation, setShowDialog }) {
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
-              setShowDialog(false)
+              setShowDialog(false);
               navigation.navigate("Student");
             }}
           >

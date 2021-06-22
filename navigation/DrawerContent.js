@@ -6,7 +6,7 @@ import COLORS from "../styles/colors";
 import DrawerMenu from "../components/DrawerMenu";
 import { authStyles } from "../styles/authStyle";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
-import auth from "@react-native-firebase/auth"
+import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
 
 const DrawerContent = ({ navigation }) => {
@@ -14,8 +14,8 @@ const DrawerContent = ({ navigation }) => {
 
   const logout = () => {
     auth().signOut();
-    navigation.closeDrawer()
-  }
+    navigation.closeDrawer();
+  };
   return (
     <View style={{ flex: 1, backgroundColor: "#414567" }}>
       <View
