@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Auth from './navigation/Auth'
 import Main from './navigation/Main'
+import DrawerTab from './navigation/Drawer';
 
 export default function App() {
   const [ user, setUser ] = useState(null)
@@ -12,14 +13,14 @@ export default function App() {
     <View style={styles.container}>
       {/* <Text>Open up App.js to start working on your app!</Text> */}
       <StatusBar barStyle="light-content" />
-      {/* <AnnouncementScreen/> */}
-      {/* <Register /> */}
       <NavigationContainer>
-        {
+        {/* {
           user ? <Main/> : <Auth setUser={setUser}/>
-        }
+        } */}
+        {/* <Main /> */}
+        <DrawerTab />
       </NavigationContainer>
-      {/* <Login /> */}
+    
     </View>
   );
 }

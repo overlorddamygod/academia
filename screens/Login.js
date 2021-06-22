@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text ,TextInput,StyleSheet ,Image,TouchableOpacity} from "react-native";
+import { View, Text ,TextInput,Image,TouchableOpacity,TouchableWithoutFeedback, Keyboard} from "react-native";
 import {authStyles} from '../styles/authStyle'
 import COLORS from "../styles/colors";
 
 const Login = ({navigation}) => {
   return (
+    <TouchableWithoutFeedback onPress={ Keyboard.dismiss}>
     <View style={{ flex: 1,backgroundColor: COLORS.main }}>
       <View style={authStyles.upper}>
         <View style={{alignItems:'center'}}>
@@ -39,6 +40,7 @@ const Login = ({navigation}) => {
           </View>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

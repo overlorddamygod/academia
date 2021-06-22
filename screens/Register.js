@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text ,TextInput,StyleSheet ,TouchableOpacity,KeyboardAvoidingView} from "react-native";
+import { Keyboard,View, Text ,TextInput,StyleSheet ,TouchableOpacity,TouchableWithoutFeedback} from "react-native";
 import {authStyles} from '../styles/authStyle'
 import COLORS from "../styles/colors";
 
 const Register = ({navigation}) => {
   return (
+    <TouchableWithoutFeedback onPress={ Keyboard.dismiss}>
     <View style={{ flex: 1 , backgroundColor: COLORS.main}}>
       <View style={authStyles.upper}>
         <View style={{alignItems:'center'}}>
@@ -42,6 +43,7 @@ const Register = ({navigation}) => {
       </View>
 
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 
