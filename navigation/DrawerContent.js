@@ -14,6 +14,7 @@ const DrawerContent = ({ navigation }) => {
 
   const logout = () => {
     auth().signOut();
+    navigation.closeDrawer()
   }
   return (
     <View style={{ flex: 1, backgroundColor: "#414567" }}>

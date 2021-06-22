@@ -1,11 +1,8 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import BottomTab from "./BottomTab";
-import Login from "../screens/Login";
-import Register from "../screens/Register";
 import DrawerContent from './DrawerContent'
-import { DrawerMenuStackScreen } from "./Stack";
+import { DrawerMenuStackScreen, StudentStackScreen, TeacherStackScreen } from "./Stack";
 
 const Drawer = createDrawerNavigator();
 
@@ -18,6 +15,8 @@ const DrawerTab = () => {
       {/* Contains Buttom tab navigator . */}
       <Drawer.Screen name="Home" initialParams component={BottomTab} />
       <Drawer.Screen name="Menu" component={DrawerMenuStackScreen}/>
+      <Drawer.Screen name="Teacher" component={TeacherStackScreen}/>
+      <Drawer.Screen name="Student" component={StudentStackScreen}/>
     </Drawer.Navigator>
   );
 };
