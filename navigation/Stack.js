@@ -7,6 +7,7 @@ import AnnouncementScreen from "../screens/Announcement";
 import TeacherList from "../screens/TeachersList";
 import Chat from "../screens/Chat";
 import Notifications from "../screens/Notifications";
+import CalendarScreen from "../screens/calendar";
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
 import Settings from "../screens/Settings";
@@ -22,6 +23,7 @@ const NotificationsStack = createStackNavigator();
 const SettingStack = createStackNavigator();
 const MaterialStack = createStackNavigator();
 const DrawerMenu = createStackNavigator();
+const CalendarStack = createStackNavigator();
 
 export function HomeStackScreen() {
   return (
@@ -43,6 +45,21 @@ export function AnnounceStackScreen() {
         component={AnnouncementScreen}
       />
     </AnnounceStack.Navigator>
+  )
+    };
+
+export function CalendarStackScreen() {
+  return (
+    <CalendarStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <CalendarStack.Screen
+        name="Calendar"
+        component={CalendarScreen}
+      />
+    </CalendarStack.Navigator>
   );
 }
 

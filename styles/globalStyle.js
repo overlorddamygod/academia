@@ -27,4 +27,13 @@ export const globalStyles = StyleSheet.create({
     fontSize: 19,
     fontWeight: "bold",
   },
+  input: {
+    height: 50,
+    margin: 12,
+    padding: 10,
+    fontSize: 18,
+    backgroundColor: "#CDD1EF",
+    color: "#444",
+    borderRadius: 6,
+  }
 });

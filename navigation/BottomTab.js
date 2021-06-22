@@ -20,6 +20,7 @@ import {
   NotificationsStackScreen,
   ModalStackScreen,
   DrawerMenuStackScreen,
+  CalendarStackScreen
 } from "./Stack";
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
@@ -35,14 +36,14 @@ const BottomTab = (props) => {
         tabBarOptions={{
           showLabel: false,
           style: {
-            position: "absolute",
-            bottom: 5,
-            left: 10,
-            right: 10,
+            // position: "absolute",
+            // bottom: 5,
+            // left: 10,
+            // right: 10,
             backgroundColor: "#0E243F",
             elevation: 4,
             height: 70,
-            borderRadius: 15,
+            // borderRadius: 15,
           },
         }}
       >
@@ -95,8 +96,8 @@ const BottomTab = (props) => {
         />
 
         <Tabs.Screen
-          name="Announcement"
-          component={AnnounceStackScreen}
+          name="Calendar"
+          component={CalendarStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <AntDesign

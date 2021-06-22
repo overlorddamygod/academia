@@ -9,43 +9,37 @@ import {
   FlatList,
 } from "react-native";
 import Header from "../components/Header";
-import firestore from "@react-native-firebase/firestore";
+import firestore from '@react-native-firebase/firestore';
 
-const AnnouncementScreen = ({ navigation }) => {
+const AnnouncementScreen = ({navigation}) => {
   const [announcements, setAnnouncements] = useState([]);
   const [selectedTag, setSelectedTag] = useState("All Items");
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchAnnouncements();
-  }, []);
+  }, [])
 
   const fetchAnnouncements = () => {
-    setRefreshing(true);
-    firestore()
-      .collection("announcement")
-      .get()
-      .then((snapshot) => {
-        setAnnouncements(
-          snapshot.docs.map((announcement) => {
-            const ann = announcement.data();
-            if (ann.time) {
-              const date = new Date(ann.time.seconds * 1000);
-              ann.time = `${date.toLocaleTimeString()} ${date.toDateString()}`;
-            }
-            return ann;
-          })
-        );
-        setRefreshing(false);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+    setRefreshing(true)
+    firestore().collection('announcement').get().then(snapshot=> {
+      setAnnouncements(snapshot.docs.map((announcement)=> {
+        const ann = announcement.data();
+        if ( ann.time ) {
+          const date = new Date(ann.time.seconds * 1000)
+          ann.time = `${date.toLocaleTimeString()} ${date.toDateString()}`;
+        }
+        return ann
+      }))
+      setRefreshing(false)
+    }).catch(err=>{
+      console.error(err)
+    })
+  }
 
-  const onRefresh = React.useCallback(() => {
-    fetchAnnouncements();
-  }, []);
+  const onRefresh = () => {
+    fetchAnnouncements()
+  }
 
   const items = [
     "All Items",
@@ -58,49 +52,45 @@ const AnnouncementScreen = ({ navigation }) => {
 
   return (
     <>
-      <Header title="Announcement" navigation={navigation} />
-      <View style={{ flex: 1 }}>
-        <View
-          style={{
-            height: StatusBar.currentHeight,
-            backgroundColor: "#4C367B",
-          }}
-        ></View>
-        {/* <AppBar title="Announcements"></AppBar> */}
-        <View style={{ ...styles.tags, ...styles.shadow }}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ height: "100%" }}
+     <Header title="Announcement" navigation={navigation}/>
+    <View style={{ flex: 1 }}>
+      <View
+        style={{ height: StatusBar.currentHeight, backgroundColor: "#4C367B" }}
+      ></View>
+      {/* <AppBar title="Announcements"></AppBar> */}
+      <View style={{ ...styles.tags, ...styles.shadow }}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ height: "100%" }}
           >
-            {items.map((itemName, i) => {
-              return (
-                <Item
-                  name={itemName}
-                  active={selectedTag == itemName}
-                  onPress={setSelectedTag}
-                  key={i}
-                />
-              );
-            })}
-          </ScrollView>
-        </View>
-        <View style={{ marginTop: 30, flex: 1 }}>
-          <FlatList
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            data={announcements.filter((announcement) =>
-              selectedTag == "All Items"
-                ? true
-                : announcement.tag == selectedTag
-            )}
-            keyExtractor={(item) => item.time}
-            renderItem={({ item }) => (
-              <Announcement data={item} key={item.title} />
-            )}
-          />
-        </View>
+          {items.map((itemName, i) => {
+            return (
+              <Item
+                name={itemName}
+                active={selectedTag == itemName}
+                onPress={setSelectedTag}
+                key={i}
+              />
+            );
+          })}
+        </ScrollView>
       </View>
+      <View style={{ marginTop: 30, flex: 1 }}>
+        <FlatList
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          data={announcements.filter((announcement) =>
+            selectedTag == "All Items" ? true: announcement.tag == selectedTag
+          )}
+          keyExtractor={(item) => item.time}
+          renderItem={({ item }) => (
+            <Announcement data={item} key={item.title} />
+          )}
+        />
+      </View>
+      
+    </View>
     </>
   );
 };

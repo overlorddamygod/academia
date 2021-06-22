@@ -6,5 +6,10 @@ const COLORS = {
   royalBlue: "#4F60F4",
   mainred: "#FB616A",
 };
-
+const tagColor = {
+  Exams: "#F05479",
+  Classes: "#EBA52A",
+  Holiday: "#9336E7",
+};
 export default COLORS;
+export { tagColor }
