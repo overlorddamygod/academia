@@ -33,11 +33,11 @@ const DrawerContent = ({ navigation }) => {
         </View>
       </View>
       {/* lower part */}
-      <DrawerContentScrollView style={{ flex: 1 }}>
+      <DrawerContentScrollView style={{ flex: 1,paddingBottom:20 }}>
         <View style={{ paddingTop: 10, alignItems: "center" }}>
           <View style={{ marginTop: 40, flexDirection: "row" }}>
             <DrawerMenu
-              background="#8A54BA"
+              background="#757BBD"
               title="Gallery"
               iconName="image"
               iconProvider="Feather"
@@ -56,7 +56,7 @@ const DrawerContent = ({ navigation }) => {
           </View>
           <View style={styles.menuDiv}>
             <DrawerMenu
-              background="#00B0DD"
+              background="#525892"
               title="Materials"
               iconName="library-books"
               iconProvider="MaterialIcon"
@@ -74,7 +74,7 @@ const DrawerContent = ({ navigation }) => {
           </View>
           <View style={styles.menuDiv}>
             <DrawerMenu
-              background="#555B95"
+              background="#6066A1"
               title="Events"
               iconName="event"
               iconProvider="MaterialIcon"
@@ -82,7 +82,7 @@ const DrawerContent = ({ navigation }) => {
               screen="Announcements"
             />
             <DrawerMenu
-              background="#714DBE"
+              background="#757BBD"
               title="Settings"
               iconName="settings"
               iconProvider="Feather"

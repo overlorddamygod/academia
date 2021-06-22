@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   lower: {
-    marginTop: 60,
+    marginTop: 50,
   },
   searchbar: {
     height: 50,

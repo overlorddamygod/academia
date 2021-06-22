@@ -10,7 +10,8 @@ const Login = ({navigation}) => {
     <View style={{ flex: 1,backgroundColor: COLORS.main }}>
       <View style={authStyles.upper}>
         <View style={{alignItems:'center'}}>
-          <Text style={authStyles.maintext}>Academia International College</Text>
+          <Text style={authStyles.maintext}>Academia </Text>
+          <Text style={authStyles.maintext}>International College</Text>
           <View style={{marginTop:5,height:5,width:200,backgroundColor:'#f9f9f9'}}></View>
         </View>
         <View style={{marginTop: 30}}>
@@ -40,7 +41,7 @@ const Login = ({navigation}) => {
             </TouchableOpacity>
             <Text style={{marginTop:5,fontSize:18}}>Already have account? 
               <Text style={{color:'#666',fontWeight:'bold'}} onPress={()=> {
-                navigation.push("Register")
+                 navigation.navigate('Register');
               }}> Register</Text>
             </Text>
           </View>

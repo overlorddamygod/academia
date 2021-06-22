@@ -18,9 +18,7 @@ const DrawerMenu = ({ navigation,screen,background, title, iconProvider, iconNam
 
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={() => {
-      navigation.navigate("Menu", {
-        screen: `${screen}`,
-      });
+      navigation.navigate( `${screen}`);
     }}>
       <View style={{ backgroundColor: `${background}`, ...styles.menus }}>
           <IconProvider

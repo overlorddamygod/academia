@@ -12,6 +12,7 @@ import ConnectModal from "../screens/ConnectModal";
 import Settings from "../screens/Settings";
 import Materials from "../screens/Materials";
 
+
 const HomeStack = createStackNavigator();
 const AnnounceStack = createStackNavigator();
 const GalleryStack = createStackNavigator();
@@ -22,7 +23,6 @@ const NotificationsStack = createStackNavigator();
 const ModalStack = createStackNavigator();
 const SettingStack = createStackNavigator()
 const MaterialStack = createStackNavigator()
-const DrawerMenu = createStackNavigator()
 
 
 
@@ -169,21 +169,5 @@ export function MaterialStackScreen() {
     </MaterialStack.Navigator>
   );
 }
-export function DrawerMenuStackScreen() {
-  return (
-    <DrawerMenu.Navigator
-      screenOptions={{
-        headerShown: false
-      }}
-    >
-       <DrawerMenu.Screen name="Settings" component={SettingStackScreen} />
-      <DrawerMenu.Screen name="Gallery" component={GalleryStackScreen} />
-      <DrawerMenu.Screen name="Announcements" component={AnnounceStackScreen} />
-      <DrawerMenu.Screen name="Materials" component={MaterialStackScreen} />
-     
-    </DrawerMenu.Navigator>
-  );
-}
-
 
 
