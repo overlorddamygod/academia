@@ -24,6 +24,7 @@ import {
 } from "./Stack";
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
+import { SIZE } from "../styles/globalStyle";
 
 const Tabs = createBottomTabNavigator();
 
@@ -42,7 +43,7 @@ const BottomTab = (props) => {
             // right: 10,
             backgroundColor: "#0E243F",
             elevation: 4,
-            height: 70,
+            height: SIZE.height * 1.6,
             // borderRadius: 15,
           },
         }}
@@ -148,11 +149,10 @@ const BottomTab = (props) => {
 export default BottomTab;
 const styles = StyleSheet.create({
   middleIcon: {
-    height: 80,
-    width: 80,
+    height: SIZE.height * 2,
+    width: SIZE.height * 2,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 0,
     backgroundColor: COLORS.mainred,
   },
 });

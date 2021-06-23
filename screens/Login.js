@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Dimensions
 } from "react-native";
 import { authStyles } from "../styles/authStyle";
+import { SIZE } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { Feather } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
@@ -21,7 +23,7 @@ const Login = ({ navigation }) => {
 
   const initLogin = async () => {
     const result = await login(email, password);
-    console.log(result)
+    console.log("LOGIN RESULT",result)
   };
 
   return (
@@ -31,9 +33,9 @@ const Login = ({ navigation }) => {
         <View style={{alignItems:'center'}}>
           <Text style={authStyles.maintext}>Academia </Text>
           <Text style={authStyles.maintext}>International College</Text>
-          <View style={{marginTop:5,height:5,width:200,backgroundColor:'#f9f9f9'}}></View>
+          <View style={authStyles.line}></View>
         </View>
-        <View style={{marginTop: 30}}>
+        <View style={{marginTop: SIZE.height * 0.8}}>
           <Text style={authStyles.maintext}>Login</Text>
         </View>
         </View>
@@ -62,10 +64,10 @@ const Login = ({ navigation }) => {
             <TouchableOpacity style={authStyles.btn} onPress={initLogin}>
               <Text style={authStyles.text}>Login</Text>
             </TouchableOpacity>
-            <Text style={{marginTop:5,fontSize:18}}>Already have account? 
+            <Text style={{marginTop:SIZE.height / 8,fontSize:18}}>Already have account? 
               <Text style={{color:'#666',fontWeight:'bold'}} onPress={()=> {
                  navigation.navigate('Register');
-              }}> Register</Text>
+              }}> {` `} Register</Text>
             </Text>
           </View>
         </View>

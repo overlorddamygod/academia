@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useContext } from "react";
+import React, { createContext, useEffect, useContext, useState } from "react";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore"
 import messaging from "@react-native-firebase/messaging";
@@ -23,39 +23,58 @@ const UserContext = createContext(initialUser);
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState(initialUser);
+  // const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
-    async function UserChange(user) {
+    async function UserChange(u) {
+
       const loggedUser = auth().currentUser;
       if ( loggedUser ) {
         try {
-          let userData = await firestore().collection("user").where("id","==", loggedUser.uid).limit(1).get()
-          if ( userData.docs.length > 0) {
+          let userSnapshot = await firestore().collection("user").where("id","==", loggedUser.uid).limit(1).get()
+          if ( userSnapshot.size > 0 ) {
+
+            const userData = userSnapshot.docs[0].data()
 
             if (requestUserPermission()) {
               const token = await getFcmToken()
-              userData.docs[0].ref.update({
+              userSnapshot.docs[0].ref.update({
                 token
               })
             }
-            userData = userData.docs[0].data()
+            
             setUser({...user,...userData});
             messaging().subscribeToTopic(`${userData.semester}_semester`)
             messaging().subscribeToTopic(`${userData.title}`)
-
-
           }
         }
         catch(err) {
-          console.log(err)
+          console.log("ERRORR",err)
         }
 
       } else {
         setUser(null)
       }
     }
-    const subscriber = auth().onAuthStateChanged(UserChange);
-    return subscriber;
+    const unsubscribeAuth = auth().onAuthStateChanged(UserChange);
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in the background!', remoteMessage);
+      if (remoteMessage.data.logout) {
+        auth().signOut()
+      }
+    });
+
+    const unsubscribeOnMessage = messaging().onMessage(async remoteMessage => {
+      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      if (remoteMessage.data.logout) {
+        auth().signOut()
+      }
+    });
+
+    return ()=> {
+      unsubscribeAuth()
+      unsubscribeOnMessage()
+    };
   }, []);
 
   const register = (username, email, password) => {
@@ -65,12 +84,12 @@ const UserProvider = ({ children }) => {
       auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
+        
         result.user
           .updateProfile({
             displayName: username,
           })
           .then((r) => {
-            
             const { uid, email } = result.user
 
             const userData = {
@@ -84,7 +103,10 @@ const UserProvider = ({ children }) => {
             };
             
             firestore().collection("user").add(userData).then(_r => {
-              setUser({ ...user, ...userData });
+              _r.update({
+                docId: _r.id
+              })
+              setUser({...user,...userData});
 
               return true
             }).catch(err=> {
@@ -108,8 +130,8 @@ const UserProvider = ({ children }) => {
 
   const logout = async () => {
     messaging().deleteToken()
-    let userData = await firestore().collection("user").where("id","==", auth().currentUser.uid).limit(1).get()
-    userData.docs[0].ref.update({
+    console.log("HERE",user)
+    await firestore().collection("user").doc(user.docId).update({
       token: null
     })
     auth().signOut();

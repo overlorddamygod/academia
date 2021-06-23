@@ -5,6 +5,8 @@ const COLORS = {
   black: "#000000",
   royalBlue: "#4F60F4",
   mainred: "#FB616A",
+  grey: "grey",
+  red: "red"
 };
 const tagColor = {
   Exams: "#F05479",

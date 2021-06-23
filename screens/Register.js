@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
+import { SIZE } from "../styles/globalStyle";
 import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
 
@@ -37,15 +38,10 @@ const Register = ({ navigation }) => {
             <Text style={authStyles.maintext}>Academia</Text>
             <Text style={authStyles.maintext}>International College</Text>
             <View
-              style={{
-                marginTop: 5,
-                height: 5,
-                width: 200,
-                backgroundColor: "#f9f9f9",
-              }}
+              style={authStyles.line}
             ></View>
           </View>
-          <View style={{ marginTop: 30 }}>
+          <View style={{ marginTop: SIZE.height * 0.8 }}>
             <Text style={authStyles.maintext}>Register</Text>
           </View>
         </View>
@@ -83,7 +79,7 @@ const Register = ({ navigation }) => {
             <TouchableOpacity style={authStyles.btn} onPress={initRegister}>
               <Text style={authStyles.text}>Register</Text>
             </TouchableOpacity>
-            <Text style={{ marginTop: 5, fontSize: 18 }}>
+            <Text style={{ marginTop: SIZE.height / 8, fontSize: 18 }}>
               Already have account?
               <Text
                 style={{ color: "#666", fontWeight: "bold" }}
@@ -91,7 +87,7 @@ const Register = ({ navigation }) => {
                   navigation.navigate("Login");
                 }}
               >
-                Login
+                {` `}Login
               </Text>
             </Text>
           </View>

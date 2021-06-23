@@ -4,7 +4,6 @@ import COLORS from "../styles/colors";
 import { globalStyles } from "../styles/globalStyle";
 import firestore from "@react-native-firebase/firestore";
 import { sendNotification } from "../notifications";
-import firebase from "@react-native-firebase/app"
 
 const AddEvent = ({date, closeDialog}) => {
     const todaysDate = new Date();

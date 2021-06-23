@@ -5,54 +5,43 @@ import {
   Button,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
 } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { Ionicons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
+import { SIZE } from "../styles/globalStyle";
+import Header from "../components/Header"
 
 const Home = ({ navigation }) => {
   const { user } = useUserContext();
   return (
     <>
+    <Header title={`Hello, ${user.username}`} justifyContent="flex-start" navigation={navigation}></Header>
       <View
         style={{
-          height: 220,
           backgroundColor: COLORS.main,
           borderBottomRightRadius: 36,
         }}
       >
         <View style={styles.upper}>
-          <View style={{ position: "relative", flexDirection: "row" }}>
-            <Text style={globalStyles.txt}>Hello, {user.username}</Text>
-            <TouchableOpacity
-              style={{ position: "absolute", right: 0, top: -9 }}
-              onPress={() => navigation.openDrawer()}
-            >
-              <Ionicons name="menu" size={34} color="white" />
-            </TouchableOpacity>
-          </View>
           <View>
-            <Text style={{ marginTop: 10, ...globalStyles.txt }}>
+            <Text style={{ marginTop: -SIZE.width/1.8, ...globalStyles.txt,...{paddingLeft:SIZE.width} }}>
               It's lovely day right ?
             </Text>
           </View>
-          <View style={{ position: "relative", ...styles.lower }}>
-            <Ionicons
-              style={{
-                position: "absolute",
-                zIndex: 10,
-                marginTop: 12,
-                marginLeft: 10,
-              }}
-              name="search"
-              size={24}
-              color="#777"
-            />
-            <TextInput style={styles.searchbar} placeholder="Search" />
+          <View style={{padding: SIZE.width}}>
+            <View style={styles.searchbar}>
+              <Ionicons
+                name="search"
+                size={24}
+                color="#777"
+              />
+              <TextInput style={{color:"#000", flex:1}}placeholder="Search" />
+            </View>
           </View>
+
         </View>
       </View>
       <View style={globalStyles.container}>
@@ -89,20 +78,13 @@ const Home = ({ navigation }) => {
 export default Home;
 
 const styles = StyleSheet.create({
-  upper: {
-    padding: 40,
-    marginVertical: 10,
-  },
-  lower: {
-    marginTop: 50,
-  },
   searchbar: {
-    height: 50,
-    paddingLeft: 40,
-    fontSize: 18,
+    flexDirection:"row",
+    height: SIZE.height * 1.2,
+    paddingLeft: SIZE.height * 0.5,
+    fontSize: SIZE.height * 0.5,
     backgroundColor: "white",
-    color: "#444",
     borderRadius: 24,
-    paddingRight: 16,
+    alignItems:"center"
   },
 });

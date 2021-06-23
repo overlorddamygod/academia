@@ -1,7 +1,15 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,Dimensions } from "react-native";
 import COLORS from "./colors";
 
-export const globalStyles = StyleSheet.create({
+const {width, height} = Dimensions.get("window")
+const SIZE = {
+  width: width * 0.05,
+  height: height * 0.05,
+};
+
+console.log(SIZE);
+
+const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
@@ -28,12 +36,14 @@ export const globalStyles = StyleSheet.create({
     fontWeight: "bold",
   },
   input: {
-    height: 50,
-    margin: 12,
-    padding: 10,
+    height: SIZE.height * 1.2,
+    margin: SIZE.height / 4,
+    padding: SIZE.height * 4,
     fontSize: 18,
     backgroundColor: "#CDD1EF",
     color: "#444",
     borderRadius: 6,
   }
 });
+
+export { globalStyles, SIZE }

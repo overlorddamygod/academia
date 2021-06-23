@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Auth from "./navigation/Auth";
 import DrawerTab from "./navigation/Drawer";

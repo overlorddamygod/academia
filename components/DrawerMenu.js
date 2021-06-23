@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import { AntDesign } from "@expo/vector-icons";
-
+import { SIZE } from "../styles/globalStyle";
 const iconProviderMap = {
   Feather: Feather,
   MaterialIcon: MaterialIcons,
@@ -28,7 +28,7 @@ const DrawerMenu = ({
     }}>
       <View style={{ backgroundColor: `${background}`, ...styles.menus }}>
         <IconProvider name={iconName} size={25} color="white" />
-        <Text style={{ ...globalStyles.txt, marginTop: 10, fontSize: 16 }}>
+        <Text style={{ ...globalStyles.txt, marginTop: SIZE.height / 4, fontSize: 16 }}>
           {title}
         </Text>
       </View>
@@ -39,10 +39,10 @@ const DrawerMenu = ({
 export default DrawerMenu;
 const styles = StyleSheet.create({
   menus: {
-    width: 110,
-    height: 110,
+    width: SIZE.width * 5.5,
+    height: SIZE.height * 2.8,
     borderRadius: 4,
-    marginHorizontal: 4,
+    marginHorizontal: SIZE.height / 10,
     justifyContent: "center",
     alignItems: "center",
   },

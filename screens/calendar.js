@@ -28,7 +28,7 @@ const CalendarScreen = ({ navigation }) => {
   const [eventsCache, setEventsCache] = useState({});
   const [events, setEvents] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [showDialog, setShowDialog] = useState(false);
+  const [addEventDialog, setAddEventDialog] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     getEventsForMonth(date.year, date.month, true);
@@ -57,31 +57,24 @@ const CalendarScreen = ({ navigation }) => {
       .then((doc) => {
         const fetchedEvents = doc.docs.map((d) => ({...d.data(),id:d.id})).sort((a,b)=>a.date-b.date);
   
-        const tempEvent = eventsCache;
-        tempEvent[dateKey] = fetchedEvents;
-        setEventsCache(tempEvent);
+        // const tempEvent = eventsCache;
+        eventsCache[dateKey] = fetchedEvents;
+        setEventsCache(eventsCache);
         setEvents(eventsCache[dateKey]);
         setRefreshing(false)
       });
       setRefreshing(false)
-
   };
+
   return (
     <>
       <Header title="Calendar" navigation={navigation} />
       <View style={{ flex: 1, backgroundColor: "white" }}>
-        {/* <View
-          style={{
-            height: StatusBar.currentHeight,
-            backgroundColor: "#4C367B",
-          }}
-        ></View> */}
         <Calendar
-          // current={`${date.year}-${date.month}-${date.date}`}
           minDate={"2020-01-01"}
           maxDate={"2030-01-01"}
           markedDates={events.reduce((acc, e) => {
-            const _date = `${e.year}-${e.month < 10 ? `0${e.month}` : e.month}-${
+            const _date = `${e.year}-${formatDate(e.month)}-${
               e.date
             }`;
             acc[_date] = {
@@ -91,26 +84,24 @@ const CalendarScreen = ({ navigation }) => {
             return acc;
           }, {})}
           enableSwipeMonths={true}
-          onDayPress={(a) => {
-
-            setDate(a)
-            setShowDialog(true);
-
+          onDayPress={(time) => {
+            setDate(time)
+            setAddEventDialog(true);
           }}
-          onMonthChange={(d) => {
-              console.log("MONTH CHANGED")
-            setDate(d);
-            getEventsForMonth(d.year, d.month);
+          onMonthChange={(time) => {
+            console.log("MONTH CHANGED")
+            setDate(time);
+            getEventsForMonth(time.year, time.month);
           }}
           style={{ backgroundColor: COLORS.main }}
           theme={{
-            // backgroundColor: COLORS.main,
             calendarBackground: COLORS.main,
-            dayTextColor: "white",
-            textDisabledColor: "grey",
-            arrowColor: "white",
-            monthTextColor: "white",
-            selectedDayBackgroundColor: "red",
+            dayTextColor: COLORS.white,
+            textDisabledColor: COLORS.grey,
+            arrowColor: COLORS.white,
+            monthTextColor: COLORS.white,
+            selectedDayBackgroundColor: COLORS.red,
+            
           }}
         />
         <View style={{ paddingHorizontal: 10, flex: 1 }}>
@@ -126,7 +117,7 @@ const CalendarScreen = ({ navigation }) => {
               style={{
                 fontSize: 30,
                 fontWeight: "bold",
-                color: "black",
+                color: COLORS.black,
               }}
             >
               Events
@@ -135,11 +126,11 @@ const CalendarScreen = ({ navigation }) => {
               activeOpacity={0.5}
               style={{ borderWidth: 1, borderRadius: 5 }}
               onPress={() => {
-                setShowDialog(true);
+                setAddEventDialog(true);
                 console.log("Add Event");
               }}
             >
-              <Feather name="plus" color="black" size={35}></Feather>
+              <Feather name="plus" color={COLORS.black} size={35}></Feather>
             </TouchableOpacity>
           </View>
 
@@ -170,10 +161,10 @@ const CalendarScreen = ({ navigation }) => {
           paddingHorizontal: 40,
         }}
         width="100%"
-        visible={showDialog}
-        onDismiss={() => setShowDialog(false)}
+        visible={addEventDialog}
+        onDismiss={() => setAddEventDialog(false)}
       >
-        <AddEvent closeDialog={()=>setShowDialog(false)} date={date.dateString}/>
+        <AddEvent closeDialog={()=>setAddEventDialog(false)} date={date.dateString}/>
       </Dialog>
     </>
   );
@@ -202,7 +193,7 @@ const CalendarEventListItem = ({ event }) => {
               borderRightColor: tagColor[event.tag],
             }}
           >
-            {event.date < 10 ? `0${event.date}` : event.date}
+            {formatDate(event.date)}
           </Text>
 
         <Text style={{ fontSize: 16, flex: 1 }}>{event.title}</Text>
@@ -210,3 +201,7 @@ const CalendarEventListItem = ({ event }) => {
     </TouchableOpacity>
   );
 };
+
+const formatDate = (date) => {
+  return date < 10 ? `0${date}` : date
+}
