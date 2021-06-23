@@ -6,7 +6,7 @@ import Header from "../components/Header";
 const Notifications = ({ navigation }) => {
   return (
     <>
-      <Header title="Notifications" navigation={navigation} />
+      <Header title="Notifications" navigation={navigation} showBackMenu={false}/>
       <View style={globalStyles.container}>
         <Text style={globalStyles.boldText}>Notifications</Text>
         {/* dummy button to navigate between screens */}

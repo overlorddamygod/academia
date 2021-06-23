@@ -5,6 +5,8 @@ const {width, height} = Dimensions.get("window")
 const SIZE = {
   width: width * 0.05,
   height: height * 0.05,
+  screenWidth: width,
+  screenHeight: height
 };
 
 console.log(SIZE);
@@ -36,13 +38,12 @@ const globalStyles = StyleSheet.create({
     fontWeight: "bold",
   },
   input: {
-    height: SIZE.height * 1.2,
-    margin: SIZE.height / 4,
-    padding: SIZE.height * 4,
+    height: SIZE.height * 1.4,
     fontSize: 18,
     backgroundColor: "#CDD1EF",
     color: "#444",
     borderRadius: 6,
+    marginVertical:5
   }
 });
 

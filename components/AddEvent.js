@@ -47,7 +47,7 @@ const AddEvent = ({date, closeDialog}) => {
         <Text>Title</Text>
         <TextInput
             value={eventData.title}
-            style={{...globalStyles.input,margin:0,marginVertical:5}}
+            style={{...globalStyles.input}}
             onChangeText={text=> {
                 setEventData({...eventData,title:text})
             }}
@@ -55,7 +55,7 @@ const AddEvent = ({date, closeDialog}) => {
         <Text>Tag</Text>
         <TextInput
             value={eventData.tag}
-            style={{...globalStyles.input,margin:0,marginVertical:5}}
+            style={{...globalStyles.input}}
             onChangeText={text=> {
                 setEventData({...eventData,tag:text})
             }}
@@ -63,7 +63,7 @@ const AddEvent = ({date, closeDialog}) => {
         <Text>Date</Text>
         <TextInput
             value={eventData.date}
-            style={{...globalStyles.input,margin:0,marginVertical:5}}
+            style={{...globalStyles.input}}
             onChangeText={text=> {
                 setEventData({...eventData,date:text})
             }}
@@ -75,7 +75,7 @@ const AddEvent = ({date, closeDialog}) => {
         <Text>Topic</Text>
         <TextInput
             value={notificationData.topic}
-            style={{...globalStyles.input,margin:0,marginVertical:5}}
+            style={{...globalStyles.input}}
             onChangeText={text=> {
                 setNotificationData({...notificationData,topic:text})
             }}

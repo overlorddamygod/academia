@@ -8,6 +8,7 @@ import TeacherList from "../screens/TeachersList";
 import Chat from "../screens/Chat";
 import Notifications from "../screens/Notifications";
 import CalendarScreen from "../screens/calendar";
+import IndividualChat from "../screens/IndividualChat";
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
 import Settings from "../screens/Settings";

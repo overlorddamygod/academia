@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  Text,
-  Modal,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -16,10 +13,8 @@ import { Dialog } from "react-native-ui-lib";
 import {
   HomeStackScreen,
   ChatStackScreen,
-  AnnounceStackScreen,
   NotificationsStackScreen,
   ModalStackScreen,
-  DrawerMenuStackScreen,
   CalendarStackScreen
 } from "./Stack";
 import COLORS from "../styles/colors";
@@ -131,14 +126,14 @@ const BottomTab = (props) => {
         containerStyle={{
           backgroundColor: "#0E243F",
           justifyContent: "space-between",
-          paddingVertical: 20,
-          addingHorizontal: 30,
+          paddingVertical: SIZE.height/4,
+          borderRadius:30
         }}
         width="100%"
         visible={showDialog}
         onDismiss={() => setShowDialog(false)}
       >
-        <View style={{ paddingHorizontal: 30 }}>
+        <View style={{ paddingHorizontal: SIZE.width * 0.8 }}>
           <ConnectModal setShowDialog={setShowDialog} {...props} />
         </View>
       </Dialog>

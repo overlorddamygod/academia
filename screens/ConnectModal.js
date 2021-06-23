@@ -2,11 +2,19 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import COLORS from "../styles/colors";
+import { SIZE } from "../styles/globalStyle";
+import { Feather } from "@expo/vector-icons";
 
 function ConnectModal({ navigation, setShowDialog }) {
   return (
     <>
       <View style={styles.modal}>
+        <TouchableOpacity style={styles.cancel} onPress={()=> {
+          setShowDialog(false)
+        }}>
+          <Feather name="x-circle" size={SIZE.height/1.5} color={COLORS.white}/>
+        </TouchableOpacity>
+
         <View>
           <TouchableOpacity
             activeOpacity={0.9}
@@ -33,7 +41,6 @@ function ConnectModal({ navigation, setShowDialog }) {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={styles.cancel}></View>
       </View>
     </>
   );
@@ -44,7 +51,7 @@ export default ConnectModal;
 const styles = StyleSheet.create({
   modal: {
     backgroundColor: COLORS.darkblue,
-    borderRadius: 10,
+    borderRadius: 100,
   },
   text: {
     color: COLORS.darkblue,
@@ -56,11 +63,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "white",
-    padding: 14,
+    padding: SIZE.height / 3.5,
     borderRadius: 8,
   },
   cancel: {
-    width: 90,
+    marginVertical: SIZE.height * 0.05,
+    marginRight: 5,
     alignSelf: "flex-end",
   },
 });

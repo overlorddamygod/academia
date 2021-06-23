@@ -18,7 +18,7 @@ const Home = ({ navigation }) => {
   const { user } = useUserContext();
   return (
     <>
-    <Header title={`Hello, ${user.username}`} justifyContent="flex-start" navigation={navigation}></Header>
+    <Header showBackMenu={false} title={`Hello, ${user.username}`} justifyContent="flex-start" navigation={navigation}></Header>
       <View
         style={{
           backgroundColor: COLORS.main,

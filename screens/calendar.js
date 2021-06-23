@@ -68,7 +68,7 @@ const CalendarScreen = ({ navigation }) => {
 
   return (
     <>
-      <Header title="Calendar" navigation={navigation} />
+      <Header title="Calendar" navigation={navigation} showBackMenu={false} />
       <View style={{ flex: 1, backgroundColor: "white" }}>
         <Calendar
           minDate={"2020-01-01"}

@@ -3,6 +3,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import BottomTab from "./BottomTab";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import IndividualChat from "../screens/IndividualChat";
 import DrawerContent from "./DrawerContent";
 import {
   AnnounceStackScreen,
@@ -31,6 +32,7 @@ const DrawerTab = () => {
       <Drawer.Screen name="Register" component={Register} />
       <Drawer.Screen name="Teacher" component={TeacherStackScreen} />
       <Drawer.Screen name="Student" component={StudentStackScreen} />
+      <Drawer.Screen name="IndividualChat" component={IndividualChat} />
     </Drawer.Navigator>
   );
 };
