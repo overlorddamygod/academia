@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, Button } from "react-native";
+import { Text, View, TextInput, Button,Switch } from "react-native";
 import COLORS from "../styles/colors";
 import { globalStyles } from "../styles/globalStyle";
 import firestore from "@react-native-firebase/firestore";
+import { sendNotification } from "../notifications";
+import firebase from "@react-native-firebase/app"
 
 const AddEvent = ({date, closeDialog}) => {
     const todaysDate = new Date();
-
+    const [notificationData, setNotificationData ] = useState({
+        send: false,
+        topic: "All"
+    })
     const [eventData, setEventData] = useState({
         title: "",
         tag: "",
@@ -22,8 +27,17 @@ const AddEvent = ({date, closeDialog}) => {
             // time: firestore.Timestamp.fromDate(new Date(eventData.date)),
             date: _date,
             year,
-            month
+            month,
+            createdAt: firestore.FieldValue.serverTimestamp()
         }).then(r=> {
+            if ( notificationData.send ) {
+                sendNotification({
+                    title: eventData.title,
+                    date: eventData.date,
+                    topic: notificationData.title
+                })
+            }
+
             closeDialog();
         })
     }
@@ -55,6 +69,19 @@ const AddEvent = ({date, closeDialog}) => {
                 setEventData({...eventData,date:text})
             }}
         />
+        <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+            <Text>Send Notification</Text>
+            <Switch value={notificationData.send} onValueChange={(val)=>setNotificationData({...notificationData,send:val})}/>
+        </View>
+        <Text>Topic</Text>
+        <TextInput
+            value={notificationData.topic}
+            style={{...globalStyles.input,margin:0,marginVertical:5}}
+            onChangeText={text=> {
+                setNotificationData({...notificationData,topic:text})
+            }}
+        />
+
         <View style={{marginVertical:20}}>
             <Button title="Add" onPress={submitEvent}></Button>
         </View>

@@ -10,10 +10,10 @@ import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
 
 const DrawerContent = ({ navigation }) => {
-  const { user } = useUserContext();
+  const { user, logout: _logout } = useUserContext();
 
   const logout = () => {
-    auth().signOut();
+    _logout();
     navigation.closeDrawer();
   };
   return (
@@ -27,9 +27,12 @@ const DrawerContent = ({ navigation }) => {
       >
         <View style={{ flex: 1, zIndex: 20, padding: 30 }}>
           <View style={{ marginTop: 20 }}>
-            <Text style={globalStyles.txt}>{user.displayName}</Text>
+            <Text style={globalStyles.txt}>{user.username}</Text>
             <Text style={{ color: "lightgray", fontSize: 18, lineHeight: 30 }}>
-              3rd Semester
+              {user.title}
+            </Text>
+            <Text style={{ color: "lightgray", fontSize: 18, lineHeight: 30 }}>
+              Semester : {user.semester}
             </Text>
           </View>
           <Image

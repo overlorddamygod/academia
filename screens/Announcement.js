@@ -29,6 +29,7 @@ const AnnouncementScreen = ({navigation}) => {
           const date = new Date(ann.time.seconds * 1000)
           ann.time = `${date.toLocaleTimeString()} ${date.toDateString()}`;
         }
+        ann.id = announcement.id;
         return ann
       }))
       setRefreshing(false)
@@ -83,9 +84,9 @@ const AnnouncementScreen = ({navigation}) => {
           data={announcements.filter((announcement) =>
             selectedTag == "All Items" ? true: announcement.tag == selectedTag
           )}
-          keyExtractor={(item) => item.time}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Announcement data={item} key={item.title} />
+            <Announcement data={item} />
           )}
         />
       </View>

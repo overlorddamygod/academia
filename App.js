@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Auth from "./navigation/Auth";
@@ -8,6 +8,7 @@ import { useUserContext } from "./providers/user";
 
 export default function App() {
   const { user } = useUserContext();
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />

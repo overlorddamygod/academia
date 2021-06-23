@@ -18,33 +18,15 @@ const Register = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, setUser } = useUserContext();
+  const [registering, setRegistering] = useState(false)
 
-  const initRegister = () => {
-    if (!username || !email || !password) return;
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        console.log("User account created & signed in!");
-        result.user
-          .updateProfile({
-            displayName: username,
-          })
-          .then((r) => {
-            setUser({ ...user, displayName: username });
-          });
-      })
-      .catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          console.log("That email address is already in use!");
-        }
+  const { register } = useUserContext();
 
-        if (error.code === "auth/invalid-email") {
-          console.log("That email address is invalid!");
-        }
-
-        console.error(error);
-      });
+  const initRegister = async () => {
+    setRegistering(true)
+    const registerResult = await register(username, email, password)
+    console.log(registerResult)
+    setRegistering(false)
   };
 
   return (
@@ -67,6 +49,7 @@ const Register = ({ navigation }) => {
             <Text style={authStyles.maintext}>Register</Text>
           </View>
         </View>
+        { registering ? <Text>Register in process. Please Wait.</Text> :
         <View style={{ ...authStyles.lower, flex: 1 }}>
           <View>
             <TextInput
@@ -113,6 +96,7 @@ const Register = ({ navigation }) => {
             </Text>
           </View>
         </View>
+}
       </View>
     </TouchableWithoutFeedback>
   );

@@ -12,20 +12,16 @@ import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
 import { Feather } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
+import { useUserContext } from "../providers/user";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useUserContext();
 
-  const initLogin = () => {
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log("User succesfully signed in");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const initLogin = async () => {
+    const result = await login(email, password);
+    console.log(result)
   };
 
   return (

@@ -26,7 +26,7 @@ const Home = ({ navigation }) => {
       >
         <View style={styles.upper}>
           <View style={{ position: "relative", flexDirection: "row" }}>
-            <Text style={globalStyles.txt}>Hello, {user.displayName}</Text>
+            <Text style={globalStyles.txt}>Hello, {user.username}</Text>
             <TouchableOpacity
               style={{ position: "absolute", right: 0, top: -9 }}
               onPress={() => navigation.openDrawer()}

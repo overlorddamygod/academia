@@ -55,7 +55,8 @@ const CalendarScreen = ({ navigation }) => {
       .where("month", "==", +month)
       .get()
       .then((doc) => {
-        const fetchedEvents = doc.docs.map((d) => d.data()).sort((a,b)=>a.date-b.date);
+        const fetchedEvents = doc.docs.map((d) => ({...d.data(),id:d.id})).sort((a,b)=>a.date-b.date);
+  
         const tempEvent = eventsCache;
         tempEvent[dateKey] = fetchedEvents;
         setEventsCache(tempEvent);
@@ -92,8 +93,8 @@ const CalendarScreen = ({ navigation }) => {
           enableSwipeMonths={true}
           onDayPress={(a) => {
 
-            // setDate(a)
-            // setShowDialog(true);
+            setDate(a)
+            setShowDialog(true);
 
           }}
           onMonthChange={(d) => {
@@ -147,9 +148,9 @@ const CalendarScreen = ({ navigation }) => {
               data={events}
               refreshing={refreshing}
               onRefresh={onRefresh}
-              keyExtractor={(item) => `${item.date}`}
+              keyExtractor={(item) => `${item.id}`}
               renderItem={({ item }) => (
-                <CalendarEventListItem event={item} key={item.date} />
+                <CalendarEventListItem event={item} />
               )}
             />
           ) : (
@@ -190,20 +191,20 @@ const CalendarEventListItem = ({ event }) => {
           paddingVertical: 10,
           alignItems: "center",
         }}
-        key={event.date}
       >
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: "bold",
-            paddingRight: 10,
-            marginRight: 10,
-            borderRightWidth: 3,
-            borderRightColor: tagColor[event.tag],
-          }}
-        >
-          {event.date}
-        </Text>
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: "bold",
+              paddingRight: 10,
+              marginRight: 10,
+              borderRightWidth: 3,
+              borderRightColor: tagColor[event.tag],
+            }}
+          >
+            {event.date < 10 ? `0${event.date}` : event.date}
+          </Text>
+
         <Text style={{ fontSize: 16, flex: 1 }}>{event.title}</Text>
       </View>
     </TouchableOpacity>
