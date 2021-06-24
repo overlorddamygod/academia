@@ -15,7 +15,7 @@ const Chat = ({ navigation }) => {
   const { user } = useUserContext();
   const [conversations, setConversations] = useState([]);
 
-  const collectionRef = firestore().collection("conversation").where("participants","array-contains", user.docId);
+  const collectionRef = firestore().collection("conversation").where("participants","array-contains", user.id);
 
   useEffect(() => {
     const unsubscribe = collectionRef
@@ -58,7 +58,8 @@ const Chat = ({ navigation }) => {
             onPress={()=> {
               navigation.navigate("IndividualChat",{
                 id: item.docId,
-                name: item.name,
+                name: getChatName(item,user.id),
+                conversation: item
               })
             }}
           >
@@ -66,7 +67,7 @@ const Chat = ({ navigation }) => {
               fontSize: 20,
               fontWeight: "bold",
               color: COLORS.black
-            }}>{item.p[item.participants.filter(id=> id != user.docId)[0]]}</Text>
+            }}>{getChatName(item,user.id)}</Text>
           </TouchableOpacity>
         )}
       />
@@ -75,3 +76,7 @@ const Chat = ({ navigation }) => {
 };
 
 export default Chat;
+
+const getChatName = (convo, userId) => {
+  return convo.group ? convo.name : convo.p[convo.participants.filter(id=> id != userId)[0]]
+}

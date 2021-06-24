@@ -18,7 +18,7 @@ import { Feather } from "@expo/vector-icons";
 import Hyperlink from "react-native-hyperlink";
 
 const IndividualChat = ({ navigation, route: { params } }) => {
-  const { id, name } = params;
+  const { id, name, conversation } = params;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,7 +43,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
           );
           setLoading(false);
           if (messages.length > 0)
-          flatlistRef.current.scrollToEnd({animate:true});
+            flatlistRef.current.scrollToEnd({ animate: true });
         },
         (error) => console.error(error)
       );
@@ -55,13 +55,19 @@ const IndividualChat = ({ navigation, route: { params } }) => {
     if (!message) return;
     collectionRef.add({
       userId: user.id,
-      userDocId: user.docId,
       username: user.username,
       body: message,
       createdAt: firestore.FieldValue.serverTimestamp(),
     });
     setMessage("");
   };
+
+  const deleteMessage = (id) => {
+    collectionRef.doc(id).update({
+      deleted: true,
+    });
+  };
+
   return (
     <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
       <Header
@@ -85,7 +91,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
             alignItems: "center",
           }}
         >
-          <Text style={{fontSize:20}}>Start A Conversation</Text>
+          <Text style={{ fontSize: 20 }}>Start A Conversation</Text>
         </View>
       ) : (
         <View style={{ flex: 1 }}>
@@ -95,7 +101,13 @@ const IndividualChat = ({ navigation, route: { params } }) => {
             contentContainerStyle={{ flex: 1, justifyContent: "flex-end" }}
             keyExtractor={(item) => item.docId}
             renderItem={({ item }) => (
-              <ChatMessage message={item} me={user.id == item.userId} />
+              <ChatMessage
+                message={item}
+                deleteMessage={() => {
+                  if (item.userId == user.id) deleteMessage(item.docId)
+                }}
+                me={user.id == item.userId}
+              />
             )}
           />
         </View>
@@ -143,7 +155,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
 
 export default IndividualChat;
 
-const ChatMessage = ({ message, me }) => {
+const ChatMessage = ({ message, me, deleteMessage }) => {
   const messageItems = [
     <View
       key={`${message.id}1`}
@@ -159,11 +171,19 @@ const ChatMessage = ({ message, me }) => {
         {message.username[0]}
       </Text>
     </View>,
-    <View
+    <TouchableOpacity
       key={`${message.id}2`}
+      activeOpacity={0.8}
+      onLongPress={() => {
+        deleteMessage();
+      }}
       style={{
         marginHorizontal: SIZE.width / 2,
-        backgroundColor: me ? "#F8F8F9" : "#EBF4FF",
+        backgroundColor: message.deleted
+          ? "red"
+          : me
+          ? "#F8F8F9"
+          : "#EBF4FF",
         maxWidth: SIZE.screenWidth * 0.6,
         paddingHorizontal: SIZE.width * 0.6,
         paddingVertical: SIZE.height / 2.6,
@@ -173,17 +193,23 @@ const ChatMessage = ({ message, me }) => {
         borderTopEndRadius: 30,
       }}
     >
-      <Hyperlink
-        linkStyle={{ color: "#2980b9", textDecorationLine: "underline" }}
-        onPress={(url, text) => {
-          Linking.openURL(url);
-        }}
-      >
+      {message.deleted ? (
         <Text style={{ color: COLORS.black, fontSize: 15 }}>
-          {message.body}
+          DELETED
         </Text>
-      </Hyperlink>
-    </View>,
+      ) : (
+        <Hyperlink
+          linkStyle={{ color: "#2980b9", textDecorationLine: "underline" }}
+          onPress={(url, text) => {
+            Linking.openURL(url);
+          }}
+        >
+          <Text style={{ color: COLORS.black, fontSize: 15 }}>
+            {message.body}
+          </Text>
+        </Hyperlink>
+      )}
+    </TouchableOpacity>,
     <View key={`${message.id}3`}>
       {/* <Moment date={message.createdAt}><Text></Text></Moment> */}
       {/* <Text style={{fontSize:10}}>{message.createdAt.toDate().toLocaleTimeString()}</Text> */}

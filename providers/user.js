@@ -102,10 +102,7 @@ const UserProvider = ({ children }) => {
               createdAt: firestore.FieldValue.serverTimestamp()
             };
             
-            firestore().collection("user").add(userData).then(_r => {
-              _r.update({
-                docId: _r.id
-              })
+            firestore().collection("user").doc(`${uid}`).set(userData).then(_r => {
               setUser({...user,...userData});
 
               return true
@@ -131,7 +128,7 @@ const UserProvider = ({ children }) => {
   const logout = async () => {
     messaging().deleteToken()
     console.log("HERE",user)
-    await firestore().collection("user").doc(user.docId).update({
+    await firestore().collection("user").doc(user.id).update({
       token: null
     })
     auth().signOut();

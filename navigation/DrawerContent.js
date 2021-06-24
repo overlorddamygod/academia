@@ -34,7 +34,7 @@ const DrawerContent = ({ navigation }) => {
               }}
               style={styles.avatar}
             />
-            <Text style={globalStyles.txt}>{user.username}</Text>
+            <Text style={globalStyles.txt}>{user.username || ""}</Text>
             <Text style={{ color: "lightgray", fontSize: 18, lineHeight: SIZE.height * 0.7 }}>
               {user.title}
             </Text>
