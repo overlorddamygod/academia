@@ -10,6 +10,7 @@ import {
 import COLORS from "../styles/colors";
 import { globalStyles } from "../styles/globalStyle";
 import firestore from "@react-native-firebase/firestore"
+import database from "@react-native-firebase/database"
 import { useUserContext } from "../providers/user";
 
 const PeopleCard = ({ data,navigation }) => {
@@ -33,11 +34,10 @@ const PeopleCard = ({ data,navigation }) => {
   };
 
   const createNewConversation = () => {
+
     const newConvo = {
       chatId: `${user.id}${data.id}`,
-      p: {
-
-      },
+      p: {},
       participants: [`${user.id}`,`${data.id}`],
     }
     newConvo.p[`${user.id}`] = user.username;
@@ -47,17 +47,20 @@ const PeopleCard = ({ data,navigation }) => {
         // const convoDoc = a.docs[0]
         const convoData = getResult.data()
         convoData.id = getResult.id
+
+        const tempConvo = {}
+        tempConvo["1234"] = []
+
+        database().ref(`/conversations/${convoData.id}`).push({
+          lol: 1
+        })
+      
         navigation.navigate("IndividualChat",{
           id: convoData.id,
           name: getChatName(convoData,user.id),
           conversation: convoData
         })
       })
-      // navigation.navigate("IndividualChat",{
-      //   id: convoData.id,
-      //   name: getChatName(convoData,user.id),
-      //   conversation: convoData
-      // })
     })
   }
 

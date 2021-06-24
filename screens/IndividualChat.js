@@ -58,8 +58,6 @@ const IndividualChat = ({ navigation, route: { params } }) => {
     // console.log(`typing/${conversation.participants.filter(a=>id != user.id)[0]}`)
     conversationRef.child(`status/${partnerId}`).on("value", onTyping)
 
- 
-
     return ()=> {
       conversationRef.child("messages").limitToLast(5).off("child_added",onAdd)
       conversationRef.child(`status/${partnerId}`).off("value", onTyping)
@@ -75,6 +73,9 @@ const IndividualChat = ({ navigation, route: { params } }) => {
       body: message,
       createdAt: Date.now(),
     });
+    conversationRef.child(`status/${user.id}`).update({
+      typing: false
+    });;
     setMessage("");
   };
 
@@ -139,14 +140,14 @@ const IndividualChat = ({ navigation, route: { params } }) => {
                 deleteMessage={() => {
                   if (item.userId == user.id) deleteMessage(item.docId)
                 }}
-                seen={status.seen}
+                seen={status ? status.seen :false}
                 me={user.id == item.userId}
               />
             )}
           />
         </View>
       )}
-      { status.typing &&
+      { status && status.typing &&
         <View style={{paddingHorizontal: 5, flexDirection:"row", alignItems:"center"}}>
           <View
             style={{
