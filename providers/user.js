@@ -3,6 +3,7 @@ import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore"
 import messaging from "@react-native-firebase/messaging";
 import {requestUserPermission, getFcmToken} from "../notifications";
+import database from '@react-native-firebase/database';
 
 const initialUser = {
   username: null,
@@ -42,10 +43,14 @@ const UserProvider = ({ children }) => {
                 token
               })
             }
-            
             setUser({...user,...userData});
             messaging().subscribeToTopic(`${userData.semester}_semester`)
             messaging().subscribeToTopic(`${userData.title}`)
+
+            // const onlineStatusRef = database().ref(`/status/${userData.id}`)
+
+            // onlineStatusRef.set(true).then(()=>console.log("ONLINE"))
+            // onlineStatusRef.onDisconnect().remove().then(()=>console.log("OFFLINE"))
           }
         }
         catch(err) {

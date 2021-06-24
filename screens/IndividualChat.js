@@ -16,6 +16,7 @@ import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
 import { Feather } from "@expo/vector-icons";
 import Hyperlink from "react-native-hyperlink";
+import database from "@react-native-firebase/database"
 
 const IndividualChat = ({ navigation, route: { params } }) => {
   const { id, name, conversation } = params;
@@ -24,48 +25,80 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   const [loading, setLoading] = useState(true);
   const { user } = useUserContext();
   const flatlistRef = useRef();
+  const [status, setStatus] = useState(false)
+  const [typingTimeout, setTypingTimeout] = useState(false)
 
-  const collectionRef = firestore()
-    .collection("conversation")
-    .doc(`${id}`)
-    .collection("message");
+  // const collectionRef = firestore()
+  //   .collection("conversation")
+  //   .doc(`${id}`)
+  //   .collection("message");
+
+  const conversationRef = database().ref(`/conversations/${id}`)
 
   useEffect(() => {
-    setLoading(true);
-    const unsubscribe = collectionRef
-      .orderBy("createdAt")
-      .limitToLast(20)
-      .onSnapshot(
-        { includeMetadataChanges: true },
-        (querySnapshot) => {
-          setMessages(
-            querySnapshot.docs.map((d) => ({ docId: d.id, ...d.data() }))
-          );
-          setLoading(false);
-          if (messages.length > 0)
-            flatlistRef.current.scrollToEnd({ animate: true });
-        },
-        (error) => console.error(error)
-      );
+    setLoading(false);
+    setMessages([])
 
-    return unsubscribe;
+    const onAdd = value => {
+      value = value.val()
+      // console.log(value)
+      setMessages(oldMessage=>[...oldMessage, value])
+      // if ( messages.length <=5 )
+      conversationRef.child(`status/${user.id}`).update({
+        seen: value.createdAt
+      });
+    }
+
+    const onTyping = value => {
+      // console.log("HERE",value.val())
+      setStatus(value.val())
+    }
+    conversationRef.child("messages").limitToLast(5).on("child_added",onAdd)
+    const partnerId = conversation.participants.filter(id=>id != user.id)[0]
+    // console.log(`typing/${conversation.participants.filter(a=>id != user.id)[0]}`)
+    conversationRef.child(`status/${partnerId}`).on("value", onTyping)
+
+ 
+
+    return ()=> {
+      conversationRef.child("messages").limitToLast(5).off("child_added",onAdd)
+      conversationRef.child(`status/${partnerId}`).off("value", onTyping)
+      clearTimeout(typingTimeout)
+    }
   }, [id]);
 
   const sendMessage = () => {
     if (!message) return;
-    collectionRef.add({
+    conversationRef.child("messages").push({
       userId: user.id,
       username: user.username,
       body: message,
-      createdAt: firestore.FieldValue.serverTimestamp(),
+      createdAt: Date.now(),
     });
     setMessage("");
   };
 
-  const deleteMessage = (id) => {
-    collectionRef.doc(id).update({
-      deleted: true,
+  const startTyping = () => {
+    if ( !!typingTimeout ) return
+    // setT(true)
+    // setTypingTimeout(1)
+    console.log("HEHEH")
+    conversationRef.child(`status/${user.id}`).update({
+      typing: true
     });
+    setTypingTimeout(setTimeout(()=> {
+      conversationRef.child(`status/${user.id}`).update({
+        typing: false
+      });;
+      clearTimeout(typingTimeout)
+      setTypingTimeout(0)
+    }, 1500))
+  }
+
+  const deleteMessage = (id) => {
+    // collectionRef.doc(id).update({
+    //   deleted: true,
+    // });
   };
 
   return (
@@ -99,19 +132,38 @@ const IndividualChat = ({ navigation, route: { params } }) => {
             data={messages}
             ref={flatlistRef}
             contentContainerStyle={{ flex: 1, justifyContent: "flex-end" }}
-            keyExtractor={(item) => item.docId}
+            keyExtractor={(item) => `${item.createdAt}`}
             renderItem={({ item }) => (
               <ChatMessage
                 message={item}
                 deleteMessage={() => {
                   if (item.userId == user.id) deleteMessage(item.docId)
                 }}
+                seen={status.seen}
                 me={user.id == item.userId}
               />
             )}
           />
         </View>
       )}
+      { status.typing &&
+        <View style={{paddingHorizontal: 5, flexDirection:"row", alignItems:"center"}}>
+          <View
+            style={{
+              width: SIZE.width * 2,
+              height: SIZE.width * 2,
+              justifyContent: "center",
+              backgroundColor: "black",
+              borderRadius: 30,
+            }}
+          >
+            <Text style={{ textAlign: "center", color: COLORS.white }}>
+              {name[0]}
+            </Text>
+          </View>
+          <Text> {name+" "}is typing...</Text>
+        </View>
+      }
       <View
         style={{
           marginHorizontal: SIZE.width * 1.7,
@@ -129,6 +181,12 @@ const IndividualChat = ({ navigation, route: { params } }) => {
           value={message}
           onChangeText={setMessage}
           placeholder="Type a message.."
+          onChange={()=> {
+            startTyping()
+          }}
+          onEndEditing={()=>{
+            console.log("ENDED")
+          }}
         />
         <TouchableOpacity
           onPress={sendMessage}
@@ -155,7 +213,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
 
 export default IndividualChat;
 
-const ChatMessage = ({ message, me, deleteMessage }) => {
+const ChatMessage = ({ message, me, deleteMessage, seen }) => {
   const messageItems = [
     <View
       key={`${message.id}1`}
@@ -212,7 +270,10 @@ const ChatMessage = ({ message, me, deleteMessage }) => {
     </TouchableOpacity>,
     <View key={`${message.id}3`}>
       {/* <Moment date={message.createdAt}><Text></Text></Moment> */}
-      {/* <Text style={{fontSize:10}}>{message.createdAt.toDate().toLocaleTimeString()}</Text> */}
+      <Text style={{fontSize:10}}>{new Date(message.createdAt).toLocaleTimeString()}</Text>
+      {me && message.createdAt == seen && 
+        <Text style={{fontSize:12}}>Seen</Text>
+      }
     </View>,
   ];
 

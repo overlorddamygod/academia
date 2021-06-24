@@ -10,12 +10,15 @@ import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
+import database from "@react-native-firebase/database"
 
 const Chat = ({ navigation }) => {
   const { user } = useUserContext();
   const [conversations, setConversations] = useState([]);
 
   const collectionRef = firestore().collection("conversation").where("participants","array-contains", user.id);
+  
+  // const conversationRef = database().ref(`/conversations`).where("participants","")
 
   useEffect(() => {
     const unsubscribe = collectionRef
