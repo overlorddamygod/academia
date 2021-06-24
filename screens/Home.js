@@ -13,7 +13,8 @@ import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
 import { SIZE } from "../styles/globalStyle";
 import Header from "../components/Header"
-
+import UpcomingEvent from "../components/UpcomingEvent";
+import HomeNotice from "../components/HomeNotice";
 const Home = ({ navigation }) => {
   const { user } = useUserContext();
   return (
@@ -44,18 +45,8 @@ const Home = ({ navigation }) => {
 
         </View>
       </View>
-      <View style={globalStyles.container}>
-        <Text style={globalStyles.boldText}>Home</Text>
-        {/* dummy button to navigate between screens */}
-        <Button
-          title="Go to Chat"
-          onPress={() => {
-            navigation.navigate("Chat", {
-              screen: "Chat",
-            });
-          }}
-        />
-        <Button
+    
+        {/* <Button
           title="Go to Chat"
           onPress={() => {
             auth()
@@ -69,7 +60,12 @@ const Home = ({ navigation }) => {
                 alert("err");
               });
           }}
-        />
+        /> */}
+      <View>
+        <UpcomingEvent />
+      </View>
+      <View style={{flex:1}}>
+        <HomeNotice />
       </View>
     </>
   );

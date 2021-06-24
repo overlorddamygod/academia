@@ -44,7 +44,26 @@ const globalStyles = StyleSheet.create({
     color: "#444",
     borderRadius: 6,
     marginVertical:5
-  }
+  },
+
+  search:
+    {
+      position: "absolute",
+      paddingLeft:20,
+      paddingRight:10,
+      marginTop: -10,
+      width: "90%",
+    },
+    shadow: {
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.23,
+      shadowRadius: 2.62,
+      elevation: 4,
+    },
 });
 
 export { globalStyles, SIZE }

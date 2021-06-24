@@ -26,14 +26,17 @@ const DrawerContent = ({ navigation }) => {
         }}
       >
         <View style={{ flex: 1, zIndex: 20, padding: SIZE.height * 0.8 }}>
-
-          <View style={{alignItems:"center",marginTop: SIZE.height }}>
-            <Image
-              source={{
-                uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+ <View style={{ marginTop: SIZE.height *0.1 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
-              style={styles.avatar}
-            />
+            >
+              <Text style={globalStyles.txt}>{user.displayName}</Text>
+           
+            </View>
             <Text style={globalStyles.txt}>{user.username}</Text>
             <Text style={{ color: "lightgray", fontSize: 18, lineHeight: SIZE.height * 0.7 }}>
               {user.title}
@@ -42,7 +45,12 @@ const DrawerContent = ({ navigation }) => {
               Semester : {user.semester}
             </Text>
           </View>
-
+          <Image
+            source={{
+              uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+            }}
+            style={styles.avatar}
+          />
         </View>
       </View>
       {/* lower part */}
@@ -125,6 +133,9 @@ const styles = StyleSheet.create({
     width: SIZE.width * 5,
     borderRadius: 50,
     resizeMode: "cover",
+    position: "absolute",
+    bottom: -SIZE.height * 1,
+    left: SIZE.width * 4,
   },
   menuDiv: {
     marginTop: SIZE.height / 4,
