@@ -126,14 +126,15 @@ const BottomTab = (props) => {
         containerStyle={{
           backgroundColor: "#0E243F",
           justifyContent: "space-between",
-          paddingVertical: SIZE.height/4,
-          borderRadius:30
+          paddingVertical: SIZE.height/2,
+          borderTopRightRadius:30,
+          borderTopLeftRadius:30,
         }}
         width="100%"
         visible={showDialog}
         onDismiss={() => setShowDialog(false)}
       >
-        <View style={{ paddingHorizontal: SIZE.width * 0.8 }}>
+        <View style={{ paddingHorizontal: SIZE.width * 0.9 }}>
           <ConnectModal setShowDialog={setShowDialog} {...props} />
         </View>
       </Dialog>

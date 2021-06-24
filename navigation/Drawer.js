@@ -11,6 +11,7 @@ import {
   MaterialStackScreen,
   SettingStackScreen,
   TeacherStackScreen,
+  PersonDetailStackScreen,
   StudentStackScreen,
 } from "./Stack";
 
@@ -33,6 +34,7 @@ const DrawerTab = () => {
       <Drawer.Screen name="Teacher" component={TeacherStackScreen} />
       <Drawer.Screen name="Student" component={StudentStackScreen} />
       <Drawer.Screen name="IndividualChat" component={IndividualChat} />
+      <Drawer.Screen name="PersonDetail" component={PersonDetailStackScreen} />
     </Drawer.Navigator>
   );
 };
