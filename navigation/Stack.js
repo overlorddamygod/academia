@@ -13,7 +13,7 @@ import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
 import Settings from "../screens/Settings";
 import Materials from "../screens/Materials";
-
+import PersonDetail from "../screens/PersonDetail";
 
 const HomeStack = createStackNavigator();
 const AnnounceStack = createStackNavigator();
@@ -24,7 +24,7 @@ const ChatStack = createStackNavigator();
 const NotificationsStack = createStackNavigator();
 const SettingStack = createStackNavigator()
 const MaterialStack = createStackNavigator()
-
+const PersonDetailStack = createStackNavigator()
 const CalendarStack = createStackNavigator();
 
 export function HomeStackScreen() {
@@ -92,32 +92,30 @@ export function ChatStackScreen() {
 export function StudentStackScreen() {
   return (
     <StudentStack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: COLORS.main,
-          elevation: 0, // remove shadow on Android
-          shadowOpacity: 0, // remove shadow on iOS
-        },
-        headerTintColor: "white",
-        headerTitleAlign: "center",
-      }}
+    screenOptions={{
+      headerShown:false
+     }}
     >
       <StudentStack.Screen name="Students" component={StudentList} />
     </StudentStack.Navigator>
   );
 }
-
+export function PersonDetailStackScreen() {
+  return (
+    <PersonDetailStack.Navigator
+      screenOptions={{
+        headerShown:false
+      }}
+    >
+      <PersonDetailStack.Screen name="PersonDetail" component={PersonDetail} />
+    </PersonDetailStack.Navigator>
+  );
+}
 export function TeacherStackScreen() {
   return (
     <TeacherStack.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: COLORS.main,
-          elevation: 0, // remove shadow on Android
-          shadowOpacity: 0, // remove shadow on iOS
-        },
-        headerTintColor: "white",
-        headerTitleAlign: "center",
+       headerShown:false
       }}
     >
       <TeacherStack.Screen name="Teachers" component={TeacherList} />
