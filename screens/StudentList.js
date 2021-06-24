@@ -55,7 +55,7 @@ const StudentList = ({ navigation }) => {
                   onPress={() => navigation.navigate("PersonDetail")}
                 >
                   <View style={{ flex: 1 }}>
-                    <PeopleCard data={item} key={item.id} />
+                    <PeopleCard data={item} key={item.id} navigation={navigation} />
                   </View>
                 </TouchableOpacity>
               )}

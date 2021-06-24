@@ -25,6 +25,7 @@ const Chat = ({ navigation }) => {
           setConversations(
             querySnapshot.docs.map((d) => ({ docId: d.id, ...d.data() }))
           );
+          console.log(conversations)
         },
         (error) => console.error(error)
       );

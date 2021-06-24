@@ -22,10 +22,11 @@ const TITLE = {
 const UserContext = createContext(initialUser);
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = React.useState(initialUser);
+  const [user, setUser] = React.useState(null);
   // const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
+    // auth().signOut()
     async function UserChange(u) {
 
       const loggedUser = auth().currentUser;

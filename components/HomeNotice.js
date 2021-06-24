@@ -11,9 +11,9 @@ import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const HomeNotice = () => {
   const [events, setEvents] = useState([
-    { name: "Sports Event", detail: "Submit before may 23", data: "May 23" },
-    { name: "Dancer Event", detail: "Submit before June 1. or It won't be accepted", data: "June 1" },
-    { name: "Sports Event", detail: "Submit before may 23", data: "May 29" },
+    { name: "Sports Event", detail: "Submit before may 23", date: "May 23" },
+    { name: "Dancer Event", detail: "Submit before June 1. or It won't be accepted", date: "June 1" },
+    { name: "Sports Event", detail: "Submit before may 23", date: "May 29" },
   ]);
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>

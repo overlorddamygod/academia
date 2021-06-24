@@ -42,6 +42,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
             querySnapshot.docs.map((d) => ({ docId: d.id, ...d.data() }))
           );
           setLoading(false);
+          console.log(messages.length)
           if (messages.length > 0)
             flatlistRef.current.scrollToEnd({ animate: true });
         },
