@@ -1,10 +1,31 @@
-import React from "react";
-import { View, Text ,TextInput,Image,TouchableOpacity,TouchableWithoutFeedback, Keyboard} from "react-native";
-import {authStyles} from '../styles/authStyle'
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Dimensions
+} from "react-native";
+import { authStyles } from "../styles/authStyle";
+import { SIZE } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { Feather } from "@expo/vector-icons";
+import auth from "@react-native-firebase/auth";
+import { useUserContext } from "../providers/user";
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useUserContext();
+
+  const initLogin = async () => {
+    const result = await login(email, password);
+    console.log("LOGIN RESULT",result)
+  };
+
   return (
     <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
     <View style={{ flex: 1,backgroundColor: COLORS.main }}>
@@ -12,44 +33,47 @@ const Login = ({navigation}) => {
         <View style={{alignItems:'center'}}>
           <Text style={authStyles.maintext}>Academia </Text>
           <Text style={authStyles.maintext}>International College</Text>
-          <View style={{marginTop:5,height:5,width:200,backgroundColor:'#f9f9f9'}}></View>
+          <View style={authStyles.line}></View>
         </View>
-        <View style={{marginTop: 30}}>
+        <View style={{marginTop: SIZE.height * 0.8}}>
           <Text style={authStyles.maintext}>Login</Text>
         </View>
-      </View>
+        </View>
 
-      <View style={authStyles.lower}>
+        <View style={authStyles.lower}>
           <View>
-            <TextInput 
-             placeholder="Email"
-             autoCompleteType="email"
-             keyboardType="email-address"
+            <TextInput
+              placeholder="Email"
+              autoCompleteType="email"
+              keyboardType="email-address"
               style={authStyles.input}
+              onChangeText={setEmail}
+              value={email}
             />
 
-            <TextInput 
+            <TextInput
               placeholder="Password"
               autoCompleteType="password"
               secureTextEntry={true}
               style={authStyles.input}
-            />             
+              onChangeText={setPassword}
+              value={password}
+            />
           </View>
-          <View style={{justifyContent:'center',alignItems:'center'}}>
-            <TouchableOpacity style={authStyles.btn}>
-                <Text style={authStyles.text}>Login</Text>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TouchableOpacity style={authStyles.btn} onPress={initLogin}>
+              <Text style={authStyles.text}>Login</Text>
             </TouchableOpacity>
-            <Text style={{marginTop:5,fontSize:18}}>Already have account? 
+            <Text style={{marginTop:SIZE.height / 8,fontSize:18}}>Already have account? 
               <Text style={{color:'#666',fontWeight:'bold'}} onPress={()=> {
                  navigation.navigate('Register');
-              }}> Register</Text>
+              }}> {` `} Register</Text>
             </Text>
           </View>
+        </View>
       </View>
-    </View>
     </TouchableWithoutFeedback>
   );
 };
 
 export default Login;
-

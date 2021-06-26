@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -9,10 +9,38 @@ import {
   FlatList,
 } from "react-native";
 import Header from "../components/Header";
+import firestore from '@react-native-firebase/firestore';
 
 const AnnouncementScreen = ({navigation}) => {
-  const [announcements, setAnnouncements] = useState(announcementsData);
+  const [announcements, setAnnouncements] = useState([]);
   const [selectedTag, setSelectedTag] = useState("All Items");
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    fetchAnnouncements();
+  }, [])
+
+  const fetchAnnouncements = () => {
+    setRefreshing(true)
+    firestore().collection('announcement').get().then(snapshot=> {
+      setAnnouncements(snapshot.docs.map((announcement)=> {
+        const ann = announcement.data();
+        if ( ann.time ) {
+          const date = new Date(ann.time.seconds * 1000)
+          ann.time = `${date.toLocaleTimeString()} ${date.toDateString()}`;
+        }
+        ann.id = announcement.id;
+        return ann
+      }))
+      setRefreshing(false)
+    }).catch(err=>{
+      console.error(err)
+    })
+  }
+
+  const onRefresh = () => {
+    fetchAnnouncements()
+  }
 
   const items = [
     "All Items",
@@ -36,7 +64,7 @@ const AnnouncementScreen = ({navigation}) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ height: "100%" }}
-        >
+          >
           {items.map((itemName, i) => {
             return (
               <Item
@@ -51,12 +79,14 @@ const AnnouncementScreen = ({navigation}) => {
       </View>
       <View style={{ marginTop: 30, flex: 1 }}>
         <FlatList
+          refreshing={refreshing}
+          onRefresh={onRefresh}
           data={announcements.filter((announcement) =>
             selectedTag == "All Items" ? true: announcement.tag == selectedTag
           )}
-          keyExtractor={(item) => item.time}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Announcement data={item} key={item.title} />
+            <Announcement data={item} />
           )}
         />
       </View>
@@ -67,24 +97,6 @@ const AnnouncementScreen = ({navigation}) => {
 };
 
 export default AnnouncementScreen;
-
-const announcementsData = [
-  {
-    tag: "Exams",
-    title: "1st Semester Exam scheduled on 19th June",
-    time: "10:30 AM",
-  },
-  {
-    tag: "Holiday",
-    title: "Ghode Jatra Holiday ",
-    time: "5:20 AM",
-  },
-  {
-    tag: "Classes",
-    title: "Project Classes starting from 22th June, 2021",
-    time: "9:00 AM",
-  },
-];
 
 const itemTypes = {
   Exams: "#F05479",

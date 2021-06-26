@@ -1,37 +1,45 @@
-import React from "react";
-import { StyleSheet, View, Text, Modal, Button } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import { Dialog } from "react-native-ui-lib";
 
 import {
   HomeStackScreen,
   ChatStackScreen,
-  AnnounceStackScreen,
   NotificationsStackScreen,
   ModalStackScreen,
-  DrawerMenuStackScreen,
+  CalendarStackScreen
 } from "./Stack";
 import COLORS from "../styles/colors";
+import ConnectModal from "../screens/ConnectModal";
+import { SIZE } from "../styles/globalStyle";
 
 const Tabs = createBottomTabNavigator();
 
-const BottomTab = () => {
+const BottomTab = (props) => {
+  const [showDialog, setShowDialog] = useState(false);
+
   return (
     <>
       <Tabs.Navigator
         tabBarOptions={{
           showLabel: false,
           style: {
-            position: "absolute",
-            bottom: 5,
-            left: 10,
-            right: 10,
+            // position: "absolute",
+            // bottom: 5,
+            // left: 10,
+            // right: 10,
             backgroundColor: "#0E243F",
             elevation: 4,
-            height: 70,
-            borderRadius: 15,
+            height: SIZE.height * 1.6,
+            // borderRadius: 15,
           },
         }}
       >
@@ -66,20 +74,26 @@ const BottomTab = () => {
           component={ModalStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={styles.middleIcon}>
-                <Feather
-                  name="users"
-                  size={focused ? 29 : 24}
-                  color={focused ? "pink" : "white"}
-                />
-              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowDialog(true);
+                }}
+              >
+                <View style={styles.middleIcon}>
+                  <Feather
+                    name="users"
+                    size={focused ? 29 : 24}
+                    color={focused ? "pink" : "white"}
+                  />
+                </View>
+              </TouchableOpacity>
             ),
           }}
         />
 
         <Tabs.Screen
-          name="Announcement"
-          component={AnnounceStackScreen}
+          name="Calendar"
+          component={CalendarStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <AntDesign
@@ -104,6 +118,26 @@ const BottomTab = () => {
           }}
         />
       </Tabs.Navigator>
+      <Dialog
+        migrate
+        useSafeArea
+        bottom={true}
+        panDirection={"Down"}
+        containerStyle={{
+          backgroundColor: "#0E243F",
+          justifyContent: "space-between",
+          paddingVertical: SIZE.height/2,
+          borderTopRightRadius:30,
+          borderTopLeftRadius:30,
+        }}
+        width="100%"
+        visible={showDialog}
+        onDismiss={() => setShowDialog(false)}
+      >
+        <View style={{ paddingHorizontal: SIZE.width * 0.9 }}>
+          <ConnectModal setShowDialog={setShowDialog} {...props} />
+        </View>
+      </Dialog>
     </>
   );
 };
@@ -111,11 +145,10 @@ const BottomTab = () => {
 export default BottomTab;
 const styles = StyleSheet.create({
   middleIcon: {
-    height: 80,
-    width: 80,
+    height: SIZE.height * 2,
+    width: SIZE.height * 2,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 0,
     backgroundColor: COLORS.mainred,
   },
 });

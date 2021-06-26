@@ -1,48 +1,53 @@
-import React from 'react'
-import { View, Text,StyleSheet,TouchableOpacity,Button } from 'react-native'
-import COLORS from '../styles/colors';
-import { globalStyles } from "../styles/globalStyle";
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Button, StatusBar } from "react-native";
+import COLORS from "../styles/colors";
 import { Ionicons } from "@expo/vector-icons";
-const Header = ({title,navigation}) => {
-    return (
-        <View style={styles.headers}>
-        <View style={styles.head}>
-          
-          <Text style={styles.text}>{title}</Text>
-        <TouchableOpacity 
-        onPress={() => navigation.openDrawer()}
-        style={{position:'absolute',right:10}}>
-          <Ionicons
-            name="menu"
-            size={32}
-            color="white"
-          />
-          </TouchableOpacity>
-        </View>
+import { SIZE } from "../styles/globalStyle";
+
+const Header = ({ title, navigation, justifyContent, showSidebar=true, showBackMenu=true }) => {
+
+  return (
+    <View style={styles.headers}>
+      <View style={{height: SIZE.height * 1.5}}></View>
+      <View style={{...styles.head,...{justifyContent: justifyContent || "center", paddingLeft: SIZE.width}}}>
+      {showBackMenu &&
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{ position: "absolute", left: SIZE.width / 1.8 }}
+        >
+          <Ionicons name="arrow-back-outline" size={32} color="white" />
+        </TouchableOpacity>
+        }
+        <Text style={styles.text}>{title}</Text>
+        {showSidebar &&
+        <TouchableOpacity
+          onPress={() => navigation.openDrawer()}
+          style={{ position: "absolute", right: SIZE.width / 2 }}
+        >
+          <Ionicons name="menu" size={32} color="white" />
+        </TouchableOpacity>
+        }
       </View>
-    )
-}
+    </View>
+  );
+};
 
-export default Header
-
+export default Header;
 
 const styles = StyleSheet.create({
-    headers: {
-      paddingTop:50,
-      paddingBottom:30,
-      width: "100%",
-      backgroundColor: COLORS.main,
-    },
-    head: {
-      flexDirection: "row",
-      alignItems: "center",
-      flex: 1,
-    },
-    text: {
-      color: "white",
-     position:'absolute',
-     marginLeft:'30%',
-      fontSize: 23,
-    },
-  });
-  
+  headers: {
+    paddingBottom: SIZE.height * 0.8,
+    width: "100%",
+    backgroundColor: COLORS.main,
+  },
+  head: {
+    flexDirection: "row",
+    flex: 1,
+    // justifyContent:"center",
+    alignItems: "center"
+  },
+  text: {
+    color: "white",
+    fontSize: 23,
+  },
+});

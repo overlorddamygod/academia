@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../screens/Home";
 import Gallery from "../screens/Gallery";
@@ -7,11 +7,13 @@ import AnnouncementScreen from "../screens/Announcement";
 import TeacherList from "../screens/TeachersList";
 import Chat from "../screens/Chat";
 import Notifications from "../screens/Notifications";
+import CalendarScreen from "../screens/calendar";
+import IndividualChat from "../screens/IndividualChat";
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
 import Settings from "../screens/Settings";
 import Materials from "../screens/Materials";
-
+import PersonDetail from "../screens/PersonDetail";
 
 const HomeStack = createStackNavigator();
 const AnnounceStack = createStackNavigator();
@@ -20,11 +22,10 @@ const StudentStack = createStackNavigator();
 const TeacherStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const NotificationsStack = createStackNavigator();
-const ModalStack = createStackNavigator();
 const SettingStack = createStackNavigator()
 const MaterialStack = createStackNavigator()
-
-
+const PersonDetailStack = createStackNavigator()
+const CalendarStack = createStackNavigator();
 
 export function HomeStackScreen() {
   return (
@@ -38,7 +39,7 @@ export function AnnounceStackScreen() {
   return (
     <AnnounceStack.Navigator
       screenOptions={{
-       headerShown:false
+        headerShown: false,
       }}
     >
       <AnnounceStack.Screen
@@ -46,6 +47,21 @@ export function AnnounceStackScreen() {
         component={AnnouncementScreen}
       />
     </AnnounceStack.Navigator>
+  )
+    };
+
+export function CalendarStackScreen() {
+  return (
+    <CalendarStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <CalendarStack.Screen
+        name="Calendar"
+        component={CalendarScreen}
+      />
+    </CalendarStack.Navigator>
   );
 }
 
@@ -53,7 +69,7 @@ export function GalleryStackScreen() {
   return (
     <GalleryStack.Navigator
       screenOptions={{
-        headerShown:false
+        headerShown: false,
       }}
     >
       <GalleryStack.Screen name="Gallery" component={Gallery} />
@@ -64,9 +80,9 @@ export function GalleryStackScreen() {
 export function ChatStackScreen() {
   return (
     <ChatStack.Navigator
-    screenOptions={{
-      headerShown:false
-    }}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
       <ChatStack.Screen name="Chat" component={Chat} />
     </ChatStack.Navigator>
@@ -77,31 +93,29 @@ export function StudentStackScreen() {
   return (
     <StudentStack.Navigator
     screenOptions={{
-      headerStyle: {
-        backgroundColor: COLORS.main,
-        elevation: 0, // remove shadow on Android
-        shadowOpacity: 0, // remove shadow on iOS
-      },
-      headerTintColor: "white",
-      headerTitleAlign: "center"
-    }}
+      headerShown:false
+     }}
     >
       <StudentStack.Screen name="Students" component={StudentList} />
     </StudentStack.Navigator>
   );
 }
-
+export function PersonDetailStackScreen() {
+  return (
+    <PersonDetailStack.Navigator
+      screenOptions={{
+        headerShown:false
+      }}
+    >
+      <PersonDetailStack.Screen name="PersonDetail" component={PersonDetail} />
+    </PersonDetailStack.Navigator>
+  );
+}
 export function TeacherStackScreen() {
   return (
     <TeacherStack.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: COLORS.main,
-          elevation: 0, // remove shadow on Android
-          shadowOpacity: 0, // remove shadow on iOS
-        },
-        headerTintColor: "white",
-        headerTitleAlign: "center"
+       headerShown:false
       }}
     >
       <TeacherStack.Screen name="Teachers" component={TeacherList} />
@@ -112,9 +126,9 @@ export function TeacherStackScreen() {
 export function NotificationsStackScreen() {
   return (
     <NotificationsStack.Navigator
-    screenOptions={{
-      headerShown:false
-    }}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
       <NotificationsStack.Screen
         name="Notifications"
@@ -124,33 +138,26 @@ export function NotificationsStackScreen() {
   );
 }
 
+export function ModalStackScreen({ navigation }) {
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("tabPress", (e) => {
+      // Prevent Connect Screen from opening
+      e.preventDefault();
+    });
 
-
-export function ModalStackScreen() {
-  return (
-    <ModalStack.Navigator
-        screenOptions={{
-          headerShown:false
-      }}
-    >
-      <ModalStack.Screen name="ConnectModal" component={ConnectModal} />
-      <ModalStack.Screen name="Teacher" component={TeacherStackScreen} />
-      <ModalStack.Screen name="Student" component={StudentStackScreen} />
-    </ModalStack.Navigator>
-  );
+    return unsubscribe;
+  }, [navigation]);
+  return <></>;
 }
 
 export function SettingStackScreen() {
   return (
     <SettingStack.Navigator
-    screenOptions={{
-      headerShown:false
-    }}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
-      <SettingStack.Screen
-        name="Settings"
-        component={Settings}
-      />
+      <SettingStack.Screen name="Settings" component={Settings} />
     </SettingStack.Navigator>
   );
 }
@@ -158,14 +165,11 @@ export function SettingStackScreen() {
 export function MaterialStackScreen() {
   return (
     <MaterialStack.Navigator
-    screenOptions={{
-      headerShown:false
-    }}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
-      <MaterialStack.Screen
-        name="Materials"
-        component={Materials}
-      />
+      <MaterialStack.Screen name="Materials" component={Materials} />
     </MaterialStack.Navigator>
   );
 }
