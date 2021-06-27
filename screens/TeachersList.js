@@ -12,8 +12,8 @@ import { useCollection } from "../hooks/firestore";
 
 const TeacherList = ({navigation}) => {
   const {user} = useUserContext()
-  const [ students, loading, error ] = useCollection(firestore().collection("user").where("title","==","Student").where("id","!=",user.id))
-
+  const [ students, loading, error ] = useCollection(firestore().collection("user").where("title","==","Teacher").where("id","!=",user.id))
+  console.log(students)
   return (
     <>
     {/* {loading && <Text>Loading ...</Text>} */}
@@ -46,7 +46,7 @@ const TeacherList = ({navigation}) => {
                   onPress={() => navigation.navigate("PersonDetail")}
                 >
                   <View style={{ flex: 1 }}>
-                    <PeopleCard data={item} key={item.id} />
+                    <PeopleCard data={item} key={item.id} navigation={navigation}/>
                   </View>
                 </TouchableOpacity>
               )}

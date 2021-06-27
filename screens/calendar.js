@@ -15,6 +15,7 @@ import COLORS, { tagColor } from "../styles/colors";
 import { Dialog } from "react-native-ui-lib";
 import { Feather } from "@expo/vector-icons";
 import AddEvent from "../components/AddEvent";
+import { SIZE } from "../styles/globalStyle";
 
 const CalendarScreen = ({ navigation }) => {
   const todaysDate = new Date();
@@ -88,6 +89,7 @@ const CalendarScreen = ({ navigation }) => {
             setDate(time)
             setAddEventDialog(true);
           }}
+          
           onMonthChange={(time) => {
             console.log("MONTH CHANGED")
             setDate(time);
@@ -100,8 +102,11 @@ const CalendarScreen = ({ navigation }) => {
             textDisabledColor: COLORS.grey,
             arrowColor: COLORS.white,
             monthTextColor: COLORS.white,
-            selectedDayBackgroundColor: COLORS.red,
-            
+            "stylesheet.calendar.header":{
+              dayTextAtIndex0: {
+                color: 'red'
+              },
+            },
           }}
         />
         <View style={{ paddingHorizontal: 10, flex: 1 }}>

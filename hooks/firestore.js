@@ -16,6 +16,7 @@ const useCollection = (collection) => {
         setLoading(false)
         setValue(data.docs.map(d=>({id:d.id,...d.data()})))
       } catch (err) {
+        setLoading(false)
         setError(err)
       }
     }

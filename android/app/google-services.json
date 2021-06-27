@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1048000501046",
+    "firebase_url": "https://academia-cc640-default-rtdb.firebaseio.com",
     "project_id": "academia-cc640",
     "storage_bucket": "academia-cc640.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1048000501046-c5km67t2gvd8vvd4cme4d3ej38nj05pq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.academia",
+            "certificate_hash": "8ee94905cbdf1975f71a6fcf6f1c603eb1bbdfcd"
+          }
+        },
         {
           "client_id": "1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
           "client_type": 3
@@ -42,6 +51,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1048000501046-9ptns48atr63p5fclmgbg2cv1ti07igj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.academiacollege.academia",
+            "certificate_hash": "8ee94905cbdf1975f71a6fcf6f1c603eb1bbdfcd"
+          }
+        },
         {
           "client_id": "1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
           "client_type": 3

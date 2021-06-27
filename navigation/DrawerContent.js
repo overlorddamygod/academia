@@ -39,9 +39,11 @@ const DrawerContent = ({ navigation }) => {
             <Text style={{ color: "lightgray", fontSize: 18, lineHeight: SIZE.height * 0.7 }}>
               {user.title}
             </Text>
+            {user.title == "Student" &&
             <Text style={{ color: "lightgray", fontSize: 18, lineHeight: SIZE.height * 0.7 }}>
               Semester : {user.semester}
             </Text>
+            }
           </View>
           <Image
             source={{

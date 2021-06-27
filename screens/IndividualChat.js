@@ -26,6 +26,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   const { user } = useUserContext();
   const flatlistRef = useRef();
   const [status, setStatus] = useState(false)
+  const [online, setOnline] = useState(false)
   const [typingTimeout, setTypingTimeout] = useState(false)
 
   // const collectionRef = firestore()
@@ -58,9 +59,16 @@ const IndividualChat = ({ navigation, route: { params } }) => {
     // console.log(`typing/${conversation.participants.filter(a=>id != user.id)[0]}`)
     conversationRef.child(`status/${partnerId}`).on("value", onTyping)
 
+    const onOnlineStatus = value => {
+      // console.log("HERE",value.val())
+      setOnline(value.val())
+    }
+    database().ref(`status/${partnerId}`).on("value", onOnlineStatus)
+
     return ()=> {
       conversationRef.child("messages").limitToLast(5).off("child_added",onAdd)
       conversationRef.child(`status/${partnerId}`).off("value", onTyping)
+      database().ref(`status/${partnerId}`).off("value", onOnlineStatus)
       clearTimeout(typingTimeout)
     }
   }, [id]);
@@ -105,7 +113,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   return (
     <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
       <Header
-        title={name}
+        title={name+`${online?" Online":""}`}
         navigation={navigation}
         showSidebar={false}
         showBackMenu

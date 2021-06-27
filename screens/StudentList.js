@@ -21,15 +21,21 @@ const StudentList = ({ navigation }) => {
     firestore()
       .collection("user")
       .where("title", "==", "Student")
+      .where("semester", "==", 3)
       .where("id", "!=", user.id)
   );
 
+  const [ searchTerm, setSearchTerm ] = useState("")
+
   return (
-    <>
-      <Header title="Student List" navigation={navigation} />
-      <View>
+    <View style={{ flex: 1 }}>
+      <Header
+        title="Student List"
+        navigation={navigation}
+        showSidebar={false}
+      />
+      <View style={{ flex: 1 }}>
         <View style={{ alignItems: "center" }}>
-        
           <TextInput
             style={{
               ...authStyles.input,
@@ -38,16 +44,22 @@ const StudentList = ({ navigation }) => {
               color: "#555",
             }}
             placeholder="Search"
+            value={searchTerm}
+            onChangeText={setSearchTerm}
           />
         </View>
-        <View style={{ marginTop: 50 }}>
+        <View style={{ marginTop: 50, flex: 1 }}>
           {loading ? (
-            <View style={{alignItems:'center'}}>
-            <Text style={globalStyles.boldText}>Loading ..</Text>
+            <View style={{ alignItems: "center" }}>
+              <Text style={globalStyles.boldText}>Loading ..</Text>
+            </View>
+          ) : error ? (
+            <View style={{ alignItems: "center" }}>
+              <Text style={globalStyles.boldText}>error</Text>
             </View>
           ) : (
             <FlatList
-              data={students}
+              data={students.filter(student => student.username.match(new RegExp(searchTerm,"i")) || student.email.match(new RegExp(searchTerm,"i")))}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <TouchableOpacity
@@ -55,7 +67,11 @@ const StudentList = ({ navigation }) => {
                   onPress={() => navigation.navigate("PersonDetail")}
                 >
                   <View style={{ flex: 1 }}>
-                    <PeopleCard data={item} key={item.id} navigation={navigation} />
+                    <PeopleCard
+                      data={item}
+                      key={item.id}
+                      navigation={navigation}
+                    />
                   </View>
                 </TouchableOpacity>
               )}
@@ -63,7 +79,7 @@ const StudentList = ({ navigation }) => {
           )}
         </View>
       </View>
-    </>
+    </View>
   );
 };
 

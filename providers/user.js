@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useContext, useState } from "react";
-import auth from "@react-native-firebase/auth";
+import auth, { firebase } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore"
 import messaging from "@react-native-firebase/messaging";
 import {requestUserPermission, getFcmToken} from "../notifications";
-import database from '@react-native-firebase/database';
-
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+GoogleSignin.configure({
+  webClientId: '1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com',
+});
 const initialUser = {
   username: null,
   email: null,
@@ -23,65 +25,7 @@ const TITLE = {
 const UserContext = createContext(initialUser);
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = React.useState(null);
-  // const [initializing, setInitializing] = useState(true);
-
-  useEffect(() => {
-    // auth().signOut()
-    async function UserChange(u) {
-
-      const loggedUser = auth().currentUser;
-      if ( loggedUser ) {
-        try {
-          let userSnapshot = await firestore().collection("user").where("id","==", loggedUser.uid).limit(1).get()
-          if ( userSnapshot.size > 0 ) {
-
-            const userData = userSnapshot.docs[0].data()
-
-            if (requestUserPermission()) {
-              const token = await getFcmToken()
-              userSnapshot.docs[0].ref.update({
-                token
-              })
-            }
-            setUser({...user,...userData});
-            messaging().subscribeToTopic(`${userData.semester}_semester`)
-            messaging().subscribeToTopic(`${userData.title}`)
-
-            // const onlineStatusRef = database().ref(`/status/${userData.id}`)
-
-            // onlineStatusRef.set(true).then(()=>console.log("ONLINE"))
-            // onlineStatusRef.onDisconnect().remove().then(()=>console.log("OFFLINE"))
-          }
-        }
-        catch(err) {
-          console.log("ERRORR",err)
-        }
-
-      } else {
-        setUser(null)
-      }
-    }
-    const unsubscribeAuth = auth().onAuthStateChanged(UserChange);
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log('Message handled in the background!', remoteMessage);
-      if (remoteMessage.data.logout) {
-        auth().signOut()
-      }
-    });
-
-    const unsubscribeOnMessage = messaging().onMessage(async remoteMessage => {
-      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
-      if (remoteMessage.data.logout) {
-        auth().signOut()
-      }
-    });
-
-    return ()=> {
-      unsubscribeAuth()
-      unsubscribeOnMessage()
-    };
-  }, []);
+  const [user, setUser] = useState(null);
 
   const register = (username, email, password) => {
     if (!username || !email || !password) return;
@@ -90,7 +34,7 @@ const UserProvider = ({ children }) => {
       auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        
+        console.log("CREATED")
         result.user
           .updateProfile({
             displayName: username,
@@ -133,15 +77,39 @@ const UserProvider = ({ children }) => {
 
   const logout = async () => {
     messaging().deleteToken()
-    console.log("HERE",user)
     await firestore().collection("user").doc(user.id).update({
       token: null
     })
     auth().signOut();
   }
 
+  const linkWithGoogle = async () => {
+    // console.log("SAD")
+    // var googleProvider =  new auth.GoogleAuthProvider();
+    // auth().currentUser.linkWithPopup(googleProvider).then((result) => {
+    //   // Accounts successfully linked.
+    //   var credential = result.credential;
+    //   var user = result.user;
+    //   console.log("CREDENTIAL", credential)
+    //   console.log("USER", result.user)
+    //   // ...
+    // }).catch((error) => {
+    //   // Handle Errors here.
+    //   // ...
+    // });
+    const { idToken } = await GoogleSignin.signIn();
+    let credential = auth.GoogleAuthProvider.credential(idToken);
+
+    auth().currentUser.linkWithCredential(credential)
+    console.log(idToken)
+  }
+  const loginWithGoogle = async () => {
+    // var googleProvider =  auth.GoogleAuthProvider();
+    // auth().signInWithCredential()
+  }
+
   return (
-    <UserContext.Provider value={{ user, register, login, logout }}>
+    <UserContext.Provider value={{ user, register, login, logout, setUser: setUser, linkWithGoogle,loginWithGoogle}}>
       {children}
     </UserContext.Provider>
   );
