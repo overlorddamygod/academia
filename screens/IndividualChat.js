@@ -10,7 +10,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Header from "../components/Header";
-import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
@@ -28,11 +27,6 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   const [status, setStatus] = useState(false)
   const [online, setOnline] = useState(false)
   const [typingTimeout, setTypingTimeout] = useState(false)
-
-  // const collectionRef = firestore()
-  //   .collection("conversation")
-  //   .doc(`${id}`)
-  //   .collection("message");
 
   const conversationRef = database().ref(`/conversations/${id}`)
 
@@ -60,7 +54,6 @@ const IndividualChat = ({ navigation, route: { params } }) => {
     conversationRef.child(`status/${partnerId}`).on("value", onTyping)
 
     const onOnlineStatus = value => {
-      // console.log("HERE",value.val())
       setOnline(value.val())
     }
     database().ref(`status/${partnerId}`).on("value", onOnlineStatus)
@@ -91,7 +84,6 @@ const IndividualChat = ({ navigation, route: { params } }) => {
     if ( !!typingTimeout ) return
     // setT(true)
     // setTypingTimeout(1)
-    console.log("HEHEH")
     conversationRef.child(`status/${user.id}`).update({
       typing: true
     });
@@ -193,9 +185,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
           onChange={()=> {
             startTyping()
           }}
-          onEndEditing={()=>{
-            console.log("ENDED")
-          }}
+          onSubmitEditing={sendMessage}
         />
         <TouchableOpacity
           onPress={sendMessage}
