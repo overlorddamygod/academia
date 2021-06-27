@@ -28,14 +28,10 @@ const BottomTab = (props) => {
         tabBarOptions={{
           showLabel: false,
           style: {
-            // position: "absolute",
-            // bottom: 5,
-            // left: 10,
-            // right: 10,
             backgroundColor: "#0E243F",
             elevation: 4,
             height: SIZE.height * 1.6,
-            // borderRadius: 15,
+          
           },
         }}
       >
@@ -71,6 +67,7 @@ const BottomTab = (props) => {
           options={{
             tabBarIcon: ({ focused }) => (
               <TouchableOpacity
+              activeOpacity={0.7}
                 onPress={() => {
                   setShowDialog(true);
                 }}
