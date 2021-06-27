@@ -11,23 +11,28 @@ const UpcomingEvent = () => {
   ]);
   return (
     <View>
-      <View
-        style={styles.card}
-      >
+      <View style={styles.card}>
         <Text style={{ color: "#444", fontSize: 16 }}>Upcoming Event</Text>
-        
       </View>
 
-      <View style={{ width:'100%',padding:10}}>
+      <View style={{ width: "100%", padding: 10 }}>
         <FlatList
-        horizontal={true}
+          horizontal={true}
           data={events}
           keyExtractor={(item) => item.date}
           renderItem={({ item }) => (
-            <View style={{...globalStyles.shadow,...styles.events}}>
-                 <Ionicons name="american-football" size={34} color="white" />
+            <View style={{ ...globalStyles.shadow, ...styles.events }}>
+              <Ionicons name="american-football" size={34} color="white" />
               <Text style={globalStyles.txt}>{item.name} </Text>
-              <Text style={{...globalStyles.txt,marginTop:5,color:'lightgray'}}>{item.date} </Text>
+              <Text
+                style={{
+                  ...globalStyles.txt,
+                  marginTop: 5,
+                  color: "lightgray",
+                }}
+              >
+                {item.date}{" "}
+              </Text>
             </View>
           )}
         />
@@ -36,27 +41,24 @@ const UpcomingEvent = () => {
   );
 };
 
-
-
 export default UpcomingEvent;
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#ACDBD8",
-    width:SIZE.width *7,
+    width: SIZE.width * 7,
     borderRadius: 5,
-    padding: SIZE.width *0.4,
-    margin:  SIZE.width *0.4,
+    padding: SIZE.width * 0.4,
+    margin: SIZE.width * 0.4,
     textAlign: "left",
-    
   },
-  events:{
-      padding: SIZE.width *0.7,
-      marginHorizontal:6,
-      backgroundColor: "#5C5578",
-      height:SIZE.screenHeight*0.2 ,
-      width:SIZE.screenWidth *0.5,
-      justifyContent:'center',
-      alignItems:'center',
-      borderRadius:5
-  }
+  events: {
+    padding: SIZE.width * 0.7,
+    marginHorizontal: 6,
+    backgroundColor: "#5C5578",
+    height: SIZE.screenHeight * 0.2,
+    width: SIZE.screenWidth * 0.5,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+  },
 });

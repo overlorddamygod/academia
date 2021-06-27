@@ -23,12 +23,21 @@ const DrawerMenu = ({
   const IconProvider = iconProviderMap[iconProvider];
 
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={() => {
-      navigation.navigate( `${screen}`);
-    }}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() => {
+        navigation.navigate(`${screen}`);
+      }}
+    >
       <View style={{ backgroundColor: `${background}`, ...styles.menus }}>
         <IconProvider name={iconName} size={25} color="white" />
-        <Text style={{ ...globalStyles.txt, marginTop: SIZE.height / 4, fontSize: 16 }}>
+        <Text
+          style={{
+            ...globalStyles.txt,
+            marginTop: SIZE.height / 4,
+            fontSize: 16,
+          }}
+        >
           {title}
         </Text>
       </View>

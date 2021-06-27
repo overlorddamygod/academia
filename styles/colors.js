@@ -6,7 +6,7 @@ const COLORS = {
   royalBlue: "#4F60F4",
   mainred: "#FB616A",
   grey: "grey",
-  red: "red"
+  red: "red",
 };
 const tagColor = {
   Exams: "#F05479",
@@ -14,4 +14,4 @@ const tagColor = {
   Holiday: "#9336E7",
 };
 export default COLORS;
-export { tagColor }
+export { tagColor };

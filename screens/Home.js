@@ -1,25 +1,24 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  TextInput,
-} from "react-native";
+import { View, Text, Button, StyleSheet, TextInput } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { Ionicons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
 import { SIZE } from "../styles/globalStyle";
-import Header from "../components/Header"
+import Header from "../components/Header";
 import UpcomingEvent from "../components/UpcomingEvent";
 import HomeNotice from "../components/HomeNotice";
 const Home = ({ navigation }) => {
   const { user } = useUserContext();
   return (
     <>
-    <Header showBackMenu={false} title={`Hello, ${user.username || ""}`} justifyContent="flex-start" navigation={navigation}></Header>
+      <Header
+        showBackMenu={false}
+        title={`Hello, ${user.username || ""}`}
+        justifyContent="flex-start"
+        navigation={navigation}
+      ></Header>
       <View
         style={{
           backgroundColor: COLORS.main,
@@ -28,25 +27,29 @@ const Home = ({ navigation }) => {
       >
         <View style={styles.upper}>
           <View>
-            <Text style={{ marginTop: -SIZE.width/1.8, ...globalStyles.txt,...{paddingLeft:SIZE.width} }}>
+            <Text
+              style={{
+                marginTop: -SIZE.width / 1.8,
+                ...globalStyles.txt,
+                ...{ paddingLeft: SIZE.width },
+              }}
+            >
               It's lovely day right ?
             </Text>
           </View>
-          <View style={{padding: SIZE.width}}>
+          <View style={{ padding: SIZE.width }}>
             <View style={styles.searchbar}>
-              <Ionicons
-                name="search"
-                size={24}
-                color="#777"
+              <Ionicons name="search" size={24} color="#777" />
+              <TextInput
+                style={{ color: "#000", flex: 1 }}
+                placeholder="Search"
               />
-              <TextInput style={{color:"#000", flex:1}}placeholder="Search" />
             </View>
           </View>
-
         </View>
       </View>
-    
-        {/* <Button
+
+      {/* <Button
           title="Go to Chat"
           onPress={() => {
             auth()
@@ -64,7 +67,7 @@ const Home = ({ navigation }) => {
       <View>
         <UpcomingEvent />
       </View>
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         <HomeNotice />
       </View>
     </>
@@ -75,12 +78,12 @@ export default Home;
 
 const styles = StyleSheet.create({
   searchbar: {
-    flexDirection:"row",
+    flexDirection: "row",
     height: SIZE.height * 1.2,
     paddingLeft: SIZE.height * 0.5,
     fontSize: SIZE.height * 0.5,
     backgroundColor: "white",
     borderRadius: 24,
-    alignItems:"center"
+    alignItems: "center",
   },
 });

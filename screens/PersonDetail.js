@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -16,9 +16,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 
 const PersonDetail = ({ navigation }) => {
-  useEffect(() => {
-    
-  }, [])
+  useEffect(() => {}, []);
   return (
     <>
       <Header title="Person Detail" navigation={navigation} />

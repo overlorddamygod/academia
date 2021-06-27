@@ -50,11 +50,10 @@ const CalendarScreen = ({ navigation }) => {
       return;
     }
 
+    const start = new Date(`${year}-${formatDate(month)}-01`);
+    const end = addMonth(new Date(`${year}-${formatDate(month)}-01`), 1);
 
-    const start = new Date(`${year}-${formatDate(month)}-01`)
-    const end = addMonth(new Date(`${year}-${formatDate(month)}-01`),1)
-
-    console.log(start, end)
+    console.log(start, end);
     firestore()
       .collection("announcementTemp")
       .where("date", ">=", start)
@@ -75,48 +74,50 @@ const CalendarScreen = ({ navigation }) => {
     setRefreshing(false);
   };
 
-  const formatYmd = date => date.toDate().toISOString().slice(0, 10);
+  const formatYmd = (date) => date.toDate().toISOString().slice(0, 10);
 
   const addDay = (t, range = 0) => {
-    const d = t.toDate()
-    return new Date(d.setDate(d.getDate() + range)).toISOString().slice(0, 10)
-  }
+    const d = t.toDate();
+    return new Date(d.setDate(d.getDate() + range)).toISOString().slice(0, 10);
+  };
   const addMonth = (d, range = 1) => {
-    return new Date(d.setMonth(d.getMonth() + range))
-  }
+    return new Date(d.setMonth(d.getMonth() + range));
+  };
 
-  useEffect(()=> {
-    console.log("EVENTS", events)
-  },[events])
-  
+  useEffect(() => {
+    console.log("EVENTS", events);
+  }, [events]);
+
   return (
     <>
       <Header title="Calendar" navigation={navigation} showBackMenu={false} />
       <View style={{ flex: 1, backgroundColor: "white" }}>
         <Calendar
-          markingType={'period'}
+          markingType={"period"}
           markedDates={{
-            ...Object.values(eventsCache).reduce((acc, _event)=> {
-              return [...acc,..._event]
-            },[]).reduce((acc,e) => {
-              const startingDate = e.date
-              if ( e.range <= 0 ) {
-                acc[formatYmd(startingDate)] = {
-                  dotColor: tagColor[e.tag || "Holiday"],
-                  marked: true,
-                }
-              } else {
-                for ( let i = 0;i <= e.range; i++) {
-                  acc[addDay(startingDate, i)] = {
-                    startingDay: i == 0,
-                    endingDay: i == e.range,
-                    color: tagColor[e.tag || "Holiday"]
+            ...Object.values(eventsCache)
+              .reduce((acc, _event) => {
+                return [...acc, ..._event];
+              }, [])
+              .reduce((acc, e) => {
+                const startingDate = e.date;
+                if (e.range <= 0) {
+                  acc[formatYmd(startingDate)] = {
+                    dotColor: tagColor[e.tag || "Holiday"],
+                    marked: true,
+                  };
+                } else {
+                  for (let i = 0; i <= e.range; i++) {
+                    acc[addDay(startingDate, i)] = {
+                      startingDay: i == 0,
+                      endingDay: i == e.range,
+                      color: tagColor[e.tag || "Holiday"],
+                    };
                   }
                 }
-              }
-              
-              return acc
-            },{})
+
+                return acc;
+              }, {}),
           }}
           enableSwipeMonths={true}
           onDayPress={(time) => {

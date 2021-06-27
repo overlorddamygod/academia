@@ -22,9 +22,9 @@ const StudentStack = createStackNavigator();
 const TeacherStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const NotificationsStack = createStackNavigator();
-const SettingStack = createStackNavigator()
-const MaterialStack = createStackNavigator()
-const PersonDetailStack = createStackNavigator()
+const SettingStack = createStackNavigator();
+const MaterialStack = createStackNavigator();
+const PersonDetailStack = createStackNavigator();
 const CalendarStack = createStackNavigator();
 
 export function HomeStackScreen() {
@@ -47,8 +47,8 @@ export function AnnounceStackScreen() {
         component={AnnouncementScreen}
       />
     </AnnounceStack.Navigator>
-  )
-    };
+  );
+}
 
 export function CalendarStackScreen() {
   return (
@@ -57,10 +57,7 @@ export function CalendarStackScreen() {
         headerShown: false,
       }}
     >
-      <CalendarStack.Screen
-        name="Calendar"
-        component={CalendarScreen}
-      />
+      <CalendarStack.Screen name="Calendar" component={CalendarScreen} />
     </CalendarStack.Navigator>
   );
 }
@@ -92,9 +89,9 @@ export function ChatStackScreen() {
 export function StudentStackScreen() {
   return (
     <StudentStack.Navigator
-    screenOptions={{
-      headerShown:false
-     }}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
       <StudentStack.Screen name="Students" component={StudentList} />
     </StudentStack.Navigator>
@@ -104,7 +101,7 @@ export function PersonDetailStackScreen() {
   return (
     <PersonDetailStack.Navigator
       screenOptions={{
-        headerShown:false
+        headerShown: false,
       }}
     >
       <PersonDetailStack.Screen name="PersonDetail" component={PersonDetail} />
@@ -115,7 +112,7 @@ export function TeacherStackScreen() {
   return (
     <TeacherStack.Navigator
       screenOptions={{
-       headerShown:false
+        headerShown: false,
       }}
     >
       <TeacherStack.Screen name="Teachers" component={TeacherList} />
@@ -173,5 +170,3 @@ export function MaterialStackScreen() {
     </MaterialStack.Navigator>
   );
 }
-
-

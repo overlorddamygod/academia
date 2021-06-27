@@ -25,7 +25,7 @@ const StudentList = ({ navigation }) => {
       .where("id", "!=", user.id)
   );
 
-  const [ searchTerm, setSearchTerm ] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <View style={{ flex: 1 }}>
@@ -59,7 +59,11 @@ const StudentList = ({ navigation }) => {
             </View>
           ) : (
             <FlatList
-              data={students.filter(student => student.username.match(new RegExp(searchTerm,"i")) || student.email.match(new RegExp(searchTerm,"i")))}
+              data={students.filter(
+                (student) =>
+                  student.username.match(new RegExp(searchTerm, "i")) ||
+                  student.email.match(new RegExp(searchTerm, "i"))
+              )}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <TouchableOpacity

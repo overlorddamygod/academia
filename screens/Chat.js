@@ -1,37 +1,33 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
-import database from "@react-native-firebase/database"
+import database from "@react-native-firebase/database";
 
 const Chat = ({ navigation }) => {
   const { user } = useUserContext();
   const [conversations, setConversations] = useState([]);
 
-  const collectionRef = firestore().collection("conversation").where("participants","array-contains", user.id);
-  
+  const collectionRef = firestore()
+    .collection("conversation")
+    .where("participants", "array-contains", user.id);
+
   // const conversationRef = database().ref(`/conversations`).where("participants","")
 
   useEffect(() => {
-    const unsubscribe = collectionRef
-      .onSnapshot(
-        { includeMetadataChanges: true },
-        (querySnapshot) => {
-          setConversations(
-            querySnapshot.docs.map((d) => ({ docId: d.id, ...d.data() }))
-          );
-          console.log(conversations)
-        },
-        (error) => console.error(error)
-      );
+    const unsubscribe = collectionRef.onSnapshot(
+      { includeMetadataChanges: true },
+      (querySnapshot) => {
+        setConversations(
+          querySnapshot.docs.map((d) => ({ docId: d.id, ...d.data() }))
+        );
+        console.log(conversations);
+      },
+      (error) => console.error(error)
+    );
 
     return unsubscribe;
   }, []);
@@ -45,7 +41,7 @@ const Chat = ({ navigation }) => {
       />
 
       <FlatList
-        contentContainerStyle={{flex:1}}
+        contentContainerStyle={{ flex: 1 }}
         data={conversations}
         keyExtractor={(item) => item.docId}
         renderItem={({ item }) => (
@@ -57,21 +53,25 @@ const Chat = ({ navigation }) => {
               marginVertical: SIZE.height * 0.3,
               paddingHorizontal: SIZE.width * 0.8,
               paddingVertical: SIZE.height * 0.2,
-              borderRadius:10
+              borderRadius: 10,
             }}
-            onPress={()=> {
-              navigation.navigate("IndividualChat",{
+            onPress={() => {
+              navigation.navigate("IndividualChat", {
                 id: item.docId,
-                name: getChatName(item,user.id),
-                conversation: item
-              })
+                name: getChatName(item, user.id),
+                conversation: item,
+              });
             }}
           >
-            <Text style={{
-              fontSize: 20,
-              fontWeight: "bold",
-              color: COLORS.black
-            }}>{getChatName(item,user.id)}</Text>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                color: COLORS.black,
+              }}
+            >
+              {getChatName(item, user.id)}
+            </Text>
           </TouchableOpacity>
         )}
       />
@@ -82,5 +82,7 @@ const Chat = ({ navigation }) => {
 export default Chat;
 
 const getChatName = (convo, userId) => {
-  return convo.group ? convo.name : convo.p[convo.participants.filter(id=> id != userId)[0]]
-}
+  return convo.group
+    ? convo.name
+    : convo.p[convo.participants.filter((id) => id != userId)[0]];
+};

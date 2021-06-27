@@ -9,10 +9,17 @@ function ConnectModal({ navigation, setShowDialog }) {
   return (
     <>
       <View style={styles.modal}>
-        <TouchableOpacity style={styles.cancel} onPress={()=> {
-          setShowDialog(false)
-        }}>
-          <Feather name="x-circle" size={SIZE.height/1.5} color={COLORS.white}/>
+        <TouchableOpacity
+          style={styles.cancel}
+          onPress={() => {
+            setShowDialog(false);
+          }}
+        >
+          <Feather
+            name="x-circle"
+            size={SIZE.height / 1.5}
+            color={COLORS.white}
+          />
         </TouchableOpacity>
 
         <View>

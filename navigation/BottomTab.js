@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,7 +11,7 @@ import {
   ChatStackScreen,
   NotificationsStackScreen,
   ModalStackScreen,
-  CalendarStackScreen
+  CalendarStackScreen,
 } from "./Stack";
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
@@ -126,9 +122,9 @@ const BottomTab = (props) => {
         containerStyle={{
           backgroundColor: "#0E243F",
           justifyContent: "space-between",
-          paddingVertical: SIZE.height/2,
-          borderTopRightRadius:30,
-          borderTopLeftRadius:30,
+          paddingVertical: SIZE.height / 2,
+          borderTopRightRadius: 30,
+          borderTopLeftRadius: 30,
         }}
         width="100%"
         visible={showDialog}

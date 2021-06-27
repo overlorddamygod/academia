@@ -12,7 +12,11 @@ import { globalStyles, SIZE } from "../styles/globalStyle";
 const HomeNotice = () => {
   const [events, setEvents] = useState([
     { name: "Sports Event", detail: "Submit before may 23", date: "May 23" },
-    { name: "Dancer Event", detail: "Submit before June 1. or It won't be accepted", date: "June 1" },
+    {
+      name: "Dancer Event",
+      detail: "Submit before June 1. or It won't be accepted",
+      date: "June 1",
+    },
     { name: "Sports Event", detail: "Submit before may 23", date: "May 29" },
   ]);
   return (
@@ -22,14 +26,24 @@ const HomeNotice = () => {
         keyExtractor={(item) => item.date}
         renderItem={({ item }) => (
           <View style={styles.events}>
-            <View style={{width:'60%'}}>
-              <Text style={{...globalStyles.txt,fontWeight:'bold' }}>{item.name}</Text>
-              <Text style={{ ...globalStyles.midText, color: "white",marginTop:5}}>
+            <View style={{ width: "60%" }}>
+              <Text style={{ ...globalStyles.txt, fontWeight: "bold" }}>
+                {item.name}
+              </Text>
+              <Text
+                style={{
+                  ...globalStyles.midText,
+                  color: "white",
+                  marginTop: 5,
+                }}
+              >
                 {item.detail}
               </Text>
             </View>
             <TouchableOpacity style={styles.btn}>
-              <Text style={{color:'white',fontSize:16}}>App Submission</Text>
+              <Text style={{ color: "white", fontSize: 16 }}>
+                App Submission
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -42,12 +56,12 @@ export default HomeNotice;
 const styles = StyleSheet.create({
   events: {
     padding: 20,
-    position:'relative',
+    position: "relative",
     backgroundColor: "#856EE1",
     marginTop: 5,
-    width:SIZE.screenWidth *0.9,
+    width: SIZE.screenWidth * 0.9,
     borderRadius: 9,
-    marginBottom:10
+    marginBottom: 10,
   },
   btn: {
     position: "absolute",
