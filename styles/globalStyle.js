@@ -21,6 +21,7 @@ const globalStyles = StyleSheet.create({
     color: "white",
     fontSize: 22,
     fontWeight: "normal",
+  
   },
   boldText: {
     color: "#333",

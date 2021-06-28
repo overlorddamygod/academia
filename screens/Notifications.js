@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from '@react-navigation/native';
 
 const dummyLists = [
   { notifications: "Sandeep Maharjan Messaged You .", date: "20-3-23" },
@@ -13,6 +14,7 @@ const dummyLists = [
 
 const Notifications = ({ navigation }) => {
   const [lists, setLists] = useState(dummyLists);
+  const { colors } = useTheme();
   return (
     <>
       <Header title="Notifications" navigation={navigation} />
@@ -26,7 +28,7 @@ const Notifications = ({ navigation }) => {
                 style={{
                   marginHorizontal: 20,
                   marginBottom: 10,
-                  backgroundColor: "white",
+                  backgroundColor: colors.card,
                   borderRadius: 8,
                   padding: 17,
                   flexDirection: "row",
@@ -37,13 +39,13 @@ const Notifications = ({ navigation }) => {
                   <Ionicons
                     name="notifications-circle"
                     size={40}
-                    color="#555"
+                    color={colors.text}
                   />
                 </View>
                 <View style={{ marginLeft: 20 }}>
                   <Text
                     style={{
-                      color: "#444",
+                      color: colors.text,
                       fontWeight: "bold",
                       fontSize: 20,
                       marginVertical: 2,

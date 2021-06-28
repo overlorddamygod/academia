@@ -1,5 +1,12 @@
-import React from "react";
-import { View, Text, Button, StyleSheet, TextInput,ScrollView } from "react-native";
+import React, { useContext } from "react";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,49 +16,61 @@ import { SIZE } from "../styles/globalStyle";
 import Header from "../components/Header";
 import UpcomingEvent from "../components/UpcomingEvent";
 import HomeNotice from "../components/HomeNotice";
+import { ThemeContext } from "../components/Theme";
+import { useTheme } from "@react-navigation/native";
+
 const Home = ({ navigation }) => {
+  const { colors } = useTheme();
   const { user } = useUserContext();
+  const { isDark } = useContext(ThemeContext);
   return (
-    <View style={{flex:1,backgroundColor:'#edeef2'}}>
-    <Header showBackMenu={false} title={`Hello, ${user.username || ""}`} justifyContent="flex-start" navigation={navigation}></Header>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <Header
+        showBackMenu={false}
+        title={`Hello, ${user.username || ""}`}
+        justifyContent="flex-start"
+        navigation={navigation}
+      ></Header>
       <View
         style={{
-          backgroundColor: COLORS.main,
+          backgroundColor: colors.mainblue,
           borderBottomRightRadius: 36,
         }}
       >
         <View style={styles.upper}>
           <View>
-            <Text style={{ marginTop: -SIZE.width/1.8, ...globalStyles.txt,...{paddingLeft:SIZE.width} }}>
-              It's lovely day right ?
+            <Text
+              style={{
+                ...globalStyles.txt,
+                 paddingLeft: SIZE.width ,
+                 marginTop: -SIZE.width / 1.8,
+                 
+              }}
+            >
+              It's {isDark ? "Dark" : "Light"} theme right ?
             </Text>
           </View>
-          <View style={{padding: SIZE.width}}>
+          <View style={{ padding: SIZE.width }}>
             <View style={styles.searchbar}>
-              <Ionicons
-                name="search"
-                size={24}
-                color="#777"
+              <Ionicons name="search" size={24} color="#777" />
+              <TextInput
+                style={{ color: "#000", flex: 1 }}
+                placeholder="Search"
               />
-              <TextInput style={{color:"#000", flex:1}}placeholder="Search" />
             </View>
           </View>
-
         </View>
       </View>
 
-      <View style={{flex:1}}>
-      <ScrollView
-      showsVerticalScrollIndicator={false}
-      >
-        
-      <View>
-        <UpcomingEvent />
-      </View>
-      <View style={{flex:1}}>
-        <HomeNotice  navigation={navigation}/>
-      </View>
-      </ScrollView>
+      <View style={{ flex: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View>
+            <UpcomingEvent />
+          </View>
+          <View style={{ flex: 1 }}>
+            <HomeNotice navigation={navigation} />
+          </View>
+        </ScrollView>
       </View>
     </View>
   );

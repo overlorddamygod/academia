@@ -10,12 +10,12 @@ import {
 } from "react-native";
 import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
-
+import { useTheme } from '@react-navigation/native';
 const AnnouncementScreen = ({ navigation }) => {
   const [announcements, setAnnouncements] = useState([]);
   const [selectedTag, setSelectedTag] = useState("All Items");
   const [refreshing, setRefreshing] = useState(false);
-
+  const {colors} = useTheme()
   useEffect(() => {
     fetchAnnouncements();
   }, []);
@@ -68,7 +68,7 @@ const AnnouncementScreen = ({ navigation }) => {
           }}
         ></View>
         {/* <AppBar title="Announcements"></AppBar> */}
-        <View style={{ ...styles.tags, ...styles.shadow }}>
+        <View style={{ ...styles.tags, ...styles.shadow,backgroundColor:colors.card }}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -113,14 +113,16 @@ const itemTypes = {
 };
 
 const Announcement = ({
+  
   data = { tag: "Classes", title: "Lorem Ipsum", time: "10:00 PM" },
 }) => {
+  const {colors} =useTheme();
   return (
     <View
       style={{
         marginHorizontal: 20,
         marginBottom: 10,
-        backgroundColor: "white",
+        backgroundColor: colors.card,
         borderRadius: 8,
         padding: 8,
         ...styles.shadow,
@@ -134,9 +136,9 @@ const Announcement = ({
           borderRadius: 6,
         }}
       >
-        <Text style={{ color: "white" }}>{data.tag}</Text>
+        <Text style={{ color: colors.text }}>{data.tag}</Text>
       </View>
-      <Text style={{ fontWeight: "bold", fontSize: 20, marginVertical: 8 }}>
+      <Text style={{color: colors.text , fontWeight: "bold", fontSize: 20, marginVertical: 8 }}>
         {data.title}
       </Text>
       <Text style={{ color: "#ABABAB" }}>{data.time}</Text>
@@ -145,6 +147,7 @@ const Announcement = ({
 };
 
 const Item = ({ name, active, onPress }) => {
+  const {colors} = useTheme();
   return (
     <TouchableOpacity
       style={{ alignItems: "center", textAlign: "center", marginRight: 15 }}
@@ -155,7 +158,7 @@ const Item = ({ name, active, onPress }) => {
       <Text
         style={{
           fontWeight: active ? "bold" : "normal",
-          color: !active ? "#ABABAB" : "black",
+          color: !active ? "#ABABAB" : colors.text,
           alignItems: "center",
         }}
       >
