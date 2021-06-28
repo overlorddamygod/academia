@@ -30,7 +30,7 @@ const Notifications = ({ navigation }) => {
                   borderRadius: 8,
                   padding: 17,
                   flexDirection: "row",
-                  ...globalStyles.shadow,
+                 
                 }}
               >
                 <View>

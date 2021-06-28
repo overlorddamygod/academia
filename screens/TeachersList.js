@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
   TextInput,
 } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
@@ -34,7 +34,7 @@ const TeacherList = ({ navigation }) => {
             style={{
               ...authStyles.input,
               ...globalStyles.search,
-              backgroundColor: "#afb7ed",
+              backgroundColor: "#d3ddf0",
               color: "#555",
             }}
             placeholder="Search"
@@ -43,8 +43,8 @@ const TeacherList = ({ navigation }) => {
         <View style={{ marginTop: 50 }}>
           {loading ? (
             <View style={{ alignItems: "center" }}>
-              {/* some loading style maybe? */}
-              <Text style={globalStyles.boldText}>Loading ..</Text>
+        
+              <ActivityIndicator size="large" color="#f44" />
             </View>
           ) : (
             <FlatList

@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator
 } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import firestore from "@react-native-firebase/firestore";
@@ -40,7 +41,7 @@ const StudentList = ({ navigation }) => {
             style={{
               ...authStyles.input,
               ...globalStyles.search,
-              backgroundColor: "#afb7ed",
+              backgroundColor: "#d3ddf0",
               color: "#555",
             }}
             placeholder="Search"
@@ -51,7 +52,7 @@ const StudentList = ({ navigation }) => {
         <View style={{ marginTop: 50, flex: 1 }}>
           {loading ? (
             <View style={{ alignItems: "center" }}>
-              <Text style={globalStyles.boldText}>Loading ..</Text>
+             <ActivityIndicator size="large" color="#f44" />
             </View>
           ) : error ? (
             <View style={{ alignItems: "center" }}>

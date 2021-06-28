@@ -63,6 +63,11 @@ const globalStyles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 2,
   },
+  smallavatar:{
+    height:60,
+    width:60,
+    borderRadius:50
+  }
 });
 
 export { globalStyles, SIZE };
