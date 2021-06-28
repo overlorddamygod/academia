@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,7 +11,7 @@ import {
   ChatStackScreen,
   NotificationsStackScreen,
   ModalStackScreen,
-  CalendarStackScreen
+  CalendarStackScreen,
 } from "./Stack";
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
@@ -32,14 +28,10 @@ const BottomTab = (props) => {
         tabBarOptions={{
           showLabel: false,
           style: {
-            // position: "absolute",
-            // bottom: 5,
-            // left: 10,
-            // right: 10,
             backgroundColor: "#0E243F",
             elevation: 4,
             height: SIZE.height * 1.6,
-            // borderRadius: 15,
+          
           },
         }}
       >
@@ -75,6 +67,7 @@ const BottomTab = (props) => {
           options={{
             tabBarIcon: ({ focused }) => (
               <TouchableOpacity
+              activeOpacity={0.7}
                 onPress={() => {
                   setShowDialog(true);
                 }}
@@ -126,9 +119,9 @@ const BottomTab = (props) => {
         containerStyle={{
           backgroundColor: "#0E243F",
           justifyContent: "space-between",
-          paddingVertical: SIZE.height/2,
-          borderTopRightRadius:30,
-          borderTopLeftRadius:30,
+          paddingVertical: SIZE.height / 2,
+          borderTopRightRadius: 30,
+          borderTopLeftRadius: 30,
         }}
         width="100%"
         visible={showDialog}

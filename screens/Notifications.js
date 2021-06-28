@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
@@ -35,11 +30,15 @@ const Notifications = ({ navigation }) => {
                   borderRadius: 8,
                   padding: 17,
                   flexDirection: "row",
-                  ...globalStyles.shadow,
+                 
                 }}
               >
                 <View>
-                  <Ionicons name="notifications-circle" size={40} color="#555" />
+                  <Ionicons
+                    name="notifications-circle"
+                    size={40}
+                    color="#555"
+                  />
                 </View>
                 <View style={{ marginLeft: 20 }}>
                   <Text
@@ -48,7 +47,7 @@ const Notifications = ({ navigation }) => {
                       fontWeight: "bold",
                       fontSize: 20,
                       marginVertical: 2,
-                      width:'99%'
+                      width: "99%",
                     }}
                   >
                     {item.notifications}

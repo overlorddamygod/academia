@@ -8,7 +8,6 @@ import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useUserContext } from "../providers/user";
 import { SIZE } from "../styles/globalStyle";
 
-
 const DrawerContent = ({ navigation }) => {
   const { user, logout: _logout } = useUserContext();
 
@@ -26,7 +25,7 @@ const DrawerContent = ({ navigation }) => {
         }}
       >
         <View style={{ flex: 1, zIndex: 20, padding: SIZE.height * 0.8 }}>
- <View style={{ marginTop: SIZE.height *0.1 }}>
+          <View style={{ marginTop: SIZE.height * 0.1 }}>
             <View
               style={{
                 flexDirection: "row",
@@ -36,12 +35,26 @@ const DrawerContent = ({ navigation }) => {
               style={styles.avatar}
             />
             <Text style={globalStyles.txt}>{user.username || ""}</Text>
-            <Text style={{ color: "lightgray", fontSize: 18, lineHeight: SIZE.height * 0.7 }}>
+            <Text
+              style={{
+                color: "lightgray",
+                fontSize: 18,
+                lineHeight: SIZE.height * 0.7,
+              }}
+            >
               {user.title}
             </Text>
-            <Text style={{ color: "lightgray", fontSize: 18, lineHeight: SIZE.height * 0.7 }}>
-              Semester : {user.semester}
-            </Text>
+            {user.title == "Student" && (
+              <Text
+                style={{
+                  color: "lightgray",
+                  fontSize: 18,
+                  lineHeight: SIZE.height * 0.7,
+                }}
+              >
+                Semester : {user.semester}
+              </Text>
+            )}
           </View>
           <Image
             source={{
@@ -52,7 +65,9 @@ const DrawerContent = ({ navigation }) => {
         </View>
       </View>
       {/* lower part */}
-      <DrawerContentScrollView style={{ flex: 1,paddingBottom:SIZE.height * 0.5 }}>
+      <DrawerContentScrollView
+        style={{ flex: 1, paddingBottom: SIZE.height * 0.5 }}
+      >
         <View style={{ paddingTop: SIZE.height * 0.25, alignItems: "center" }}>
           <View style={{ marginTop: SIZE.height, flexDirection: "row" }}>
             <DrawerMenu

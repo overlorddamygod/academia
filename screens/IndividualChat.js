@@ -10,13 +10,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Header from "../components/Header";
-import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
 import { Feather } from "@expo/vector-icons";
 import Hyperlink from "react-native-hyperlink";
-import database from "@react-native-firebase/database"
+import database from "@react-native-firebase/database";
 
 const IndividualChat = ({ navigation, route: { params } }) => {
   const { id, name, conversation } = params;
@@ -25,44 +24,51 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   const [loading, setLoading] = useState(true);
   const { user } = useUserContext();
   const flatlistRef = useRef();
-  const [status, setStatus] = useState(false)
-  const [typingTimeout, setTypingTimeout] = useState(false)
+  const [status, setStatus] = useState(false);
+  const [online, setOnline] = useState(false);
+  const [typingTimeout, setTypingTimeout] = useState(false);
 
-  // const collectionRef = firestore()
-  //   .collection("conversation")
-  //   .doc(`${id}`)
-  //   .collection("message");
-
-  const conversationRef = database().ref(`/conversations/${id}`)
+  const conversationRef = database().ref(`/conversations/${id}`);
 
   useEffect(() => {
     setLoading(false);
-    setMessages([])
+    setMessages([]);
 
-    const onAdd = value => {
-      value = value.val()
+    const onAdd = (value) => {
+      value = value.val();
       // console.log(value)
-      setMessages(oldMessage=>[...oldMessage, value])
+      setMessages((oldMessage) => [...oldMessage, value]);
       // if ( messages.length <=5 )
       conversationRef.child(`status/${user.id}`).update({
-        seen: value.createdAt
+        seen: value.createdAt,
       });
-    }
+    };
 
-    const onTyping = value => {
+    const onTyping = (value) => {
       // console.log("HERE",value.val())
-      setStatus(value.val())
-    }
-    conversationRef.child("messages").limitToLast(5).on("child_added",onAdd)
-    const partnerId = conversation.participants.filter(id=>id != user.id)[0]
+      setStatus(value.val());
+    };
+    conversationRef.child("messages").limitToLast(5).on("child_added", onAdd);
+    const partnerId = conversation.participants.filter(
+      (id) => id != user.id
+    )[0];
     // console.log(`typing/${conversation.participants.filter(a=>id != user.id)[0]}`)
-    conversationRef.child(`status/${partnerId}`).on("value", onTyping)
+    conversationRef.child(`status/${partnerId}`).on("value", onTyping);
 
-    return ()=> {
-      conversationRef.child("messages").limitToLast(5).off("child_added",onAdd)
-      conversationRef.child(`status/${partnerId}`).off("value", onTyping)
-      clearTimeout(typingTimeout)
-    }
+    const onOnlineStatus = (value) => {
+      setOnline(value.val());
+    };
+    database().ref(`status/${partnerId}`).on("value", onOnlineStatus);
+
+    return () => {
+      conversationRef
+        .child("messages")
+        .limitToLast(5)
+        .off("child_added", onAdd);
+      conversationRef.child(`status/${partnerId}`).off("value", onTyping);
+      database().ref(`status/${partnerId}`).off("value", onOnlineStatus);
+      clearTimeout(typingTimeout);
+    };
   }, [id]);
 
   const sendMessage = () => {
@@ -74,27 +80,28 @@ const IndividualChat = ({ navigation, route: { params } }) => {
       createdAt: Date.now(),
     });
     conversationRef.child(`status/${user.id}`).update({
-      typing: false
-    });;
+      typing: false,
+    });
     setMessage("");
   };
 
   const startTyping = () => {
-    if ( !!typingTimeout ) return
+    if (!!typingTimeout) return;
     // setT(true)
     // setTypingTimeout(1)
-    console.log("HEHEH")
     conversationRef.child(`status/${user.id}`).update({
-      typing: true
+      typing: true,
     });
-    setTypingTimeout(setTimeout(()=> {
-      conversationRef.child(`status/${user.id}`).update({
-        typing: false
-      });;
-      clearTimeout(typingTimeout)
-      setTypingTimeout(0)
-    }, 1500))
-  }
+    setTypingTimeout(
+      setTimeout(() => {
+        conversationRef.child(`status/${user.id}`).update({
+          typing: false,
+        });
+        clearTimeout(typingTimeout);
+        setTypingTimeout(0);
+      }, 1500)
+    );
+  };
 
   const deleteMessage = (id) => {
     // collectionRef.doc(id).update({
@@ -105,7 +112,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   return (
     <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
       <Header
-        title={name}
+        title={name + `${online ? " Online" : ""}`}
         navigation={navigation}
         showSidebar={false}
         showBackMenu
@@ -138,17 +145,23 @@ const IndividualChat = ({ navigation, route: { params } }) => {
               <ChatMessage
                 message={item}
                 deleteMessage={() => {
-                  if (item.userId == user.id) deleteMessage(item.docId)
+                  if (item.userId == user.id) deleteMessage(item.docId);
                 }}
-                seen={status ? status.seen :false}
+                seen={status ? status.seen : false}
                 me={user.id == item.userId}
               />
             )}
           />
         </View>
       )}
-      { status && status.typing &&
-        <View style={{paddingHorizontal: 5, flexDirection:"row", alignItems:"center"}}>
+      {status && status.typing && (
+        <View
+          style={{
+            paddingHorizontal: 5,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
           <View
             style={{
               width: SIZE.width * 2,
@@ -162,9 +175,9 @@ const IndividualChat = ({ navigation, route: { params } }) => {
               {name[0]}
             </Text>
           </View>
-          <Text> {name+" "}is typing...</Text>
+          <Text> {name + " "}is typing...</Text>
         </View>
-      }
+      )}
       <View
         style={{
           marginHorizontal: SIZE.width * 1.7,
@@ -182,12 +195,10 @@ const IndividualChat = ({ navigation, route: { params } }) => {
           value={message}
           onChangeText={setMessage}
           placeholder="Type a message.."
-          onChange={()=> {
-            startTyping()
+          onChange={() => {
+            startTyping();
           }}
-          onEndEditing={()=>{
-            console.log("ENDED")
-          }}
+          onSubmitEditing={sendMessage}
         />
         <TouchableOpacity
           onPress={sendMessage}
@@ -238,11 +249,7 @@ const ChatMessage = ({ message, me, deleteMessage, seen }) => {
       }}
       style={{
         marginHorizontal: SIZE.width / 2,
-        backgroundColor: message.deleted
-          ? "red"
-          : me
-          ? "#F8F8F9"
-          : "#EBF4FF",
+        backgroundColor: message.deleted ? "red" : me ? "#F8F8F9" : "#EBF4FF",
         maxWidth: SIZE.screenWidth * 0.6,
         paddingHorizontal: SIZE.width * 0.6,
         paddingVertical: SIZE.height / 2.6,
@@ -253,9 +260,7 @@ const ChatMessage = ({ message, me, deleteMessage, seen }) => {
       }}
     >
       {message.deleted ? (
-        <Text style={{ color: COLORS.black, fontSize: 15 }}>
-          DELETED
-        </Text>
+        <Text style={{ color: COLORS.black, fontSize: 15 }}>DELETED</Text>
       ) : (
         <Hyperlink
           linkStyle={{ color: "#2980b9", textDecorationLine: "underline" }}
@@ -271,10 +276,12 @@ const ChatMessage = ({ message, me, deleteMessage, seen }) => {
     </TouchableOpacity>,
     <View key={`${message.id}3`}>
       {/* <Moment date={message.createdAt}><Text></Text></Moment> */}
-      <Text style={{fontSize:10}}>{new Date(message.createdAt).toLocaleTimeString()}</Text>
-      {me && message.createdAt == seen && 
-        <Text style={{fontSize:12}}>Seen</Text>
-      }
+      <Text style={{ fontSize: 10 }}>
+        {new Date(message.createdAt).toLocaleTimeString()}
+      </Text>
+      {me && message.createdAt == seen && (
+        <Text style={{ fontSize: 12 }}>Seen</Text>
+      )}
     </View>,
   ];
 

@@ -7,37 +7,35 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { authStyles } from "../styles/authStyle";
 import { SIZE } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
-import { Feather } from "@expo/vector-icons";
-import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useUserContext();
+  const { login, loginWithGoogle } = useUserContext();
 
   const initLogin = async () => {
     const result = await login(email, password);
-    console.log("LOGIN RESULT",result)
+    console.log("LOGIN RESULT", result);
   };
 
   return (
-    <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
-    <View style={{ flex: 1,backgroundColor: COLORS.main }}>
-      <View style={authStyles.upper}>
-        <View style={{alignItems:'center'}}>
-          <Text style={authStyles.maintext}>Academia </Text>
-          <Text style={authStyles.maintext}>International College</Text>
-          <View style={authStyles.line}></View>
-        </View>
-        <View style={{marginTop: SIZE.height * 0.8}}>
-          <Text style={authStyles.maintext}>Login</Text>
-        </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={{ flex: 1, backgroundColor: COLORS.main }}>
+        <View style={authStyles.upper}>
+          <View style={{ alignItems: "center" }}>
+            <Text style={authStyles.maintext}>Academia </Text>
+            <Text style={authStyles.maintext}>International College</Text>
+            <View style={authStyles.line}></View>
+          </View>
+          <View style={{ marginTop: SIZE.height * 0.8 }}>
+            <Text style={authStyles.maintext}>Login</Text>
+          </View>
         </View>
 
         <View style={authStyles.lower}>
@@ -64,10 +62,17 @@ const Login = ({ navigation }) => {
             <TouchableOpacity style={authStyles.btn} onPress={initLogin}>
               <Text style={authStyles.text}>Login</Text>
             </TouchableOpacity>
-            <Text style={{marginTop:SIZE.height / 8,fontSize:18}}>Already have account? 
-              <Text style={{color:'#666',fontWeight:'bold'}} onPress={()=> {
-                 navigation.navigate('Register');
-              }}> {` `} Register</Text>
+            <Text style={{ marginTop: SIZE.height / 8, fontSize: 18 }}>
+              Already have account?
+              <Text
+                style={{ color: "#666", fontWeight: "bold" }}
+                onPress={() => {
+                  navigation.navigate("Register");
+                }}
+              >
+                {" "}
+                {` `} Register
+              </Text>
             </Text>
           </View>
         </View>

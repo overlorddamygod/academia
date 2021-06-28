@@ -4,12 +4,13 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
+  Image
 } from "react-native";
 import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
-import { SIZE } from "../styles/globalStyle";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 import database from "@react-native-firebase/database"
 
 const Chat = ({ navigation }) => {
@@ -35,7 +36,7 @@ const Chat = ({ navigation }) => {
 
     return unsubscribe;
   }, []);
-
+ 
   return (
     <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
       <Header
@@ -55,9 +56,11 @@ const Chat = ({ navigation }) => {
               backgroundColor: "#EBF4FF",
               marginHorizontal: SIZE.width,
               marginVertical: SIZE.height * 0.3,
-              paddingHorizontal: SIZE.width * 0.8,
-              paddingVertical: SIZE.height * 0.2,
-              borderRadius:10
+              paddingHorizontal: SIZE.width * 1,
+              paddingVertical: SIZE.height * 0.3,
+              borderRadius:10,
+              flexDirection: "row",
+              alignItems:'center'
             }}
             onPress={()=> {
               navigation.navigate("IndividualChat",{
@@ -67,11 +70,21 @@ const Chat = ({ navigation }) => {
               })
             }}
           >
+            <View>
+            <Image
+          source={{
+            uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+          }}
+          style={globalStyles.smallavatar}
+        />
+            </View>
+            <View style={{marginLeft:SIZE.width}}>
             <Text style={{
               fontSize: 20,
               fontWeight: "bold",
-              color: COLORS.black
+              color: "#333"
             }}>{getChatName(item,user.id)}</Text>
+            </View>
           </TouchableOpacity>
         )}
       />

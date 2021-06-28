@@ -8,7 +8,7 @@ import { Feather } from "@expo/vector-icons";
 function ConnectModal({ navigation, setShowDialog }) {
   return (
     <>
-      <View style={styles.modal}>
+   
         <TouchableOpacity style={styles.cancel} onPress={()=> {
           setShowDialog(false)
         }}>
@@ -41,7 +41,7 @@ function ConnectModal({ navigation, setShowDialog }) {
             </View>
           </TouchableOpacity>
         </View>
-      </View>
+     
     </>
   );
 }
@@ -49,10 +49,6 @@ function ConnectModal({ navigation, setShowDialog }) {
 export default ConnectModal;
 
 const styles = StyleSheet.create({
-  modal: {
-    backgroundColor: COLORS.darkblue,
-    borderRadius: 100,
-  },
   text: {
     color: COLORS.darkblue,
     fontSize: 18,
@@ -63,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "white",
-    padding: SIZE.height / 3.5,
+    padding: SIZE.height / 2.5,
     borderRadius: 8,
   },
   cancel: {

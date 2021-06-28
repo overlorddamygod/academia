@@ -22,6 +22,7 @@ const UpcomingEvent = () => {
         <FlatList
         horizontal={true}
           data={events}
+          showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.date}
           renderItem={({ item }) => (
             <View style={{...globalStyles.shadow,...styles.events}}>
@@ -41,11 +42,12 @@ const UpcomingEvent = () => {
 export default UpcomingEvent;
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#ACDBD8",
+    backgroundColor: "#fff",
     width:SIZE.width *7,
     borderRadius: 5,
     padding: SIZE.width *0.4,
-    margin:  SIZE.width *0.4,
+    marginLeft:  SIZE.width *0.7,
+    marginTop:SIZE.width *0.7,
     textAlign: "left",
     
   },
@@ -53,8 +55,8 @@ const styles = StyleSheet.create({
       padding: SIZE.width *0.7,
       marginHorizontal:6,
       backgroundColor: "#5C5578",
-      height:SIZE.screenHeight*0.2 ,
-      width:SIZE.screenWidth *0.5,
+      height:SIZE.screenHeight*0.23 ,
+      width:SIZE.screenWidth *0.4,
       justifyContent:'center',
       alignItems:'center',
       borderRadius:5

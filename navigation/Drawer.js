@@ -1,5 +1,7 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+
 import BottomTab from "./BottomTab";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
@@ -19,23 +21,28 @@ const Drawer = createDrawerNavigator();
 
 const DrawerTab = () => {
   return (
-    <Drawer.Navigator
-      drawerContent={(props) => <DrawerContent {...props} />}
-      initialRouteName="Home"
-    >
-      {/* Contains Buttom tab navigator . */}
-      <Drawer.Screen name="Home" component={BottomTab} />
-      <Drawer.Screen name="Settings" component={SettingStackScreen} />
-      <Drawer.Screen name="Gallery" component={GalleryStackScreen} />
-      <Drawer.Screen name="Announcements" component={AnnounceStackScreen} />
-      <Drawer.Screen name="Materials" component={MaterialStackScreen} />
-      <Drawer.Screen name="Login" component={Login} />
-      <Drawer.Screen name="Register" component={Register} />
-      <Drawer.Screen name="Teacher" component={TeacherStackScreen} />
-      <Drawer.Screen name="Student" component={StudentStackScreen} />
-      <Drawer.Screen name="IndividualChat" component={IndividualChat} />
-      <Drawer.Screen name="PersonDetail" component={PersonDetailStackScreen} />
-    </Drawer.Navigator>
+    <NavigationContainer>
+      <Drawer.Navigator
+        drawerContent={(props) => <DrawerContent {...props} />}
+        initialRouteName="Home"
+      >
+        {/* Contains Buttom tab navigator . */}
+        <Drawer.Screen name="Home" component={BottomTab} />
+        <Drawer.Screen name="Settings" component={SettingStackScreen} />
+        <Drawer.Screen name="Gallery" component={GalleryStackScreen} />
+        <Drawer.Screen name="Announcements" component={AnnounceStackScreen} />
+        <Drawer.Screen name="Materials" component={MaterialStackScreen} />
+        <Drawer.Screen name="Login" component={Login} />
+        <Drawer.Screen name="Register" component={Register} />
+        <Drawer.Screen name="Teacher" component={TeacherStackScreen} />
+        <Drawer.Screen name="Student" component={StudentStackScreen} />
+        <Drawer.Screen name="IndividualChat" component={IndividualChat} />
+        <Drawer.Screen
+          name="PersonDetail"
+          component={PersonDetailStackScreen}
+        />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 };
 

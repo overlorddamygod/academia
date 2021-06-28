@@ -9,60 +9,66 @@ import {
 } from "react-native";
 import COLORS from "../styles/colors";
 import { globalStyles } from "../styles/globalStyle";
-import firestore from "@react-native-firebase/firestore"
-import database from "@react-native-firebase/database"
+import firestore from "@react-native-firebase/firestore";
+import database from "@react-native-firebase/database";
 import { useUserContext } from "../providers/user";
 
-const PeopleCard = ({ data,navigation }) => {
+const PeopleCard = ({ data, navigation }) => {
   const { user } = useUserContext();
   const startChat = () => {
-    console.log([`${user.id}${data.id}`,`${data.id}${user.id}`])
-    firestore().collection("conversation").where("chatId","in",[`${user.id}${data.id}`,`${data.id}${user.id}`]).get().then(a=> {
-      if ( a.size > 0 ) {
-        const convoDoc = a.docs[0]
-        const convoData = convoDoc.data()
-        convoData.id = convoDoc.id
-        navigation.navigate("IndividualChat",{
-          id: convoData.id,
-          name: getChatName(convoData,user.id),
-          conversation: convoData
-        })
-      } else {
-        createNewConversation()
-      }
-    })
+    console.log([`${user.id}${data.id}`, `${data.id}${user.id}`]);
+    firestore()
+      .collection("conversation")
+      .where("chatId", "in", [`${user.id}${data.id}`, `${data.id}${user.id}`])
+      .get()
+      .then((a) => {
+        if (a.size > 0) {
+          const convoDoc = a.docs[0];
+          const convoData = convoDoc.data();
+          convoData.id = convoDoc.id;
+          navigation.navigate("IndividualChat", {
+            id: convoData.id,
+            name: getChatName(convoData, user.id),
+            conversation: convoData,
+          });
+        } else {
+          createNewConversation();
+        }
+      });
   };
 
   const createNewConversation = () => {
-
     const newConvo = {
       chatId: `${user.id}${data.id}`,
       p: {},
-      participants: [`${user.id}`,`${data.id}`],
-    }
+      participants: [`${user.id}`, `${data.id}`],
+    };
     newConvo.p[`${user.id}`] = user.username;
     newConvo.p[`${data.id}`] = data.username;
-    firestore().collection("conversation").add(newConvo).then(addedResult=> {
-      addedResult.get().then(getResult=> {
-        // const convoDoc = a.docs[0]
-        const convoData = getResult.data()
-        convoData.id = getResult.id
+    firestore()
+      .collection("conversation")
+      .add(newConvo)
+      .then((addedResult) => {
+        addedResult.get().then((getResult) => {
+          // const convoDoc = a.docs[0]
+          const convoData = getResult.data();
+          convoData.id = getResult.id;
 
-        const tempConvo = {}
-        tempConvo["1234"] = []
+          const tempConvo = {};
+          tempConvo["1234"] = [];
 
-        database().ref(`/conversations/${convoData.id}`).push({
-          lol: 1
-        })
-      
-        navigation.navigate("IndividualChat",{
-          id: convoData.id,
-          name: getChatName(convoData,user.id),
-          conversation: convoData
-        })
-      })
-    })
-  }
+          database().ref(`/conversations/${convoData.id}`).push({
+            lol: 1,
+          });
+
+          navigation.navigate("IndividualChat", {
+            id: convoData.id,
+            name: getChatName(convoData, user.id),
+            conversation: convoData,
+          });
+        });
+      });
+  };
 
   return (
     <View
@@ -133,5 +139,7 @@ const styles = StyleSheet.create({
 });
 
 const getChatName = (convo, userId) => {
-  return convo.group ? convo.name : convo.p[convo.participants.filter(id=> id != userId)[0]]
-}
+  return convo.group
+    ? convo.name
+    : convo.p[convo.participants.filter((id) => id != userId)[0]];
+};

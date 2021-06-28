@@ -2,6 +2,7 @@
   "main": "index.js",
   "scripts": {
     "android": "react-native run-android",
+    "release": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start"
@@ -12,6 +13,7 @@
     "@react-native-firebase/database": "^12.1.0",
     "@react-native-firebase/firestore": "^12.1.0",
     "@react-native-firebase/messaging": "^12.1.0",
+    "@react-native-google-signin/google-signin": "^6.0.1",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/drawer": "^5.12.5",
     "@react-navigation/native": "^5.9.4",
