@@ -5,10 +5,12 @@ import messaging from "@react-native-firebase/messaging";
 import database from "@react-native-firebase/database";
 import { requestUserPermission, getFcmToken } from "../notifications";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+
 GoogleSignin.configure({
   webClientId:
     "1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
 });
+
 const initialUser = {
   username: null,
   email: null,
@@ -32,7 +34,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
   const UserChange = async (u) => {
     const loggedUser = auth().currentUser;
-    console.log("USERCHANGE", u);
+    console.log("USER");
     if (loggedUser) {
       try {
         setUser(loggedUser);
@@ -40,28 +42,27 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
         let userSnapshot = await firestore()
           .collection("user")
-          .where("id", "==", loggedUser.uid)
-          .limit(1)
+          .doc(loggedUser.uid)
           .get();
-        if (userSnapshot.size > 0) {
-          const userData = userSnapshot.docs[0].data();
+        const userData = userSnapshot.data();
 
-          // if (requestUserPermission()) {
-          //   const token = await getFcmToken()
-          //   userSnapshot.docs[0].ref.update({
-          //     token
-          //   })
-          // }
-          setUser({ ...user, ...userData });
-          messaging().subscribeToTopic(`${userData.title}`);
-          const onlineStatusRef = database().ref(`/status/${loggedUser.uid}`);
+        // if (requestUserPermission()) {
+        //   const token = await getFcmToken()
+        //   userSnapshot.docs[0].ref.update({
+        //     token
+        //   })
+        // }
 
-          onlineStatusRef.set(true).then(() => console.log("ONLINE"));
-          onlineStatusRef
-            .onDisconnect()
-            .remove()
-            .then(() => console.log("OFFLINE"));
-        }
+        setUser({ ...user, ...userData });
+        messaging().subscribeToTopic(`${userData.title}`);
+        // Change online status
+        // const onlineStatusRef = database().ref(`/status/${loggedUser.uid}`);
+
+        // onlineStatusRef.set(true).then(() => console.log("ONLINE"));
+        // onlineStatusRef
+        //   .onDisconnect()
+        //   .remove()
+        //   .then(() => console.log("OFFLINE"));
       } catch (err) {
         console.log("ERRORR", err);
         setUser(null);
@@ -100,53 +101,32 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
     };
   }, []);
 
-  console.log("Intiatlizing", intializing);
   if (intializing) return null;
 
-  const register = (username, email, password) => {
+  const register = async (username, email, password) => {
     if (!username || !email || !password) return;
 
     try {
-      auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((result) => {
-          console.log("CREATED");
-          result.user
-            .updateProfile({
-              displayName: username,
-            })
-            .then((r) => {
-              const { uid, email } = result.user;
-
-              const userData = {
-                id: uid,
-                email,
-                username: username,
-                title: TITLE.STUDENT,
-                semester: 3,
-                role: ROLE.NORMAL,
-                createdAt: firestore.FieldValue.serverTimestamp(),
-              };
-
-              firestore()
-                .collection("user")
-                .doc(`${uid}`)
-                .set(userData)
-                .then((_r) => {
-                  setUser({ ...user, ...userData });
-
-                  return true;
-                })
-                .catch((err) => {
-                  return err;
-                });
-            });
-        })
-        .catch((error) => {
-          return error;
-        });
-    } catch (err) {
-      return err;
+      let res = await fetch(
+        "https://academiacollege.azurewebsites.net/api/signUp",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+          }),
+        }
+      );
+      res = await res.json();
+      if (!res.error) {
+        console.log("Account created succesfully.");
+      } else {
+        console.error(res.error.message);
+      }
+    } catch (error) {
+      console.error("ERR", error);
+      return error;
     }
   };
 
