@@ -9,6 +9,7 @@ public class BasePackageList {
     return Arrays.<Package>asList(
         new expo.modules.application.ApplicationPackage(),
         new expo.modules.constants.ConstantsPackage(),
+        new expo.modules.crypto.CryptoPackage(),
         new expo.modules.errorrecovery.ErrorRecoveryPackage(),
         new expo.modules.filesystem.FileSystemPackage(),
         new expo.modules.font.FontLoaderPackage(),
@@ -16,7 +17,8 @@ public class BasePackageList {
         new expo.modules.keepawake.KeepAwakePackage(),
         new expo.modules.permissions.PermissionsPackage(),
         new expo.modules.splashscreen.SplashScreenPackage(),
-        new expo.modules.updates.UpdatesPackage()
+        new expo.modules.updates.UpdatesPackage(),
+        new expo.modules.webbrowser.WebBrowserPackage()
     );
   }
 }

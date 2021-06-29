@@ -6,11 +6,6 @@ import database from "@react-native-firebase/database";
 import { requestUserPermission, getFcmToken } from "../notifications";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
-GoogleSignin.configure({
-  webClientId:
-    "1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
-});
-
 const initialUser = {
   username: null,
   email: null,
@@ -33,6 +28,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   const [intializing, setInitializing] = useState(true);
 
   const UserChange = async (u) => {
+    // auth().signOut()
     const loggedUser = auth().currentUser;
     if (loggedUser) {
       try {
@@ -94,6 +90,11 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
       }
     );
 
+    GoogleSignin.configure({
+      webClientId:"1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
+    
+    });
+
     return () => {
       unsubscribeAuth();
       unsubscribeOnMessage();
@@ -142,28 +143,29 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   };
 
   const linkWithGoogle = async () => {
-    // console.log("SAD")
-    // var googleProvider =  new auth.GoogleAuthProvider();
-    // auth().currentUser.linkWithPopup(googleProvider).then((result) => {
-    //   // Accounts successfully linked.
-    //   var credential = result.credential;
-    //   var user = result.user;
-    //   console.log("CREDENTIAL", credential)
-    //   console.log("USER", result.user)
-    //   // ...
-    // }).catch((error) => {
-    //   // Handle Errors here.
-    //   // ...
-    // });
-    const { idToken } = await GoogleSignin.signIn();
-    let credential = auth.GoogleAuthProvider.credential(idToken);
+    try {
+      await GoogleSignin.hasPlayServices()
+      const { idToken } = await GoogleSignin.signIn();
+      let credential = auth.GoogleAuthProvider.credential(idToken);
+  
+      auth().currentUser.linkWithCredential(credential);
+    } catch(err) {
+      console.error(err)
+    }
 
-    auth().currentUser.linkWithCredential(credential);
-    console.log(idToken);
   };
+
   const loginWithGoogle = async () => {
-    // var googleProvider =  auth.GoogleAuthProvider();
-    // auth().signInWithCredential()
+    try {
+
+      await GoogleSignin.hasPlayServices()
+      const { idToken } = await GoogleSignin.signIn();
+      let credential = auth.GoogleAuthProvider.credential(idToken);
+  
+      auth().signInWithCredential(credential);
+    } catch(err) {
+      console.error(err)
+    }
   };
 
   return (

@@ -62,6 +62,11 @@ const Login = ({ navigation }) => {
             <TouchableOpacity style={authStyles.btn} onPress={initLogin}>
               <Text style={authStyles.text}>Login</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={authStyles.btn} onPress={()=> {
+              loginWithGoogle()
+            }}>
+              <Text style={authStyles.text}>Login With Google</Text>
+            </TouchableOpacity>
             <Text style={{ marginTop: SIZE.height / 8, fontSize: 18 }}>
               Already have account?
               <Text
