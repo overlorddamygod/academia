@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
-import COLORS from "../styles/colors";
 import { Ionicons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
