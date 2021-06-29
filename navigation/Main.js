@@ -1,11 +1,11 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import Announcement from "../screens/Announcement";
-import Home from "../screens/Home";
-import Gallery from "../screens/Gallery";
-import StudentList from "../screens/TeachersList";
-import DrawerTab from "./Drawer";
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from "@react-navigation/stack";
+import BottomTab from "./BottomTab";
 import IndividualChat from "../screens/IndividualChat";
+import { StudentStackScreen, TeacherStackScreen } from "./Stack";
 
 const MainStack = createStackNavigator();
 
@@ -13,13 +13,31 @@ function Main() {
   return (
     <MainStack.Navigator
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
       }}
     >
-      {/* <MainStack.Screen name="Drawer" component={DrawerTab} /> */}
-      {/* <MainStack.Screen name="IndividualChat" component={IndividualChat} /> */}
-      {/* <MainStack.Screen name="Gallery" component={Gallery} /> */}
-      {/* <MainStack.Screen name="StudentList" component={StudentList} /> */}
+      <MainStack.Screen name="BottomTab" component={BottomTab} />
+      <MainStack.Screen
+        name="IndividualChat"
+        component={IndividualChat}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <MainStack.Screen
+        name="Teacher"
+        component={TeacherStackScreen}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+        }}
+      />
+      <MainStack.Screen
+        name="Student"
+        component={StudentStackScreen}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+        }}
+      />
     </MainStack.Navigator>
   );
 }

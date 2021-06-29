@@ -1,21 +1,15 @@
 import React,{useContext} from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
-import BottomTab from "./BottomTab";
-import Login from "../screens/Login";
-import Register from "../screens/Register";
-import IndividualChat from "../screens/IndividualChat";
 import DrawerContent from "./DrawerContent";
 import { ThemeContext } from "../components/Theme";
-
+import MainStack from "./Main";
 import {
   AnnounceStackScreen,
   GalleryStackScreen,
   MaterialStackScreen,
   SettingStackScreen,
-  TeacherStackScreen,
   PersonDetailStackScreen,
-  StudentStackScreen,
 } from "./Stack";
 
 
@@ -60,16 +54,14 @@ const DrawerTab = () => {
         initialRouteName="Home"
       >
         {/* Contains Buttom tab navigator . */}
-        <Drawer.Screen name="Home" component={BottomTab} />
+        <Drawer.Screen name="Home" component={MainStack}/>
         <Drawer.Screen name="Settings" component={SettingStackScreen} />
         <Drawer.Screen name="Gallery" component={GalleryStackScreen} />
         <Drawer.Screen name="Announcements" component={AnnounceStackScreen} />
         <Drawer.Screen name="Materials" component={MaterialStackScreen} />
-        <Drawer.Screen name="Login" component={Login} />
-        <Drawer.Screen name="Register" component={Register} />
-        <Drawer.Screen name="Teacher" component={TeacherStackScreen} />
-        <Drawer.Screen name="Student" component={StudentStackScreen} />
-        <Drawer.Screen name="IndividualChat" component={IndividualChat} />
+        {/* <Drawer.Screen name="Login" component={Login} /> */}
+        {/* <Drawer.Screen name="Register" component={Register} /> */}
+        {/* <Drawer.Screen name="IndividualChat" component={IndividualChat} /> */}
         <Drawer.Screen
           name="PersonDetail"
           component={PersonDetailStackScreen}

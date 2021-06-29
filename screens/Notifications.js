@@ -32,7 +32,7 @@ const Notifications = ({ navigation }) => {
                   borderRadius: 8,
                   padding: 17,
                   flexDirection: "row",
-                 
+                  
                 }}
               >
                 <View>
@@ -42,7 +42,7 @@ const Notifications = ({ navigation }) => {
                     color={colors.text}
                   />
                 </View>
-                <View style={{ marginLeft: 20 }}>
+                <View style={{ flex:1,marginLeft: 20}}>
                   <Text
                     style={{
                       color: colors.text,

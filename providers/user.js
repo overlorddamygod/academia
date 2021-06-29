@@ -34,7 +34,6 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
   const UserChange = async (u) => {
     const loggedUser = auth().currentUser;
-    console.log("USER");
     if (loggedUser) {
       try {
         setUser(loggedUser);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity,Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -32,8 +32,10 @@ const BottomTab = (props) => {
             backgroundColor: colors.buttomtab,
             elevation: 4,
             height: SIZE.height * 1.6,
-          
           },
+        }}
+        screenOptions={{
+          headerShown:false
         }}
       >
         <Tabs.Screen
@@ -139,7 +141,7 @@ const BottomTab = (props) => {
 export default BottomTab;
 const styles = StyleSheet.create({
   middleIcon: {
-    height: SIZE.height * 2,
+    flex:1,
     width: SIZE.height * 2,
     alignItems: "center",
     justifyContent: "center",
