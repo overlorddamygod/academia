@@ -5,15 +5,14 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  Dimensions,
   TouchableOpacity,
   Modal,
 } from "react-native";
-
-
+import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import Header from "../components/Header";
-const { width } = Dimensions.get("window");
+import { Ionicons } from "@expo/vector-icons";
+
 const images = [
   "https://academiacollege.edu.np/img/landing.jpg",
   "https://i.pinimg.com/564x/bf/fa/c1/bffac152b96db8c2290c8e3f09699301.jpg",
@@ -21,16 +20,12 @@ const images = [
   "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
   "https://academiacollege.edu.np/img/abt.jpg",
   "https://academiacollege.edu.np/storage/sports/cover/1623690510-d.JPG",
- 
-  
-  
 ];
-
 
 const Gallery = ({ navigation }) => {
   const [active, setActive] = useState(0);
   const [visible, setIsVisible] = useState(false);
-
+  const [imageuri, setImageuri] = useState("");
 
   const change = ({ nativeEvent }) => {
     const slide = Math.ceil(
@@ -78,14 +73,16 @@ const Gallery = ({ navigation }) => {
           }}
         >
           {images.map((image, index) => (
-            <View>
+            <View key={index}>
               <TouchableOpacity
-                onPress={() => setIsVisible(true)}
+                onPress={() => {
+                  setIsVisible(true);
+                  setImageuri(image);
+                }}
                 activeOpacity={0.7}
               >
-              
                 <Image
-                  source={{uri:image}}
+                  source={{ uri: image }}
                   style={{
                     width: SIZE.screenWidth / 2.1,
                     height: 200,
@@ -95,37 +92,55 @@ const Gallery = ({ navigation }) => {
                   }}
                 />
               </TouchableOpacity>
-             
-              {/* <Modal 
-               onRequestClose={() => setIsVisible(false)}
-                visible={visible}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "#111",
-                  }}
-                >
-                  <Image
-               
-                    source={{uri:image}}
-                    style={{
-                      width: SIZE.screenWidth,
-                      height: 400,
-                      resizeMode: "cover",
-                      marginTop: 5,
-                      marginHorizontal: 2,
-                    }}
-                  />
-                </View>
-              </Modal> */}
             </View>
           ))}
 
-          
+          <Modal onRequestClose={() => setIsVisible(false)} visible={visible}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#111",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => setIsVisible(false)}
+                style={{position: "relative", width: "100%" }}
+              >
+                <Ionicons
+                  style={{
+                    marginTop:10,
+                    alignSelf:'flex-end'
+                  }}
+                  name="close"
+                  size={34}
+                  color="white"
+                />
+              </TouchableOpacity>
+
+              <ReactNativeZoomableView
+                maxZoom={2}
+                minZoom={1}
+                zoomStep={0.5}
+                initialZoom={1}
+                bindToBorders={true}
+                captureEvent={true}
+              >
+                <Image
+                  source={{ uri: `${imageuri}` }}
+                  style={{
+                    width: SIZE.screenWidth,
+                    height: "100%",
+                    resizeMode: "contain",
+                    marginTop: 5,
+                    marginHorizontal: 2,
+                  }}
+                />
+              </ReactNativeZoomableView>
+            </View>
+          </Modal>
         </View>
-        
       </ScrollView>
     </>
   );
