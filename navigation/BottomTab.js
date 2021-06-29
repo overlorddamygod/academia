@@ -16,19 +16,20 @@ import {
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
 import { SIZE } from "../styles/globalStyle";
+import { useTheme } from "@react-navigation/native";
 
 const Tabs = createBottomTabNavigator();
 
 const BottomTab = (props) => {
   const [showDialog, setShowDialog] = useState(false);
-
+  const {colors} = useTheme()
   return (
     <>
       <Tabs.Navigator
         tabBarOptions={{
           showLabel: false,
           style: {
-            backgroundColor: "#0E243F",
+            backgroundColor: colors.buttomtab,
             elevation: 4,
             height: SIZE.height * 1.6,
           

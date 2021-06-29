@@ -12,11 +12,12 @@ import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import database from "@react-native-firebase/database"
+import { useTheme } from '@react-navigation/native';
 
 const Chat = ({ navigation }) => {
   const { user } = useUserContext();
   const [conversations, setConversations] = useState([]);
-
+  const { colors } = useTheme();
   const collectionRef = firestore().collection("conversation").where("participants","array-contains", user.id);
   
   // const conversationRef = database().ref(`/conversations`).where("participants","")
@@ -38,7 +39,7 @@ const Chat = ({ navigation }) => {
   }, []);
  
   return (
-    <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <View style={{ backgroundColor: colors.background, flex: 1 }}>
       <Header
         showBackMenu={false}
         title="Message People"
@@ -53,7 +54,7 @@ const Chat = ({ navigation }) => {
           <TouchableOpacity
             activeOpacity={0.7}
             style={{
-              backgroundColor: "#EBF4FF",
+              backgroundColor: colors.card,
               marginHorizontal: SIZE.width,
               marginVertical: SIZE.height * 0.3,
               paddingHorizontal: SIZE.width * 1,
@@ -82,7 +83,7 @@ const Chat = ({ navigation }) => {
             <Text style={{
               fontSize: 20,
               fontWeight: "bold",
-              color: "#333"
+              color: colors.text
             }}>{getChatName(item,user.id)}</Text>
             </View>
           </TouchableOpacity>

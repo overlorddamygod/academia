@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 
 const UpcomingEvent = () => {
+  const { colors } = useTheme();
   const [events, setEvents] = useState([
     { name: "App Event", date: "May 12" },
     { name: "Sports Event", date: "May 24" },
@@ -12,13 +14,13 @@ const UpcomingEvent = () => {
   return (
     <View>
       <View
-        style={styles.card}
+        style={{...styles.card,backgroundColor:colors.card}}
       >
-        <Text style={{ color: "#444", fontSize: 16 }}>Upcoming Event</Text>
+        <Text style={{ color:colors.text,fontSize: 16 }}>Upcoming Event</Text>
         
       </View>
 
-      <View style={{ width:'100%',padding:10}}>
+      <View style={{ width:'100%',padding:SIZE.width*0.7}}>
         <FlatList
         horizontal={true}
           data={events}
@@ -42,7 +44,6 @@ const UpcomingEvent = () => {
 export default UpcomingEvent;
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#fff",
     width:SIZE.width *7,
     borderRadius: 5,
     padding: SIZE.width *0.4,

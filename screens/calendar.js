@@ -16,7 +16,8 @@ import { Dialog } from "react-native-ui-lib";
 import { Feather } from "@expo/vector-icons";
 import AddEvent from "../components/AddEvent";
 import { SIZE } from "../styles/globalStyle";
-
+import { useTheme } from '@react-navigation/native';
+import { color } from "react-native-reanimated";
 const CalendarScreen = ({ navigation }) => {
   const todaysDate = new Date();
   const [date, setDate] = useState({
@@ -25,7 +26,7 @@ const CalendarScreen = ({ navigation }) => {
     date: todaysDate.getDate(),
     day: todaysDate.getDay(),
   });
-
+  const { colors } = useTheme();
   const [eventsCache, setEventsCache] = useState({});
   const [events, setEvents] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -91,7 +92,7 @@ const CalendarScreen = ({ navigation }) => {
   return (
     <>
       <Header title="Calendar" navigation={navigation} showBackMenu={false} />
-      <View style={{ flex: 1, backgroundColor: "white" }}>
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
         <Calendar
           markingType={"period"}
           markedDates={{
@@ -129,9 +130,9 @@ const CalendarScreen = ({ navigation }) => {
             setDate(time);
             getEventsForMonth(time.year, time.month);
           }}
-          style={{ backgroundColor: COLORS.main }}
+          style={{ backgroundColor: colors.mainblue }}
           theme={{
-            calendarBackground: COLORS.main,
+            calendarBackground:  colors.mainblue,
             dayTextColor: COLORS.white,
             textDisabledColor: COLORS.grey,
             arrowColor: COLORS.white,
@@ -156,7 +157,7 @@ const CalendarScreen = ({ navigation }) => {
               style={{
                 fontSize: 30,
                 fontWeight: "bold",
-                color: COLORS.black,
+                color: colors.text
               }}
             >
               Events
@@ -169,7 +170,7 @@ const CalendarScreen = ({ navigation }) => {
                 console.log("Add Event");
               }}
             >
-              <Feather name="plus" color={COLORS.black} size={35}></Feather>
+              <Feather name="plus" color={colors.text} size={35}></Feather>
             </TouchableOpacity>
           </View>
 
@@ -183,7 +184,7 @@ const CalendarScreen = ({ navigation }) => {
             />
           ) : (
             <View style={{ alignItems: "center", marginTop: 50 }}>
-              <Text>No events for this month</Text>
+              <Text style={{colors:colors.text}}>No events for this month</Text>
             </View>
           )}
         </View>
@@ -213,6 +214,7 @@ const CalendarScreen = ({ navigation }) => {
 export default CalendarScreen;
 
 const CalendarEventListItem = ({ event }) => {
+  const {colors} = useTheme();
   return (
     <TouchableOpacity activeOpacity={0.8}>
       <View
@@ -230,13 +232,14 @@ const CalendarEventListItem = ({ event }) => {
             paddingRight: 10,
             marginRight: 10,
             borderRightWidth: 3,
+            color:colors.text,
             borderRightColor: tagColor[event.tag],
           }}
         >
           {formatDate(event.date.toDate().getDate())}
         </Text>
 
-        <Text style={{ fontSize: 16, flex: 1 }}>{event.title}</Text>
+        <Text style={{ fontSize: 16, flex: 1,color:colors.text }}>{event.title}</Text>
       </View>
     </TouchableOpacity>
   );

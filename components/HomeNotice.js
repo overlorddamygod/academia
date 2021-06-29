@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
-
+import { useTheme } from "@react-navigation/native";
 const HomeNotice = ({navigation}) => {
+  const { colors } = useTheme();
   const [events, setEvents] = useState([
     { name: "Sports Event", detail: "Submit before may 23", date: "May 23" },
     {
@@ -27,19 +28,19 @@ const HomeNotice = ({navigation}) => {
     >
    {/* only some five latest events for home page . There will be separate page for events */}
       {events.map(item => (
-        <View style={styles.events} key={item.date}>
+        <View style={{...styles.events,backgroundColor:colors.card}} key={item.date}>
         <View style={{ width: "60%" }}>
           <Text
             style={{
               ...globalStyles.txt,
               fontWeight: "bold",
-              color: "#444",
+              color:colors.text
             }}
           >
             {item.name}
           </Text>
           <Text
-            style={{ ...globalStyles.midText, color: "#888", marginTop: 5 }}
+            style={{ ...globalStyles.midText, color: "#888", marginTop: 5 ,color:colors.text}}
           >
             {item.detail}
           </Text>
@@ -52,7 +53,7 @@ const HomeNotice = ({navigation}) => {
       </View>
       ))}
       <TouchableOpacity onPress={()=>navigation.navigate('Announcements')} style={{ marginTop:SIZE.height *0.4}}>
-        <Text style={styles.btnText}>See All Events</Text>
+        <Text style={{...styles.btnText,color:colors.text}}>See All Events</Text>
       </TouchableOpacity>
     </View>
   );
@@ -63,7 +64,6 @@ const styles = StyleSheet.create({
   events: {
     padding: SIZE.width,
     position: "relative",
-    backgroundColor: "white",
     marginTop: SIZE.width*0.4,
     width: SIZE.screenWidth * 0.9,
     borderRadius: 9,
@@ -80,8 +80,6 @@ const styles = StyleSheet.create({
     padding: SIZE.width*0.5,
   },
   btnText:{
-   
-    color:'#444',
     fontSize:16,
     fontWeight:'bold'
   }
