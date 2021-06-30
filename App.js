@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React,{useEffect} from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import Auth from "./navigation/Auth";
 import DrawerTab from "./navigation/Drawer";
@@ -7,9 +7,7 @@ import { UserProvider } from "./providers/user";
 import ThemeProvider from "./components/Theme";
 
 export default function App() {
-  useEffect(() => {
-    // StatusBar.setBarStyle('light-content')
-  }, [])
+
   return (
     <ThemeProvider>
     <View style={styles.container}>

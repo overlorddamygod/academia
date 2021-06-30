@@ -8,10 +8,11 @@ import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useUserContext } from "../providers/user";
 import { SIZE } from "../styles/globalStyle";
 import auth from "@react-native-firebase/auth"
+import { useTheme } from "@react-navigation/native";
 
 const DrawerContent = ({ navigation }) => {
   const { user, logout: _logout } = useUserContext();
-
+ const {colors} = useTheme()
   const logout = () => {
     _logout();
     navigation.closeDrawer();
@@ -22,11 +23,11 @@ const DrawerContent = ({ navigation }) => {
   let googlePhotoUrl = googleData.length>0 ? googleData[0].photoURL : "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png"
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#414567" }}>
+    <View style={{ flex: 1, backgroundColor: colors.drawerBackground }}>
       <View
         style={{
           height: SIZE.height * 5,
-          backgroundColor: "#636996",
+          backgroundColor: colors.upcoming,
           borderBottomRightRadius: 90,
         }}
       >
