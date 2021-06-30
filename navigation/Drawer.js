@@ -18,7 +18,7 @@ const Drawer = createDrawerNavigator();
 
 const DrawerTab = () => {
   const {isDark} = useContext(ThemeContext);
-
+  // 1e1b2e #191b2a 262a3d c05fff 232232
   const LightTheme = {
     ...DefaultTheme,
   colors:{
@@ -30,19 +30,23 @@ const DrawerTab = () => {
     mainblue:'#4C367B',
     buttomtab:'#0E243F',
     border:'lightgray',
+    upcoming:'#323752',
+    drawerBackground:'#414567',
   }}
 
   const CustomDarkTheme = {
     ...DarkTheme,
   colors:{
     ...DarkTheme.colors,
-    background:"#11042b",
-    card:'#393861',
+    background:"#191b2a",
+    card:'#262a3d',
     btn:'#6765c2',
     msgIcon:'#393861',
-    mainblue:'#2e2657',
-    buttomtab:'#27284a',
-    border:'#3e3f73',
+    mainblue:'#202336',
+    buttomtab:'#1e1b2e',
+    border:'#2b2e3d',
+    upcoming:'#262a3d',
+    drawerBackground:'#191b2a',
   }}
 
   const themes = isDark?CustomDarkTheme:LightTheme;
