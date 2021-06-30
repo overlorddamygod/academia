@@ -4,13 +4,17 @@ import { StyleSheet, View } from "react-native";
 import Auth from "./navigation/Auth";
 import DrawerTab from "./navigation/Drawer";
 import { UserProvider } from "./providers/user";
+import ThemeProvider from "./components/Theme";
 
 export default function App() {
+
   return (
+    <ThemeProvider>
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <UserProvider SignedOutScreen={Auth} SignedInScreen={DrawerTab} />
     </View>
+    </ThemeProvider>
   );
 }
 

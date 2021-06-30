@@ -10,6 +10,7 @@ import {
 import COLORS from "../styles/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { SIZE } from "../styles/globalStyle";
+import { useTheme } from "@react-navigation/native";
 
 const Header = ({
   title,
@@ -18,9 +19,10 @@ const Header = ({
   showSidebar = true,
   showBackMenu = true,
 }) => {
+  const {colors}  = useTheme()
   return (
-    <View style={styles.headers}>
-      <View style={{ height: SIZE.height * 1.5 }}></View>
+    <View style={{...styles.headers,backgroundColor:colors.mainblue}}>
+      <View style={{ height: StatusBar.currentHeight }}></View>
       <View
         style={{
           ...styles.head,
@@ -56,15 +58,15 @@ export default Header;
 
 const styles = StyleSheet.create({
   headers: {
-    paddingBottom: SIZE.height * 0.8,
+    // paddingBottom: SIZE.height * 0.8,
     width: "100%",
-    backgroundColor: COLORS.main,
   },
   head: {
+    // flex:1,
     flexDirection: "row",
-    flex: 1,
-    // justifyContent:"center",
     alignItems: "center",
+    // borderWidth:2,
+    marginVertical: SIZE.height * 0.3
   },
   text: {
     color: "white",

@@ -16,6 +16,7 @@ import { SIZE } from "../styles/globalStyle";
 import { Feather } from "@expo/vector-icons";
 import Hyperlink from "react-native-hyperlink";
 import database from "@react-native-firebase/database";
+import { useTheme } from '@react-navigation/native';
 
 const IndividualChat = ({ navigation, route: { params } }) => {
   const { id, name, conversation } = params;
@@ -27,7 +28,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   const [status, setStatus] = useState(false);
   const [online, setOnline] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(false);
-
+  const { colors } = useTheme();
   const conversationRef = database().ref(`/conversations/${id}`);
 
   useEffect(() => {
@@ -110,7 +111,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   };
 
   return (
-    <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <View style={{ backgroundColor: colors.background, flex: 1 }}>
       <Header
         title={name + `${online ? " Online" : ""}`}
         navigation={navigation}
@@ -183,7 +184,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
           marginHorizontal: SIZE.width * 1.7,
           alignItems: "center",
           flexDirection: "row",
-          backgroundColor: "#F6F8FD",
+          backgroundColor: colors.card,
           paddingLeft: SIZE.width * 1.2,
           borderRadius: 30,
           paddingRight: SIZE.width * 0.6,
@@ -191,10 +192,11 @@ const IndividualChat = ({ navigation, route: { params } }) => {
         }}
       >
         <TextInput
-          style={{ flex: 1 }}
+          style={{ flex: 1 ,color:colors.text}}
           value={message}
           onChangeText={setMessage}
           placeholder="Type a message.."
+          placeholderTextColor={colors.text}
           onChange={() => {
             startTyping();
           }}
@@ -203,7 +205,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
         <TouchableOpacity
           onPress={sendMessage}
           style={{
-            backgroundColor: "#583EFF",
+            backgroundColor: colors.btn,
             height: 35,
             width: 35,
             borderRadius: 30,
@@ -226,6 +228,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
 export default IndividualChat;
 
 const ChatMessage = ({ message, me, deleteMessage, seen }) => {
+  const {colors} =useTheme();
   const messageItems = [
     <View
       key={`${message.id}1`}
@@ -233,7 +236,7 @@ const ChatMessage = ({ message, me, deleteMessage, seen }) => {
         width: SIZE.width * 2.25,
         height: SIZE.height * 1.1,
         justifyContent: "center",
-        backgroundColor: "black",
+        backgroundColor: colors.msgIcon,
         borderRadius: 30,
       }}
     >

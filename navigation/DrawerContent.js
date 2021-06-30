@@ -7,6 +7,7 @@ import { authStyles } from "../styles/authStyle";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useUserContext } from "../providers/user";
 import { SIZE } from "../styles/globalStyle";
+import auth from "@react-native-firebase/auth"
 
 const DrawerContent = ({ navigation }) => {
   const { user, logout: _logout } = useUserContext();
@@ -15,6 +16,11 @@ const DrawerContent = ({ navigation }) => {
     _logout();
     navigation.closeDrawer();
   };
+
+  const googleData = auth().currentUser.providerData.filter(provider=>provider.providerId=="google.com")
+
+  let googlePhotoUrl = googleData.length>0 ? googleData[0].photoURL : "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png"
+
   return (
     <View style={{ flex: 1, backgroundColor: "#414567" }}>
       <View
@@ -58,7 +64,7 @@ const DrawerContent = ({ navigation }) => {
           </View>
           <Image
             source={{
-              uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+              uri: googlePhotoUrl,
             }}
             style={styles.avatar}
           />
