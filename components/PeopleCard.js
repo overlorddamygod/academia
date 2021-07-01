@@ -12,9 +12,10 @@ import { globalStyles } from "../styles/globalStyle";
 import firestore from "@react-native-firebase/firestore";
 import database from "@react-native-firebase/database";
 import { useUserContext } from "../providers/user";
-
+import { useTheme } from "@react-navigation/native";
 const PeopleCard = ({ data, navigation }) => {
   const { user } = useUserContext();
+  const {colors} = useTheme();
   const startChat = () => {
     console.log([`${user.id}${data.id}`, `${data.id}${user.id}`]);
     firestore()
@@ -75,7 +76,7 @@ const PeopleCard = ({ data, navigation }) => {
       style={{
         marginHorizontal: 25,
         marginBottom: 10,
-        backgroundColor: "white",
+        backgroundColor: colors.card,
         borderRadius: 8,
         padding: 12,
         flexDirection: "row",
@@ -93,7 +94,7 @@ const PeopleCard = ({ data, navigation }) => {
       <View style={{ marginLeft: 20 }}>
         <Text
           style={{
-            color: "#444",
+            color: colors.text,
             fontWeight: "bold",
             fontSize: 20,
             marginVertical: 2,
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   msgBtn: {
-    backgroundColor: "blueviolet",
+    backgroundColor: "#6765c2",
     padding: 8,
     justifyContent: "center",
     alignItems: "center",

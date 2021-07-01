@@ -43,11 +43,13 @@ const BottomTab = (props) => {
           component={HomeStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
+              <View style={focused?styles.middleIcon:null}>
               <AntDesign
                 name="home"
                 size={focused ? 29 : 24}
-                color={focused ? "pink" : "white"}
+                color={"white"}
               />
+              </View>
             ),
           }}
         />
@@ -56,11 +58,13 @@ const BottomTab = (props) => {
           component={ChatStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
+              <View style={focused?styles.middleIcon:null}>
               <Ionicons
                 name="chatbox-ellipses-outline"
                 size={focused ? 29 : 24}
-                color={focused ? "pink" : "white"}
+                color={'white'}
               />
+              </View>
             ),
           }}
         />
@@ -75,11 +79,11 @@ const BottomTab = (props) => {
                   setShowDialog(true);
                 }}
               >
-                <View style={styles.middleIcon}>
+                <View style={focused?styles.middleIcon:null}>
                   <Feather
                     name="users"
                     size={focused ? 29 : 24}
-                    color={focused ? "pink" : "white"}
+                    color={"white"}
                   />
                 </View>
               </TouchableOpacity>
@@ -92,11 +96,13 @@ const BottomTab = (props) => {
           component={CalendarStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
+              <View style={focused?styles.middleIcon:null}>
               <AntDesign
                 name="calendar"
                 size={focused ? 29 : 24}
-                color={focused ? "pink" : "white"}
+                color={"white"}
               />
+              </View>
             ),
           }}
         />
@@ -105,11 +111,13 @@ const BottomTab = (props) => {
           component={NotificationsStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
+              <View style={focused?styles.middleIcon:null}>
               <Ionicons
                 name="notifications-outline"
                 size={focused ? 29 : 24}
-                color={focused ? "pink" : "white"}
+                color={"white"}
               />
+              </View>
             ),
           }}
         />
@@ -120,7 +128,7 @@ const BottomTab = (props) => {
         bottom={true}
         panDirection={"Down"}
         containerStyle={{
-          backgroundColor: "#0E243F",
+          backgroundColor: colors.dialogs,
           justifyContent: "space-between",
           paddingVertical: SIZE.height / 2,
           borderTopRightRadius: 30,

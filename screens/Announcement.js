@@ -64,11 +64,11 @@ const AnnouncementScreen = ({ navigation }) => {
         <View
           style={{
             height: StatusBar.currentHeight,
-            backgroundColor: "#4C367B",
+            backgroundColor: colors.background,
           }}
         ></View>
         {/* <AppBar title="Announcements"></AppBar> */}
-        <View style={{ ...styles.tags, ...styles.shadow,backgroundColor:colors.card }}>
+        <View style={{ ...styles.tags, ...styles.shadow,backgroundColor:colors.card}}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -136,7 +136,7 @@ const Announcement = ({
           borderRadius: 6,
         }}
       >
-        <Text style={{ color: colors.text }}>{data.tag}</Text>
+        <Text style={{ color: colors.text ,padding:3}}>{data.tag}</Text>
       </View>
       <Text style={{color: colors.text , fontWeight: "bold", fontSize: 20, marginVertical: 8 }}>
         {data.title}

@@ -16,8 +16,10 @@ import { authStyles } from "../styles/authStyle";
 import { Ionicons } from "@expo/vector-icons";
 import { useCollection } from "../hooks/firestore";
 
+
 const StudentList = ({ navigation }) => {
   const { user } = useUserContext();
+ 
   const [students, loading, error] = useCollection(
     firestore()
       .collection("user")
