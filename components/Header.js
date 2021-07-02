@@ -19,9 +19,9 @@ const Header = ({
   showSidebar = true,
   showBackMenu = true,
 }) => {
-  const {colors}  = useTheme()
+  const { colors } = useTheme();
   return (
-    <View style={{...styles.headers,backgroundColor:colors.mainblue}}>
+    <View style={{ ...styles.headers, backgroundColor: colors.mainblue }}>
       <View style={{ height: StatusBar.currentHeight }}></View>
       <View
         style={{
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     // borderWidth:2,
-    marginVertical: SIZE.height * 0.3
+    marginVertical: SIZE.height * 0.3,
   },
   text: {
     color: "white",

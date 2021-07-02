@@ -5,7 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import firestore from "@react-native-firebase/firestore";
@@ -54,7 +54,7 @@ const StudentList = ({ navigation }) => {
         <View style={{ marginTop: 50, flex: 1 }}>
           {loading ? (
             <View style={{ alignItems: "center" }}>
-             <ActivityIndicator size="large" color="#f44" />
+              <ActivityIndicator size="large" color="#f44" />
             </View>
           ) : error ? (
             <View style={{ alignItems: "center" }}>

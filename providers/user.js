@@ -107,15 +107,16 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
     if (!username || !email || !password) return;
 
     try {
+      console.log()
       let res = await fetch(
-        "https://academiacollege.azurewebsites.net/api/signUp",
+        "https://academiacollege.azurewebsites.net/api/signup?code=XatmuqcfTTFvHRhCLtHAWU6M1CFii1Jvtn8TH4hTmFOXTS3Ux85M0A%3D%3D",
         {
           method: "POST",
           body: JSON.stringify({
             username,
             email,
             password,
-          }),
+          })
         }
       );
       res = await res.json();

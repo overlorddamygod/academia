@@ -18,15 +18,4 @@ const getFcmToken = async () => {
   return fcmToken;
 };
 
-const sendNotification = (data) => {
-  // messaging().
-  messaging().sendMessage({
-    notification: {
-      title: data.title,
-      body: data.title + data.date,
-    },
-    messageId: "22424",
-  });
-};
-
-export { requestUserPermission, getFcmToken, sendNotification };
+export { requestUserPermission, getFcmToken };

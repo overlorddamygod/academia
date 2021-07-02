@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import ForgotPassword from "../screens/ForgotPassword";
 const AuthStack = createStackNavigator();
 
 function Auth() {
@@ -16,6 +17,7 @@ function Auth() {
       >
         <AuthStack.Screen name="Login" component={Login} />
         <AuthStack.Screen name="Register" component={Register} />
+        <AuthStack.Screen name="ForgotPassword" component={ForgotPassword} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

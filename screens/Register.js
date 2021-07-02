@@ -12,13 +12,12 @@ import {
 import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
-import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
 
 const Register = ({ navigation }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("Test69");
+  const [email, setEmail] = useState("test69@gmail.com");
+  const [password, setPassword] = useState("test123");
   const [registering, setRegistering] = useState(false);
 
   const { register } = useUserContext();

@@ -8,7 +8,7 @@ import { sendNotification } from "../notifications";
 import { useUserContext } from "../providers/user";
 
 const AddEvent = ({ date, closeDialog }) => {
-  const { user } = useUserContext()
+  const { user } = useUserContext();
   const todaysDate = new Date();
   const [notificationData, setNotificationData] = useState({
     send: false,
@@ -55,24 +55,30 @@ const AddEvent = ({ date, closeDialog }) => {
       //   date: eventData.date,
       //   topic: notificationData.title,
       // });
-      const idToken = await auth().currentUser.getIdToken()
-      console.log(idToken)
-      fetch("https://academiacollege.azurewebsites.net/api/addevent?code=%2F6irg0JmuJqjGbXxEZvRUv7pwDOkqpM6hxCLsHS9AS6VXvOhJFcrwA%3D%3D", {
-        method: "POST",
-        headers: JSON.stringify({
-          "Authorization": idToken
-        }),
-        body: JSON.stringify({
-          notification: {
-            title: "YOO",
-            body: "YOO"
-          },
-          data: {
-            logout: false
-          },
-          topic: "Student"
-        })
-      }).then(res=>res.json()).then(console.log).catch(console.error)
+      const idToken = await auth().currentUser.getIdToken();
+      console.log(idToken);
+      fetch(
+        "https://academiacollege.azurewebsites.net/api/addevent?code=%2F6irg0JmuJqjGbXxEZvRUv7pwDOkqpM6hxCLsHS9AS6VXvOhJFcrwA%3D%3D",
+        {
+          method: "POST",
+          headers: JSON.stringify({
+            Authorization: idToken,
+          }),
+          body: JSON.stringify({
+            notification: {
+              title: "YOO",
+              body: "YOO",
+            },
+            data: {
+              logout: false,
+            },
+            topic: "Student",
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then(console.log)
+        .catch(console.error);
     }
     closeDialog();
   };

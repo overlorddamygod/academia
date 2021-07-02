@@ -58,7 +58,6 @@ const HomeNotice = ({ navigation }) => {
           </View>
         </View>
       </View>
-
       <TouchableOpacity
         onPress={() => navigation.navigate("Announcements")}
         style={{ marginTop: SIZE.height * 0.4 }}
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     padding: SIZE.width,
     position: "relative",
     marginTop: SIZE.width * 0.4,
-    width: SIZE.screenWidth * 0.91,
+    width: SIZE.screenWidth * 0.9,
     borderRadius: 9,
   },
   btn: {
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 16,
     fontWeight: "bold",
-  },
+
   midView: {
     width: "100%",
     height: 80,
@@ -107,5 +106,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     letterSpacing: 2,
+
   },
 });

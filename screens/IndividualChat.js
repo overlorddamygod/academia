@@ -16,7 +16,7 @@ import { SIZE } from "../styles/globalStyle";
 import { Feather } from "@expo/vector-icons";
 import Hyperlink from "react-native-hyperlink";
 import database from "@react-native-firebase/database";
-import { useTheme } from '@react-navigation/native';
+import { useTheme } from "@react-navigation/native";
 
 const IndividualChat = ({ navigation, route: { params } }) => {
   const { id, name, conversation } = params;
@@ -192,7 +192,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
         }}
       >
         <TextInput
-          style={{ flex: 1 ,color:colors.text}}
+          style={{ flex: 1, color: colors.text }}
           value={message}
           onChangeText={setMessage}
           placeholder="Type a message.."
@@ -228,7 +228,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
 export default IndividualChat;
 
 const ChatMessage = ({ message, me, deleteMessage, seen }) => {
-  const {colors} =useTheme();
+  const { colors } = useTheme();
   const messageItems = [
     <View
       key={`${message.id}1`}

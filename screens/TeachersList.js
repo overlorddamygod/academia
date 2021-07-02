@@ -43,7 +43,6 @@ const TeacherList = ({ navigation }) => {
         <View style={{ marginTop: 50 }}>
           {loading ? (
             <View style={{ alignItems: "center" }}>
-        
               <ActivityIndicator size="large" color="#f44" />
             </View>
           ) : (
