@@ -133,7 +133,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
             alignItems: "center",
           }}
         >
-          <Text style={{ fontSize: 20 }}>Start A Conversation</Text>
+          <Text style={{ fontSize: 20,color:colors.text }}>Start A Conversation</Text>
         </View>
       ) : (
         <View style={{ flex: 1 }}>
@@ -176,7 +176,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
               {name[0]}
             </Text>
           </View>
-          <Text> {name + " "}is typing...</Text>
+          <Text style={{color:colors.text}}> {name + " "}is typing...</Text>
         </View>
       )}
       <View
@@ -279,11 +279,11 @@ const ChatMessage = ({ message, me, deleteMessage, seen }) => {
     </TouchableOpacity>,
     <View key={`${message.id}3`}>
       {/* <Moment date={message.createdAt}><Text></Text></Moment> */}
-      <Text style={{ fontSize: 10 }}>
+      <Text style={{ fontSize: 10,color:colors.text }}>
         {new Date(message.createdAt).toLocaleTimeString()}
       </Text>
       {me && message.createdAt == seen && (
-        <Text style={{ fontSize: 12 }}>Seen</Text>
+        <Text style={{ fontSize: 12,color:colors.text }}>Seen</Text>
       )}
     </View>,
   ];

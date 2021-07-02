@@ -17,9 +17,12 @@ import UpcomingEvent from "../components/UpcomingEvent";
 import HomeNotice from "../components/HomeNotice";
 import { ThemeContext } from "../components/Theme";
 import { useTheme } from "@react-navigation/native";
+import ImageCarousel from "../components/ImageCarousel";
+import { images } from "../styles/colors";
 
 const Home = ({ navigation }) => {
   const { colors } = useTheme();
+
   const { user } = useUserContext();
   const { isDark } = useContext(ThemeContext);
   return (
@@ -41,9 +44,8 @@ const Home = ({ navigation }) => {
             <Text
               style={{
                 ...globalStyles.txt,
-                 paddingLeft: SIZE.width ,
-                 marginTop: -SIZE.width / 1.8,
-                 
+                paddingLeft: SIZE.width,
+                marginTop: -SIZE.width / 1.8,
               }}
             >
               It's {isDark ? "Dark" : "Light"} theme right ?
@@ -64,8 +66,19 @@ const Home = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View>
+              <View style={{ ...globalStyles.card,width:SIZE.screenWidth*0.3, backgroundColor: colors.card,marginBottom:4 }}>
+                <Text style={{ color: colors.text, fontSize: 16 }}>
+                  Recent Photos
+                </Text>
+              </View>
+            <ImageCarousel images={images} />
+          </View>
+         
+
+          <View>
             <UpcomingEvent />
           </View>
+
           <View style={{ flex: 1 }}>
             <HomeNotice navigation={navigation} />
           </View>
@@ -87,4 +100,5 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     alignItems: "center",
   },
+ 
 });
