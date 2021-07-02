@@ -51,7 +51,7 @@ const Chat = ({ navigation }) => {
             style={{
               backgroundColor: colors.card,
               marginHorizontal: SIZE.width,
-              marginVertical: SIZE.height * 0.3,
+              marginVertical: SIZE.height * 0.2,
               paddingHorizontal: SIZE.width * 1,
               paddingVertical: SIZE.height * 0.3,
               borderRadius: 10,

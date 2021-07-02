@@ -47,7 +47,7 @@ const AnnouncementScreen = ({ navigation }) => {
         <View
           style={{
             height: StatusBar.currentHeight,
-            backgroundColor: "#4C367B",
+            backgroundColor: colors.background,
           }}
         ></View>
         {/* <AppBar title="Announcements"></AppBar> */}
@@ -131,7 +131,7 @@ const Announcement = ({
           borderRadius: 6,
         }}
       >
-        <Text style={{ color: COLORS.white }}>{data.tag}</Text>
+        <Text style={{ color: COLORS.white,padding:3 }}>{data.tag}</Text>
       </View>
       <Text
         style={{

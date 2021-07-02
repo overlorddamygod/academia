@@ -63,10 +63,16 @@ const globalStyles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 2,
   },
-  smallavatar: {
-    height: 60,
-    width: 60,
-    borderRadius: 50,
+  smallavatar:{
+    height:60,
+    width:60,
+    borderRadius:50
+  },
+  card: {
+    borderRadius: 5,
+    padding: SIZE.width * 0.5,
+    marginLeft: SIZE.width * 0.7,
+    marginTop: SIZE.width * 0.7,
   },
 });
 

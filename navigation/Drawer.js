@@ -10,6 +10,7 @@ import {
   MaterialStackScreen,
   SettingStackScreen,
   PersonDetailStackScreen,
+  HomeStackScreen,
 } from "./Stack";
 
 
@@ -32,6 +33,8 @@ const DrawerTab = () => {
     border:'lightgray',
     upcoming:'#323752',
     drawerBackground:'#414567',
+    dialogs:'#202336',
+    midBox:'#edf0f5'
   }}
 
   const CustomDarkTheme = {
@@ -39,14 +42,16 @@ const DrawerTab = () => {
   colors:{
     ...DarkTheme.colors,
     background:"#191b2a",
-    card:'#262a3d',
+    card:'#30354d',
     btn:'#6765c2',
     msgIcon:'#393861',
-    mainblue:'#202336',
+    mainblue:'#343954',
     buttomtab:'#1e1b2e',
     border:'#2b2e3d',
     upcoming:'#262a3d',
     drawerBackground:'#191b2a',
+    dialogs:'#191b2a',
+    midBox:'#212538'
   }}
 
   const themes = isDark?CustomDarkTheme:LightTheme;
@@ -63,6 +68,7 @@ const DrawerTab = () => {
         <Drawer.Screen name="Gallery" component={GalleryStackScreen} />
         <Drawer.Screen name="Announcements" component={AnnounceStackScreen} />
         <Drawer.Screen name="Materials" component={MaterialStackScreen} />
+        <Drawer.Screen name="GoHome" component={HomeStackScreen} />
         {/* <Drawer.Screen name="Login" component={Login} /> */}
         {/* <Drawer.Screen name="Register" component={Register} /> */}
         {/* <Drawer.Screen name="IndividualChat" component={IndividualChat} /> */}
