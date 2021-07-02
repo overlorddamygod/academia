@@ -174,21 +174,20 @@ const CalendarScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          {events.length > 0 ? (
-            <FlatList
-              data={events}
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              keyExtractor={(item) => `${item.id}`}
-              renderItem={({ item }) => <CalendarEventListItem event={item} />}
-            />
-          ) : (
-            <View style={{ alignItems: "center", marginTop: 50 }}>
-              <Text style={{ color: colors.text }}>
-                No events for this month
-              </Text>
-            </View>
-          )}
+          <FlatList
+            data={events}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            keyExtractor={(item) => `${item.id}`}
+            renderItem={({ item }) => <CalendarEventListItem event={item} />}
+            ListEmptyComponent={()=>
+              <View style={{ alignItems: "center", marginTop: 50 }}>
+                <Text style={{ color: colors.text }}>
+                  No events for this month
+                </Text>
+              </View>
+            }
+          />
         </View>
       </View>
       <Dialog

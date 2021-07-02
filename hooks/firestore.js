@@ -14,7 +14,7 @@ const useCollection = (collection) => {
     try {
       const data = await collection.get();
       setLoading(false);
-      setValue(data.docs.map((d) => ({ id: d.id, ...d.data() })));
+      setValue(docsAddId(data));
     } catch (err) {
       setLoading(false);
       setError(err);
@@ -24,4 +24,46 @@ const useCollection = (collection) => {
   return [value, loading, error];
 };
 
-export { useCollection };
+const useCollectionLazy = (collection,orderBy, direction = "desc",limit = 10) => {
+  const [query, setQuery] = useState(collection)
+  const [value, setValue] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    getInitialData();
+  }, []);
+
+  const getInitialData = async () => {
+    setLoading(true);
+    try {
+      const data = await query.orderBy(orderBy, direction).limit(limit).get();
+      setValue(docsAddId(data));
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setError(err);
+      console.error(err)
+    }
+  };
+
+  const getMoreData = async () => {
+    try {
+      const data = await query.orderBy(orderBy, direction).startAfter(value[value.length-1][orderBy]).limit(limit).get();
+      setValue(prevValue=>[...prevValue,...docsAddId(data)]);
+    } catch (err) {
+      setError(err);
+      console.error(err)
+    }
+  };
+
+  const onRefresh = async () => {
+    getInitialData()
+  }
+
+  return {value, loading, error, getMoreData, onRefresh, setQuery};
+};
+
+const docsAddId = (data) => data.docs.map((d) => ({ id: d.id, ...d.data() }))
+
+export { useCollection, useCollectionLazy };

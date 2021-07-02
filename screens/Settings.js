@@ -2,13 +2,15 @@ import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Switch } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import Header from "../components/Header";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { ThemeContext } from "../components/Theme";
 import { useTheme } from "@react-navigation/native";
+import { useUserContext } from "../providers/user";
 
 export default function Settings({ navigation }) {
   const { isDark, toggleTheme } = useContext(ThemeContext);
+  const { linkWithGoogle } = useUserContext();
   const { colors } = useTheme();
   return (
     <View style={{ flex: 1 }}>
@@ -46,7 +48,7 @@ export default function Settings({ navigation }) {
               <Feather name="sun" size={24} color={colors.text} />
             )}
 
-            <View>
+            <View style={styles.settingsbtnText}>
               <Text style={{ ...globalStyles.boldText, color: colors.text }}>
                 Color Mode
               </Text>
@@ -66,7 +68,7 @@ export default function Settings({ navigation }) {
             style={{ ...styles.settingsbtn, borderColor: colors.border }}
           >
             <Feather name="image" size={24} color={colors.text} />
-            <View>
+            <View style={styles.settingsbtnText}>
               <Text style={{ ...globalStyles.boldText, color: colors.text }}>
                 Edit Profile
               </Text>
@@ -78,9 +80,21 @@ export default function Settings({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={{ ...styles.settingsbtn, borderColor: colors.border }}
+            onPress={linkWithGoogle}
+          >
+            <Ionicons name="logo-google" size={24} color={colors.text} />
+            <View style={styles.settingsbtnText}>
+              <Text style={{ ...globalStyles.boldText, color: colors.text }}>
+                Link your google account
+              </Text>
+            </View>
+            <Ionicons name="link" size={24} color={colors.text} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ ...styles.settingsbtn, borderColor: colors.border }}
           >
             <Feather name="book-open" size={24} color={colors.text} />
-            <View>
+            <View style={styles.settingsbtnText}>
               <Text style={{ ...globalStyles.boldText, color: colors.text }}>
                 Terms & Policy
               </Text>
@@ -112,7 +126,7 @@ export default function Settings({ navigation }) {
             style={{ ...styles.settingsbtn, borderColor: colors.border }}
           >
             <Feather name="meh" size={24} color={colors.text} />
-            <View>
+            <View style={styles.settingsbtnText}>
               <Text style={{ ...globalStyles.boldText, color: colors.text }}>
                 About Us
               </Text>
@@ -131,11 +145,15 @@ export default function Settings({ navigation }) {
 const styles = StyleSheet.create({
   settingsbtn: {
     marginTop: SIZE.height * 0.6,
-    padding: SIZE.width,
+    paddingHorizontal: SIZE.width,
+    paddingVertical: SIZE.width / 2,
     borderWidth: 1,
     borderRadius: SIZE.width * 0.6,
     flexDirection: "row",
-    justifyContent: "space-around",
+    // justifyContent: "space-around",
     alignItems: "center",
   },
+  settingsbtnText: {
+     flex:1, paddingHorizontal:SIZE.width
+  }
 });

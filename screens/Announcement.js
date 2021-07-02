@@ -7,46 +7,29 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
+import { useCollectionLazy } from "../hooks/firestore";
+import COLORS, {tagColor} from "../styles/colors";
+
 const AnnouncementScreen = ({ navigation }) => {
-  const [announcements, setAnnouncements] = useState([]);
   const [selectedTag, setSelectedTag] = useState("All Items");
-  const [refreshing, setRefreshing] = useState(false);
+
+  const query = firestore().collection("announcementTemp");
+
+  const {
+    value: announcements,
+    loading,
+    error,
+    getMoreData,
+    onRefresh,
+    setQuery
+  } = useCollectionLazy(query, "createdAt", "desc", 10);
+
   const { colors } = useTheme();
-  useEffect(() => {
-    fetchAnnouncements();
-  }, []);
-
-  const fetchAnnouncements = () => {
-    setRefreshing(true);
-    firestore()
-      .collection("announcement")
-      .get()
-      .then((snapshot) => {
-        setAnnouncements(
-          snapshot.docs.map((announcement) => {
-            const ann = announcement.data();
-            if (ann.time) {
-              const date = new Date(ann.time.seconds * 1000);
-              ann.time = `${date.toLocaleTimeString()} ${date.toDateString()}`;
-            }
-            ann.id = announcement.id;
-            return ann;
-          })
-        );
-        setRefreshing(false);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
-  const onRefresh = () => {
-    fetchAnnouncements();
-  };
 
   const items = [
     "All Items",
@@ -85,7 +68,14 @@ const AnnouncementScreen = ({ navigation }) => {
                 <Item
                   name={itemName}
                   active={selectedTag == itemName}
-                  onPress={setSelectedTag}
+                  onPress={(item)=> {
+                    setSelectedTag(item)
+                    // if ( item == "All Items") {
+                    //   setQuery(firestore().collection("announcementTemp"))
+                    // } else {
+                    //   setQuery(firestore().collection("announcementTemp").where("tag","==",item))
+                    // }
+                  }}
                   key={i}
                 />
               );
@@ -94,15 +84,21 @@ const AnnouncementScreen = ({ navigation }) => {
         </View>
         <View style={{ marginTop: 30, flex: 1 }}>
           <FlatList
-            refreshing={refreshing}
+            refreshing={loading}
             onRefresh={onRefresh}
-            data={announcements.filter((announcement) =>
-              selectedTag == "All Items"
-                ? true
-                : announcement.tag == selectedTag
-            )}
+            data={announcements.filter(announcement=> selectedTag == "All Items" ? "true" : announcement.tag == selectedTag)}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <Announcement data={item} />}
+            onEndReached={getMoreData}
+            ListEmptyComponent={() => {
+              return (
+                <View style={{ alignItems: "center", marginTop: 50 }}>
+                  <Text style={{ color: colors.text }}>
+                    No announcements
+                  </Text>
+                </View>
+              );
+            }}
           />
         </View>
       </View>
@@ -111,12 +107,6 @@ const AnnouncementScreen = ({ navigation }) => {
 };
 
 export default AnnouncementScreen;
-
-const itemTypes = {
-  Exams: "#F05479",
-  Classes: "#EBA52A",
-  Holiday: "#9336E7",
-};
 
 const Announcement = ({
   data = { tag: "Classes", title: "Lorem Ipsum", time: "10:00 PM" },
@@ -136,12 +126,12 @@ const Announcement = ({
       <View
         style={{
           alignSelf: "flex-start",
-          backgroundColor: itemTypes[data.tag],
+          backgroundColor: tagColor[data.tag],
           paddingHorizontal: 5,
           borderRadius: 6,
         }}
       >
-        <Text style={{ color: colors.text }}>{data.tag}</Text>
+        <Text style={{ color: COLORS.white }}>{data.tag}</Text>
       </View>
       <Text
         style={{
@@ -153,7 +143,9 @@ const Announcement = ({
       >
         {data.title}
       </Text>
-      <Text style={{ color: "#ABABAB" }}>{data.time}</Text>
+      <Text style={{ color: "#ABABAB" }}>
+        {data.createdAt.toDate().toLocaleDateString()}
+      </Text>
     </View>
   );
 };

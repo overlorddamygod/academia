@@ -20,7 +20,7 @@ import { useTheme } from "@react-navigation/native";
 
 const Home = ({ navigation }) => {
   const { colors } = useTheme();
-  const { user,linkWithGoogle } = useUserContext();
+  const { user } = useUserContext();
   const { isDark } = useContext(ThemeContext);
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -44,9 +44,6 @@ const Home = ({ navigation }) => {
                  paddingLeft: SIZE.width ,
                  marginTop: -SIZE.width / 1.8,
                  
-              }}
-              onPress ={()=> {
-                linkWithGoogle()
               }}
             >
               It's {isDark ? "Dark" : "Light"} theme right ?
