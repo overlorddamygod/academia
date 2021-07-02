@@ -47,12 +47,23 @@ const HomeNotice = ({ navigation }) => {
               <Text style={{ ...styles.midNum, color: colors.text }}>602+</Text>
               <Text style={{ fontSize: 16, color: colors.text }}>Students</Text>
             </View>
-            <View style={{borderLeftColor:'gray',borderLeftWidth:2,paddingLeft:10,borderRightColor:'gray',borderRightWidth:2,paddingRight:10}}>
-            <Text style={{ ...styles.midNum, color: colors.text }}>309+</Text>
-              <Text style={{ fontSize: 16, color: colors.text }}>Graduates</Text>
+            <View
+              style={{
+                borderLeftColor: "gray",
+                borderLeftWidth: 2,
+                paddingLeft: 10,
+                borderRightColor: "gray",
+                borderRightWidth: 2,
+                paddingRight: 10,
+              }}
+            >
+              <Text style={{ ...styles.midNum, color: colors.text }}>309+</Text>
+              <Text style={{ fontSize: 16, color: colors.text }}>
+                Graduates
+              </Text>
             </View>
             <View>
-            <Text style={{ ...styles.midNum, color: colors.text }}>16+</Text>
+              <Text style={{ ...styles.midNum, color: colors.text }}>16+</Text>
               <Text style={{ fontSize: 16, color: colors.text }}>Teachers</Text>
             </View>
           </View>
@@ -92,7 +103,7 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 16,
     fontWeight: "bold",
-
+  },
   midView: {
     width: "100%",
     height: 80,
@@ -106,6 +117,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     letterSpacing: 2,
-
   },
 });
