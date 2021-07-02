@@ -48,6 +48,7 @@ const useCollectionLazy = (collection,orderBy, direction = "desc",limit = 10) =>
   };
 
   const getMoreData = async () => {
+    console.log("GETTING MORE DATA")
     try {
       const data = await query.orderBy(orderBy, direction).startAfter(value[value.length-1][orderBy]).limit(limit).get();
       setValue(prevValue=>[...prevValue,...docsAddId(data)]);

@@ -90,6 +90,7 @@ const AnnouncementScreen = ({ navigation }) => {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <Announcement data={item} />}
             onEndReached={getMoreData}
+            onEndReachedThreshold={0.1}
             ListEmptyComponent={() => {
               return (
                 <View style={{ alignItems: "center", marginTop: 50 }}>
