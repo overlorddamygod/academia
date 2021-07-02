@@ -34,12 +34,9 @@ const Gallery = ({ navigation }) => {
   };
   return (
     <>
-      
       <ScrollView>
-        
         <Header title="Academia Gallary" navigation={navigation} />
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          
           <ScrollView
             style={{ width: SIZE.screenWidth * 0.97, marginTop: 4 }}
             horizontal
@@ -47,19 +44,16 @@ const Gallery = ({ navigation }) => {
             onScroll={change}
             showsHorizontalScrollIndicator={false}
           >
-            
             {images.map((image, index) => (
               <Image source={{ uri: image }} style={styles.cover} />
             ))}
           </ScrollView>
           <View style={styles.dotDiv}>
-            
             {images.map((e, f) => (
               <Text
                 key={f}
                 style={f == active ? styles.dotActive : styles.dots}
               >
-                
                 ⬤
               </Text>
             ))}
@@ -72,10 +66,8 @@ const Gallery = ({ navigation }) => {
             justifyContent: "center",
           }}
         >
-          
           {images.map((image, index) => (
             <View key={index}>
-              
               <TouchableOpacity
                 onPress={() => {
                   setIsVisible(true);
@@ -83,7 +75,6 @@ const Gallery = ({ navigation }) => {
                 }}
                 activeOpacity={0.7}
               >
-                
                 <Image
                   source={{ uri: image }}
                   style={{
@@ -98,7 +89,6 @@ const Gallery = ({ navigation }) => {
             </View>
           ))}
           <Modal onRequestClose={() => setIsVisible(false)} visible={visible}>
-            
             <View
               style={{
                 flex: 1,
@@ -107,12 +97,10 @@ const Gallery = ({ navigation }) => {
                 backgroundColor: "#111",
               }}
             >
-              
               <TouchableOpacity
                 onPress={() => setIsVisible(false)}
                 style={{ position: "relative", width: "100%" }}
               >
-                
                 <Ionicons
                   style={{ marginTop: 10, alignSelf: "flex-end" }}
                   name="close"
@@ -128,7 +116,6 @@ const Gallery = ({ navigation }) => {
                 bindToBorders={true}
                 captureEvent={true}
               >
-                
                 <Image
                   source={{ uri: `${imageuri}` }}
                   style={{

@@ -7,13 +7,12 @@ import { UserProvider } from "./providers/user";
 import ThemeProvider from "./components/Theme";
 
 export default function App() {
-
   return (
     <ThemeProvider>
-    <View style={styles.container}>
-      <StatusBar barStyle="light-content" />
-      <UserProvider SignedOutScreen={Auth} SignedInScreen={DrawerTab} />
-    </View>
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" />
+        <UserProvider SignedOutScreen={Auth} SignedInScreen={DrawerTab} />
+      </View>
     </ThemeProvider>
   );
 }
@@ -24,4 +23,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
- 

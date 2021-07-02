@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import { globalStyles } from "../styles/globalStyle";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from '@react-navigation/native';
+import { useTheme } from "@react-navigation/native";
 
 const dummyLists = [
   { notifications: "Sandeep Maharjan Messaged You .", date: "20-3-23" },
@@ -32,7 +32,6 @@ const Notifications = ({ navigation }) => {
                   borderRadius: 8,
                   padding: 17,
                   flexDirection: "row",
-                  
                 }}
               >
                 <View>
@@ -42,7 +41,7 @@ const Notifications = ({ navigation }) => {
                     color={colors.text}
                   />
                 </View>
-                <View style={{ flex:1,marginLeft: 20}}>
+                <View style={{ flex: 1, marginLeft: 20 }}>
                   <Text
                     style={{
                       color: colors.text,

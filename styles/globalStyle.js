@@ -21,7 +21,6 @@ const globalStyles = StyleSheet.create({
     color: "white",
     fontSize: 22,
     fontWeight: "normal",
-  
   },
   boldText: {
     color: "#333",
@@ -64,11 +63,11 @@ const globalStyles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 2,
   },
-  smallavatar:{
-    height:60,
-    width:60,
-    borderRadius:50
-  }
+  smallavatar: {
+    height: 60,
+    width: 60,
+    borderRadius: 50,
+  },
 });
 
 export { globalStyles, SIZE };

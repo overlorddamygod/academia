@@ -16,7 +16,7 @@ import { Dialog } from "react-native-ui-lib";
 import { Feather } from "@expo/vector-icons";
 import AddEvent from "../components/AddEvent";
 import { SIZE } from "../styles/globalStyle";
-import { useTheme } from '@react-navigation/native';
+import { useTheme } from "@react-navigation/native";
 import { color } from "react-native-reanimated";
 const CalendarScreen = ({ navigation }) => {
   const todaysDate = new Date();
@@ -132,7 +132,7 @@ const CalendarScreen = ({ navigation }) => {
           }}
           style={{ backgroundColor: colors.mainblue }}
           theme={{
-            calendarBackground:  colors.mainblue,
+            calendarBackground: colors.mainblue,
             dayTextColor: COLORS.white,
             textDisabledColor: COLORS.grey,
             arrowColor: COLORS.white,
@@ -157,7 +157,7 @@ const CalendarScreen = ({ navigation }) => {
               style={{
                 fontSize: 30,
                 fontWeight: "bold",
-                color: colors.text
+                color: colors.text,
               }}
             >
               Events
@@ -184,7 +184,9 @@ const CalendarScreen = ({ navigation }) => {
             />
           ) : (
             <View style={{ alignItems: "center", marginTop: 50 }}>
-              <Text style={{colors:colors.text}}>No events for this month</Text>
+              <Text style={{ color: colors.text }}>
+                No events for this month
+              </Text>
             </View>
           )}
         </View>
@@ -214,7 +216,7 @@ const CalendarScreen = ({ navigation }) => {
 export default CalendarScreen;
 
 const CalendarEventListItem = ({ event }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   return (
     <TouchableOpacity activeOpacity={0.8}>
       <View
@@ -232,14 +234,16 @@ const CalendarEventListItem = ({ event }) => {
             paddingRight: 10,
             marginRight: 10,
             borderRightWidth: 3,
-            color:colors.text,
+            color: colors.text,
             borderRightColor: tagColor[event.tag],
           }}
         >
           {formatDate(event.date.toDate().getDate())}
         </Text>
 
-        <Text style={{ fontSize: 16, flex: 1,color:colors.text }}>{event.title}</Text>
+        <Text style={{ fontSize: 16, flex: 1, color: colors.text }}>
+          {event.title}
+        </Text>
       </View>
     </TouchableOpacity>
   );

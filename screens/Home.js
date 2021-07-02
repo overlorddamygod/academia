@@ -26,7 +26,7 @@ const Home = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Header
         showBackMenu={false}
-        title={`Hello, ${user.username || ""}`}
+        title={`Hello, ${auth().currentUser.displayName || ""}`}
         justifyContent="flex-start"
         navigation={navigation}
       ></Header>

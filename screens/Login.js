@@ -59,12 +59,28 @@ const Login = ({ navigation }) => {
             />
           </View>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Text style={{ marginTop: SIZE.height / 8, fontSize: 14 }}>
+              <Text
+                style={{ color: "#666", fontWeight: "bold" }}
+                onPress={() => {
+                  navigation.navigate("ForgotPassword", {
+                    email,
+                  });
+                }}
+              >
+                {" "}
+                Forgot Password ?
+              </Text>
+            </Text>
             <TouchableOpacity style={authStyles.btn} onPress={initLogin}>
               <Text style={authStyles.text}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={authStyles.btn} onPress={()=> {
-              loginWithGoogle()
-            }}>
+            <TouchableOpacity
+              style={authStyles.btn}
+              onPress={() => {
+                loginWithGoogle();
+              }}
+            >
               <Text style={authStyles.text}>Login With Google</Text>
             </TouchableOpacity>
             <Text style={{ marginTop: SIZE.height / 8, fontSize: 18 }}>

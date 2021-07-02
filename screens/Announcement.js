@@ -10,12 +10,12 @@ import {
 } from "react-native";
 import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
-import { useTheme } from '@react-navigation/native';
+import { useTheme } from "@react-navigation/native";
 const AnnouncementScreen = ({ navigation }) => {
   const [announcements, setAnnouncements] = useState([]);
   const [selectedTag, setSelectedTag] = useState("All Items");
   const [refreshing, setRefreshing] = useState(false);
-  const {colors} = useTheme()
+  const { colors } = useTheme();
   useEffect(() => {
     fetchAnnouncements();
   }, []);
@@ -68,7 +68,13 @@ const AnnouncementScreen = ({ navigation }) => {
           }}
         ></View>
         {/* <AppBar title="Announcements"></AppBar> */}
-        <View style={{ ...styles.tags, ...styles.shadow,backgroundColor:colors.card }}>
+        <View
+          style={{
+            ...styles.tags,
+            ...styles.shadow,
+            backgroundColor: colors.card,
+          }}
+        >
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -113,10 +119,9 @@ const itemTypes = {
 };
 
 const Announcement = ({
-  
   data = { tag: "Classes", title: "Lorem Ipsum", time: "10:00 PM" },
 }) => {
-  const {colors} =useTheme();
+  const { colors } = useTheme();
   return (
     <View
       style={{
@@ -138,7 +143,14 @@ const Announcement = ({
       >
         <Text style={{ color: colors.text }}>{data.tag}</Text>
       </View>
-      <Text style={{color: colors.text , fontWeight: "bold", fontSize: 20, marginVertical: 8 }}>
+      <Text
+        style={{
+          color: colors.text,
+          fontWeight: "bold",
+          fontSize: 20,
+          marginVertical: 8,
+        }}
+      >
         {data.title}
       </Text>
       <Text style={{ color: "#ABABAB" }}>{data.time}</Text>
@@ -147,7 +159,7 @@ const Announcement = ({
 };
 
 const Item = ({ name, active, onPress }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   return (
     <TouchableOpacity
       style={{ alignItems: "center", textAlign: "center", marginRight: 15 }}

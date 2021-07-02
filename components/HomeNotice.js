@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { useTheme } from "@react-navigation/native";
-const HomeNotice = ({navigation}) => {
+const HomeNotice = ({ navigation }) => {
   const { colors } = useTheme();
   const [events, setEvents] = useState([
     { name: "Sports Event", detail: "Submit before may 23", date: "May 23" },
@@ -26,34 +21,45 @@ const HomeNotice = ({navigation}) => {
         marginBottom: 20,
       }}
     >
-   {/* only some five latest events for home page . There will be separate page for events */}
-      {events.map(item => (
-        <View style={{...styles.events,backgroundColor:colors.card}} key={item.date}>
-        <View style={{ width: "60%" }}>
-          <Text
-            style={{
-              ...globalStyles.txt,
-              fontWeight: "bold",
-              color:colors.text
-            }}
-          >
-            {item.name}
-          </Text>
-          <Text
-            style={{ ...globalStyles.midText, color: "#888", marginTop: 5 ,color:colors.text}}
-          >
-            {item.detail}
-          </Text>
+      {/* only some five latest events for home page . There will be separate page for events */}
+      {events.map((item) => (
+        <View
+          style={{ ...styles.events, backgroundColor: colors.card }}
+          key={item.date}
+        >
+          <View style={{ width: "60%" }}>
+            <Text
+              style={{
+                ...globalStyles.txt,
+                fontWeight: "bold",
+                color: colors.text,
+              }}
+            >
+              {item.name}
+            </Text>
+            <Text
+              style={{
+                ...globalStyles.midText,
+                color: "#888",
+                marginTop: 5,
+                color: colors.text,
+              }}
+            >
+              {item.detail}
+            </Text>
+          </View>
+          <TouchableOpacity style={styles.btn}>
+            <Text style={{ color: "white", fontSize: 16 }}>App Submission</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.btn}>
-          <Text style={{ color: "white", fontSize: 16 }}>
-            App Submission
-          </Text>
-        </TouchableOpacity>
-      </View>
       ))}
-      <TouchableOpacity onPress={()=>navigation.navigate('Announcements')} style={{ marginTop:SIZE.height *0.4}}>
-        <Text style={{...styles.btnText,color:colors.text}}>See All Events</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Announcements")}
+        style={{ marginTop: SIZE.height * 0.4 }}
+      >
+        <Text style={{ ...styles.btnText, color: colors.text }}>
+          See All Events
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -64,24 +70,22 @@ const styles = StyleSheet.create({
   events: {
     padding: SIZE.width,
     position: "relative",
-    marginTop: SIZE.width*0.4,
+    marginTop: SIZE.width * 0.4,
     width: SIZE.screenWidth * 0.9,
     borderRadius: 9,
-  
   },
   btn: {
     position: "absolute",
-    right: SIZE.width*0.5,
-    bottom: SIZE.width*0.5,
+    right: SIZE.width * 0.5,
+    bottom: SIZE.width * 0.5,
     borderTopEndRadius: 6,
     borderTopLeftRadius: 6,
     borderBottomLeftRadius: 6,
     backgroundColor: "#F05479",
-    padding: SIZE.width*0.5,
+    padding: SIZE.width * 0.5,
   },
-  btnText:{
-    fontSize:16,
-    fontWeight:'bold'
-  }
-
+  btnText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
