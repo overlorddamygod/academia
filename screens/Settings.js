@@ -8,10 +8,11 @@ import { ThemeContext } from "../components/Theme";
 import { useTheme } from "@react-navigation/native";
 import { useUserContext } from "../providers/user";
 
-export default function Settings({ navigation }) {
+export default function Settings({navigation }) {
   const { isDark, toggleTheme } = useContext(ThemeContext);
   const { linkWithGoogle } = useUserContext();
   const { colors } = useTheme();
+
   return (
     <View style={{ flex: 1 }}>
       <Header title="Your Settings" navigation={navigation} />
@@ -85,7 +86,10 @@ export default function Settings({ navigation }) {
             <Ionicons name="logo-google" size={24} color={colors.text} />
             <View style={styles.settingsbtnText}>
               <Text style={{ ...globalStyles.boldText, color: colors.text }}>
-                Link your google account
+                Google Link
+              </Text>
+              <Text style={{ ...globalStyles.midText, color: colors.text }}>
+                Link your Account with Google
               </Text>
             </View>
             <Ionicons name="link" size={24} color={colors.text} />
