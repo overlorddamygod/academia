@@ -1,47 +1,21 @@
-import React from "react";
+import React,{useState} from "react";
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import Header from "../components/Header";
 import { Feather, Ionicons } from "@expo/vector-icons";
 
 import { useTheme } from "@react-navigation/native";
+import { faculties } from "../components/SubjectList";
 
-const faculties =[
-  {
-    id:1,
-    short:"BSC CSIT" ,
-    full:"Bachelor of Computer Science & Information Technology"
-  },
-  {
-    id:2,
-    short:"BCA" ,
-    full:"Bachelor of Computer Administration"
-  },
-  {
-    id:3,
-    short:"BBM" ,
-    full:"Bachelor of Business Management"
-  },
-  {
-    id:4,
-    short:"BBS" ,
-    full:"Bachelor of Business Studies"
-  },
-  {
-    id:5,
-    short:"MBS" ,
-    full:"Master in Business Studies"
-  },
 
-]
 
 export default function Materials({ navigation }) {
-
+const [myIndex, setMyIndex] = useState(null)
   const { colors } = useTheme();
   return (
     <View style={{ flex: 1 }}>
       <Header title="Your Materials" navigation={navigation} />
-      <View style={{ padding: 20 }}>
+      <View style={{flex:1, padding: 20 }}>
         <View>
           <Text
             style={{
@@ -72,18 +46,73 @@ export default function Materials({ navigation }) {
             data={faculties}
             keyExtractor={(item) => item.date}
             showVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
+            renderItem={({ item ,index}) => (
               <TouchableOpacity 
-              onPress={()=> navigation.navigate("Subjects",
-              {
-                screen:"Subjects",
-                params:{user:"bishal rai"}
-              })}
+              onPress={()=>{
+                setMyIndex(index===myIndex?null:index)
+              } }
               >
               <Faculty 
               short={item.short} 
               full={item.full}
               />
+
+             {index === myIndex && <View style={{flex:1,backgroundColor:colors.card,padding:20,marginVertical:10}}>
+                <TouchableOpacity onPress={()=>
+                navigation.navigate("Subjects",
+                {
+                  screen:"Subjects",
+                  params:{sub:item.year.firstYear}
+                })}
+                
+                >
+              <Faculty 
+              short="First Year"
+              full="1st and 2nd semester"
+              />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={()=>
+                navigation.navigate("Subjects",
+                {
+                  screen:"Subjects",
+                  params:{sub:item.year.secondYear}
+                })}
+                
+                >
+              <Faculty 
+              short="Second Year"
+              full="3rd and 4th semester"
+              />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={()=>
+                navigation.navigate("Subjects",
+                {
+                  screen:"Subjects",
+                  params:{sub:item.year.ThirdYear}
+                })}
+                
+                >
+              <Faculty 
+              short="Third Year"
+              full="5th and 6th semester"
+              />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={()=>
+                navigation.navigate("Subjects",
+                {
+                  screen:"Subjects",
+                  params:{sub:item.year.FourthYear}
+                })}
+                
+                >
+              <Faculty 
+              short="Fouth Year"
+              full="7th and 8th semester"
+              />
+              </TouchableOpacity>
+              </View>}
               </TouchableOpacity>
             )}
           />
