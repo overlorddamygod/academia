@@ -5,6 +5,7 @@ import messaging from "@react-native-firebase/messaging";
 import database from "@react-native-firebase/database";
 import { requestUserPermission, getFcmToken } from "../notifications";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { showToast } from "../utils/error";
 
 const initialUser = {
   username: null,
@@ -70,6 +71,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   };
 
   useEffect(() => {
+
     const unsubscribeAuth = auth().onAuthStateChanged(UserChange);
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       console.log("Message handled in the background!", remoteMessage);
@@ -129,30 +131,49 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
       token: null,
     });
     auth().signOut();
+    GoogleSignin.signOut()
+
   };
 
   const linkWithGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const { idToken } = await GoogleSignin.signIn();
+      const { idToken, user: googleUser } = await GoogleSignin.signIn();
       let credential = auth.GoogleAuthProvider.credential(idToken);
 
-      auth().currentUser.linkWithCredential(credential);
+      await auth().currentUser.linkWithCredential(credential);
+
+      await firestore().collection("user").doc(auth().currentUser.uid).update({
+        googleId: googleUser.id
+      })
+      showToast("Successfully linked your google account")
     } catch (err) {
-      console.error(err);
+      console.error(err)
+      if (err.code == "auth/unknown") 
+      showToast("User has already been linked")
+      else {
+        showToast("Error linking your google account")
+      }
     }
   };
 
   const loginWithGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const { idToken } = await GoogleSignin.signIn();
-      let credential = auth.GoogleAuthProvider.credential(idToken);
-      console.log(credential)
-      const res = await auth().signInWithCredential(credential);
-      console.log(res)
+      const {idToken, user:googleUser} = await GoogleSignin.signIn();
+
+      const snapshot = await firestore().collection("user").where("googleId","==", googleUser.id).get()
+      if ( snapshot.size > 0 ) {
+        let credential = auth.GoogleAuthProvider.credential(idToken);
+        const res = await auth().signInWithCredential(credential);
+        showToast("Successfully signed in")
+      } else {
+        showToast("Given gmail account is not linked to any account.")
+        GoogleSignin.signOut()
+      }
     } catch (err) {
-      console.error(err);
+      showToast("Error signing in")
+      GoogleSignin.signOut()
     }
   };
 

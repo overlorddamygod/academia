@@ -6,6 +6,7 @@ import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { sendNotification } from "../notifications";
 import { useUserContext } from "../providers/user";
+import { DateTimePicker, ChipsInput } from "react-native-ui-lib";
 
 const AddEvent = ({ date, closeDialog }) => {
   const { user } = useUserContext();
@@ -111,12 +112,15 @@ const AddEvent = ({ date, closeDialog }) => {
         }}
       />
       <Text>Tag</Text>
-      <TextInput
+      {/* <TextInput
         value={eventData.tag}
         style={{ ...globalStyles.input }}
         onChangeText={(text) => {
           setEventData({ ...eventData, tag: text });
         }}
+      /> */}
+      <ChipsInput
+        containerStyle={{ ...globalStyles.input }}
       />
       <Text>Starting Date</Text>
       <TextInput
@@ -126,7 +130,7 @@ const AddEvent = ({ date, closeDialog }) => {
           setEventData({ ...eventData, startingDate: text });
         }}
       />
-      <Text>Enging Date</Text>
+      <Text>Ending Date</Text>
       <TextInput
         value={eventData.endingDate}
         style={{ ...globalStyles.input }}
@@ -134,6 +138,7 @@ const AddEvent = ({ date, closeDialog }) => {
           setEventData({ ...eventData, endingDate: text });
         }}
       />
+      <DateTimePicker title={"Date"} value={new Date()} />
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text>Send Notification</Text>
         <Switch
