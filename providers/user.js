@@ -91,8 +91,8 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
     );
 
     GoogleSignin.configure({
-      webClientId:"1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
-    
+      webClientId:
+        "1048000501046-9ubq5o872gsbsut6am9vcndrr6s6dv47.apps.googleusercontent.com",
     });
 
     return () => {
@@ -106,32 +106,20 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   const register = async (username, email, password) => {
     if (!username || !email || !password) return;
 
-    try {
-      console.log()
-      let res = await fetch(
-        "https://academiacollege.azurewebsites.net/api/signup?code=XatmuqcfTTFvHRhCLtHAWU6M1CFii1Jvtn8TH4hTmFOXTS3Ux85M0A%3D%3D",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            username,
-            email,
-            password,
-          })
-        }
-      );
-      res = await res.json();
-      if (!res.error) {
-        console.log("Account created succesfully.");
-      } else {
-        console.error(res.error.message);
+    return fetch(
+      "https://academiacollege.azurewebsites.net/api/signup?code=XatmuqcfTTFvHRhCLtHAWU6M1CFii1Jvtn8TH4hTmFOXTS3Ux85M0A%3D%3D",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
       }
-    } catch (error) {
-      console.error("ERR", error);
-      return error;
-    }
+    );
   };
 
-  const login = async (email, password) => {
+  const login = (email, password) => {
     return auth().signInWithEmailAndPassword(email, password);
   };
 
@@ -145,27 +133,26 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
   const linkWithGoogle = async () => {
     try {
-      await GoogleSignin.hasPlayServices()
+      await GoogleSignin.hasPlayServices();
       const { idToken } = await GoogleSignin.signIn();
       let credential = auth.GoogleAuthProvider.credential(idToken);
-  
-      auth().currentUser.linkWithCredential(credential);
-    } catch(err) {
-      console.error(err)
-    }
 
+      auth().currentUser.linkWithCredential(credential);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const loginWithGoogle = async () => {
     try {
-
-      await GoogleSignin.hasPlayServices()
+      await GoogleSignin.hasPlayServices();
       const { idToken } = await GoogleSignin.signIn();
       let credential = auth.GoogleAuthProvider.credential(idToken);
-  
-      auth().signInWithCredential(credential);
-    } catch(err) {
-      console.error(err)
+      console.log(credential)
+      const res = await auth().signInWithCredential(credential);
+      console.log(res)
+    } catch (err) {
+      console.error(err);
     }
   };
 

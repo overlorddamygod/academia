@@ -7,21 +7,42 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  Dimensions,
+  ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
 import { authStyles } from "../styles/authStyle";
 import { SIZE } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { useUserContext } from "../providers/user";
+import { showToast, getErrorMessage } from "../utils/error";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login, loginWithGoogle } = useUserContext();
 
   const initLogin = async () => {
-    const result = await login(email, password);
-    console.log("LOGIN RESULT", result);
+    if (!email) {
+      showToast("Please enter your email");
+      return;
+    }
+    if (!password) {
+      showToast("Please enter your password");
+      return;
+    }
+    setLoading(true);
+    try {
+      const result = await login(email, password);
+      showToast("Succesfully signed in");
+      setLoading(false);
+    } catch (err) {
+      let errorMessage =
+        getErrorMessage(err.code) || "Error logging in. Please try again";
+
+      showToast(errorMessage);
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,23 +78,36 @@ const Login = ({ navigation }) => {
               onChangeText={setPassword}
               value={password}
             />
-          </View>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Text style={{ marginTop: SIZE.height / 8, fontSize: 14 }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ForgotPassword", {
+                  email,
+                });
+              }}
+            >
               <Text
-                style={{ color: "#666", fontWeight: "bold" }}
-                onPress={() => {
-                  navigation.navigate("ForgotPassword", {
-                    email,
-                  });
+                style={{
+                  color: "#666",
+                  fontWeight: "bold",
+                  textAlign: "right",
+                  padding: SIZE.height / 4,
                 }}
               >
-                {" "}
                 Forgot Password ?
               </Text>
-            </Text>
+            </TouchableOpacity>
+          </View>
+          <View></View>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            {/* <Text style={{ marginTop: SIZE.height / 8, fontSize: 14 }}> */}
+
+            {/* </Text> */}
             <TouchableOpacity style={authStyles.btn} onPress={initLogin}>
-              <Text style={authStyles.text}>Login</Text>
+              {loading ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <Text style={authStyles.text}>Login</Text>
+              )}
             </TouchableOpacity>
             <TouchableOpacity
               style={authStyles.btn}
