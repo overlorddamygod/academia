@@ -4,10 +4,6 @@ import { globalStyles, SIZE } from "../styles/globalStyle";
 import Header from "../components/Header";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "@react-navigation/native";
-// const selectHalf = {
-//     firstHalf: firstHalf,
-//     secondHalf: secondHalf,
-//   };
 
 const Subject = ({ route, navigation }) => {
   const { colors } = useTheme();
