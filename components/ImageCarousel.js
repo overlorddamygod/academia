@@ -24,7 +24,7 @@ const ImageCarousel = ({ images }) => {
         showsHorizontalScrollIndicator={false}
       >
         {images.map((image, index) => (
-          <Image source={{ uri: image }} style={styles.cover} />
+          <Image source={{ uri: image }} style={styles.cover} key={index} />
         ))}
       </ScrollView>
       <View style={styles.dotDiv}>
