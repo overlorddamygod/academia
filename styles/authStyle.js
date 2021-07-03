@@ -34,7 +34,7 @@ const authStyles = StyleSheet.create({
   },
   lower: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#ffffff",
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
     padding: SIZE.height * 0.8,

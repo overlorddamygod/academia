@@ -7,24 +7,29 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import { authStyles } from "../styles/authStyle";
 import { SIZE } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { useUserContext } from "../providers/user";
 import auth from "@react-native-firebase/auth";
+import { getErrorMessage, showToast } from "../utils/error";
 
 const ForgotPassword = ({ navigation, route: { params } }) => {
   const [email, setEmail] = useState(params.email || "");
-  console.log(params.email);
+  const [loading, setLoading] = useState(false);
 
   const submit = async () => {
+    setLoading(true);
     try {
       const result = await auth().sendPasswordResetEmail(email);
-      console.log(result);
+      showToast("Password reset link sent to your email address");
+      setLoading(false);
     } catch (err) {
-      console.error(err);
+      const errorMessage = getErrorMessage(err.code) || "Error sending password reset link"
+      showToast(errorMessage);
+      setLoading(false);
     }
   };
 
@@ -55,7 +60,11 @@ const ForgotPassword = ({ navigation, route: { params } }) => {
           </View>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <TouchableOpacity style={authStyles.btn} onPress={submit}>
-              <Text style={authStyles.text}>Submit</Text>
+              {loading ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <Text style={authStyles.text}>Submit</Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
