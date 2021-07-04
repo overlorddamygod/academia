@@ -86,11 +86,11 @@ const AnnouncementScreen = ({ navigation }) => {
           <FlatList
             refreshing={loading}
             onRefresh={onRefresh}
+            onEndReached={getMoreData}
+            onEndReachedThreshold={0.1}
             data={announcements.filter(announcement=> selectedTag == "All Items" ? "true" : announcement.tag == selectedTag)}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <Announcement data={item} />}
-            onEndReached={getMoreData}
-            onEndReachedThreshold={0.1}
             ListEmptyComponent={() => {
               return (
                 <View style={{ alignItems: "center", marginTop: 50 }}>

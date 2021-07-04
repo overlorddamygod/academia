@@ -32,7 +32,7 @@ const useCollectionLazy = (collection,orderBy, direction = "desc",limit = 10) =>
 
   useEffect(() => {
     getInitialData();
-  }, []);
+  }, [query]);
 
   const getInitialData = async () => {
     setLoading(true);

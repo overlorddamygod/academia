@@ -42,7 +42,6 @@ const Chat = ({ navigation }) => {
       />
 
       <FlatList
-        contentContainerStyle={{ flex: 1 }}
         data={conversations}
         keyExtractor={(item) => item.docId}
         renderItem={({ item }) => (
