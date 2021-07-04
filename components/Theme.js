@@ -1,12 +1,13 @@
 import React, { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(false);
   const toggleTheme = () => {
     setIsDark((prev) => {
-      AsyncStorage.setItem("isDark",COLOR[`${!prev}`] )
+      AsyncStorage.setItem("isDark", COLOR[`${!prev}`]);
       return !prev;
     });
   };

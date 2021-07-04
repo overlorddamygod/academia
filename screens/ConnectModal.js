@@ -8,40 +8,45 @@ import { Feather } from "@expo/vector-icons";
 function ConnectModal({ navigation, setShowDialog }) {
   return (
     <>
-   
-        <TouchableOpacity style={styles.cancel} onPress={()=> {
-          setShowDialog(false)
-        }}>
-          <Feather name="x-circle" size={SIZE.height/1.5} color={COLORS.white}/>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.cancel}
+        onPress={() => {
+          setShowDialog(false);
+        }}
+      >
+        <Feather
+          name="x-circle"
+          size={SIZE.height / 1.5}
+          color={COLORS.white}
+        />
+      </TouchableOpacity>
 
-        <View>
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={() => {
-              setShowDialog(false);
-              navigation.navigate("Teacher");
-            }}
-          >
-            <View style={styles.btntext}>
-              <Text style={styles.text}>Connect with Teachers</Text>
-              <AntDesign name="right" size={24} color="black" />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={() => {
-              setShowDialog(false);
-              navigation.navigate("Student");
-            }}
-          >
-            <View style={styles.btntext}>
-              <Text style={styles.text}>Connect with Student</Text>
-              <AntDesign name="right" size={24} color="black" />
-            </View>
-          </TouchableOpacity>
-        </View>
-     
+      <View>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => {
+            setShowDialog(false);
+            navigation.navigate("Teacher");
+          }}
+        >
+          <View style={styles.btntext}>
+            <Text style={styles.text}>Connect with Teachers</Text>
+            <AntDesign name="right" size={24} color="black" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => {
+            setShowDialog(false);
+            navigation.navigate("Student");
+          }}
+        >
+          <View style={styles.btntext}>
+            <Text style={styles.text}>Connect with Student</Text>
+            <AntDesign name="right" size={24} color="black" />
+          </View>
+        </TouchableOpacity>
+      </View>
     </>
   );
 }

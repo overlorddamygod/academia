@@ -2,71 +2,103 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   FlatList,
-  TouchableOpacity,
   ActivityIndicator,
   TextInput,
+  TouchableOpacity,
+  Text
 } from "react-native";
-import { globalStyles } from "../styles/globalStyle";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 import Header from "../components/Header";
 import PeopleCard from "../components/PeopleCard";
 import { authStyles } from "../styles/authStyle";
-import { Ionicons } from "@expo/vector-icons";
-import { useCollection } from "../hooks/firestore";
+import { useCollectionLazy } from "../hooks/firestore";
+import COLORS from "../styles/colors";
 
 const TeacherList = ({ navigation }) => {
   const { user } = useUserContext();
-  const [students, loading, error] = useCollection(
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const {
+    value: teachers,
+    loading,
+    onRefresh,
+    getMoreData,
+  } = useCollectionLazy(
     firestore()
       .collection("user")
       .where("title", "==", "Teacher")
-      .where("id", "!=", user.id)
+      .where("id", "!=", user.id),
+    "id"
   );
-  console.log(students);
+
   return (
     <>
       {/* {loading && <Text>Loading ...</Text>} */}
       <Header title="Teacher List" navigation={navigation} />
-      <View>
-        <View style={{ alignItems: "center", position: "relative" }}>
-          <TextInput
+      <View style={{ flex: 1 }}>
+        <View>
+          <View
+            style={{ backgroundColor: COLORS.main, height: SIZE.height }}
+          ></View>
+          <View
             style={{
-              ...authStyles.input,
-              ...globalStyles.search,
-              backgroundColor: "#d3ddf0",
-              color: "#555",
+              marginTop: -SIZE.height,
+              backgroundColor: COLORS.white,
+              marginVertical: SIZE.height / 3,
+              marginHorizontal: SIZE.width,
+              borderRadius: 10,
+              ...globalStyles.shadow,
+              paddingHorizontal: SIZE.width,
+              paddingVertical: SIZE.height / 3,
             }}
-            placeholder="Search"
-          />
-        </View>
-        <View style={{ marginTop: 50 }}>
-          {loading ? (
-            <View style={{ alignItems: "center" }}>
-        
-              <ActivityIndicator size="large" color="#f44" />
-            </View>
-          ) : (
-            <FlatList
-              data={students}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => navigation.navigate("PersonDetail")}
-                >
-                  <View style={{ flex: 1 }}>
-                    <PeopleCard
-                      data={item}
-                      key={item.id}
-                      navigation={navigation}
-                    />
-                  </View>
-                </TouchableOpacity>
-              )}
+          >
+            <TextInput
+              style={{
+                marginVertical: 5,
+                borderWidth: 1,
+                paddingHorizontal: 10,
+                borderRadius: 10,
+                color: "#555",
+              }}
+              placeholder="Search"
+              value={searchTerm}
+              onChangeText={setSearchTerm}
             />
-          )}
+          </View>
         </View>
+
+        <FlatList
+          refreshing={loading}
+          onRefresh={onRefresh}
+          onEndReached={getMoreData}
+          onEndReachedThreshold={0.1}
+          ListEmptyComponent={() => {
+            return (
+              <View style={{ alignItems: "center", marginTop: 50 }}>
+                <Text style={{ color: "black" }}>No teachers found</Text>
+              </View>
+            );
+          }}
+          data={teachers.filter(
+            (teachers) =>
+              teachers.username.match(new RegExp(searchTerm, "i")) ||
+              teachers.email.match(new RegExp(searchTerm, "i"))
+          )}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate("PersonDetail")}
+            >
+              <View style={{ flex: 1 }}>
+                <PeopleCard data={item} key={item.id} navigation={navigation} />
+              </View>
+            </TouchableOpacity>
+          )}
+        />
       </View>
     </>
   );

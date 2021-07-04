@@ -14,8 +14,9 @@ import { globalStyles } from "../styles/globalStyle";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
-
+import { useTheme } from "@react-navigation/native";
 const PersonDetail = ({ navigation }) => {
+  const {colors} = useTheme();
   useEffect(() => {}, []);
   return (
     <>
@@ -35,7 +36,7 @@ const PersonDetail = ({ navigation }) => {
         </ImageBackground>
       </View>
       <View style={styles.bg}>
-        <Text style={styles.name}>Naruto Uzumaki</Text>
+        <Text style={{...styles.name,color:colors.text}}>Naruto Uzumaki</Text>
         <ScrollView>
           <Animatable.View animation="fadeInUp">
             <View
@@ -48,18 +49,18 @@ const PersonDetail = ({ navigation }) => {
               }}
             >
               <TouchableOpacity style={styles.msgbtn}>
-                <Text style={{ color: "#555", fontSize: 16 }}>Message</Text>
+                <Text style={{ color:colors.text, fontSize: 16 }}>Message</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.msgbtn}>
-                <AntDesign name="home" size={22} color="black" />
+                <AntDesign name="home" size={22} color={colors.text} />
               </TouchableOpacity>
               <TouchableOpacity style={styles.msgbtn}>
-                <AntDesign name="user" size={22} color="black" />
+                <AntDesign name="user" size={22} color={colors.text} />
               </TouchableOpacity>
             </View>
             <View style={{ padding: 20 }}>
               <TouchableOpacity activeOpacity={0.6} style={styles.msgbtn}>
-                <Text style={{ color: "#555", fontSize: 16 }}>
+                <Text style={{ color:colors.text, fontSize: 16 }}>
                   See 3rd Semester Syllabus
                 </Text>
               </TouchableOpacity>
@@ -78,7 +79,7 @@ const PersonDetail = ({ navigation }) => {
               <Text
                 style={{
                   ...globalStyles.boldText,
-                  color: "#444",
+                  color:colors.text,
                   fontSize: 24,
                 }}
               >
@@ -101,19 +102,19 @@ const PersonDetail = ({ navigation }) => {
                 onPress={() => Linking.openURL("https://facebook.com")}
                 name="facebook-square"
                 size={35}
-                color="#655bb5"
+                color={colors.text}
               />
               <AntDesign
                 onPress={() => Linking.openURL("https://linkedin.com")}
                 name="linkedin-square"
                 size={35}
-                color="black"
+                color="#777"
               />
               <MaterialCommunityIcons
                 onPress={() => Linking.openURL("https://gmail.com")}
                 name="gmail"
                 size={35}
-                color="#f44"
+                color={colors.text}
               />
             </View>
           </Animatable.View>

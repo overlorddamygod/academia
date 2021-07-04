@@ -7,27 +7,61 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
-import auth from "@react-native-firebase/auth";
 import { useUserContext } from "../providers/user";
+import { showToast, getErrorMessage } from "../utils/error";
 
 const Register = ({ navigation }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("Test69");
+  const [email, setEmail] = useState("test69@gmail.com");
+  const [password1, setPassword1] = useState("test123");
+  const [password2, setPassword2] = useState("test123");
   const [registering, setRegistering] = useState(false);
 
   const { register } = useUserContext();
 
   const initRegister = async () => {
+
+    if (!username) {
+      showToast("Please enter your username");
+      return;
+    }
+    if (!email) {
+      showToast("Please enter your email");
+      return;
+    }
+    if (!password1 || !password2) {
+      showToast("Please enter your password");
+      return;
+    }
+    if (password1 != password2) {
+      showToast("Provided passwords do not match");
+      return;
+    }
     setRegistering(true);
-    const registerResult = await register(username, email, password);
-    console.log(registerResult);
-    setRegistering(false);
+    try {
+      let registerResult = await register(username, email, password1);
+      const res = await registerResult.json()
+      if ( !res.error ) {
+        showToast("Successfully signed up. Please log in")
+        navigation.goBack()
+      } else {
+        let errorMessage =
+        getErrorMessage(res.error.code) || "Error signing up. Please try again";
+        showToast(errorMessage);
+      }
+      setRegistering(false);
+    } catch(err) {
+      let errorMessage =
+        getErrorMessage(err.code) || "Error signing up. Please try again";
+
+      showToast(errorMessage);
+      setRegistering(false);
+    }
   };
 
   return (
@@ -43,9 +77,7 @@ const Register = ({ navigation }) => {
             <Text style={authStyles.maintext}>Register</Text>
           </View>
         </View>
-        {registering ? (
-          <Text>Register in process. Please Wait.</Text>
-        ) : (
+      
           <View style={{ ...authStyles.lower, flex: 1 }}>
             <View>
               <TextInput
@@ -65,19 +97,22 @@ const Register = ({ navigation }) => {
                 autoCompleteType="password"
                 secureTextEntry={true}
                 style={authStyles.input}
-                onChangeText={setPassword}
-                value={password}
+                onChangeText={setPassword1}
+                value={password1}
               />
               <TextInput
                 placeholder="Confirm Password"
                 autoCompleteType="password"
                 secureTextEntry={true}
                 style={authStyles.input}
+                onChangeText={setPassword2}
+                value={password2}
               />
             </View>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <TouchableOpacity style={authStyles.btn} onPress={initRegister}>
-                <Text style={authStyles.text}>Register</Text>
+              {registering ? <ActivityIndicator color="white"/>:
+                <Text style={authStyles.text}>Register</Text>}
               </TouchableOpacity>
               <Text style={{ marginTop: SIZE.height / 8, fontSize: 18 }}>
                 Already have account?
@@ -92,7 +127,7 @@ const Register = ({ navigation }) => {
               </Text>
             </View>
           </View>
-        )}
+        
       </View>
     </TouchableWithoutFeedback>
   );

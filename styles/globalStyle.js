@@ -21,7 +21,6 @@ const globalStyles = StyleSheet.create({
     color: "white",
     fontSize: 22,
     fontWeight: "normal",
-  
   },
   boldText: {
     color: "#333",
@@ -68,7 +67,13 @@ const globalStyles = StyleSheet.create({
     height:60,
     width:60,
     borderRadius:50
-  }
+  },
+  card: {
+    borderRadius: 5,
+    padding: SIZE.width * 0.5,
+    marginLeft: SIZE.width * 0.7,
+    marginTop: SIZE.width * 0.7,
+  },
 });
 
 export { globalStyles, SIZE };

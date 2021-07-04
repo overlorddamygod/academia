@@ -6,9 +6,10 @@ import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { sendNotification } from "../notifications";
 import { useUserContext } from "../providers/user";
+import { DateTimePicker, ChipsInput } from "react-native-ui-lib";
 
 const AddEvent = ({ date, closeDialog }) => {
-  const { user } = useUserContext()
+  const { user } = useUserContext();
   const todaysDate = new Date();
   const [notificationData, setNotificationData] = useState({
     send: false,
@@ -55,24 +56,30 @@ const AddEvent = ({ date, closeDialog }) => {
       //   date: eventData.date,
       //   topic: notificationData.title,
       // });
-      const idToken = await auth().currentUser.getIdToken()
-      console.log(idToken)
-      fetch("https://academiacollege.azurewebsites.net/api/addevent?code=%2F6irg0JmuJqjGbXxEZvRUv7pwDOkqpM6hxCLsHS9AS6VXvOhJFcrwA%3D%3D", {
-        method: "POST",
-        headers: JSON.stringify({
-          "Authorization": idToken
-        }),
-        body: JSON.stringify({
-          notification: {
-            title: "YOO",
-            body: "YOO"
-          },
-          data: {
-            logout: false
-          },
-          topic: "Student"
-        })
-      }).then(res=>res.json()).then(console.log).catch(console.error)
+      const idToken = await auth().currentUser.getIdToken();
+      console.log(idToken);
+      fetch(
+        "https://academiacollege.azurewebsites.net/api/addevent?code=%2F6irg0JmuJqjGbXxEZvRUv7pwDOkqpM6hxCLsHS9AS6VXvOhJFcrwA%3D%3D",
+        {
+          method: "POST",
+          headers: JSON.stringify({
+            Authorization: idToken,
+          }),
+          body: JSON.stringify({
+            notification: {
+              title: "YOO",
+              body: "YOO",
+            },
+            data: {
+              logout: false,
+            },
+            topic: "Student",
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then(console.log)
+        .catch(console.error);
     }
     closeDialog();
   };
@@ -105,12 +112,15 @@ const AddEvent = ({ date, closeDialog }) => {
         }}
       />
       <Text>Tag</Text>
-      <TextInput
+      {/* <TextInput
         value={eventData.tag}
         style={{ ...globalStyles.input }}
         onChangeText={(text) => {
           setEventData({ ...eventData, tag: text });
         }}
+      /> */}
+      <ChipsInput
+        containerStyle={{ ...globalStyles.input }}
       />
       <Text>Starting Date</Text>
       <TextInput
@@ -120,7 +130,7 @@ const AddEvent = ({ date, closeDialog }) => {
           setEventData({ ...eventData, startingDate: text });
         }}
       />
-      <Text>Enging Date</Text>
+      <Text>Ending Date</Text>
       <TextInput
         value={eventData.endingDate}
         style={{ ...globalStyles.input }}
@@ -128,6 +138,7 @@ const AddEvent = ({ date, closeDialog }) => {
           setEventData({ ...eventData, endingDate: text });
         }}
       />
+      <DateTimePicker title={"Date"} value={new Date()} />
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text>Send Notification</Text>
         <Switch
