@@ -10,8 +10,6 @@ const Subject = ({ route, navigation }) => {
   const { sub } = route.params;
   const [half, sethalf] = useState("first");
 
-
-
   const changeHalf = () => {
     if (half === "first") {
       sethalf("second");
@@ -39,21 +37,22 @@ const Subject = ({ route, navigation }) => {
               activeOpacity={0.8}
               style={{
                ...styles.top,
-                backgroundColor: half === "first" ? "#FB616A" : "#6765c2",
+                backgroundColor: half === "first" ? "#FB616A" : null,
               }}
               onPress={changeHalf}
             >
-              <Text style={{ color: "white" }}>First Half</Text>
+              <Text style={{ fontSize:17,color: half!="first" ? "black" : "white" }}>First Half</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
               style={{
               ...styles.top,
-                backgroundColor: half === "second" ? "#FB616A" : "#6765c2",
+                backgroundColor: half === "second" ? "#FB616A" : null,
+                
               }}
               onPress={changeHalf}
             >
-              <Text style={{ color: "white" }}>Second Half</Text>
+              <Text style={{ fontSize:17,color: half!="second" ? "black" : "white" }}>Second Half</Text>
             </TouchableOpacity>
           </View>}
 
