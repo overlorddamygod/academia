@@ -58,7 +58,7 @@ const UpcomingEvent = () => {
               <TouchableOpacity
                 activeOpacity={0.5}
                 style={{
-                  backgroundColor: "#5f52ab",
+                  backgroundColor: "#8d81db",
                   padding: 8,
                   marginTop: 5,
                   justifyContent: "center",

@@ -15,10 +15,11 @@ import PeopleCard from "../components/PeopleCard";
 import { authStyles } from "../styles/authStyle";
 import { useCollectionLazy } from "../hooks/firestore";
 import COLORS from "../styles/colors";
+import { useTheme } from "@react-navigation/native";
 
 const TeacherList = ({ navigation }) => {
   const { user } = useUserContext();
-
+  const {colors} = useTheme();
   const [searchTerm, setSearchTerm] = useState("");
 
   const {
@@ -41,12 +42,12 @@ const TeacherList = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <View>
           <View
-            style={{ backgroundColor: COLORS.main, height: SIZE.height }}
+            style={{ backgroundColor: colors.background, height: SIZE.height }}
           ></View>
           <View
             style={{
               marginTop: -SIZE.height,
-              backgroundColor: COLORS.white,
+              backgroundColor: colors.searchDiv,
               marginVertical: SIZE.height / 3,
               marginHorizontal: SIZE.width,
               borderRadius: 10,
@@ -61,9 +62,12 @@ const TeacherList = ({ navigation }) => {
                 borderWidth: 1,
                 paddingHorizontal: 10,
                 borderRadius: 10,
-                color: "#555",
+                color:colors.text,
+                borderColor:'lightgray',
+                fontSize:SIZE.width *0.9
               }}
               placeholder="Search"
+              placeholderTextColor="#999"
               value={searchTerm}
               onChangeText={setSearchTerm}
             />
@@ -78,7 +82,7 @@ const TeacherList = ({ navigation }) => {
           ListEmptyComponent={() => {
             return (
               <View style={{ alignItems: "center", marginTop: 50 }}>
-                <Text style={{ color: "black" }}>No teachers found</Text>
+                <Text style={{ color: colors.text }}>No teachers found</Text>
               </View>
             );
           }}

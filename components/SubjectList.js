@@ -5,7 +5,10 @@ export const faculties =[
     full:"Bachelor of Computer Science & Information Technology",
     year:{
       firstYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"First Semester",
+          subject:[
           {
             name:'Introduction to Information Technology',
           },
@@ -21,8 +24,11 @@ export const faculties =[
           {
             name:'Mathematics I'
           }
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:
+        {
+          sem:"Second Semester",
+          subject:[
             {
                 name:'Discrete Structures',
               },
@@ -36,10 +42,13 @@ export const faculties =[
                 name:'Mathematics II',
               },
               {name:'Statistics I'}
-        ]
+        ]}
       },
       secondYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"Third Semester",
+          subject:[
           {
             name:'Data Structure and Algortihm',
           },
@@ -53,8 +62,11 @@ export const faculties =[
             name:'Computer Graphics',
           },
           {name:'Statistics II'}
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:
+        {
+          sem:"Fourth Semester",
+          subject:[
             {
                 name:'Theory of Computation',
               },
@@ -70,10 +82,13 @@ export const faculties =[
               {
                 name:'Artificial Intelligence'
               }
-        ]
+        ]}
       },
       ThirdYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"Fifth Semester",
+          subject:[
           {
             name:'Design and Analysis of Algorithms',
           },
@@ -96,8 +111,11 @@ export const faculties =[
           {name:' Elective I'},
          
 
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:
+        {
+          sem:"Sixth Semester",
+          subject:[
             {
                 name:'Software Engineering',
               },
@@ -134,10 +152,13 @@ export const faculties =[
               {
                 name:'Elective II'
               } 
-        ]
+        ]}
       },
       FourthYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"Seventh Semester",
+          subject:[
           {
             name:'Advanced Java Programming'
           },
@@ -171,9 +192,12 @@ export const faculties =[
           {
             name:'International Marketing',
           },
-        ],
+        ]},
 
-        secondHalf:[
+        secondHalf:
+        {
+          sem:"Eighth Semester",
+          subject:[
             {
                 name:'Advance Database',
               },
@@ -220,7 +244,7 @@ export const faculties =[
                 name:'Embedded Systems Programming'
               },
               {name:'International Business Management'}
-        ]
+        ]}
       },
 
 
@@ -233,7 +257,9 @@ export const faculties =[
     full:"Bachelor of Computer Administration",
     year:{
       firstYear:{
-        firstHalf:[
+        firstHalf:{
+          sem:"First Semeseter",
+        subject:[
           {
             name:'Computer Fundamentals & Applications',
           },
@@ -249,8 +275,10 @@ export const faculties =[
           {
             name:'Digital Logic'
           }
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:{
+          sem:"Second Semester",
+          subject:[
             {
                 name:'C Programming',
               },
@@ -264,10 +292,12 @@ export const faculties =[
                 name:'Mathematics II',
               },
               {name:'Microprocessor and Computer Architecture'}
-        ]
+        ]}
       },
       secondYear:{
-        firstHalf:[
+        firstHalf:{
+          sem:"Third Semester",
+          subject:[
           {
             name:'Data Structures and Algorithms',
           },
@@ -283,8 +313,10 @@ export const faculties =[
           {
             name:'Web Technology'
           }
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:{
+          sem:"Fourth Semester",
+          subject:[
             {
                 name:'Operating System',
               },
@@ -299,10 +331,13 @@ export const faculties =[
               },
               {name:'Project I'},
               {name:'Software Engineering'}
-        ]
+        ]}
       },
-      ThridYear:{
-        firstHalf:[
+      ThirdYear:{
+        firstHalf:
+        {
+          sem:"Fifth Semester",
+          subject:[
           {
             name:'MIS and E-Business',
           },
@@ -334,8 +369,11 @@ export const faculties =[
             name:'Project II'
           },
           
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:
+        {
+          sem:"Sixth Semester",
+          subject:[
             {
                 name:'Mobile Programming',
               },
@@ -351,10 +389,13 @@ export const faculties =[
               {name:'Advanced Java Programming'},
               {name:'  Network Programming'},
               {name:'Project II'}
-        ]
+        ]}
       },
       FourthYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"Seventh Semester",
+          subject:[
           {
             name:'Cyber Law and Professional Ethics',
           },
@@ -372,8 +413,11 @@ export const faculties =[
             name:'Elective II'
 
           }
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:
+        {
+          sem:"Eighth Semester",
+          subject:[
             {
                 name:'Operations Research',
               },
@@ -396,7 +440,7 @@ export const faculties =[
               {name:'Database Programming'},
               {name:'Database Administration'},
               {name:'Network Administration'},
-        ]
+        ]}
       },
 
     }},
@@ -408,7 +452,10 @@ export const faculties =[
     full:"Bachelor of Business Management",
     year:{
       firstYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"First Semester",
+          subject:[
           {
             name:'Introductory Microeconomics',
           },
@@ -424,8 +471,11 @@ export const faculties =[
           {
             name:'Sociology for Business',
           },
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:
+        {
+          sem:"Second Semester",
+          subject:[
           {
             name:'Financial Accounting',
           },
@@ -441,11 +491,14 @@ export const faculties =[
           {
             name:'Psychology',
           },
-        ]
+        ]}
       },
       secondYear:{
 
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"Third Semester",
+          subject:[
           {
             name:'Computer Based Financial Accounting',
           },
@@ -461,8 +514,11 @@ export const faculties =[
           {
             name:'Business Statistics',
           },
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:
+        {
+          sem:"Fourth Semester",
+          subject:[
           {
             name:'Accounting for Decision Making',
           },
@@ -478,11 +534,13 @@ export const faculties =[
           {
             name:'Business Research Methods',
           },
-        ]
+        ]}
       },
       ThirdYear:{
-
-        firstHalf:[
+        firstHalf:{
+        sem:"Fifth Semester",
+        subject:
+          [
           {
             name:'Corporate Taxation in Nepal',
           },
@@ -498,8 +556,11 @@ export const faculties =[
           {
             name:'Legal Environment of Business',
           },
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:
+        {
+          sem:"Sixth Semester",
+          subject:[
           {
             name:'Focus Area Course II',
           },
@@ -515,11 +576,14 @@ export const faculties =[
           {
             name:'Business Ethics and Social Responsibility',
           },
-        ]
+        ]}
       },
       FourthYear:{
 
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"Seventh Semester",
+          subject:[
           {
             name:'Elective Course I',
           },
@@ -535,8 +599,11 @@ export const faculties =[
           {
             name:'Business Strategy',
           },
-        ],
-        secondHalf:[
+        ]},
+        secondHalf:
+        {
+          sem:"Eighth Semester",
+          subject:[
           {
             name:'Elective Course II',
           },
@@ -552,7 +619,7 @@ export const faculties =[
           {
             name:'Project Report Writing Or Internship',
           },
-        ]
+        ]}
       }
 
 
@@ -563,7 +630,10 @@ export const faculties =[
     full:"Bachelor of Business Studies",
     year:{
       firstYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"First Year",
+          subject:[
           {
             name:'Business English',
           },
@@ -579,11 +649,14 @@ export const faculties =[
           {
             name:'Principles of Management',
           }
-        ],
+        ]},
         secondHalf:null
       },
       secondYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"Second Year",
+          subject:[
           {
             name:'Business Communication',
           },
@@ -599,11 +672,14 @@ export const faculties =[
           {
             name:'Foundations of Human Resource Management',
           }
-        ],
+        ]},
         secondHalf:null
       },
       ThirdYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"Third Year",
+          subject:[
           {
             name:'Business Law',
           },
@@ -619,11 +695,14 @@ export const faculties =[
           {
             name:'Organizational Behavior',
           }
-        ],
+        ]},
         secondHalf:null
       },
       FourthYear:{
-        firstHalf:[
+        firstHalf:
+        {
+          sem:"Fourth Year",
+          subject:[
           {
             name:'Entrepreneurship and Enterprise Development',
           },
@@ -640,12 +719,169 @@ export const faculties =[
             name:'Business Research Methods',
           },
           {name:'Final Project'}
-        ],
+        ]},
         secondHalf:null
       },
 
 
     }},
+
+    // mbs
+    {
+      id:5,
+      short:"MBS" ,
+      full:"Master of Business Studies",
+      year:{
+        firstYear:{
+          firstHalf:
+          {
+            sem:"First Semester",
+            subject:[
+            {
+              name:'Marketing Management',
+            },
+            {
+              name:'Managerial Economics',
+            },
+            {
+              name:'Statistical Methods'
+            },
+            {
+              name:'Organizational Behavior',
+            },
+            {
+              name:'Managerial Communication',
+            }
+          ]},
+          secondHalf:
+          {
+            sem:"Second Semester",
+            subject:[
+            {
+              name:'Financial Management'
+            },
+            {
+              name:'Human Resource Management'
+            },
+            {
+              name:'Production and Operations Management'
+            },
+            {
+              name:'Management Accountancy'
+            },
+            {
+              name:'Business Environment'
+            },
+          ]}
+        },
+        secondYear:{
+          firstHalf:
+          {
+            sem:"Third Semester",
+            subject:[
+            {
+              name:'Accounting for Financial and Managerial Decision and Control',
+            },
+            {
+              name:'Research Methodology',
+            },
+            {
+              name:'International Business',
+            },
+            {
+              name:'Entrepreneurship',
+            },
+            {
+              name:'Financial Derivatives and Market',
+            },
+            {
+              name:'Corporate Finance'
+            },
+            {
+              name:'Corporate Taxation'
+            },
+            {
+              name:' Cost Management'},
+            {
+              name:'Recent Trends in Management'
+            },
+            {
+              name:'Organizational Theory'
+            },
+            {
+              name:'Advertising and Promotion Management'
+            },
+            {
+              name:'Rural Marketing'
+            }
+
+          ]},
+          secondHalf:
+          {
+            sem:"Fourth Semester",
+            subject:[
+            {
+              name:'Strategic Management'
+            },
+            {
+              name:'Financial Markets and Institutions'
+            },
+            {
+              name:'International Financial Management'
+            },
+            {
+              name:'Investment Management'
+            },
+            {
+              name:'Insurance: Theory and Practice'
+            },
+            {
+              name:'Commercial Bank Management: Theory and Practice'
+            },
+            {
+              name:'Consumer Behavior'
+            },
+            {
+              name:' International Marketing'
+            },
+            {
+              name:'Brand Management'
+            },
+            {
+              name:' Sales Management'
+            },
+            {
+              name:'Retail Management'
+            },
+            {
+              name:'Services Marketing'
+            },
+            {
+              name:' Contemporary Auditing'
+            },
+            {
+              name:'Accounting Theory and Financial Reporting'
+            },
+            {
+              name:'Management Control Systems'
+            },
+
+            {
+              name:'Balance Scorecard: A Tool for Performance Measurement'
+            },
+            {name:'Organizational Development and Change'},
+            {name:'Quality Management'},
+            {name:'Performance Management'},
+            {name:'Leadership and Communication'},
+            {name:'Dissertation'},
+
+          ]}
+        },
+
+ 
+  
+  
+      }},
   
 
 ]

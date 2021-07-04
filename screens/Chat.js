@@ -56,6 +56,7 @@ const Chat = ({ navigation }) => {
               borderRadius: 10,
               flexDirection: "row",
               alignItems: "center",
+
             }}
             onPress={() => {
               navigation.navigate("IndividualChat", {

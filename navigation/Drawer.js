@@ -29,13 +29,14 @@ const DrawerTab = () => {
     card:'white',
     btn:'#583EFF',
     msgIcon:'black',
-    mainblue:'#4C367B',
+    mainblue:'#4a3f8c',
     buttomtab:'#0E243F',
     border:'lightgray',
-    upcoming:'#323752',
+    upcoming:'#515a8a',
     drawerBackground:'#414567',
     dialogs:'#202336',
-    midBox:'#edf0f5'
+    midBox:'#edf0f5',
+    searchDiv:'white'
   }}
 
   const CustomDarkTheme = {
@@ -48,11 +49,12 @@ const DrawerTab = () => {
     msgIcon:'#393861',
     mainblue:'#343954',
     buttomtab:'#1e1b2e',
-    border:'#2b2e3d',
+    border:'#3e435c',
     upcoming:'#262a3d',
     drawerBackground:'#191b2a',
     dialogs:'#191b2a',
-    midBox:'#212538'
+    midBox:'#212538',
+    searchDiv:'#50587a'
   }}
 
   const themes = isDark?CustomDarkTheme:LightTheme;
