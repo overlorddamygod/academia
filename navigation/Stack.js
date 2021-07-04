@@ -7,13 +7,14 @@ import AnnouncementScreen from "../screens/Announcement";
 import TeacherList from "../screens/TeachersList";
 import Chat from "../screens/Chat";
 import Notifications from "../screens/Notifications";
-import CalendarScreen from "../screens/Calendar";
+import CalendarScreen from "../screens/calendar";
 import IndividualChat from "../screens/IndividualChat";
 import COLORS from "../styles/colors";
 import ConnectModal from "../screens/ConnectModal";
 import Settings from "../screens/Settings";
 import Materials from "../screens/Materials";
 import PersonDetail from "../screens/PersonDetail";
+import Subject from "../screens/Subject";
 
 const HomeStack = createStackNavigator();
 const AnnounceStack = createStackNavigator();
@@ -26,7 +27,7 @@ const SettingStack = createStackNavigator();
 const MaterialStack = createStackNavigator();
 const PersonDetailStack = createStackNavigator();
 const CalendarStack = createStackNavigator();
-
+const SubjectStack = createStackNavigator();
 export function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
@@ -156,6 +157,18 @@ export function SettingStackScreen() {
     >
       <SettingStack.Screen name="Settings" component={Settings} />
     </SettingStack.Navigator>
+  );
+}
+
+export function SubjectStackScreen() {
+  return (
+    <MaterialStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <MaterialStack.Screen name="Subjects" component={Subject} />
+    </MaterialStack.Navigator>
   );
 }
 

@@ -11,6 +11,7 @@ import {
   SettingStackScreen,
   PersonDetailStackScreen,
   HomeStackScreen,
+  SubjectStackScreen,
 } from "./Stack";
 
 
@@ -69,6 +70,8 @@ const DrawerTab = () => {
         <Drawer.Screen name="Announcements" component={AnnounceStackScreen} />
         <Drawer.Screen name="Materials" component={MaterialStackScreen} />
         <Drawer.Screen name="GoHome" component={HomeStackScreen} />
+        
+        <Drawer.Screen name="Subjects" component={SubjectStackScreen} />
         {/* <Drawer.Screen name="Login" component={Login} /> */}
         {/* <Drawer.Screen name="Register" component={Register} /> */}
         {/* <Drawer.Screen name="IndividualChat" component={IndividualChat} /> */}
