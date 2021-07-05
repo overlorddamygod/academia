@@ -12,6 +12,7 @@ import {
   PersonDetailStackScreen,
   HomeStackScreen,
   SubjectStackScreen,
+  VideoStackScreen,
 } from "./Stack";
 
 
@@ -20,7 +21,6 @@ const Drawer = createDrawerNavigator();
 
 const DrawerTab = () => {
   const {isDark} = useContext(ThemeContext);
-  // 1e1b2e #191b2a 262a3d c05fff 232232
   const LightTheme = {
     ...DefaultTheme,
   colors:{
@@ -69,6 +69,7 @@ const DrawerTab = () => {
         <Drawer.Screen name="Home" component={MainStack}/>
         <Drawer.Screen name="Settings" component={SettingStackScreen} />
         <Drawer.Screen name="Gallery" component={GalleryStackScreen} />
+        <Drawer.Screen name="Video" component={VideoStackScreen} />
         <Drawer.Screen name="Announcements" component={AnnounceStackScreen} />
         <Drawer.Screen name="Materials" component={MaterialStackScreen} />
         <Drawer.Screen name="GoHome" component={HomeStackScreen} />

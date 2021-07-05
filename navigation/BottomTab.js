@@ -79,7 +79,13 @@ const BottomTab = (props) => {
                   setShowDialog(true);
                 }}
               >
-                <View style={focused?styles.middleIcon:null}>
+                <View style={{
+                   flex:1,
+                   width: SIZE.height * 2,
+                   alignItems: "center",
+                   justifyContent: "center",
+                   backgroundColor:COLORS.mainred,
+                }}>
                   <Feather
                     name="users"
                     size={focused ? 29 : 24}
@@ -138,7 +144,7 @@ const BottomTab = (props) => {
         visible={showDialog}
         onDismiss={() => setShowDialog(false)}
       >
-        <View style={{ paddingHorizontal: SIZE.width * 0.9 }}>
+        <View style={{paddingHorizontal: SIZE.width * 0.9 }}>
           <ConnectModal setShowDialog={setShowDialog} {...props} />
         </View>
       </Dialog>
@@ -153,6 +159,6 @@ const styles = StyleSheet.create({
     width: SIZE.height * 2,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: COLORS.mainred,
+    backgroundColor:'#534db0',
   },
 });

@@ -69,7 +69,7 @@ const Subject = ({ route, navigation }) => {
                 {sub.firstHalf.sem}
               </Text>
               {sub.firstHalf.subject.map((a) => (
-                <TouchableOpacity
+                <TouchableOpacity key={a.short}
                   style={{ ...styles.cards, backgroundColor: colors.card }}
                 >
                   <Text style={{ color: colors.text, fontSize: 18 }}>
@@ -93,6 +93,7 @@ const Subject = ({ route, navigation }) => {
               </Text>
               {sub.secondHalf.subject.map((a) => (
                 <TouchableOpacity
+                key={a.short}
                   style={{ ...styles.cards, backgroundColor: colors.card }}
                 >
                   <Text style={{ color: colors.text, fontSize: 18 }}>
