@@ -16,11 +16,13 @@ import PeopleCard from "../components/PeopleCard";
 import { authStyles } from "../styles/authStyle";
 import { useCollectionLazy } from "../hooks/firestore";
 import COLORS from "../styles/colors";
+import { useTheme } from "@react-navigation/native";
 
 const StudentList = ({ navigation }) => {
   const { user } = useUserContext();
   const [faculty, setFaculty] = useState("Bsc CSIT");
   const [semester, setSemester] = useState("3");
+  const {colors} = useTheme();
 
   const buildQuery = (_faculty, _semester) => {
     return firestore()
@@ -45,7 +47,6 @@ const StudentList = ({ navigation }) => {
   }, [semester, faculty]);
 
   const [searchTerm, setSearchTerm] = useState("");
-
   return (
     <View style={{ flex: 1 }}>
       <Header
@@ -56,12 +57,12 @@ const StudentList = ({ navigation }) => {
         <View style={{ flex: 1 }}>
           <View>
             <View
-              style={{ backgroundColor: COLORS.main, height: SIZE.height }}
+              style={{ backgroundColor: colors.mainblue, height: SIZE.height }}
             ></View>
             <View
               style={{
                 marginTop: -SIZE.height,
-                backgroundColor: COLORS.white,
+                backgroundColor: colors.searchDiv,
                 marginVertical: SIZE.height / 3,
                 marginHorizontal: SIZE.width,
                 borderRadius: 10,
@@ -76,20 +77,25 @@ const StudentList = ({ navigation }) => {
                   borderWidth: 1,
                   paddingHorizontal: 10,
                   borderRadius: 10,
-                  color: "#555",
+                  color: colors.text,
+                  borderColor:'lightgray',
+                  fontSize:SIZE.width *0.9
                 }}
                 placeholder="Search"
+                placeholderTextColor="#999"
+
                 value={searchTerm}
                 onChangeText={setSearchTerm}
               />
               <View style={{ flexDirection: "row" }}>
                 <View style={{ flex: 1 }}>
-                  <Text>Faculty</Text>
+                  <Text style={{color: colors.text,}}>Faculty</Text>
                   <Picker
                     selectedValue={faculty}
                     onValueChange={(itemValue, itemIndex) =>
                       setFaculty(itemValue)
                     }
+                   
                   >
                     <Picker.Item label="Bsc CSIT" value="Bsc CSIT" />
                     <Picker.Item label="BCA" value="BCA" />
@@ -98,7 +104,7 @@ const StudentList = ({ navigation }) => {
                   </Picker>
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text>Semester</Text>
+                  <Text style={{color: colors.text,}} >Semester</Text>
                   <Picker
                     // style={{ flex: 1 }}
                     selectedValue={semester}
@@ -130,7 +136,7 @@ const StudentList = ({ navigation }) => {
             ListEmptyComponent={() => {
               return (
                 <View style={{ alignItems: "center", marginTop: 50 }}>
-                  <Text style={{ color: "black" }}>No students found</Text>
+                  <Text style={{ color: colors.text }}>No students found</Text>
                 </View>
               );
             }}
@@ -143,7 +149,12 @@ const StudentList = ({ navigation }) => {
             renderItem={({ item }) => (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate("PersonDetail")}
+                onPress={() => navigation.navigate("PersonDetail",{
+                  screen:"PersonDetail",
+                  params:{
+                    data:item
+                  }
+                })}
               >
                 <View style={{ flex: 1 }}>
                   <PeopleCard

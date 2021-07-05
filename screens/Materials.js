@@ -45,77 +45,13 @@ export default function Materials({ navigation }) {
           </Text>
         </View>
         <View>
-          <View style={{ borderWidth: 1 }}></View>
+          
           <FlatList
             data={faculties}
             keyExtractor={(item) => item.date}
             showVerticalScrollIndicator={false}
             renderItem={({ item, index }) => (
               <FacultyExpanded data={item} navigation={navigation}></FacultyExpanded>
-              // <TouchableOpacity
-              //   onPress={() => {
-              //     setMyIndex(index === myIndex ? null : index);
-              //   }}
-              // >
-              //   <Faculty short={item.short} full={item.full} />
-
-              //   {index === myIndex && (
-              //     <View
-              //       style={{
-              //         flex: 1,
-              //         backgroundColor: colors.card,
-              //         padding: 20,
-              //         marginVertical: 10,
-              //       }}
-              //     >
-              //       <TouchableOpacity
-              //         onPress={() =>
-              //           navigation.navigate("Subjects", {
-              //             screen: "Subjects",
-              //             params: { sub: item.year.firstYear },
-              //           })
-              //         }
-              //       >
-              //         <Faculty short="First Year" full="1st and 2nd semester" />
-              //       </TouchableOpacity>
-
-              //       <TouchableOpacity
-              //         onPress={() =>
-              //           navigation.navigate("Subjects", {
-              //             screen: "Subjects",
-              //             params: { sub: item.year.secondYear },
-              //           })
-              //         }
-              //       >
-              //         <Faculty
-              //           short="Second Year"
-              //           full="3rd and 4th semester"
-              //         />
-              //       </TouchableOpacity>
-
-              //       <TouchableOpacity
-              //         onPress={() =>
-              //           navigation.navigate("Subjects", {
-              //             screen: "Subjects",
-              //             params: { sub: item.year.ThirdYear },
-              //           })
-              //         }
-              //       >
-              //         <Faculty short="Third Year" full="5th and 6th semester" />
-              //       </TouchableOpacity>
-              //       <TouchableOpacity
-              //         onPress={() =>
-              //           navigation.navigate("Subjects", {
-              //             screen: "Subjects",
-              //             params: { sub: item.year.FourthYear },
-              //           })
-              //         }
-              //       >
-              //         <Faculty short="Fouth Year" full="7th and 8th semester" />
-              //       </TouchableOpacity>
-              //     </View>
-              //   )}
-              // </TouchableOpacity>
             )}
           />
         </View>
@@ -126,7 +62,7 @@ export default function Materials({ navigation }) {
 
 const FacultyExpanded = ({ data, navigation }) => {
   const [expanded, setExpanded] = useState(false);
-
+const {colors} = useTheme();
   const FacultyHeader = () => {
     return (
       <View
@@ -135,40 +71,50 @@ const FacultyExpanded = ({ data, navigation }) => {
           paddingVertical: SIZE.height / 2,
           flexDirection: "row",
           justifyContent: "space-between",
+          borderWidth:1,
+          borderColor:colors.border,
+          marginVertical:5,
+          borderRadius:6
         }}
       >
-        <Text style={{ color: COLORS.black, fontSize: 20, fontWeight: "bold" }}>
+        <View style={{width:'90%'}}>
+        <Text style={{ color: colors.text, fontSize: 20, fontWeight: "bold" }}>
           {data.short}
         </Text>
+        <Text style={{ ...globalStyles.midText, color: colors.text}}>{data.full}</Text>
+        </View>
         {expanded ? (
-          <Ionicons name="chevron-up-outline" size={32} />
+          <Ionicons name="chevron-up-outline" size={32} color={colors.text}/>
         ) : (
-          <Ionicons name="chevron-down-outline" size={32} />
+          <Ionicons name="chevron-down-outline" size={32} color={colors.text}/>
         )}
       </View>
     );
   };
 
   const Year = ({ year, yearItem }) => {
+    const {colors} = useTheme();
     return (
       <TouchableOpacity
         style={{
           borderWidth: 1,
           borderRadius: 5,
-          width: SIZE.width * 2.5,
-          height: SIZE.width * 2.5,
+          width: SIZE.width * 3.7,
+          height: SIZE.width *3.7,
           justifyContent: "center",
           alignItems: "center",
+          borderWidth:1,
+          borderColor:colors.border,
         }}
         onPress={() =>
           navigation.navigate("Subjects", {
             screen: "Subjects",
-            params: { sub: yearItem },
+            params: { sub: yearItem,short:data.short },
           })
         }
       >
-        <Text style={{ fontWeight: "bold", color: COLORS.black }}>{year}</Text>
-        <Text>Year</Text>
+        <Text style={{ fontWeight: "bold", color: colors.text }}>{year}</Text>
+        <Text style={{color:colors.text}}>Year</Text>
       </TouchableOpacity>
     );
   };
@@ -190,9 +136,14 @@ const FacultyExpanded = ({ data, navigation }) => {
       >
         <Year year="1st" yearItem={data.year.firstYear}/>
         <Year year="2nd" yearItem={data.year.secondYear}/>
-        <Year year="3rd" yearItem={data.year.thirdYear}/>
-        <Year year="4th" yearItem={data.year.fourthYear}/>
+       
+        {data.year.ThirdYear && data.year.FourthYear && 
+        <>
+        <Year year="3rd" yearItem={data.year.ThirdYear}/>
+        <Year year="4th" yearItem={data.year.FourthYear}/>
+        </>}
       </View>
+      
     </ExpandableSection>
   );
 };
@@ -205,6 +156,7 @@ const Faculty = ({ short, full }) => {
         <Text style={{ ...globalStyles.boldText, color: colors.text }}>
           {short}
         </Text>
+        
         <Text style={{ ...globalStyles.midText, color: colors.text }}>
           {full}
         </Text>

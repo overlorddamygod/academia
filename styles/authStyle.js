@@ -24,7 +24,7 @@ const authStyles = StyleSheet.create({
     fontSize: 18,
   },
   input: {
-    height: SIZE.height * 1.2,
+    height: SIZE.height * 1.4,
     margin: SIZE.height / 4,
     padding: SIZE.height / 4,
     fontSize: 18,
@@ -44,10 +44,10 @@ const authStyles = StyleSheet.create({
     height: SIZE.height * 1.2,
     justifyContent: "center",
     alignItems: "center",
-    width: SIZE.width * 10,
+    width: SIZE.width * 15,
     backgroundColor: COLORS.royalBlue,
     borderRadius: 4,
-    marginVertical: SIZE.height / 2,
+    marginVertical: SIZE.height / 5,
   },
 });
 
