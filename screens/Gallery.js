@@ -46,7 +46,7 @@ const Gallery = ({ navigation }) => {
     setUploading(false);
     Alert.alert(
       "Photo uploaded!",
-      "Your photo has been uploaded Succesfully!"
+      "Your photo has been uploaded Successfully!"
     );
     setImages(null);
     setOption(false);

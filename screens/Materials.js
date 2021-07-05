@@ -51,7 +51,11 @@ export default function Materials({ navigation }) {
             keyExtractor={(item) => item.date}
             showVerticalScrollIndicator={false}
             renderItem={({ item, index }) => (
+              <View style={{ borderWidth:1,
+                borderColor:colors.border,borderRadius:6, marginVertical:5,}}>
+
               <FacultyExpanded data={item} navigation={navigation}></FacultyExpanded>
+              </View>
             )}
           />
         </View>
@@ -71,10 +75,6 @@ const {colors} = useTheme();
           paddingVertical: SIZE.height / 2,
           flexDirection: "row",
           justifyContent: "space-between",
-          borderWidth:1,
-          borderColor:colors.border,
-          marginVertical:5,
-          borderRadius:6
         }}
       >
         <View style={{width:'90%'}}>
@@ -132,6 +132,7 @@ const {colors} = useTheme();
           justifyContent: "space-around",
           paddingHorizontal: SIZE.width,
           paddingBottom: SIZE.height / 2,
+
         }}
       >
         <Year year="1st" yearItem={data.year.firstYear}/>
@@ -147,23 +148,7 @@ const {colors} = useTheme();
     </ExpandableSection>
   );
 };
-const Faculty = ({ short, full }) => {
-  const { colors } = useTheme();
-  return (
-    <View style={{ ...styles.Materialsbtn, borderColor: colors.border }}>
-      <Feather name="image" size={24} color={colors.text} />
-      <View style={styles.MaterialsbtnText}>
-        <Text style={{ ...globalStyles.boldText, color: colors.text }}>
-          {short}
-        </Text>
-        
-        <Text style={{ ...globalStyles.midText, color: colors.text }}>
-          {full}
-        </Text>
-      </View>
-    </View>
-  );
-};
+
 const styles = StyleSheet.create({
   Materialsbtn: {
     marginTop: SIZE.height * 0.6,
