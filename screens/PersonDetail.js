@@ -10,17 +10,19 @@ import {
   Linking,
 } from "react-native";
 import Header from "../components/Header";
-import { globalStyles } from "../styles/globalStyle";
+import { globalStyles ,SIZE} from "../styles/globalStyle";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { useTheme } from "@react-navigation/native";
-const PersonDetail = ({ navigation }) => {
-  const {colors} = useTheme();
+const PersonDetail = ({ route, navigation }) => {
+  const { colors } = useTheme();
+  const { data } = route.params;
+  console.log(data);
   useEffect(() => {}, []);
   return (
     <>
-      <Header title="Person Detail" navigation={navigation} />
+      <Header title={`${data.username}'s  Profile`} navigation={navigation} />
 
       <View style={styles.top}>
         <ImageBackground
@@ -36,7 +38,20 @@ const PersonDetail = ({ navigation }) => {
         </ImageBackground>
       </View>
       <View style={styles.bg}>
-        <Text style={{...styles.name,color:colors.text}}>Naruto Uzumaki</Text>
+        <View style={{ position: "absolute", top: 10, left: SIZE.screenWidth*0.4}}>
+          <Text style={{ ...styles.name, color: colors.text }}>
+            {data.username}
+          </Text>
+       
+        </View>
+        <View style={{marginTop:SIZE.height}}>
+        <Text style={{fontSize:16, color: colors.text }}>
+            Semester : {data.semester}
+          </Text>
+          <Text style={{lineHeight:20,fontSize:16,color: colors.text }}>
+            Email : {data.email}
+          </Text>
+          </View>
         <ScrollView>
           <Animatable.View animation="fadeInUp">
             <View
@@ -49,7 +64,9 @@ const PersonDetail = ({ navigation }) => {
               }}
             >
               <TouchableOpacity style={styles.msgbtn}>
-                <Text style={{ color:colors.text, fontSize: 16 }}>Message</Text>
+                <Text style={{ color: colors.text, fontSize: 16 }}>
+                  Message
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.msgbtn}>
                 <AntDesign name="home" size={22} color={colors.text} />
@@ -60,7 +77,7 @@ const PersonDetail = ({ navigation }) => {
             </View>
             <View style={{ padding: 20 }}>
               <TouchableOpacity activeOpacity={0.6} style={styles.msgbtn}>
-                <Text style={{ color:colors.text, fontSize: 16 }}>
+                <Text style={{ color: colors.text, fontSize: 16 }}>
                   See 3rd Semester Syllabus
                 </Text>
               </TouchableOpacity>
@@ -79,7 +96,7 @@ const PersonDetail = ({ navigation }) => {
               <Text
                 style={{
                   ...globalStyles.boldText,
-                  color:colors.text,
+                  color: colors.text,
                   fontSize: 24,
                 }}
               >
@@ -154,12 +171,9 @@ const styles = StyleSheet.create({
     borderColor: "#00000078",
   },
   name: {
-    position: "absolute",
     fontSize: 22,
     color: "#222",
     fontWeight: "900",
-    top: 10,
-    left: 135,
   },
   cover: {
     flex: 1,

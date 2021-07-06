@@ -15,6 +15,7 @@ import Settings from "../screens/Settings";
 import Materials from "../screens/Materials";
 import PersonDetail from "../screens/PersonDetail";
 import Subject from "../screens/Subject";
+import Video from "../screens/Video";
 
 const HomeStack = createStackNavigator();
 const AnnounceStack = createStackNavigator();
@@ -28,6 +29,7 @@ const MaterialStack = createStackNavigator();
 const PersonDetailStack = createStackNavigator();
 const CalendarStack = createStackNavigator();
 const SubjectStack = createStackNavigator();
+const VideoStack = createStackNavigator();
 export function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
@@ -74,7 +76,17 @@ export function GalleryStackScreen() {
     </GalleryStack.Navigator>
   );
 }
-
+export function VideoStackScreen() {
+  return (
+    <VideoStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <VideoStack.Screen name="Video" component={Video} />
+    </VideoStack.Navigator>
+  );
+}
 export function ChatStackScreen() {
   return (
     <ChatStack.Navigator

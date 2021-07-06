@@ -15,7 +15,7 @@ import { SIZE } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
 import { useUserContext } from "../providers/user";
 import { showToast, getErrorMessage } from "../utils/error";
-
+import { AntDesign } from "@expo/vector-icons";
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -99,9 +99,6 @@ const Login = ({ navigation }) => {
           </View>
           <View></View>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
-            {/* <Text style={{ marginTop: SIZE.height / 8, fontSize: 14 }}> */}
-
-            {/* </Text> */}
             <TouchableOpacity style={authStyles.btn} onPress={initLogin}>
               {loading ? (
                 <ActivityIndicator color="white" />
@@ -110,12 +107,18 @@ const Login = ({ navigation }) => {
               )}
             </TouchableOpacity>
             <TouchableOpacity
-              style={authStyles.btn}
+              style={{...authStyles.btn,
+                backgroundColor:'#f56e77',
+                flexDirection:'row',
+                justifyContent:'space-around'
+              }}
               onPress={() => {
                 loginWithGoogle();
               }}
             >
-              <Text style={authStyles.text}>Login With Google</Text>
+              <AntDesign name="google" size={23} color="white" />
+              <Text style={authStyles.text}>
+                Login With Google</Text>
             </TouchableOpacity>
             <Text style={{ marginTop: SIZE.height / 8, fontSize: 18 }}>
               Already have account?
@@ -125,8 +128,8 @@ const Login = ({ navigation }) => {
                   navigation.navigate("Register");
                 }}
               >
-                {" "}
-                {` `} Register
+              
+                 Register
               </Text>
             </Text>
           </View>

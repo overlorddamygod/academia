@@ -7,7 +7,7 @@ import { useTheme } from "@react-navigation/native";
 
 const Subject = ({ route, navigation }) => {
   const { colors } = useTheme();
-  const { sub } = route.params;
+  const { sub ,short} = route.params;
   const [half, sethalf] = useState("first");
 
   const changeHalf = () => {
@@ -22,7 +22,7 @@ const Subject = ({ route, navigation }) => {
   console.log(sub);
   return (
     <>
-      <Header title="Courses" navigation={navigation} />
+      <Header title={short} navigation={navigation} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ padding: 20 }}>
             {sub.secondHalf &&
@@ -41,7 +41,7 @@ const Subject = ({ route, navigation }) => {
               }}
               onPress={changeHalf}
             >
-              <Text style={{ fontSize:17,color: half!="first" ? "black" : "white" }}>First Half</Text>
+              <Text style={{ fontSize:17,color: half!="first" ? colors.text: "white" }}>{sub.firstHalf.sem}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
@@ -52,7 +52,7 @@ const Subject = ({ route, navigation }) => {
               }}
               onPress={changeHalf}
             >
-              <Text style={{ fontSize:17,color: half!="second" ? "black" : "white" }}>Second Half</Text>
+              <Text style={{ fontSize:17,color: half!="second" ? colors.text : "white" }}>{sub.secondHalf.sem}</Text>
             </TouchableOpacity>
           </View>}
 
@@ -66,10 +66,10 @@ const Subject = ({ route, navigation }) => {
                   marginBottom: 10,
                 }}
               >
-                First Half
+                {sub.firstHalf.sem}
               </Text>
-              {sub.firstHalf.map((a) => (
-                <TouchableOpacity
+              {sub.firstHalf.subject.map((a) => (
+                <TouchableOpacity key={a.short}
                   style={{ ...styles.cards, backgroundColor: colors.card }}
                 >
                   <Text style={{ color: colors.text, fontSize: 18 }}>
@@ -89,10 +89,11 @@ const Subject = ({ route, navigation }) => {
                   textAlign: "center",
                 }}
               >
-                Second Half
+               {sub.secondHalf.sem}
               </Text>
-              {sub.secondHalf.map((a) => (
+              {sub.secondHalf.subject.map((a) => (
                 <TouchableOpacity
+                key={a.short}
                   style={{ ...styles.cards, backgroundColor: colors.card }}
                 >
                   <Text style={{ color: colors.text, fontSize: 18 }}>
