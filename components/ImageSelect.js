@@ -1,5 +1,12 @@
-import React,{useState} from "react";
-import { View, Image, Text, TouchableOpacity, StyleSheet,ActivityIndicator } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { globalStyles, SIZE } from "../styles/globalStyle";
@@ -26,18 +33,25 @@ const ImageSelect = (props) => {
         }}
       >
         <Text style={{ ...globalStyles.boldText, color: "white" }}>
-          Choose Option
+         {props.uploading?"Uploading...":"Choose Option"} 
         </Text>
-        <TouchableOpacity onPress={()=>{props.setOption(false)}} style={styles.close}>
+        <TouchableOpacity
+          onPress={() => {
+            props.setOption(false);
+          }}
+          style={styles.close}
+        >
           <AntDesign name="close" size={27} color={colors.text} />
         </TouchableOpacity>
+        {!props.uploading &&
+        <>
         <TouchableOpacity
           activeOpacity={0.8}
           style={{
             ...styles.btns,
             padding: 14,
             width: "70%",
-            marginTop:20
+            marginTop: 20,
           }}
           onPress={props.openGallery}
         >
@@ -45,7 +59,7 @@ const ImageSelect = (props) => {
           <Text
             style={{ ...globalStyles.midText, marginLeft: 6, color: "white" }}
           >
-            Open Library
+            Choose Gallery
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -64,18 +78,21 @@ const ImageSelect = (props) => {
           >
             Open Camera
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity></>}
 
         {props.imageSet && (
           <>
             <View style={{ padding: 10 }}>
               <Image
                 source={props.imageSet}
-                style={{ height: 300, width: SIZE.screenWidth*0.82, resizeMode: "contain" }}
+                style={{
+                  height: 300,
+                  width: SIZE.screenWidth * 0.82,
+                  resizeMode: "contain",
+                }}
               />
             </View>
             <View style={{ flexDirection: "row" }}>
-           
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={{
@@ -85,25 +102,32 @@ const ImageSelect = (props) => {
                 onPress={props.uploadImage}
               >
                 <Text style={{ ...globalStyles.midText, color: "white" }}>
-                 {props.uploading?<ActivityIndicator color="white" />: "Upload Image"}
+                  {props.uploading ? (
+                    <ActivityIndicator color="white" />
+                  ) : (
+                    "Upload Image"
+                  )}
                 </Text>
               </TouchableOpacity>
 
+              {!props.uploading &&
               <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  ...styles.btns,
-                  marginLeft: 4,
-                }}
-                onPress={() => {
-                  props.setImages(null);
-                  props.setOption(false);
-                }}
-              >
-                <Text style={{ ...globalStyles.midText, color: "white" }}>
-                  Cancel
-                </Text>
-              </TouchableOpacity>
+              activeOpacity={0.8}
+              style={{
+                ...styles.btns,
+                marginLeft: 4,
+              }}
+              onPress={() => {
+                props.setImages(null);
+                props.setOption(false);
+              }}
+            >
+             
+              <Text style={{ ...globalStyles.midText, color: "white" }}>
+                Cancel
+              </Text>
+            </TouchableOpacity>
+              }
             </View>
           </>
         )}
@@ -123,7 +147,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FB616A",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 4,
+    marginTop: SIZE.width*0.7,
   },
   close: {
     position: "absolute",

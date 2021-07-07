@@ -13,9 +13,7 @@ import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 import Header from "../components/Header";
 import PeopleCard from "../components/PeopleCard";
-import { authStyles } from "../styles/authStyle";
 import { useCollectionLazy } from "../hooks/firestore";
-import COLORS from "../styles/colors";
 import { useTheme } from "@react-navigation/native";
 
 const StudentList = ({ navigation }) => {

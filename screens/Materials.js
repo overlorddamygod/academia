@@ -48,10 +48,10 @@ export default function Materials({ navigation }) {
           
           <FlatList
             data={faculties}
-            keyExtractor={(item) => item.date}
+            keyExtractor={(item) => item.id}
             showVerticalScrollIndicator={false}
             renderItem={({ item, index }) => (
-              <View style={{ borderWidth:1,
+              <View key={item.id} style={{ borderWidth:1,
                 borderColor:colors.border,borderRadius:6, marginVertical:5,}}>
 
               <FacultyExpanded data={item} navigation={navigation}></FacultyExpanded>
