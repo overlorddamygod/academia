@@ -21,6 +21,7 @@ const AddAnnouncement = ({ navigation }) => {
   const { colors } = useTheme();
 
   const [announcementData, setAnnouncementData] = useState({
+    title:"",
     body: "",
     startingDate: todaysDate,
     endingDate: todaysDate,
@@ -40,7 +41,7 @@ const AddAnnouncement = ({ navigation }) => {
     setButtonDisabled(true);
     const idToken = await auth().currentUser.getIdToken();
 
-    fetch("http://192.168.100.4:7071/api/addEvent", {
+    fetch("https://academiacollege.azurewebsites.net/api/addevent?code=%2F6irg0JmuJqjGbXxEZvRUv7pwDOkqpM6hxCLsHS9AS6VXvOhJFcrwA%3D%3D", {
       method: "POST",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
