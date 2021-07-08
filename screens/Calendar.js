@@ -12,12 +12,12 @@ import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import COLORS, { tagColor } from "../styles/colors";
-import { Dialog } from "react-native-ui-lib";
 import { Feather } from "@expo/vector-icons";
-import AddEvent from "../components/AddEvent";
 import { SIZE } from "../styles/globalStyle";
 import { useTheme } from "@react-navigation/native";
 import { color } from "react-native-reanimated";
+import { useUserContext } from "../providers/user";
+
 const CalendarScreen = ({ navigation }) => {
   const todaysDate = new Date();
   const [date, setDate] = useState({
@@ -30,7 +30,7 @@ const CalendarScreen = ({ navigation }) => {
   const [eventsCache, setEventsCache] = useState({});
   const [events, setEvents] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [addEventDialog, setAddEventDialog] = useState(false);
+  const {user} = useUserContext()
 
   const onRefresh = React.useCallback(() => {
     getEventsForMonth(date.year, date.month, true);
@@ -54,11 +54,19 @@ const CalendarScreen = ({ navigation }) => {
     const start = new Date(`${year}-${formatDate(month)}-01`);
     const end = addMonth(new Date(`${year}-${formatDate(month)}-01`), 1);
 
+    const to = ["All", user.title]
+    if ( user.title == "Student" ) {
+      to.push(...[user.faculty,`${user.faculty} ${user.semester}`])
+    }
+
+    console.log(to)
     console.log(start, end);
     firestore()
-      .collection("announcementTemp")
-      .where("date", ">=", start)
-      .where("date", "<", end)
+      .collection("announcementTemp1")
+      .where("addToCalendar", "==",true)
+      .where("to","array-contains-any", to)
+      .where("startingDate", ">=", start)
+      .where("startingDate", "<", end)
       .get()
       .then((doc) => {
         const fetchedEvents = doc.docs
@@ -85,9 +93,9 @@ const CalendarScreen = ({ navigation }) => {
     return new Date(d.setMonth(d.getMonth() + range));
   };
 
-  useEffect(() => {
-    console.log("EVENTS", events);
-  }, [events]);
+  // useEffect(() => {
+  //   console.log("EVENTS", events);
+  // }, [events]);
 
   return (
     <>
@@ -101,7 +109,7 @@ const CalendarScreen = ({ navigation }) => {
                 return [...acc, ..._event];
               }, [])
               .reduce((acc, e) => {
-                const startingDate = e.date;
+                const startingDate = e.startingDate;
                 if (e.range <= 0) {
                   acc[formatYmd(startingDate)] = {
                     dotColor: tagColor[e.tag || "Holiday"],
@@ -123,7 +131,6 @@ const CalendarScreen = ({ navigation }) => {
           enableSwipeMonths={true}
           onDayPress={(time) => {
             setDate(time);
-            setAddEventDialog(true);
           }}
           onMonthChange={(time) => {
             console.log("MONTH CHANGED");
@@ -166,7 +173,7 @@ const CalendarScreen = ({ navigation }) => {
               activeOpacity={0.5}
               style={{ borderWidth: 1, borderRadius: 5 }}
               onPress={() => {
-                setAddEventDialog(true);
+                navigation.navigate("AddAnnouncement");
                 console.log("Add Event");
               }}
             >
@@ -180,34 +187,17 @@ const CalendarScreen = ({ navigation }) => {
             onRefresh={onRefresh}
             keyExtractor={(item) => `${item.id}`}
             renderItem={({ item }) => <CalendarEventListItem event={item} />}
-            ListEmptyComponent={()=>
+            ListEmptyComponent={() => (
               <View style={{ alignItems: "center", marginTop: 50 }}>
                 <Text style={{ color: colors.text }}>
                   No events for this month
                 </Text>
               </View>
-            }
+            )}
           />
         </View>
       </View>
-      <Dialog
-        migrate
-        useSafeArea
-        containerStyle={{
-          justifyContent: "space-between",
-          paddingVertical: 20,
-          addingHorizontal: 30,
-          paddingHorizontal: 40,
-        }}
-        width="100%"
-        visible={addEventDialog}
-        onDismiss={() => setAddEventDialog(false)}
-      >
-        <AddEvent
-          closeDialog={() => setAddEventDialog(false)}
-          date={date.dateString}
-        />
-      </Dialog>
+      
     </>
   );
 };
@@ -237,7 +227,7 @@ const CalendarEventListItem = ({ event }) => {
             borderRightColor: tagColor[event.tag],
           }}
         >
-          {formatDate(event.date.toDate().getDate())}
+          {formatDate(event.startingDate.toDate().getDate())}
         </Text>
 
         <Text style={{ fontSize: 16, flex: 1, color: colors.text }}>

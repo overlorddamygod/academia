@@ -7,20 +7,25 @@ import { authStyles } from "../styles/authStyle";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useUserContext } from "../providers/user";
 import { SIZE } from "../styles/globalStyle";
-import auth from "@react-native-firebase/auth"
+import auth from "@react-native-firebase/auth";
 import { useTheme } from "@react-navigation/native";
 
 const DrawerContent = ({ navigation }) => {
   const { user, logout: _logout } = useUserContext();
- const {colors} = useTheme()
+  const { colors } = useTheme();
   const logout = () => {
     _logout();
     navigation.closeDrawer();
   };
 
-  const googleData = auth().currentUser.providerData.filter(provider=>provider.providerId=="google.com")
+  const googleData = auth().currentUser.providerData.filter(
+    (provider) => provider.providerId == "google.com"
+  );
 
-  let googlePhotoUrl = googleData.length>0 ? googleData[0].photoURL : "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png"
+  let googlePhotoUrl =
+    googleData.length > 0
+      ? googleData[0].photoURL
+      : "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png";
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.drawerBackground }}>
@@ -133,13 +138,26 @@ const DrawerContent = ({ navigation }) => {
           </View>
         </View>
       </DrawerContentScrollView>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: SIZE.height / 3,
+        }}
+      >
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={logout}
-          style={{ ...authStyles.btn, backgroundColor: COLORS.mainred }}
+          style={{
+            width: "50%",
+            backgroundColor: COLORS.mainred,
+            borderRadius: 4,
+            paddingVertical:SIZE.height* 0.2
+          }}
         >
-          <Text style={globalStyles.txt}>Log Out</Text>
+          <Text style={{ ...globalStyles.txt, textAlign: "center" }}>
+            Log Out
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

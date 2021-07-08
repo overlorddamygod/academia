@@ -5,6 +5,7 @@ import {
 } from "@react-navigation/stack";
 import BottomTab from "./BottomTab";
 import IndividualChat from "../screens/IndividualChat";
+import AddAnnouncement from "../screens/AddAnnouncement";
 import { StudentStackScreen, TeacherStackScreen } from "./Stack";
 
 const MainStack = createStackNavigator();
@@ -23,6 +24,10 @@ function Main() {
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
+      />
+      <MainStack.Screen
+        name="AddAnnouncement"
+        component={AddAnnouncement}
       />
       <MainStack.Screen
         name="Teacher"

@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   cancel: {
-    marginVertical: SIZE.height * 0.05,
+    marginVertical: SIZE.height * 0.3,
     marginRight: 5,
     alignSelf: "flex-end",
   },

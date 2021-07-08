@@ -7,18 +7,18 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  ActivityIndicator,
+  TouchableHighlight,
 } from "react-native";
 import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import { useCollectionLazy } from "../hooks/firestore";
-import COLORS, {tagColor} from "../styles/colors";
+import COLORS, { tagColor } from "../styles/colors";
 
 const AnnouncementScreen = ({ navigation }) => {
   const [selectedTag, setSelectedTag] = useState("All Items");
 
-  const query = firestore().collection("announcementTemp");
+  const query = firestore().collection("announcementTemp1");
 
   const {
     value: announcements,
@@ -26,7 +26,7 @@ const AnnouncementScreen = ({ navigation }) => {
     error,
     getMoreData,
     onRefresh,
-    setQuery
+    setQuery,
   } = useCollectionLazy(query, "createdAt", "desc", 10);
 
   const { colors } = useTheme();
@@ -42,12 +42,12 @@ const AnnouncementScreen = ({ navigation }) => {
 
   return (
     <>
-      <Header title="Announcement" navigation={navigation} />
+      <Header title="Announcement" navigation={navigation} showSidebar={false} />
       <View style={{ flex: 1 }}>
         <View
           style={{
             height: StatusBar.currentHeight,
-            backgroundColor: colors.background,
+            backgroundColor: colors.mainblue,
           }}
         ></View>
         {/* <AppBar title="Announcements"></AppBar> */}
@@ -68,13 +68,8 @@ const AnnouncementScreen = ({ navigation }) => {
                 <Item
                   name={itemName}
                   active={selectedTag == itemName}
-                  onPress={(item)=> {
-                    setSelectedTag(item)
-                    // if ( item == "All Items") {
-                    //   setQuery(firestore().collection("announcementTemp"))
-                    // } else {
-                    //   setQuery(firestore().collection("announcementTemp").where("tag","==",item))
-                    // }
+                  onPress={(item) => {
+                    setSelectedTag(item);
                   }}
                   key={i}
                 />
@@ -88,15 +83,17 @@ const AnnouncementScreen = ({ navigation }) => {
             onRefresh={onRefresh}
             onEndReached={getMoreData}
             onEndReachedThreshold={0.1}
-            data={announcements.filter(announcement=> selectedTag == "All Items" ? "true" : announcement.tag == selectedTag)}
+            data={announcements.filter((announcement) =>
+              selectedTag == "All Items"
+                ? "true"
+                : announcement.tag == selectedTag
+            )}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <Announcement data={item} />}
             ListEmptyComponent={() => {
               return (
                 <View style={{ alignItems: "center", marginTop: 50 }}>
-                  <Text style={{ color: colors.text }}>
-                    No announcements
-                  </Text>
+                  <Text style={{ color: colors.text }}>No announcements</Text>
                 </View>
               );
             }}
@@ -113,8 +110,10 @@ const Announcement = ({
   data = { tag: "Classes", title: "Lorem Ipsum", time: "10:00 PM" },
 }) => {
   const { colors } = useTheme();
+
+  const [showBody, setShowBody] = useState(false);
   return (
-    <View
+    <TouchableHighlight
       style={{
         marginHorizontal: 20,
         marginBottom: 10,
@@ -123,7 +122,12 @@ const Announcement = ({
         padding: 8,
         ...styles.shadow,
       }}
+      onPress={()=> {
+        setShowBody(!showBody)
+      }}
+      underlayColor="#DDDDDD"
     >
+      <>
       <View
         style={{
           alignSelf: "flex-start",
@@ -132,7 +136,7 @@ const Announcement = ({
           borderRadius: 6,
         }}
       >
-        <Text style={{ color: COLORS.white,padding:3 }}>{data.tag}</Text>
+        <Text style={{ color: COLORS.white, padding: 3 }}>{data.tag}</Text>
       </View>
       <Text
         style={{
@@ -144,10 +148,24 @@ const Announcement = ({
       >
         {data.title}
       </Text>
+
+      {showBody && data.body && (
+        <Text
+          style={{
+            color: colors.text,
+            fontSize: 16,
+            marginVertical: 8,
+          }}
+        >
+          {data.body}
+        </Text>
+      )}
+
       <Text style={{ color: "#ABABAB" }}>
         {data.createdAt.toDate().toLocaleDateString()}
       </Text>
-    </View>
+      </>
+    </TouchableHighlight>
   );
 };
 

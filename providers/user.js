@@ -51,6 +51,12 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
         setUser({ ...user, ...userData });
         messaging().subscribeToTopic(`${userData.title}`);
+
+        if ( userData.faculty && userData.semester ) {
+          messaging().subscribeToTopic(`${userData.faculty.split(" ").join("_")}`);
+          messaging().subscribeToTopic(`${userData.faculty.split(" ").join("_")}_${userData.semester}_semester`);
+        }
+
         // Change online status
         // const onlineStatusRef = database().ref(`/status/${loggedUser.uid}`);
 

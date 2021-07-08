@@ -136,7 +136,7 @@ const BottomTab = (props) => {
         containerStyle={{
           backgroundColor: colors.dialogs,
           justifyContent: "space-between",
-          paddingVertical: SIZE.height / 2,
+          paddingBottom: SIZE.height / 2,
           borderTopRightRadius: 30,
           borderTopLeftRadius: 30,
         }}

@@ -23,8 +23,8 @@ import { images } from "../styles/colors";
 const Home = ({ navigation }) => {
   const { colors } = useTheme();
 
-  const { user } = useUserContext();
   const { isDark } = useContext(ThemeContext);
+  
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Header
