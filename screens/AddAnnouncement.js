@@ -11,7 +11,7 @@ import COLORS from "../styles/colors";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-import { DateTimePicker, ChipsInput, Button } from "react-native-ui-lib";
+import { DateTimePicker, ChipsInput, Button,KeyboardAwareScrollView } from "react-native-ui-lib";
 import Header from "../components/Header";
 import { useTheme } from "@react-navigation/native";
 import { showToast } from "../utils/error";
@@ -91,7 +91,7 @@ const AddAnnouncement = ({ navigation }) => {
           marginTop: SIZE.height / 5,
         }}
       >
-        <ScrollView>
+        {/* <ScrollView>
           <KeyboardAvoidingView
             style={{
               flex: 1,
@@ -100,7 +100,8 @@ const AddAnnouncement = ({ navigation }) => {
             }}
             keyboardVerticalOffset={-100}
             behavior={"height"}
-          >
+          > */}
+          <KeyboardAwareScrollView>
             <InputContainer label="Title">
               <CustomTextInput
                 placeholder="Title"
@@ -246,8 +247,9 @@ const AddAnnouncement = ({ navigation }) => {
               onPress={onAddButtonPress}
               disabled={buttonDisabled}
             />
-          </KeyboardAvoidingView>
-        </ScrollView>
+            </KeyboardAwareScrollView>
+          {/* </KeyboardAvoidingView>
+        </ScrollView> */}
       </View>
     </View>
   );
