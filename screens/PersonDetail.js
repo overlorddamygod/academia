@@ -35,6 +35,7 @@ const PersonDetail = ({ route, navigation }) => {
             }}
             style={styles.image}
           />
+          
         </ImageBackground>
       </View>
       <View style={styles.bg}>

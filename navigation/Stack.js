@@ -15,7 +15,10 @@ import Settings from "../screens/Settings";
 import Materials from "../screens/Materials";
 import PersonDetail from "../screens/PersonDetail";
 import Subject from "../screens/Subject";
-import Video from "../screens/Video";
+import Videos from "../screens/Video";
+import EditProfile from "../screens/EditProfile";
+import AboutCollege from "../screens/AboutCollege";
+
 
 const HomeStack = createStackNavigator();
 const AnnounceStack = createStackNavigator();
@@ -30,6 +33,8 @@ const PersonDetailStack = createStackNavigator();
 const CalendarStack = createStackNavigator();
 const SubjectStack = createStackNavigator();
 const VideoStack = createStackNavigator();
+const EditProfileStack = createStackNavigator();
+const AboutCollegeStack = createStackNavigator();
 export function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
@@ -83,7 +88,7 @@ export function VideoStackScreen() {
         headerShown: false,
       }}
     >
-      <VideoStack.Screen name="Video" component={Video} />
+      <VideoStack.Screen name="Video" component={Videos} />
     </VideoStack.Navigator>
   );
 }
@@ -159,7 +164,17 @@ export function ModalStackScreen({ navigation }) {
   }, [navigation]);
   return <></>;
 }
-
+export function EditProfileScreen() {
+  return (
+    <EditProfileStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <EditProfileStack.Screen name="EditProfile" component={EditProfile} />
+    </EditProfileStack.Navigator>
+  );
+}
 export function SettingStackScreen() {
   return (
     <SettingStack.Navigator
@@ -171,7 +186,17 @@ export function SettingStackScreen() {
     </SettingStack.Navigator>
   );
 }
-
+export function AboutColegeStackScreen() {
+  return (
+    <AboutCollegeStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <AboutCollegeStack.Screen name="AboutCollege" component={AboutCollege} />
+    </AboutCollegeStack.Navigator>
+  );
+}
 export function SubjectStackScreen() {
   return (
     <MaterialStack.Navigator

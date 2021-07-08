@@ -74,6 +74,16 @@ const globalStyles = StyleSheet.create({
     marginLeft: SIZE.width * 0.7,
     marginTop: SIZE.width * 0.7,
   },
+  btns: {
+    width: SIZE.screenWidth * 0.3,
+    padding: 8,
+    flexDirection: "row",
+    borderRadius: 5,
+    backgroundColor: "#6765c2",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 4,
+  },
 });
 
 export { globalStyles, SIZE };
