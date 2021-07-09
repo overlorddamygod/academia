@@ -33,7 +33,7 @@ const DrawerTab = () => {
       card: "white",
       btn: "#583EFF",
       msgIcon: "black",
-      mainblue: "#4a3f8c",
+      mainblue: "#473f97",
       buttomtab: "#0E243F",
       border: "lightgray",
       upcoming: "#515a8a",

@@ -14,6 +14,8 @@ import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
 import { getErrorMessage, showToast } from "../utils/error";
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +46,7 @@ const Login = ({ navigation }) => {
   };
 
   return (
+    <KeyboardAwareScrollView style={{flex:1}}>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1, backgroundColor: COLORS.main }}>
         <View style={authStyles.upper}>
@@ -133,6 +136,7 @@ const Login = ({ navigation }) => {
         </View>
       </View>
     </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 

@@ -23,7 +23,7 @@ const HomeNotice = ({ navigation }) => {
                 color: colors.text,
               }}
             >
-              Hello Friend
+              Proud of
             </Text>
             <Text
               style={{
@@ -33,7 +33,7 @@ const HomeNotice = ({ navigation }) => {
                 color: colors.text,
               }}
             >
-              How are you?
+              Academia is proud of
             </Text>
           </View>
           <TouchableOpacity style={styles.btn}>
@@ -56,9 +56,9 @@ const HomeNotice = ({ navigation }) => {
                 paddingRight: 10,
               }}
             >
-              <Text style={{ ...styles.midNum, color: colors.text }}>309+</Text>
+              <Text style={{ ...styles.midNum, color: colors.text }}>5</Text>
               <Text style={{ fontSize: 16, color: colors.text }}>
-                Graduates
+                Courses
               </Text>
             </View>
             <View>
@@ -68,14 +68,14 @@ const HomeNotice = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => navigation.navigate("Announcements")}
         style={{ marginTop: SIZE.height * 0.4 }}
       >
         <Text style={{ ...styles.btnText, color: colors.text }}>
           See All Pages
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
