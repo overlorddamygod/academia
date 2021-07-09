@@ -4,6 +4,7 @@ import messaging from "@react-native-firebase/messaging";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { showToast } from "../utils/error";
+import {getFcmToken} from "../notifications";
 
 const initialUser = {
   username: null,
@@ -48,6 +49,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
         // }
 
         setUser({ ...user, ...userData });
+        messaging().subscribeToTopic("All");
         messaging().subscribeToTopic(`${userData.title}`);
 
         if (userData.faculty && userData.semester) {
@@ -55,9 +57,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
             `${userData.faculty.split(" ").join("_")}`
           );
           messaging().subscribeToTopic(
-            `${userData.faculty.split(" ").join("_")}_${
-              userData.semester
-            }_semester`
+            `${userData.faculty.split(" ").join("_")}_${userData.semester}`
           );
         }
 
@@ -135,12 +135,21 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   };
 
   const logout = async () => {
-    messaging().deleteToken();
-    await firestore().collection("user").doc(user.id).update({
-      token: null,
-    });
-    auth().signOut();
-    GoogleSignin.signOut();
+    try {
+      messaging().deleteToken();
+      const token = await getFcmToken();
+      console.log("TOKEN", token);
+      messaging().subscribeToTopic("All");
+
+      messaging().subscribeToTopic("All");
+      await firestore().collection("user").doc(user.id).update({
+        token: null,
+      });
+      auth().signOut();
+      GoogleSignin.signOut();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const linkWithGoogle = async () => {
