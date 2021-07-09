@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { globalStyles, SIZE } from "../styles/globalStyle";
 import { useTheme } from "@react-navigation/native";
-import { color } from "react-native-reanimated";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 const HomeNotice = ({ navigation }) => {
   const { colors } = useTheme();
 

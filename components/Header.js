@@ -1,16 +1,14 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Button,
   StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import COLORS from "../styles/colors";
-import { Ionicons } from "@expo/vector-icons";
 import { SIZE } from "../styles/globalStyle";
-import { useTheme } from "@react-navigation/native";
 
 const Header = ({
   title,

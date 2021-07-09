@@ -1,9 +1,8 @@
+import { AntDesign, Feather } from "@expo/vector-icons";
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
-import { Feather } from "@expo/vector-icons";
 
 function ConnectModal({ navigation, setShowDialog }) {
   return (
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   cancel: {
-    marginVertical: SIZE.height * 0.05,
+    marginVertical: SIZE.height * 0.3,
     marginRight: 5,
     alignSelf: "flex-end",
   },

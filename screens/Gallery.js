@@ -1,85 +1,49 @@
-import React, { useState, useEffect } from "react";
+import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Image,
-  ScrollView,
   ActivityIndicator,
+  Image,
+  Modal,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  Modal,
-  Alert,
-  StyleSheet,
-  RefreshControl,
+  View,
 } from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
-import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import Header from "../components/Header";
-import { Ionicons } from "@expo/vector-icons";
-import ImageCarousel from "../components/ImageCarousel";
-import { useUserContext } from "../providers/user";
-import storage from "@react-native-firebase/storage";
-import ImageSelect from "../components/ImageSelect";
-import { showToast, getErrorMessage } from "../utils/error";
 import GalleryRoute from "../components/GalleryRoute";
+import Header from "../components/Header";
+import ImageCarousel from "../components/ImageCarousel";
+import ImageSelect from "../components/ImageSelect";
+import useGallery from "../hooks/useGallery";
+import { useUserContext } from "../providers/user";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const Gallery = ({ navigation }) => {
-  const [visible, setIsVisible] = useState(false);
   const [imageuri, setImageuri] = useState("");
   const { user } = useUserContext();
   const [imageSet, setImages] = useState(null);
-  const [option, setOption] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const [allImages, setallImages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
 
-  const fetchImages = () => {
-    const ref = storage().ref("images");
-    ref.list().then((res) => {
-      setallImages([]);
-      res.items.forEach((itemsRef) => {
-        itemsRef.getDownloadURL().then((downloadUrl) => {
-          setallImages((prev) => [...prev, downloadUrl]);
-          setLoading(false);
-          setRefreshing(false);
-        });
-      });
-    });
-  };
+  // custom hookes to upload,retrieve and delete image
+  const {
+    fetchData,
+    uploadData,
+    uploading,
+    loading,
+    deleteData,
+    refreshing,
+    setIsVisible,
+    visible,
+    option,
+    setOption,
+  } = useGallery(setImages, setallImages);
+
   useEffect(() => {
-    fetchImages();
+    fetchData("images");
   }, []);
-
-
-  const uploadImage = async () => {
-    const { uri } = imageSet;
-    const filename = "images/" + uri.substring(uri.lastIndexOf("/") + 1);
-    const uploadUri = Platform.OS === "ios" ? uri.replace("file://", "") : uri;
-
-    setUploading(true);
-
-    const task = storage().ref(filename).putFile(uploadUri);
-    try {
-      await task;
-    } catch (e) {
-      console.error(e);
-    }
-    setUploading(false);
-    showToast("Image was successfully Uploaded !")
-    setImages(null);
-    setallImages((prev) => [uri, ...prev]);
-    setOption(false);
-  
-  };
-
-  const deleteImage = (image) => {
-    var desertRef = storage().refFromURL(image);
-    desertRef.delete()
-    setIsVisible(false)
-    setallImages(prev => prev.filter(a => a !== image))
-    showToast("Successfully deleted !")
-  };
 
   const openCamera = () => {
     const options = {
@@ -125,31 +89,37 @@ const Gallery = ({ navigation }) => {
   return (
     <>
       <Header title="Academia Gallery" navigation={navigation} />
-      <GalleryRoute navigation={navigation} screen="photo"/>
+      <GalleryRoute navigation={navigation} screen="photo" />
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={fetchImages} />
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => fetchData("images")}
+          />
         }
       >
-{/* shoudl be teacher to let only teacher to add photo */}
-        {user.title === 'Student'&&
+        {/* shoudl be teacher to let only teacher to add photo */}
+        {user.title === "Student" && (
           <View
-          style={{ justifyContent: "center", alignItems: "center", padding: 6 }}
-        >
-          <TouchableOpacity
-            activeOpacity={0.8}
             style={{
-              ...styles.btns,
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 6,
             }}
-            onPress={() => setOption(true)}
           >
-            <Text style={{ ...globalStyles.midText, color: "white" }}>
-              Add Image
-            </Text>
-          </TouchableOpacity>
-        </View>
-        }
-      
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={{
+                ...globalStyles.btns,
+              }}
+              onPress={() => setOption(true)}
+            >
+              <Text style={{ ...globalStyles.midText, color: "white" }}>
+                Add Image
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
         <Modal
           transparent
@@ -161,7 +131,7 @@ const Gallery = ({ navigation }) => {
             imageSet={imageSet}
             openCamera={openCamera}
             openGallery={openGallery}
-            uploadImage={uploadImage}
+            uploadImage={uploadData}
             setImages={setImages}
             setOption={setOption}
             uploading={uploading}
@@ -231,14 +201,16 @@ const Gallery = ({ navigation }) => {
                     >
                       <Ionicons name="arrow-back" size={34} color="white" />
                     </TouchableOpacity>
-                  
-                  {/* only teacher can delete post  */}
-                  {user.title === 'Student'&&  <TouchableOpacity
-                      onPress={()=>deleteImage(imageuri)}
-                      style={styles.close}
-                    >
-                      <Ionicons name="trash" size={34} color="#ed8085" />
-                    </TouchableOpacity>}
+
+                    {/* only teacher can delete post  */}
+                    {user.title === "Student" && (
+                      <TouchableOpacity
+                        onPress={() => deleteData(imageuri)}
+                        style={styles.close}
+                      >
+                        <Ionicons name="trash" size={34} color="#ed8085" />
+                      </TouchableOpacity>
+                    )}
                   </View>
                   <ReactNativeZoomableView
                     maxZoom={2}
@@ -271,16 +243,6 @@ const Gallery = ({ navigation }) => {
 export default Gallery;
 
 const styles = StyleSheet.create({
-  btns: {
-    width: SIZE.screenWidth * 0.3,
-    padding: 8,
-    flexDirection: "row",
-    borderRadius: 5,
-    backgroundColor: "#6765c2",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 4,
-  },
   close: {
     position: "relative",
     marginTop: 10,

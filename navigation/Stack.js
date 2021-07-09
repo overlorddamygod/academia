@@ -1,21 +1,20 @@
-import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "../screens/Home";
-import Gallery from "../screens/Gallery";
-import StudentList from "../screens/StudentList";
+import React, { useEffect } from "react";
+import AboutCollege from "../screens/AboutCollege";
 import AnnouncementScreen from "../screens/Announcement";
-import TeacherList from "../screens/TeachersList";
-import Chat from "../screens/Chat";
-import Notifications from "../screens/Notifications";
 import CalendarScreen from "../screens/Calendar";
-import IndividualChat from "../screens/IndividualChat";
-import COLORS from "../styles/colors";
-import ConnectModal from "../screens/ConnectModal";
-import Settings from "../screens/Settings";
+import Chat from "../screens/Chat";
+import EditProfile from "../screens/EditProfile";
+import Gallery from "../screens/Gallery";
+import Home from "../screens/Home";
 import Materials from "../screens/Materials";
+import Notifications from "../screens/Notifications";
 import PersonDetail from "../screens/PersonDetail";
+import Settings from "../screens/Settings";
+import StudentList from "../screens/StudentList";
 import Subject from "../screens/Subject";
-import Video from "../screens/Video";
+import TeacherList from "../screens/TeachersList";
+import Videos from "../screens/Video";
 
 const HomeStack = createStackNavigator();
 const AnnounceStack = createStackNavigator();
@@ -30,6 +29,9 @@ const PersonDetailStack = createStackNavigator();
 const CalendarStack = createStackNavigator();
 const SubjectStack = createStackNavigator();
 const VideoStack = createStackNavigator();
+const EditProfileStack = createStackNavigator();
+const AboutCollegeStack = createStackNavigator();
+
 export function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
@@ -83,7 +85,7 @@ export function VideoStackScreen() {
         headerShown: false,
       }}
     >
-      <VideoStack.Screen name="Video" component={Video} />
+      <VideoStack.Screen name="Video" component={Videos} />
     </VideoStack.Navigator>
   );
 }
@@ -159,7 +161,17 @@ export function ModalStackScreen({ navigation }) {
   }, [navigation]);
   return <></>;
 }
-
+export function EditProfileScreen() {
+  return (
+    <EditProfileStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <EditProfileStack.Screen name="EditProfile" component={EditProfile} />
+    </EditProfileStack.Navigator>
+  );
+}
 export function SettingStackScreen() {
   return (
     <SettingStack.Navigator
@@ -171,7 +183,17 @@ export function SettingStackScreen() {
     </SettingStack.Navigator>
   );
 }
-
+export function AboutColegeStackScreen() {
+  return (
+    <AboutCollegeStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <AboutCollegeStack.Screen name="AboutCollege" component={AboutCollege} />
+    </AboutCollegeStack.Navigator>
+  );
+}
 export function SubjectStackScreen() {
   return (
     <MaterialStack.Navigator

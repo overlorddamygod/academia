@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from "react";
+import firestore from "@react-native-firebase/firestore";
+import { useTheme } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
-  View,
   FlatList,
-  ActivityIndicator,
+  Text,
   TextInput,
   TouchableOpacity,
-  Text
+  View,
 } from "react-native";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import firestore from "@react-native-firebase/firestore";
-import { useUserContext } from "../providers/user";
 import Header from "../components/Header";
 import PeopleCard from "../components/PeopleCard";
-import { authStyles } from "../styles/authStyle";
 import { useCollectionLazy } from "../hooks/firestore";
-import COLORS from "../styles/colors";
-import { useTheme } from "@react-navigation/native";
+import { useUserContext } from "../providers/user";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const TeacherList = ({ navigation }) => {
   const { user } = useUserContext();
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const [searchTerm, setSearchTerm] = useState("");
 
   const {
@@ -62,9 +59,9 @@ const TeacherList = ({ navigation }) => {
                 borderWidth: 1,
                 paddingHorizontal: 10,
                 borderRadius: 10,
-                color:colors.text,
-                borderColor:'lightgray',
-                fontSize:SIZE.width *0.9
+                color: colors.text,
+                borderColor: "lightgray",
+                fontSize: SIZE.width * 0.9,
               }}
               placeholder="Search"
               placeholderTextColor="#999"

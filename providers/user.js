@@ -1,10 +1,8 @@
-import React, { createContext, useEffect, useContext, useState } from "react";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import messaging from "@react-native-firebase/messaging";
-import database from "@react-native-firebase/database";
-import { requestUserPermission, getFcmToken } from "../notifications";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { showToast } from "../utils/error";
 
 const initialUser = {
@@ -51,6 +49,18 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
         setUser({ ...user, ...userData });
         messaging().subscribeToTopic(`${userData.title}`);
+
+        if (userData.faculty && userData.semester) {
+          messaging().subscribeToTopic(
+            `${userData.faculty.split(" ").join("_")}`
+          );
+          messaging().subscribeToTopic(
+            `${userData.faculty.split(" ").join("_")}_${
+              userData.semester
+            }_semester`
+          );
+        }
+
         // Change online status
         // const onlineStatusRef = database().ref(`/status/${loggedUser.uid}`);
 
@@ -71,7 +81,6 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   };
 
   useEffect(() => {
-
     const unsubscribeAuth = auth().onAuthStateChanged(UserChange);
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       console.log("Message handled in the background!", remoteMessage);
@@ -131,8 +140,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
       token: null,
     });
     auth().signOut();
-    GoogleSignin.signOut()
-
+    GoogleSignin.signOut();
   };
 
   const linkWithGoogle = async () => {
@@ -144,15 +152,14 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
       await auth().currentUser.linkWithCredential(credential);
 
       await firestore().collection("user").doc(auth().currentUser.uid).update({
-        googleId: googleUser.id
-      })
-      showToast("Successfully linked your google account")
+        googleId: googleUser.id,
+      });
+      showToast("Successfully linked your google account");
     } catch (err) {
-      console.error(err)
-      if (err.code == "auth/unknown") 
-      showToast("User has already been linked")
+      console.error(err);
+      if (err.code == "auth/unknown") showToast("User has already been linked");
       else {
-        showToast("Error linking your google account")
+        showToast("Error linking your google account");
       }
     }
   };
@@ -160,20 +167,23 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   const loginWithGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const {idToken, user:googleUser} = await GoogleSignin.signIn();
+      const { idToken, user: googleUser } = await GoogleSignin.signIn();
 
-      const snapshot = await firestore().collection("user").where("googleId","==", googleUser.id).get()
-      if ( snapshot.size > 0 ) {
+      const snapshot = await firestore()
+        .collection("user")
+        .where("googleId", "==", googleUser.id)
+        .get();
+      if (snapshot.size > 0) {
         let credential = auth.GoogleAuthProvider.credential(idToken);
         const res = await auth().signInWithCredential(credential);
-        showToast("Successfully signed in")
+        showToast("Successfully signed in");
       } else {
-        showToast("Given gmail account is not linked to any account.")
-        GoogleSignin.signOut()
+        showToast("Given gmail account is not linked to any account.");
+        GoogleSignin.signOut();
       }
     } catch (err) {
-      showToast("Error signing in")
-      GoogleSignin.signOut()
+      showToast("Error signing in");
+      GoogleSignin.signOut();
     }
   };
 

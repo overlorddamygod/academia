@@ -1,20 +1,20 @@
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
   Image,
-  ScrollView,
   ImageBackground,
-  TouchableOpacity,
   Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import Header from "../components/Header";
-import { globalStyles ,SIZE} from "../styles/globalStyle";
-import { AntDesign } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
-import { useTheme } from "@react-navigation/native";
+import Header from "../components/Header";
+import { globalStyles, SIZE } from "../styles/globalStyle";
+
 const PersonDetail = ({ route, navigation }) => {
   const { colors } = useTheme();
   const { data } = route.params;
@@ -38,20 +38,25 @@ const PersonDetail = ({ route, navigation }) => {
         </ImageBackground>
       </View>
       <View style={styles.bg}>
-        <View style={{ position: "absolute", top: 10, left: SIZE.screenWidth*0.4}}>
+        <View
+          style={{
+            position: "absolute",
+            top: 10,
+            left: SIZE.screenWidth * 0.4,
+          }}
+        >
           <Text style={{ ...styles.name, color: colors.text }}>
             {data.username}
           </Text>
-       
         </View>
-        <View style={{marginTop:SIZE.height}}>
-        <Text style={{fontSize:16, color: colors.text }}>
+        <View style={{ marginTop: SIZE.height }}>
+          <Text style={{ fontSize: 16, color: colors.text }}>
             Semester : {data.semester}
           </Text>
-          <Text style={{lineHeight:20,fontSize:16,color: colors.text }}>
+          <Text style={{ lineHeight: 20, fontSize: 16, color: colors.text }}>
             Email : {data.email}
           </Text>
-          </View>
+        </View>
         <ScrollView>
           <Animatable.View animation="fadeInUp">
             <View

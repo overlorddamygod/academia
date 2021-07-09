@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
-import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
-import { useUserContext } from "../providers/user";
-import COLORS from "../styles/colors";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import database from "@react-native-firebase/database";
 import { useTheme } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import Header from "../components/Header";
+import { useUserContext } from "../providers/user";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const Chat = ({ navigation }) => {
   const { user } = useUserContext();
@@ -56,7 +54,6 @@ const Chat = ({ navigation }) => {
               borderRadius: 10,
               flexDirection: "row",
               alignItems: "center",
-
             }}
             onPress={() => {
               navigation.navigate("IndividualChat", {

@@ -1,28 +1,25 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity,Text } from "react-native";
+import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { Dialog } from "react-native-ui-lib";
-
-import {
-  HomeStackScreen,
-  ChatStackScreen,
-  NotificationsStackScreen,
-  ModalStackScreen,
-  CalendarStackScreen,
-} from "./Stack";
-import COLORS from "../styles/colors";
-import ConnectModal from "../screens/ConnectModal";
-import { SIZE } from "../styles/globalStyle";
 import { useTheme } from "@react-navigation/native";
+import React, { useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Dialog } from "react-native-ui-lib";
+import ConnectModal from "../screens/ConnectModal";
+import COLORS from "../styles/colors";
+import { SIZE } from "../styles/globalStyle";
+import {
+  CalendarStackScreen,
+  ChatStackScreen,
+  HomeStackScreen,
+  ModalStackScreen,
+  NotificationsStackScreen,
+} from "./Stack";
 
 const Tabs = createBottomTabNavigator();
 
 const BottomTab = (props) => {
   const [showDialog, setShowDialog] = useState(false);
-  const {colors} = useTheme()
+  const { colors } = useTheme();
   return (
     <>
       <Tabs.Navigator
@@ -35,7 +32,7 @@ const BottomTab = (props) => {
           },
         }}
         screenOptions={{
-          headerShown:false
+          headerShown: false,
         }}
       >
         <Tabs.Screen
@@ -43,12 +40,12 @@ const BottomTab = (props) => {
           component={HomeStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={focused?styles.middleIcon:null}>
-              <AntDesign
-                name="home"
-                size={focused ? 29 : 24}
-                color={"white"}
-              />
+              <View style={focused ? styles.middleIcon : null}>
+                <AntDesign
+                  name="home"
+                  size={focused ? 29 : 24}
+                  color={"white"}
+                />
               </View>
             ),
           }}
@@ -58,12 +55,12 @@ const BottomTab = (props) => {
           component={ChatStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={focused?styles.middleIcon:null}>
-              <Ionicons
-                name="chatbox-ellipses-outline"
-                size={focused ? 29 : 24}
-                color={'white'}
-              />
+              <View style={focused ? styles.middleIcon : null}>
+                <Ionicons
+                  name="chatbox-ellipses-outline"
+                  size={focused ? 29 : 24}
+                  color={"white"}
+                />
               </View>
             ),
           }}
@@ -74,18 +71,20 @@ const BottomTab = (props) => {
           options={{
             tabBarIcon: ({ focused }) => (
               <TouchableOpacity
-              activeOpacity={0.7}
+                activeOpacity={0.7}
                 onPress={() => {
                   setShowDialog(true);
                 }}
               >
-                <View style={{
-                   flex:1,
-                   width: SIZE.height * 2,
-                   alignItems: "center",
-                   justifyContent: "center",
-                   backgroundColor:COLORS.mainred,
-                }}>
+                <View
+                  style={{
+                    flex: 1,
+                    width: SIZE.height * 2,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: COLORS.mainred,
+                  }}
+                >
                   <Feather
                     name="users"
                     size={focused ? 29 : 24}
@@ -102,12 +101,12 @@ const BottomTab = (props) => {
           component={CalendarStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={focused?styles.middleIcon:null}>
-              <AntDesign
-                name="calendar"
-                size={focused ? 29 : 24}
-                color={"white"}
-              />
+              <View style={focused ? styles.middleIcon : null}>
+                <AntDesign
+                  name="calendar"
+                  size={focused ? 29 : 24}
+                  color={"white"}
+                />
               </View>
             ),
           }}
@@ -117,12 +116,12 @@ const BottomTab = (props) => {
           component={NotificationsStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={focused?styles.middleIcon:null}>
-              <Ionicons
-                name="notifications-outline"
-                size={focused ? 29 : 24}
-                color={"white"}
-              />
+              <View style={focused ? styles.middleIcon : null}>
+                <Ionicons
+                  name="notifications-outline"
+                  size={focused ? 29 : 24}
+                  color={"white"}
+                />
               </View>
             ),
           }}
@@ -136,7 +135,7 @@ const BottomTab = (props) => {
         containerStyle={{
           backgroundColor: colors.dialogs,
           justifyContent: "space-between",
-          paddingVertical: SIZE.height / 2,
+          paddingBottom: SIZE.height / 2,
           borderTopRightRadius: 30,
           borderTopLeftRadius: 30,
         }}
@@ -144,7 +143,7 @@ const BottomTab = (props) => {
         visible={showDialog}
         onDismiss={() => setShowDialog(false)}
       >
-        <View style={{paddingHorizontal: SIZE.width * 0.9 }}>
+        <View style={{ paddingHorizontal: SIZE.width * 0.9 }}>
           <ConnectModal setShowDialog={setShowDialog} {...props} />
         </View>
       </Dialog>
@@ -155,10 +154,10 @@ const BottomTab = (props) => {
 export default BottomTab;
 const styles = StyleSheet.create({
   middleIcon: {
-    flex:1,
+    flex: 1,
     width: SIZE.height * 2,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor:'#534db0',
+    backgroundColor: "#534db0",
   },
 });

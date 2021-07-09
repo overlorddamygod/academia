@@ -1,21 +1,19 @@
+import { AntDesign } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
-  View,
+  ActivityIndicator,
+  Keyboard,
   Text,
   TextInput,
-  Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard,
-  ToastAndroid,
-  ActivityIndicator,
+  View,
 } from "react-native";
-import { authStyles } from "../styles/authStyle";
-import { SIZE } from "../styles/globalStyle";
-import COLORS from "../styles/colors";
 import { useUserContext } from "../providers/user";
-import { showToast, getErrorMessage } from "../utils/error";
-import { AntDesign } from "@expo/vector-icons";
+import { authStyles } from "../styles/authStyle";
+import COLORS from "../styles/colors";
+import { SIZE } from "../styles/globalStyle";
+import { getErrorMessage, showToast } from "../utils/error";
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -107,18 +105,18 @@ const Login = ({ navigation }) => {
               )}
             </TouchableOpacity>
             <TouchableOpacity
-              style={{...authStyles.btn,
-                backgroundColor:'#f56e77',
-                flexDirection:'row',
-                justifyContent:'space-around'
+              style={{
+                ...authStyles.btn,
+                backgroundColor: "#f56e77",
+                flexDirection: "row",
+                justifyContent: "space-around",
               }}
               onPress={() => {
                 loginWithGoogle();
               }}
             >
               <AntDesign name="google" size={23} color="white" />
-              <Text style={authStyles.text}>
-                Login With Google</Text>
+              <Text style={authStyles.text}>Login With Google</Text>
             </TouchableOpacity>
             <Text style={{ marginTop: SIZE.height / 8, fontSize: 18 }}>
               Already have account?
@@ -128,8 +126,7 @@ const Login = ({ navigation }) => {
                   navigation.navigate("Register");
                 }}
               >
-              
-                 Register
+                Register
               </Text>
             </Text>
           </View>

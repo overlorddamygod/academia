@@ -1,68 +1,79 @@
-import React,{useState} from 'react'
-import { View, Text,TouchableOpacity,StyleSheet } from 'react-native'
 import { useTheme } from "@react-navigation/native";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-const GalleryRoute = ({navigation,screen}) => {
-    const { colors } = useTheme();
-    const [route, setRoute] = useState(screen);
-    return (
-        <View
+import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SIZE } from "../styles/globalStyle";
+
+const GalleryRoute = ({ navigation, screen }) => {
+  const { colors } = useTheme();
+  const [route, setRoute] = useState(screen);
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        padding: SIZE.height * 0.2,
+        justifyContent: "center",
+      }}
+    >
+      <TouchableOpacity
+        activeOpacity={0.8}
         style={{
-          flexDirection: "row",
-          padding: SIZE.height * 0.2,
-          justifyContent: "center",
+          ...styles.top,
+          backgroundColor: route === "photo" ? "#FB616A" : null,
+        }}
+        onPress={() => {
+          navigation.navigate("Gallery", {
+            screen: "Gallery",
+          });
         }}
       >
-        <TouchableOpacity
-          activeOpacity={0.8}
+        <Text
           style={{
-           ...styles.top,
-            backgroundColor: route === "photo" ? "#FB616A":null ,
-          }}
-          onPress={()=>{
-
-            navigation.navigate('Gallery',{
-                screen:'Gallery'
-            })
-            
+            fontSize: 17,
+            color: route != "photo" ? colors.text : "white",
           }}
         >
-          <Text style={{ fontSize:17,color: route!="photo" ? colors.text: "white" }}>Photo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={{
+          Photo
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={{
           ...styles.top,
-            backgroundColor: route === "video" ? "#FB616A":null ,
-            
+          backgroundColor: route === "video" ? "#FB616A" : null,
+        }}
+        onPress={() => {
+          navigation.navigate("Video", {
+            screen: "Video",
+          });
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 17,
+            color: route != "video" ? colors.text : "white",
           }}
-          onPress={()=>{
-              navigation.navigate('Video',{
-                  screen:'Video'
-              })
-              
-            }}
         >
-          <Text style={{ fontSize:17,color: route!="video" ? colors.text : "white" }}>Video</Text>
-        </TouchableOpacity>
-      </View>
-    )
-}
+          Video
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
-export default GalleryRoute
+export default GalleryRoute;
 
 const styles = StyleSheet.create({
-    cards: {
-        borderRadius: 5,
-        padding: SIZE.width * 1.2,
-        marginVertical: 5,
-      },
-      top:{
-        padding: 15,
-        width: SIZE.screenWidth * 0.45,
-        borderRadius:4,
-        marginHorizontal:1,
-        justifyContent:'center',
-        alignItems:'center',
-      }
-})
+  cards: {
+    borderRadius: 5,
+    padding: SIZE.width * 1.2,
+    marginVertical: 5,
+  },
+  top: {
+    padding: 15,
+    width: SIZE.screenWidth * 0.45,
+    borderRadius: 4,
+    marginHorizontal: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

@@ -1,18 +1,17 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import Header from "../components/Header";
-import { Feather, Ionicons } from "@expo/vector-icons";
 import { ExpandableSection } from "react-native-ui-lib";
-import { useTheme } from "@react-navigation/native";
+import Header from "../components/Header";
 import { faculties } from "../components/SubjectList";
-import COLORS from "../styles/colors";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 export default function Materials({ navigation }) {
   const [myIndex, setMyIndex] = useState(null);
@@ -45,16 +44,24 @@ export default function Materials({ navigation }) {
           </Text>
         </View>
         <View>
-          
           <FlatList
             data={faculties}
             keyExtractor={(item) => item.id}
             showVerticalScrollIndicator={false}
             renderItem={({ item, index }) => (
-              <View key={item.id} style={{ borderWidth:1,
-                borderColor:colors.border,borderRadius:6, marginVertical:5,}}>
-
-              <FacultyExpanded data={item} navigation={navigation}></FacultyExpanded>
+              <View
+                key={item.id}
+                style={{
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  borderRadius: 6,
+                  marginVertical: 5,
+                }}
+              >
+                <FacultyExpanded
+                  data={item}
+                  navigation={navigation}
+                ></FacultyExpanded>
               </View>
             )}
           />
@@ -66,7 +73,7 @@ export default function Materials({ navigation }) {
 
 const FacultyExpanded = ({ data, navigation }) => {
   const [expanded, setExpanded] = useState(false);
-const {colors} = useTheme();
+  const { colors } = useTheme();
   const FacultyHeader = () => {
     return (
       <View
@@ -77,44 +84,48 @@ const {colors} = useTheme();
           justifyContent: "space-between",
         }}
       >
-        <View style={{width:'90%'}}>
-        <Text style={{ color: colors.text, fontSize: 20, fontWeight: "bold" }}>
-          {data.short}
-        </Text>
-        <Text style={{ ...globalStyles.midText, color: colors.text}}>{data.full}</Text>
+        <View style={{ width: "90%" }}>
+          <Text
+            style={{ color: colors.text, fontSize: 20, fontWeight: "bold" }}
+          >
+            {data.short}
+          </Text>
+          <Text style={{ ...globalStyles.midText, color: colors.text }}>
+            {data.full}
+          </Text>
         </View>
         {expanded ? (
-          <Ionicons name="chevron-up-outline" size={32} color={colors.text}/>
+          <Ionicons name="chevron-up-outline" size={32} color={colors.text} />
         ) : (
-          <Ionicons name="chevron-down-outline" size={32} color={colors.text}/>
+          <Ionicons name="chevron-down-outline" size={32} color={colors.text} />
         )}
       </View>
     );
   };
 
   const Year = ({ year, yearItem }) => {
-    const {colors} = useTheme();
+    const { colors } = useTheme();
     return (
       <TouchableOpacity
         style={{
           borderWidth: 1,
           borderRadius: 5,
           width: SIZE.width * 3.7,
-          height: SIZE.width *3.7,
+          height: SIZE.width * 3.7,
           justifyContent: "center",
           alignItems: "center",
-          borderWidth:1,
-          borderColor:colors.border,
+          borderWidth: 1,
+          borderColor: colors.border,
         }}
         onPress={() =>
           navigation.navigate("Subjects", {
             screen: "Subjects",
-            params: { sub: yearItem,short:data.short },
+            params: { sub: yearItem, short: data.short },
           })
         }
       >
         <Text style={{ fontWeight: "bold", color: colors.text }}>{year}</Text>
-        <Text style={{color:colors.text}}>Year</Text>
+        <Text style={{ color: colors.text }}>Year</Text>
       </TouchableOpacity>
     );
   };
@@ -132,19 +143,18 @@ const {colors} = useTheme();
           justifyContent: "space-around",
           paddingHorizontal: SIZE.width,
           paddingBottom: SIZE.height / 2,
-
         }}
       >
-        <Year year="1st" yearItem={data.year.firstYear}/>
-        <Year year="2nd" yearItem={data.year.secondYear}/>
-       
-        {data.year.ThirdYear && data.year.FourthYear && 
-        <>
-        <Year year="3rd" yearItem={data.year.ThirdYear}/>
-        <Year year="4th" yearItem={data.year.FourthYear}/>
-        </>}
+        <Year year="1st" yearItem={data.year.firstYear} />
+        <Year year="2nd" yearItem={data.year.secondYear} />
+
+        {data.year.ThirdYear && data.year.FourthYear && (
+          <>
+            <Year year="3rd" yearItem={data.year.ThirdYear} />
+            <Year year="4th" yearItem={data.year.FourthYear} />
+          </>
+        )}
       </View>
-      
     </ExpandableSection>
   );
 };

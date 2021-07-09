@@ -1,11 +1,7 @@
+import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { Feather } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { globalStyles } from "../styles/globalStyle";
-import { AntDesign } from "@expo/vector-icons";
-import { SIZE } from "../styles/globalStyle";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 const iconProviderMap = {
   Feather: Feather,
   MaterialIcon: MaterialIcons,

@@ -1,21 +1,14 @@
-import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  Button,
-} from "react-native";
-import COLORS from "../styles/colors";
-import { globalStyles } from "../styles/globalStyle";
-import firestore from "@react-native-firebase/firestore";
 import database from "@react-native-firebase/database";
-import { useUserContext } from "../providers/user";
+import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useUserContext } from "../providers/user";
+import { globalStyles } from "../styles/globalStyle";
+
 const PeopleCard = ({ data, navigation }) => {
   const { user } = useUserContext();
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const startChat = () => {
     console.log([`${user.id}${data.id}`, `${data.id}${user.id}`]);
     firestore()
