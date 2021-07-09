@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  Text,
-  View,
-  TextInput,
-  Switch,
-  ScrollView,
-  KeyboardAvoidingView,
-} from "react-native";
-import COLORS from "../styles/colors";
-import { globalStyles, SIZE } from "../styles/globalStyle";
 import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
-import { DateTimePicker, ChipsInput, Button,KeyboardAwareScrollView } from "react-native-ui-lib";
-import Header from "../components/Header";
 import { useTheme } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Switch, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  ChipsInput,
+  DateTimePicker,
+  KeyboardAwareScrollView,
+} from "react-native-ui-lib";
+import Header from "../components/Header";
+import { SIZE } from "../styles/globalStyle";
 import { showToast } from "../utils/error";
 
 const AddAnnouncement = ({ navigation }) => {
@@ -21,7 +17,7 @@ const AddAnnouncement = ({ navigation }) => {
   const { colors } = useTheme();
 
   const [announcementData, setAnnouncementData] = useState({
-    title:"",
+    title: "",
     body: "",
     startingDate: todaysDate,
     endingDate: todaysDate,
@@ -41,14 +37,17 @@ const AddAnnouncement = ({ navigation }) => {
     setButtonDisabled(true);
     const idToken = await auth().currentUser.getIdToken();
 
-    fetch("https://academiacollege.azurewebsites.net/api/addevent?code=%2F6irg0JmuJqjGbXxEZvRUv7pwDOkqpM6hxCLsHS9AS6VXvOhJFcrwA%3D%3D", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-        authorization: idToken,
-      },
-      body: JSON.stringify(announcementData),
-    })
+    fetch(
+      "https://academiacollege.azurewebsites.net/api/addevent?code=%2F6irg0JmuJqjGbXxEZvRUv7pwDOkqpM6hxCLsHS9AS6VXvOhJFcrwA%3D%3D",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          authorization: idToken,
+        },
+        body: JSON.stringify(announcementData),
+      }
+    )
       .then((res) => res.json())
       .then((res) => {
         setButtonDisabled(false);
@@ -91,173 +90,159 @@ const AddAnnouncement = ({ navigation }) => {
           marginTop: SIZE.height / 5,
         }}
       >
-        {/* <ScrollView>
-          <KeyboardAvoidingView
-            style={{
-              flex: 1,
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-            keyboardVerticalOffset={-100}
-            behavior={"height"}
-          > */}
-          <KeyboardAwareScrollView>
-            <InputContainer label="Title">
-              <CustomTextInput
-                placeholder="Title"
-                value={announcementData.title}
-                onChangeText={(text) => {
-                  setAnnouncementData({
-                    ...announcementData,
-                    title: text,
-                  });
-                }}
-              />
-            </InputContainer>
-
-            <InputContainer label="Body">
-              <CustomTextInput
-                placeholder="Body"
-                value={announcementData.body}
-                onChangeText={(text) => {
-                  setAnnouncementData({
-                    ...announcementData,
-                    body: text,
-                  });
-                }}
-              />
-            </InputContainer>
-
-            <View
-              style={{
-                flexDirection: "row",
+        <KeyboardAwareScrollView>
+          <InputContainer label="Title">
+            <CustomTextInput
+              placeholder="Title"
+              value={announcementData.title}
+              onChangeText={(text) => {
+                setAnnouncementData({
+                  ...announcementData,
+                  title: text,
+                });
               }}
-            >
-              <View style={{ flex: 1 }}>
-                <InputContainer label="Starting Date">
-                  <DateTimePicker
-                    containerStyle={{ paddingHorizontal: 5 }}
-                    style={{
-                      color: colors.text,
-                    }}
-                    value={announcementData.startingDate}
-                    dateFormat={"YYYY MMM D "}
-                    onChange={(date) => {
-                      setAnnouncementData({
-                        ...announcementData,
-                        startingDate: date,
-                      });
-                    }}
-                  />
-                </InputContainer>
-              </View>
-              <View style={{ flex: 1 }}>
-                <InputContainer label="Ending Date">
-                  <DateTimePicker
-                    containerStyle={{ paddingHorizontal: 5 }}
-                    style={{
-                      color: colors.text,
-                    }}
-                    value={announcementData.endingDate}
-                    dateFormat={"YYYY MMM D "}
-                    onChange={(date) => {
-                      setAnnouncementData({
-                        ...announcementData,
-                        endingDate: date,
-                      });
-                    }}
-                  />
-                </InputContainer>
-              </View>
-            </View>
-
-            <InputContainer
-              label="Tags"
-              style={{
-                marginTop: -SIZE.height * 0.5,
-              }}
-            >
-              <CustomTextInput
-                placeholder="eg. Classes, Exams, Holiday, etc"
-                value={announcementData.tag}
-                onChangeText={(tag) => {
-                  setAnnouncementData({
-                    ...announcementData,
-                    tag: tag,
-                  });
-                }}
-              />
-            </InputContainer>
-
-            <InputContainer
-              label="Add to Calendar"
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Switch
-                value={announcementData.addToCalendar}
-                onValueChange={(val) =>
-                  setAnnouncementData({
-                    ...announcementData,
-                    addToCalendar: !announcementData.addToCalendar,
-                  })
-                }
-              />
-            </InputContainer>
-
-            <InputContainer
-              label="Send Notification"
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Switch
-                value={announcementData.sendNotification}
-                onValueChange={(val) =>
-                  setAnnouncementData({
-                    ...announcementData,
-                    sendNotification: !announcementData.sendNotification,
-                  })
-                }
-              />
-            </InputContainer>
-
-            <InputContainer label="To">
-              <CustomChipsInput
-                tags={announcementData.to}
-                placeholder="eg. Teacher, CSIT etc"
-                onChangeTags={(tags) => {
-                  setAnnouncementData({
-                    ...announcementData,
-                    to: tags,
-                  });
-                }}
-              />
-            </InputContainer>
-
-            <Button
-              label="Add"
-              backgroundColor="#FB616A"
-              style={{
-                marginVertical: SIZE.height * 0.5,
-              }}
-              onPress={onAddButtonPress}
-              disabled={buttonDisabled}
             />
-            </KeyboardAwareScrollView>
-          {/* </KeyboardAvoidingView>
-        </ScrollView> */}
+          </InputContainer>
+
+          <InputContainer label="Body">
+            <CustomTextInput
+              placeholder="Body"
+              value={announcementData.body}
+              onChangeText={(text) => {
+                setAnnouncementData({
+                  ...announcementData,
+                  body: text,
+                });
+              }}
+            />
+          </InputContainer>
+
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <InputContainer label="Starting Date">
+                <DateTimePicker
+                  containerStyle={{ paddingHorizontal: 5 }}
+                  style={{
+                    color: colors.text,
+                  }}
+                  value={announcementData.startingDate}
+                  dateFormat={"YYYY MMM D "}
+                  onChange={(date) => {
+                    setAnnouncementData({
+                      ...announcementData,
+                      startingDate: date,
+                    });
+                  }}
+                />
+              </InputContainer>
+            </View>
+            <View style={{ flex: 1 }}>
+              <InputContainer label="Ending Date">
+                <DateTimePicker
+                  containerStyle={{ paddingHorizontal: 5 }}
+                  style={{
+                    color: colors.text,
+                  }}
+                  value={announcementData.endingDate}
+                  dateFormat={"YYYY MMM D "}
+                  onChange={(date) => {
+                    setAnnouncementData({
+                      ...announcementData,
+                      endingDate: date,
+                    });
+                  }}
+                />
+              </InputContainer>
+            </View>
+          </View>
+
+          <InputContainer
+            label="Tags"
+            style={{
+              marginTop: -SIZE.height * 0.5,
+            }}
+          >
+            <CustomTextInput
+              placeholder="eg. Classes, Exams, Holiday, etc"
+              value={announcementData.tag}
+              onChangeText={(tag) => {
+                setAnnouncementData({
+                  ...announcementData,
+                  tag: tag,
+                });
+              }}
+            />
+          </InputContainer>
+
+          <InputContainer
+            label="Add to Calendar"
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Switch
+              value={announcementData.addToCalendar}
+              onValueChange={(val) =>
+                setAnnouncementData({
+                  ...announcementData,
+                  addToCalendar: !announcementData.addToCalendar,
+                })
+              }
+            />
+          </InputContainer>
+
+          <InputContainer
+            label="Send Notification"
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Switch
+              value={announcementData.sendNotification}
+              onValueChange={(val) =>
+                setAnnouncementData({
+                  ...announcementData,
+                  sendNotification: !announcementData.sendNotification,
+                })
+              }
+            />
+          </InputContainer>
+
+          <InputContainer label="To">
+            <CustomChipsInput
+              tags={announcementData.to}
+              placeholder="eg. Teacher, CSIT etc"
+              onChangeTags={(tags) => {
+                setAnnouncementData({
+                  ...announcementData,
+                  to: tags,
+                });
+              }}
+            />
+          </InputContainer>
+
+          <Button
+            label="Add"
+            backgroundColor="#FB616A"
+            style={{
+              marginVertical: SIZE.height * 0.5,
+            }}
+            onPress={onAddButtonPress}
+            disabled={buttonDisabled}
+          />
+        </KeyboardAwareScrollView>
       </View>
     </View>
   );
 };
 
 export default AddAnnouncement;
-
-const tags = ["Exams", "Classes", "Holiday", "Result", "Project"];
 
 const Label = ({ text }) => {
   const { colors } = useTheme();
@@ -299,6 +284,20 @@ const CustomTextInput = ({ value, onChangeText, placeholder }) => {
   );
 };
 
+const InputContainer = ({ label, style = {}, children }) => {
+  return (
+    <View
+      style={{
+        marginVertical: 5,
+        ...style,
+      }}
+    >
+      <Label text={label} />
+      {children}
+    </View>
+  );
+};
+
 const CustomChipsInput = ({ tags, placeholder, onChangeTags }) => {
   return (
     <ChipsInput
@@ -316,19 +315,5 @@ const CustomChipsInput = ({ tags, placeholder, onChangeTags }) => {
       placeholder={placeholder}
       onChangeTags={onChangeTags}
     />
-  );
-};
-
-const InputContainer = ({ label, style = {}, children }) => {
-  return (
-    <View
-      style={{
-        marginVertical: 5,
-        ...style,
-      }}
-    >
-      <Label text={label} />
-      {children}
-    </View>
   );
 };

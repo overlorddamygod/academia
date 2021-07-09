@@ -1,18 +1,18 @@
+import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
-  View,
-  Text,
   Image,
-  TouchableOpacity,
   StyleSheet,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
 import Header from "../components/Header";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import { authStyles } from "../styles/authStyle";
 import { useUserContext } from "../providers/user";
+import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 const EditProfile = ({ navigation }) => {
   const { colors } = useTheme();
   const { user } = useUserContext();
@@ -26,9 +26,15 @@ const EditProfile = ({ navigation }) => {
         }}
         style={styles.image}
       />
-      <View style={{marginHorizontal:SIZE.width}}>
+      <View style={{ marginHorizontal: SIZE.width }}>
         <View>
-          <Text style={{ ...globalStyles.midText,marginLeft:SIZE.width,color: colors.text }}>
+          <Text
+            style={{
+              ...globalStyles.midText,
+              marginLeft: SIZE.width,
+              color: colors.text,
+            }}
+          >
             Email
           </Text>
           <TextInput
@@ -40,7 +46,13 @@ const EditProfile = ({ navigation }) => {
           />
         </View>
         <View>
-          <Text style={{ ...globalStyles.midText,marginLeft:SIZE.width, color: colors.text }}>
+          <Text
+            style={{
+              ...globalStyles.midText,
+              marginLeft: SIZE.width,
+              color: colors.text,
+            }}
+          >
             Password
           </Text>
           <TextInput
@@ -53,7 +65,13 @@ const EditProfile = ({ navigation }) => {
           />
         </View>
         <View>
-          <Text style={{ ...globalStyles.midText,marginLeft:SIZE.width,color: colors.text }}>
+          <Text
+            style={{
+              ...globalStyles.midText,
+              marginLeft: SIZE.width,
+              color: colors.text,
+            }}
+          >
             Link GitHub Account
           </Text>
           <TextInput
@@ -64,7 +82,13 @@ const EditProfile = ({ navigation }) => {
           />
         </View>
         <View>
-          <Text style={{ ...globalStyles.midText, marginLeft:SIZE.width,color: colors.text }}>
+          <Text
+            style={{
+              ...globalStyles.midText,
+              marginLeft: SIZE.width,
+              color: colors.text,
+            }}
+          >
             Link Facebook Account
           </Text>
           <TextInput
@@ -75,7 +99,13 @@ const EditProfile = ({ navigation }) => {
           />
         </View>
         <View>
-          <Text style={{ ...globalStyles.midText, marginLeft:SIZE.width,color: colors.text }}>
+          <Text
+            style={{
+              ...globalStyles.midText,
+              marginLeft: SIZE.width,
+              color: colors.text,
+            }}
+          >
             Little About Yourself
           </Text>
           <TextInput
@@ -84,13 +114,26 @@ const EditProfile = ({ navigation }) => {
             //   onChangeText={setPassword}
           />
         </View>
-        <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-            <TouchableOpacity style={globalStyles.btns}>
-                <Text style={{color:"white"}}>Edit Profile</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigation.goBack()} style={{...globalStyles.btns,marginLeft:6,backgroundColor:COLORS.mainred}}>
-                <Text style={{color:"white"}}>Cancel</Text>
-            </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity style={globalStyles.btns}>
+            <Text style={{ color: "white" }}>Edit Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{
+              ...globalStyles.btns,
+              marginLeft: 6,
+              backgroundColor: COLORS.mainred,
+            }}
+          >
+            <Text style={{ color: "white" }}>Cancel</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

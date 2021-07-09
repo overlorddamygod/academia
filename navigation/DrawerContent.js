@@ -1,14 +1,12 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { globalStyles } from "../styles/globalStyle";
-import COLORS from "../styles/colors";
-import DrawerMenu from "../components/DrawerMenu";
-import { authStyles } from "../styles/authStyle";
-import { DrawerContentScrollView } from "@react-navigation/drawer";
-import { useUserContext } from "../providers/user";
-import { SIZE } from "../styles/globalStyle";
 import auth from "@react-native-firebase/auth";
+import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useTheme } from "@react-navigation/native";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import DrawerMenu from "../components/DrawerMenu";
+import { useUserContext } from "../providers/user";
+import COLORS from "../styles/colors";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const DrawerContent = ({ navigation }) => {
   const { user, logout: _logout } = useUserContext();
@@ -152,7 +150,7 @@ const DrawerContent = ({ navigation }) => {
             width: "50%",
             backgroundColor: COLORS.mainred,
             borderRadius: 4,
-            paddingVertical:SIZE.height* 0.2
+            paddingVertical: SIZE.height * 0.2,
           }}
         >
           <Text style={{ ...globalStyles.txt, textAlign: "center" }}>

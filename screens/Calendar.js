@@ -1,22 +1,12 @@
-import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  ScrollView,
-  StatusBar,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-} from "react-native";
-import Header from "../components/Header";
-import firestore from "@react-native-firebase/firestore";
-import { Calendar, CalendarList, Agenda } from "react-native-calendars";
-import COLORS, { tagColor } from "../styles/colors";
 import { Feather } from "@expo/vector-icons";
-import { SIZE } from "../styles/globalStyle";
+import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
-import { color } from "react-native-reanimated";
+import React, { useEffect, useState } from "react";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { Calendar } from "react-native-calendars";
+import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
+import COLORS, { tagColor } from "../styles/colors";
 
 const CalendarScreen = ({ navigation }) => {
   const todaysDate = new Date();
@@ -30,7 +20,7 @@ const CalendarScreen = ({ navigation }) => {
   const [eventsCache, setEventsCache] = useState({});
   const [events, setEvents] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const {user} = useUserContext()
+  const { user } = useUserContext();
 
   const onRefresh = React.useCallback(() => {
     getEventsForMonth(date.year, date.month, true);
@@ -54,17 +44,17 @@ const CalendarScreen = ({ navigation }) => {
     const start = new Date(`${year}-${formatDate(month)}-01`);
     const end = addMonth(new Date(`${year}-${formatDate(month)}-01`), 1);
 
-    const to = ["All", user.title]
-    if ( user.title == "Student" ) {
-      to.push(...[user.faculty,`${user.faculty} ${user.semester}`])
+    const to = ["All", user.title];
+    if (user.title == "Student") {
+      to.push(...[user.faculty, `${user.faculty} ${user.semester}`]);
     }
 
-    console.log(to)
+    console.log(to);
     console.log(start, end);
     firestore()
       .collection("announcementTemp1")
-      .where("addToCalendar", "==",true)
-      .where("to","array-contains-any", to)
+      .where("addToCalendar", "==", true)
+      .where("to", "array-contains-any", to)
       .where("startingDate", ">=", start)
       .where("startingDate", "<", end)
       .get()
@@ -197,7 +187,6 @@ const CalendarScreen = ({ navigation }) => {
           />
         </View>
       </View>
-      
     </>
   );
 };

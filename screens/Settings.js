@@ -1,14 +1,13 @@
-import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Switch } from "react-native";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import Header from "../components/Header";
-import { Feather, Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { ThemeContext } from "../components/Theme";
+import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
+import React, { useContext } from "react";
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
+import Header from "../components/Header";
+import { ThemeContext } from "../components/Theme";
 import { useUserContext } from "../providers/user";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
-export default function Settings({navigation }) {
+export default function Settings({ navigation }) {
   const { isDark, toggleTheme } = useContext(ThemeContext);
   const { linkWithGoogle } = useUserContext();
   const { colors } = useTheme();
@@ -66,12 +65,11 @@ export default function Settings({navigation }) {
             />
           </TouchableOpacity>
           <TouchableOpacity
-         onPress={() =>
-            navigation.navigate("EditProfile", {
-              screen: "EditProfile",
-            })
-          }
-
+            onPress={() =>
+              navigation.navigate("EditProfile", {
+                screen: "EditProfile",
+              })
+            }
             style={{ ...styles.settingsbtn, borderColor: colors.border }}
           >
             <Feather name="image" size={24} color={colors.text} />
@@ -164,6 +162,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   settingsbtnText: {
-     flex:1, paddingHorizontal:SIZE.width
-  }
+    flex: 1,
+    paddingHorizontal: SIZE.width,
+  },
 });

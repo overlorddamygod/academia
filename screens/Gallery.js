@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from "react";
+import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Image,
-  ScrollView,
   ActivityIndicator,
+  Image,
+  Modal,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  Modal,
- 
-  StyleSheet,
-  RefreshControl,
+  View,
 } from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
-import ReactNativeZoomableView from "@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import Header from "../components/Header";
-import { Ionicons } from "@expo/vector-icons";
-import ImageCarousel from "../components/ImageCarousel";
-import { useUserContext } from "../providers/user";
-import ImageSelect from "../components/ImageSelect";
 import GalleryRoute from "../components/GalleryRoute";
+import Header from "../components/Header";
+import ImageCarousel from "../components/ImageCarousel";
+import ImageSelect from "../components/ImageSelect";
 import useGallery from "../hooks/useGallery";
+import { useUserContext } from "../providers/user";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const Gallery = ({ navigation }) => {
   const [imageuri, setImageuri] = useState("");

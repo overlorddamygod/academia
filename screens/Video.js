@@ -1,26 +1,21 @@
-import React, { useState ,useEffect,useRef} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
-  ScrollView
+  View,
 } from "react-native";
+import { launchImageLibrary } from "react-native-image-picker";
+import MediaControls, { PLAYER_STATES } from "react-native-media-controls";
+import Video from "react-native-video";
 import GalleryRoute from "../components/GalleryRoute";
 import Header from "../components/Header";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import { launchImageLibrary } from "react-native-image-picker";
-import { useTheme } from "@react-navigation/native";
-import Video from "react-native-video";
-import { showToast } from "../utils/error";
-import COLORS from "../styles/colors";
 import useGallery from "../hooks/useGallery";
-import
-  MediaControls, {PLAYER_STATES}
-from 'react-native-media-controls';
-
-
+import COLORS from "../styles/colors";
+import { globalStyles, SIZE } from "../styles/globalStyle";
+import { showToast } from "../utils/error";
 
 const Videos = ({ navigation }) => {
   const videoPlayer = useRef(null);
@@ -32,10 +27,8 @@ const Videos = ({ navigation }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [paused, setPaused] = useState(false);
-  const [screenType, setScreenType] = useState('content');
-  const [
-    playerState, setPlayerState
-  ] = useState(PLAYER_STATES.PLAYING);
+  const [screenType, setScreenType] = useState("content");
+  const [playerState, setPlayerState] = useState(PLAYER_STATES.PLAYING);
   const {
     fetchData,
     uploadData,
@@ -45,10 +38,9 @@ const Videos = ({ navigation }) => {
     // refreshing,
   } = useGallery(setVideo, setAllVideos);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchData("videos");
-    
-  },[])
+  }, []);
   const onSeek = (seek) => {
     //Handler for change in seekbar
     videoPlayer.current.seek(seek);
@@ -82,18 +74,18 @@ const Videos = ({ navigation }) => {
 
   const onEnd = () => setPlayerState(PLAYER_STATES.ENDED);
 
-  const onError = () => alert('Oh! ', error);
+  const onError = () => alert("Oh! ", error);
 
   const exitFullScreen = () => {
-    alert('Exit full screen');
+    alert("Exit full screen");
   };
 
   const enterFullScreen = () => {};
 
   const onFullScreen = () => {
     setIsFullScreen(isFullScreen);
-    if (screenType == 'content') setScreenType('cover');
-    else setScreenType('content');
+    if (screenType == "content") setScreenType("cover");
+    else setScreenType("content");
   };
   const renderToolbar = () => (
     <View>
@@ -124,7 +116,7 @@ const Videos = ({ navigation }) => {
       }
     });
   };
-  console.log(allVideos)
+  console.log(allVideos);
   return (
     <>
       <Header title="Academia Video" navigation={navigation} />
@@ -144,24 +136,21 @@ const Videos = ({ navigation }) => {
       )}
       {video && (
         <View style={{ ...globalStyles.container, flex: 1 }}>
-         
-                <Video
-                  onEnd={onEnd}
-                  onLoad={onLoad}
-                  onLoadStart={onLoadStart}
-                  onProgress={onProgress}
-                  paused={paused}
-                  ref={videoPlayer}
-                  resizeMode={screenType}
-                  onFullScreen={isFullScreen}
-                  source={
-                    video
-                  }
-                  // poster="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/English_Cocker_Spaniel_4.jpg/800px-English_Cocker_Spaniel_4.jpg"
-                  style={styles.mediaPlayer}
-                  volume={10}
-                />
-           <MediaControls
+          <Video
+            onEnd={onEnd}
+            onLoad={onLoad}
+            onLoadStart={onLoadStart}
+            onProgress={onProgress}
+            paused={paused}
+            ref={videoPlayer}
+            resizeMode={screenType}
+            onFullScreen={isFullScreen}
+            source={video}
+            // poster="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/English_Cocker_Spaniel_4.jpg/800px-English_Cocker_Spaniel_4.jpg"
+            style={styles.mediaPlayer}
+            volume={10}
+          />
+          <MediaControls
             duration={duration}
             isLoading={isLoading}
             mainColor="#333"
@@ -176,10 +165,10 @@ const Videos = ({ navigation }) => {
           />
           <View
             style={{
-              marginTop: SIZE.screenHeight*0.6,
+              marginTop: SIZE.screenHeight * 0.6,
               justifyContent: "center",
               alignItems: "center",
-              zIndex:20,
+              zIndex: 20,
               flexDirection: "row",
             }}
           >
@@ -208,47 +197,51 @@ const Videos = ({ navigation }) => {
           </View>
         </View>
       )}
-<ScrollView>
-           {!video &&  <View>
-                {allVideos.map((video,index)=>(
-                  <TouchableOpacity  key={index}
-                  onPress={()=>{index ===currIndex?null:setCurrIndex(index)}}
-                  >
-                     <Video
-               
-                    source={{uri:video}}
-                    style={styles.backgroundVideo}
-                    paused={index===true}
-                    onEnd={onEnd}
-                    onLoad={onLoad}
-                    onLoadStart={onLoadStart}
-                    onProgress={onProgress}
-                    paused={true}
-                    ref={videoPlayer}
-                    controls={true}
-                    resizeMode={screenType}
-                    onFullScreen={isFullScreen}
-                    onEnd={() => showToast("Video Ended")}
-                    poster="https://academiacollege.edu.np/img/landing.jpg"
-                  />
-                   
-                  <MediaControls
-                      duration={duration}
-                      isLoading={isLoading}
-                      mainColor="#333"
-                      onFullScreen={onFullScreen}
-                      onPaused={onPaused}
-                      onReplay={onReplay}
-                      onSeek={onSeek}
-                      onSeeking={onSeeking}
-                      playerState={playerState}
-                      progress={currentTime}
-                      toolbar={renderToolbar()}
-                  />
-                  </TouchableOpacity>
-                ))}
-              </View>} 
-              </ScrollView>
+      <ScrollView>
+        {!video && (
+          <View>
+            {allVideos.map((video, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => {
+                  index === currIndex ? null : setCurrIndex(index);
+                }}
+              >
+                <Video
+                  source={{ uri: video }}
+                  style={styles.backgroundVideo}
+                  paused={index === true}
+                  onEnd={onEnd}
+                  onLoad={onLoad}
+                  onLoadStart={onLoadStart}
+                  onProgress={onProgress}
+                  paused={true}
+                  ref={videoPlayer}
+                  controls={true}
+                  resizeMode={screenType}
+                  onFullScreen={isFullScreen}
+                  onEnd={() => showToast("Video Ended")}
+                  poster="https://academiacollege.edu.np/img/landing.jpg"
+                />
+
+                <MediaControls
+                  duration={duration}
+                  isLoading={isLoading}
+                  mainColor="#333"
+                  onFullScreen={onFullScreen}
+                  onPaused={onPaused}
+                  onReplay={onReplay}
+                  onSeek={onSeek}
+                  onSeeking={onSeeking}
+                  playerState={playerState}
+                  progress={currentTime}
+                  toolbar={renderToolbar()}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </ScrollView>
     </>
   );
 };
@@ -261,18 +254,18 @@ var styles = StyleSheet.create({
   },
   toolbar: {
     marginTop: 30,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 10,
     borderRadius: 5,
   },
   mediaPlayer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    marginTop:80
+    backgroundColor: "black",
+    justifyContent: "center",
+    marginTop: 80,
   },
 });

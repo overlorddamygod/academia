@@ -1,30 +1,21 @@
-import React, { useContext } from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-} from "react-native";
-import { globalStyles } from "../styles/globalStyle";
 import { Ionicons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
-import { useUserContext } from "../providers/user";
-import { SIZE } from "../styles/globalStyle";
-import Header from "../components/Header";
-import UpcomingEvent from "../components/UpcomingEvent";
-import HomeNotice from "../components/HomeNotice";
-import { ThemeContext } from "../components/Theme";
 import { useTheme } from "@react-navigation/native";
+import React, { useContext } from "react";
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import Header from "../components/Header";
+import HomeNotice from "../components/HomeNotice";
 import ImageCarousel from "../components/ImageCarousel";
+import { ThemeContext } from "../components/Theme";
+import UpcomingEvent from "../components/UpcomingEvent";
 import { images } from "../styles/colors";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const Home = ({ navigation }) => {
   const { colors } = useTheme();
 
   const { isDark } = useContext(ThemeContext);
-  
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Header
@@ -66,14 +57,20 @@ const Home = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View>
-              <View style={{ ...globalStyles.card,width:SIZE.screenWidth*0.3, backgroundColor: colors.card,marginBottom:4 }}>
-                <Text style={{ color: colors.text, fontSize: 16 }}>
-                  Recent Photos
-                </Text>
-              </View>
+            <View
+              style={{
+                ...globalStyles.card,
+                backgroundColor: colors.card,
+                marginBottom: 4,
+                alignSelf: "flex-start",
+              }}
+            >
+              <Text style={{ color: colors.text, fontSize: 16 }}>
+                Recent Photos
+              </Text>
+            </View>
             <ImageCarousel images={images} />
           </View>
-         
 
           <View>
             <UpcomingEvent />
@@ -100,5 +97,4 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     alignItems: "center",
   },
- 
 });

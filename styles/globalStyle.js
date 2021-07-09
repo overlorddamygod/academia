@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import COLORS from "./colors";
 
 const { width, height } = Dimensions.get("window");
@@ -63,10 +63,10 @@ const globalStyles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 2,
   },
-  smallavatar:{
-    height:60,
-    width:60,
-    borderRadius:50
+  smallavatar: {
+    height: 60,
+    width: 60,
+    borderRadius: 50,
   },
   card: {
     borderRadius: 5,

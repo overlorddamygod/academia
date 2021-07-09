@@ -42,7 +42,11 @@ const AnnouncementScreen = ({ navigation }) => {
 
   return (
     <>
-      <Header title="Announcement" navigation={navigation} showSidebar={false} />
+      <Header
+        title="Announcement"
+        navigation={navigation}
+        showSidebar={false}
+      />
       <View style={{ flex: 1 }}>
         <View
           style={{
@@ -122,48 +126,48 @@ const Announcement = ({
         padding: 8,
         ...styles.shadow,
       }}
-      onPress={()=> {
-        setShowBody(!showBody)
+      onPress={() => {
+        setShowBody(!showBody);
       }}
       underlayColor="#DDDDDD"
     >
       <>
-      <View
-        style={{
-          alignSelf: "flex-start",
-          backgroundColor: tagColor[data.tag],
-          paddingHorizontal: 5,
-          borderRadius: 6,
-        }}
-      >
-        <Text style={{ color: COLORS.white, padding: 3 }}>{data.tag}</Text>
-      </View>
-      <Text
-        style={{
-          color: colors.text,
-          fontWeight: "bold",
-          fontSize: 20,
-          marginVertical: 8,
-        }}
-      >
-        {data.title}
-      </Text>
-
-      {showBody && data.body && (
+        <View
+          style={{
+            alignSelf: "flex-start",
+            backgroundColor: tagColor[data.tag],
+            paddingHorizontal: 5,
+            borderRadius: 6,
+          }}
+        >
+          <Text style={{ color: COLORS.white, padding: 3 }}>{data.tag}</Text>
+        </View>
         <Text
           style={{
             color: colors.text,
-            fontSize: 16,
+            fontWeight: "bold",
+            fontSize: 20,
             marginVertical: 8,
           }}
         >
-          {data.body}
+          {data.title}
         </Text>
-      )}
 
-      <Text style={{ color: "#ABABAB" }}>
-        {data.createdAt.toDate().toLocaleDateString()}
-      </Text>
+        {showBody && data.body && (
+          <Text
+            style={{
+              color: colors.text,
+              fontSize: 16,
+              marginVertical: 8,
+            }}
+          >
+            {data.body}
+          </Text>
+        )}
+
+        <Text style={{ color: "#ABABAB" }}>
+          {data.createdAt.toDate().toLocaleDateString()}
+        </Text>
       </>
     </TouchableHighlight>
   );

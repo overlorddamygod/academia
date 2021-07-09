@@ -1,22 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
+import { Feather } from "@expo/vector-icons";
+import database from "@react-native-firebase/database";
+import { useTheme } from "@react-navigation/native";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  Text,
-  Button,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  Linking,
   ActivityIndicator,
+  FlatList,
+  Linking,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import Hyperlink from "react-native-hyperlink";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
-import { Feather } from "@expo/vector-icons";
-import Hyperlink from "react-native-hyperlink";
-import database from "@react-native-firebase/database";
-import { useTheme } from "@react-navigation/native";
 
 const IndividualChat = ({ navigation, route: { params } }) => {
   const { id, name, conversation } = params;
@@ -133,7 +132,9 @@ const IndividualChat = ({ navigation, route: { params } }) => {
             alignItems: "center",
           }}
         >
-          <Text style={{ fontSize: 20,color:colors.text }}>Start A Conversation</Text>
+          <Text style={{ fontSize: 20, color: colors.text }}>
+            Start A Conversation
+          </Text>
         </View>
       ) : (
         <View style={{ flex: 1 }}>
@@ -176,7 +177,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
               {name[0]}
             </Text>
           </View>
-          <Text style={{color:colors.text}}> {name + " "}is typing...</Text>
+          <Text style={{ color: colors.text }}> {name + " "}is typing...</Text>
         </View>
       )}
       <View
@@ -279,11 +280,11 @@ const ChatMessage = ({ message, me, deleteMessage, seen }) => {
     </TouchableOpacity>,
     <View key={`${message.id}3`}>
       {/* <Moment date={message.createdAt}><Text></Text></Moment> */}
-      <Text style={{ fontSize: 10,color:colors.text }}>
+      <Text style={{ fontSize: 10, color: colors.text }}>
         {new Date(message.createdAt).toLocaleTimeString()}
       </Text>
       {me && message.createdAt == seen && (
-        <Text style={{ fontSize: 12,color:colors.text }}>Seen</Text>
+        <Text style={{ fontSize: 12, color: colors.text }}>Seen</Text>
       )}
     </View>,
   ];

@@ -27,7 +27,8 @@ const ForgotPassword = ({ navigation, route: { params } }) => {
       showToast("Password reset link sent to your email address");
       setLoading(false);
     } catch (err) {
-      const errorMessage = getErrorMessage(err.code) || "Error sending password reset link"
+      const errorMessage =
+        getErrorMessage(err.code) || "Error sending password reset link";
       showToast(errorMessage);
       setLoading(false);
     }

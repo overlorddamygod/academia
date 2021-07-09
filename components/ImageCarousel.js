@@ -1,10 +1,10 @@
 import { useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View,Text, ScrollView, Image, StyleSheet } from "react-native";
-
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SIZE } from "../styles/globalStyle";
+
 const ImageCarousel = ({ images }) => {
-    const { colors } = useTheme();
+  const { colors } = useTheme();
   const [active, setActive] = useState(0);
   const change = ({ nativeEvent }) => {
     const slide = Math.ceil(
@@ -15,7 +15,7 @@ const ImageCarousel = ({ images }) => {
     }
   };
   return (
-    <View style={{justifyContent: "center", alignItems: "center" }}>
+    <View style={{ justifyContent: "center", alignItems: "center" }}>
       <ScrollView
         style={{ width: SIZE.screenWidth * 0.93, marginTop: 4 }}
         horizontal
