@@ -129,11 +129,11 @@ const DrawerContent = ({ navigation }) => {
             />
             <DrawerMenu
               background="#757BBD"
-              title="Settings"
-              iconName="settings"
+              title="About us"
+              iconName="box"
               iconProvider="Feather"
               navigation={navigation}
-              screen="Settings"
+              screen="AboutCollege"
             />
           </View>
         </View>

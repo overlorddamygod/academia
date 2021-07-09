@@ -66,6 +66,12 @@ export default function Settings({navigation }) {
             />
           </TouchableOpacity>
           <TouchableOpacity
+         onPress={() =>
+            navigation.navigate("EditProfile", {
+              screen: "EditProfile",
+            })
+          }
+
             style={{ ...styles.settingsbtn, borderColor: colors.border }}
           >
             <Feather name="image" size={24} color={colors.text} />

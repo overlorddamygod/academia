@@ -32,7 +32,7 @@ const ImageSelect = (props) => {
           paddingVertical: SIZE.width,
         }}
       >
-        <Text style={{ ...globalStyles.boldText, color: "white" }}>
+        <Text style={{ ...globalStyles.boldText, color: colors.text}}>
          {props.uploading?"Uploading...":"Choose Option"} 
         </Text>
         <TouchableOpacity
@@ -43,7 +43,7 @@ const ImageSelect = (props) => {
         >
           <AntDesign name="close" size={27} color={colors.text} />
         </TouchableOpacity>
-        {!props.uploading &&
+        {!props.imageSet &&
         <>
         <TouchableOpacity
           activeOpacity={0.8}
@@ -99,7 +99,7 @@ const ImageSelect = (props) => {
                   ...styles.btns,
                   backgroundColor: "#6765c2",
                 }}
-                onPress={props.uploadImage}
+                onPress={()=>props.uploadImage("images",props.imageSet)}
               >
                 <Text style={{ ...globalStyles.midText, color: "white" }}>
                   {props.uploading ? (

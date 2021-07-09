@@ -240,7 +240,7 @@ const AddAnnouncement = ({ navigation }) => {
 
             <Button
               label="Add"
-              backgroundColor="#FF6B3B"
+              backgroundColor="#FB616A"
               style={{
                 marginVertical: SIZE.height * 0.5,
               }}
