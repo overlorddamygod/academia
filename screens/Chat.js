@@ -40,6 +40,13 @@ const Chat = ({ navigation }) => {
       />
 
       <FlatList
+        ListEmptyComponent={() => {
+          return (
+            <View style={{ alignItems: "center", marginTop: 50 }}>
+              <Text style={{ color: colors.text }}>No conversations</Text>
+            </View>
+          );
+        }}
         data={conversations}
         keyExtractor={(item) => item.docId}
         renderItem={({ item }) => (

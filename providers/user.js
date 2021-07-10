@@ -61,6 +61,15 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
           );
         }
 
+        // auth()
+        //   .currentUser.getIdTokenResult()
+        //   .then((idTokenResult) => {
+        //     console.log("CLAIMS", idTokenResult.claims);
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+
         // Change online status
         const onlineStatusRef = database().ref(`/status/${loggedUser.uid}`);
 

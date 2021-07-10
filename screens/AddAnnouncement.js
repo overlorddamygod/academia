@@ -30,10 +30,6 @@ const AddAnnouncement = ({ navigation }) => {
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  useEffect(() => {
-    console.log(announcementData);
-  }, [announcementData]);
-
   const onAddButtonPress = async () => {
     setButtonDisabled(true);
     const idToken = await auth().currentUser.getIdToken();
@@ -59,7 +55,6 @@ const AddAnnouncement = ({ navigation }) => {
         } else {
           showToast("Error adding an announcement");
         }
-        console.log(res);
       })
       .catch((err) => {
         setButtonDisabled(false);

@@ -45,6 +45,15 @@ const Login = ({ navigation }) => {
       setLoading(false);
     }
   };
+  const initLoginWithGoogle = async () => {
+    setGoogleLoading(true);
+    try {
+      await loginWithGoogle();
+      setGoogleLoading(false);
+    } catch (err) {
+      setGoogleLoading(false);
+    }
+  };
 
   return (
     <KeyboardAwareScrollView style={{ flex: 1, backgroundColor: "white" }}>
@@ -115,15 +124,7 @@ const Login = ({ navigation }) => {
                   flexDirection: "row",
                   justifyContent: "space-around",
                 }}
-                onPress={async () => {
-                  setGoogleLoading(true);
-                  try {
-                    await loginWithGoogle();
-                    setGoogleLoading(false);
-                  } catch (err) {
-                    setGoogleLoading(false);
-                  }
-                }}
+                onPress={initLoginWithGoogle}
               >
                 {googleLoading ? (
                   <ActivityIndicator color="white" />
