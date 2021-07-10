@@ -14,7 +14,11 @@ export default function Settings({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Your Settings" navigation={navigation} />
+      <Header
+        title="Your Settings"
+        navigation={navigation}
+        showSidebar={false}
+      />
       <View style={{ padding: 20 }}>
         <View>
           <Text

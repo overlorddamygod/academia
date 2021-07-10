@@ -1,10 +1,11 @@
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import messaging from "@react-native-firebase/messaging";
+import database from "@react-native-firebase/database";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { showToast } from "../utils/error";
-import {getFcmToken} from "../notifications";
+import { getFcmToken } from "../notifications";
 
 const initialUser = {
   username: null,
@@ -15,7 +16,6 @@ const ROLE = {
   NORMAL: 1,
   ADMIN: 2,
 };
-
 
 const TITLE = {
   STUDENT: "Student",
@@ -29,7 +29,6 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   const [intializing, setInitializing] = useState(true);
 
   const UserChange = async (u) => {
-    // auth().signOut()
     const loggedUser = auth().currentUser;
     if (loggedUser) {
       try {
@@ -63,13 +62,13 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
         }
 
         // Change online status
-        // const onlineStatusRef = database().ref(`/status/${loggedUser.uid}`);
+        const onlineStatusRef = database().ref(`/status/${loggedUser.uid}`);
 
-        // onlineStatusRef.set(true).then(() => console.log("ONLINE"));
-        // onlineStatusRef
-        //   .onDisconnect()
-        //   .remove()
-        //   .then(() => console.log("OFFLINE"));
+        onlineStatusRef.set(true).then(() => console.log("ONLINE"));
+        onlineStatusRef
+          .onDisconnect()
+          .remove()
+          .then(() => console.log("OFFLINE"));
       } catch (err) {
         console.log("ERRORR", err);
         setUser(null);
@@ -139,8 +138,6 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
     try {
       messaging().deleteToken();
       const token = await getFcmToken();
-      console.log("TOKEN", token);
-      messaging().subscribeToTopic("All");
 
       messaging().subscribeToTopic("All");
       await firestore().collection("user").doc(user.id).update({
@@ -164,9 +161,12 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
       await firestore().collection("user").doc(auth().currentUser.uid).update({
         googleId: googleUser.id,
       });
+      GoogleSignin.signOut();
       showToast("Successfully linked your google account");
     } catch (err) {
       console.error(err);
+      GoogleSignin.signOut();
+
       if (err.code == "auth/unknown") showToast("User has already been linked");
       else {
         showToast("Error linking your google account");

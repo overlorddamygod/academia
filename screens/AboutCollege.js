@@ -17,8 +17,12 @@ const AboutCollege = ({ navigation }) => {
   const { colors } = useTheme();
   return (
     <>
-      <Header title="Academia Int'l College" navigation={navigation} />
-      <ScrollView style={{flex:1,marginBottom:20}}>
+      <Header
+        title="Academia Int'l College"
+        navigation={navigation}
+        showSidebar={false}
+      />
+      <ScrollView style={{ flex: 1, marginBottom: 20 }}>
         <View style={styles.top}>
           <ImageBackground
             source={{ uri: "https://academiacollege.edu.np/img/landing.jpg" }}
@@ -28,7 +32,7 @@ const AboutCollege = ({ navigation }) => {
 
         <View
           style={{
-            flex:1,
+            flex: 1,
             width: SIZE.screenWidth,
             justifyContent: "center",
             alignItems: "center",
@@ -78,7 +82,6 @@ const AboutCollege = ({ navigation }) => {
             </Text>
           </View>
         </View>
-
       </ScrollView>
     </>
   );
@@ -93,7 +96,7 @@ export const QuickInfo = () => {
         // borderWidth: 1,
         // borderColor: colors.border,
         justifyContent: "center",
-        alignItems:'center',
+        alignItems: "center",
         borderRadius: 10,
         backgroundColor: colors.card,
         padding: 20,
@@ -109,22 +112,42 @@ export const QuickInfo = () => {
       >
         Quick Info
       </Text>
-      <View style={{textAlign:'center',height:1,width:'70%',marginTop:6,backgroundColor:'lightgray'}}></View>
+      <View
+        style={{
+          textAlign: "center",
+          height: 1,
+          width: "70%",
+          marginTop: 6,
+          backgroundColor: "lightgray",
+        }}
+      ></View>
       <Info icon="phone" data="01-23567" />
       <Info icon="map-marker" data="Gwarkhu , Lalitpur" />
       <Info icon="code" data="academiacollege.edu.np" />
       <View
-          style={{
-            flexDirection: "row",
-            marginTop: SIZE.width,
-            justifyContent: "space-evenly",
-            zIndex: 10,
-          }}
-        >
-          <Icons icon="facebook" color="#2a51bf" link="https://www.facebook.com/academiacollege" />
-          <Icons icon="linkedin" color="#1c1a1b" link="https://www.linkedin.com"/>
-          <Icons icon="instagram" color="#e04189" link="https://www.instagram.com/academia.college/"/>
-        </View>
+        style={{
+          flexDirection: "row",
+          marginTop: SIZE.width,
+          justifyContent: "space-evenly",
+          zIndex: 10,
+        }}
+      >
+        <Icons
+          icon="facebook"
+          color="#2a51bf"
+          link="https://www.facebook.com/academiacollege"
+        />
+        <Icons
+          icon="linkedin"
+          color="#1c1a1b"
+          link="https://www.linkedin.com"
+        />
+        <Icons
+          icon="instagram"
+          color="#e04189"
+          link="https://www.instagram.com/academia.college/"
+        />
+      </View>
     </View>
   );
 };
@@ -139,7 +162,6 @@ const Info = ({ icon, data }) => {
           marginLeft: 10,
           lineHeight: 24,
           fontSize: 17,
-          
         }}
       >
         {data}
@@ -147,17 +169,21 @@ const Info = ({ icon, data }) => {
     </View>
   );
 };
-export const Icons = ({icon,color,link=""}) =>{
-  return(
+export const Icons = ({ icon, color, link = "" }) => {
+  return (
     <TouchableOpacity
-    activeOpacity={0.7}
-    onPress={() => Linking.openURL(`${link}`)}
-    style={{ ...styles.icons,marginLeft:SIZE.width,  backgroundColor: `${color}` }}
-  >
-    <FontAwesome name={`${icon}`} size={25} color="white" />
-  </TouchableOpacity>
-  )
-}
+      activeOpacity={0.7}
+      onPress={() => Linking.openURL(`${link}`)}
+      style={{
+        ...styles.icons,
+        marginLeft: SIZE.width,
+        backgroundColor: `${color}`,
+      }}
+    >
+      <FontAwesome name={`${icon}`} size={25} color="white" />
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   top: {

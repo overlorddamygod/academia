@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import database from "@react-native-firebase/database";
+import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -33,15 +34,20 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   useEffect(() => {
     setLoading(false);
     setMessages([]);
+    const partnerId = conversation.participants.filter(
+      (id) => id != user.id
+    )[0];
 
     const onAdd = (value) => {
       value = value.val();
       // console.log(value)
       setMessages((oldMessage) => [...oldMessage, value]);
       // if ( messages.length <=5 )
-      conversationRef.child(`status/${user.id}`).update({
-        seen: value.createdAt,
-      });
+      if (value.userId == partnerId) {
+        conversationRef.child(`status/${user.id}`).update({
+          seen: value.createdAt,
+        });
+      }
     };
 
     const onTyping = (value) => {
@@ -49,9 +55,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
       setStatus(value.val());
     };
     conversationRef.child("messages").limitToLast(5).on("child_added", onAdd);
-    const partnerId = conversation.participants.filter(
-      (id) => id != user.id
-    )[0];
+
     // console.log(`typing/${conversation.participants.filter(a=>id != user.id)[0]}`)
     conversationRef.child(`status/${partnerId}`).on("value", onTyping);
 
@@ -60,7 +64,30 @@ const IndividualChat = ({ navigation, route: { params } }) => {
     };
     database().ref(`status/${partnerId}`).on("value", onOnlineStatus);
 
+    // const unsubscribe = firestore()
+    //   .collection("conversation")
+    //   .doc(id)
+    //   .collection("meesages")
+    //   .orderBy("createdAt")
+    //   .limitToLast(10)
+    //   .onSnapshot((querySnapshot) => {
+    //     setMessages(
+    //       querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+    //     );
+    //     console.log("SIZE", querySnapshot.size);
+    //     const partnerMessages = messages.filter(
+    //       (message) => message.userId == partnerId
+    //     );
+    //     if (partnerMessages.length > 0) {
+    //       console.log(user.username, partnerMessages);
+    //       conversationRef.child(`status/${user.id}`).update({
+    //         seen: partnerMessages[partnerMessages.length - 1].createdAt,
+    //       });
+    //     }
+    //   });
+
     return () => {
+      // unsubscribe();
       conversationRef
         .child("messages")
         .limitToLast(5)
@@ -73,6 +100,12 @@ const IndividualChat = ({ navigation, route: { params } }) => {
 
   const sendMessage = () => {
     if (!message) return;
+    // firestore().collection("conversation").doc(id).collection("meesages").add({
+    //   userId: user.id,
+    //   username: user.username,
+    //   body: message,
+    //   createdAt: Date.now(),
+    // });
     conversationRef.child("messages").push({
       userId: user.id,
       username: user.username,
@@ -281,7 +314,7 @@ const ChatMessage = ({ message, me, deleteMessage, seen }) => {
     <View key={`${message.id}3`}>
       {/* <Moment date={message.createdAt}><Text></Text></Moment> */}
       <Text style={{ fontSize: 10, color: colors.text }}>
-        {new Date(message.createdAt).toLocaleTimeString()}
+        {new Date(message.createdAt).toLocaleString()}
       </Text>
       {me && message.createdAt == seen && (
         <Text style={{ fontSize: 12, color: colors.text }}>Seen</Text>
