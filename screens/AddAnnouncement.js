@@ -179,11 +179,12 @@ const AddAnnouncement = ({ navigation }) => {
                   style={{
                     borderWidth: 1,
                     borderRadius: 10,
-                    borderColor: "lightgrey",
+                    borderColor: colors.border,
                     justifyContent: "center",
                   }}
                 >
                   <Picker
+                
                     selectedValue={announcementData.tag}
                     onValueChange={(itemValue, itemIndex) => {
                       setAnnouncementData({
@@ -212,7 +213,7 @@ const AddAnnouncement = ({ navigation }) => {
                   style={{
                     borderWidth: 1,
                     borderRadius: 10,
-                    borderColor: "lightgrey",
+                    borderColor: colors.border,
                     justifyContent: "center",
                   }}
                 >
@@ -247,7 +248,7 @@ const AddAnnouncement = ({ navigation }) => {
                 style={{
                   borderWidth: 1,
                   borderRadius: 10,
-                  borderColor: "lightgrey",
+                  borderColor: colors.border,
                   justifyContent: "center",
                 }}
               >
@@ -280,9 +281,12 @@ const AddAnnouncement = ({ navigation }) => {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
+              marginTop:SIZE.height*0.6,
             }}
           >
             <Switch
+              trackColor={{ false: "#767577", true: "#b89ce6" }}
+              thumbColor={true ? "#a077d4" : "#f4f3f4"}
               value={announcementData.addToCalendar}
               onValueChange={(val) =>
                 setAnnouncementData({
@@ -301,6 +305,8 @@ const AddAnnouncement = ({ navigation }) => {
             }}
           >
             <Switch
+             trackColor={{ false: "#767577", true: "#b89ce6" }}
+             thumbColor={true ? "#a077d4" : "#f4f3f4"}
               value={announcementData.sendNotification}
               onValueChange={(val) =>
                 setAnnouncementData({
@@ -355,7 +361,7 @@ const CustomTextInput = ({ value, onChangeText, placeholder }) => {
         paddingHorizontal: SIZE.width * 0.5,
         borderRadius: 10,
         color: colors.text,
-        borderColor: "lightgray",
+        borderColor: colors.border,
         fontSize: SIZE.width * 0.9,
         height: SIZE.height * 1.25,
       }}
@@ -391,7 +397,7 @@ const CustomChipsInput = ({ tags, placeholder, onChangeTags }) => {
         borderWidth: 1,
         paddingHorizontal: SIZE.width * 0.5,
         borderRadius: 10,
-        borderColor: "lightgrey",
+        borderColor: colors.border,
         paddingVertical: SIZE.height * 0.15,
         // height: SIZE.height * 1.25,
         justifyContent: "center",

@@ -4,6 +4,7 @@ import React from "react";
 import {
   ImageBackground,
   Linking,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,93 +16,148 @@ import { globalStyles, SIZE } from "../styles/globalStyle";
 const AboutCollege = ({ navigation }) => {
   const { colors } = useTheme();
   return (
-    <View>
+    <>
       <Header title="Academia Int'l College" navigation={navigation} />
-      <View style={styles.top}>
-        <ImageBackground
-          source={{ uri: "https://academiacollege.edu.np/img/landing.jpg" }}
-          style={styles.cover}
-        ></ImageBackground>
-      </View>
-      <View
-        style={{
-          width: SIZE.screenWidth,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: -SIZE.width * 3,
-        }}
-      >
+      <ScrollView style={{flex:1,marginBottom:20}}>
+        <View style={styles.top}>
+          <ImageBackground
+            source={{ uri: "https://academiacollege.edu.np/img/landing.jpg" }}
+            style={styles.cover}
+          ></ImageBackground>
+        </View>
+
         <View
           style={{
-            borderWidth: 1,
-            borderColor: colors.border,
-            backgroundColor: colors.card,
-            padding: 20,
-            width: SIZE.screenWidth * 0.9,
+            flex:1,
+            width: SIZE.screenWidth,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: -SIZE.width * 3,
+            zIndex: 2,
           }}
         >
-          <Text
+          <QuickInfo />
+          <View
             style={{
-              ...globalStyles.boldText,
-              textAlign: "center",
-              color: colors.text,
+              // borderWidth: 1,
+              // borderColor: colors.border,
+              borderRadius: 10,
+              backgroundColor: colors.card,
+              padding: 20,
+              width: SIZE.screenWidth * 0.9,
+              marginTop: SIZE.width,
             }}
           >
-            About Us
-          </Text>
-          <Text style={{ color: colors.text, lineHeight: 24, fontSize: 17 }}>
-            Academia International College, affiliated with Tribhuvan
-            University, is one of the premier institutions dedicated to
-            providing quality education in a fully-integrated, multicultural
-            environment.
-          </Text>
-          <Text
-            style={{
-              marginTop: 20,
-              color: colors.text,
-              lineHeight: 24,
-              fontSize: 17,
-            }}
-          >
-            The College occupies spacious area at Lalitpur with excellent
-            facilities. In our Graduate School, we are one of the pioneer
-            institutes in Nepal to introduce B.Sc. CSIT program offered by
-            Tribhuvan University.
-          </Text>
+            <Text
+              style={{
+                ...globalStyles.boldText,
+                textAlign: "center",
+                color: colors.text,
+              }}
+            >
+              About Us
+            </Text>
+            <Text style={{ color: colors.text, lineHeight: 24, fontSize: 17 }}>
+              Academia International College, affiliated with Tribhuvan
+              University, is one of the premier institutions dedicated to
+              providing quality education in a fully-integrated, multicultural
+              environment.
+            </Text>
+            <Text
+              style={{
+                marginTop: 20,
+                color: colors.text,
+                lineHeight: 24,
+                fontSize: 17,
+              }}
+            >
+              The College occupies spacious area at Lalitpur with excellent
+              facilities. In our Graduate School, we are one of the pioneer
+              institutes in Nepal to introduce B.Sc. CSIT program offered by
+              Tribhuvan University.
+            </Text>
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: SIZE.width,
-          justifyContent: "space-evenly",
-        }}
-      >
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => Linking.openURL("https://facebook.com")}
-          style={{ ...styles.icons, backgroundColor: "#2a51bf" }}
-        >
-          <FontAwesome name="facebook" size={32} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={{ ...styles.icons, backgroundColor: "#1c1a1b" }}
-        >
-          <FontAwesome name="linkedin" size={32} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={{ ...styles.icons, backgroundColor: "#e04189" }}
-        >
-          <FontAwesome name="instagram" size={32} color="white" />
-        </TouchableOpacity>
-      </View>
-    </View>
+
+      </ScrollView>
+    </>
   );
 };
 
 export default AboutCollege;
+export const QuickInfo = () => {
+  const { colors } = useTheme();
+  return (
+    <View
+      style={{
+        // borderWidth: 1,
+        // borderColor: colors.border,
+        justifyContent: "center",
+        alignItems:'center',
+        borderRadius: 10,
+        backgroundColor: colors.card,
+        padding: 20,
+        width: SIZE.screenWidth * 0.9,
+      }}
+    >
+      <Text
+        style={{
+          ...globalStyles.boldText,
+          textAlign: "center",
+          color: colors.text,
+        }}
+      >
+        Quick Info
+      </Text>
+      <View style={{textAlign:'center',height:1,width:'70%',marginTop:6,backgroundColor:'lightgray'}}></View>
+      <Info icon="phone" data="01-23567" />
+      <Info icon="map-marker" data="Gwarkhu , Lalitpur" />
+      <Info icon="code" data="academiacollege.edu.np" />
+      <View
+          style={{
+            flexDirection: "row",
+            marginTop: SIZE.width,
+            justifyContent: "space-evenly",
+            zIndex: 10,
+          }}
+        >
+          <Icons icon="facebook" color="#2a51bf" link="https://www.facebook.com/academiacollege" />
+          <Icons icon="linkedin" color="#1c1a1b" link="https://www.linkedin.com"/>
+          <Icons icon="instagram" color="#e04189" link="https://www.instagram.com/academia.college/"/>
+        </View>
+    </View>
+  );
+};
+const Info = ({ icon, data }) => {
+  const { colors } = useTheme();
+  return (
+    <View style={styles.iconText}>
+      <FontAwesome name={`${icon}`} size={24} color="#7d81f5" />
+      <Text
+        style={{
+          color: colors.text,
+          marginLeft: 10,
+          lineHeight: 24,
+          fontSize: 17,
+          
+        }}
+      >
+        {data}
+      </Text>
+    </View>
+  );
+};
+export const Icons = ({icon,color,link=""}) =>{
+  return(
+    <TouchableOpacity
+    activeOpacity={0.7}
+    onPress={() => Linking.openURL(`${link}`)}
+    style={{ ...styles.icons,marginLeft:SIZE.width,  backgroundColor: `${color}` }}
+  >
+    <FontAwesome name={`${icon}`} size={25} color="white" />
+  </TouchableOpacity>
+  )
+}
 
 const styles = StyleSheet.create({
   top: {
@@ -118,10 +174,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   icons: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
+  },
+  iconText: {
+    flexDirection: "row",
+
+    marginTop: SIZE.height * 0.6,
   },
 });

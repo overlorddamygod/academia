@@ -1,5 +1,5 @@
 import { useTheme } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -7,136 +7,164 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
 import { globalStyles, SIZE } from "../styles/globalStyle";
-const EditProfile = ({ navigation }) => {
-  const { colors } = useTheme();
-  const { user } = useUserContext();
-  return (
-    <View>
-      <Header title="Edit Profile" navigation={navigation} />
+import { showToast } from "../utils/error";
+import firestore from "@react-native-firebase/firestore";
+import auth from "@react-native-firebase/auth";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 
-      <Image
-        source={{
-          uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
-        }}
-        style={styles.image}
-      />
-      <View style={{ marginHorizontal: SIZE.width }}>
-        <View>
-          <Text
-            style={{
-              ...globalStyles.midText,
-              marginLeft: SIZE.width,
-              color: colors.text,
-            }}
-          >
-            Email
-          </Text>
-          <TextInput
-            placeholder="Email"
-            autoCompleteType="email"
-            keyboardType="email-address"
-            style={authStyles.input}
-            value={user.email}
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              ...globalStyles.midText,
-              marginLeft: SIZE.width,
-              color: colors.text,
-            }}
-          >
-            Password
-          </Text>
-          <TextInput
-            placeholder="Password"
-            autoCompleteType="password"
-            secureTextEntry={true}
-            style={authStyles.input}
-            //   onChangeText={setPassword}
-            value="DummyPassword"
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              ...globalStyles.midText,
-              marginLeft: SIZE.width,
-              color: colors.text,
-            }}
-          >
-            Link GitHub Account
-          </Text>
-          <TextInput
-            placeholder="Your github"
-            autoCompleteType="password"
-            style={authStyles.input}
-            //   onChangeText={setPassword}
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              ...globalStyles.midText,
-              marginLeft: SIZE.width,
-              color: colors.text,
-            }}
-          >
-            Link Facebook Account
-          </Text>
-          <TextInput
-            placeholder="Your facebook"
-            autoCompleteType="password"
-            style={authStyles.input}
-            //   onChangeText={setPassword}
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              ...globalStyles.midText,
-              marginLeft: SIZE.width,
-              color: colors.text,
-            }}
-          >
-            Little About Yourself
-          </Text>
-          <TextInput
-            placeholder="Add Bio"
-            style={authStyles.input}
-            //   onChangeText={setPassword}
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity style={globalStyles.btns}>
-            <Text style={{ color: "white" }}>Edit Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{
-              ...globalStyles.btns,
-              marginLeft: 6,
-              backgroundColor: COLORS.mainred,
-            }}
-          >
-            <Text style={{ color: "white" }}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+const EditProfile = ({ navigation }) => {
+  const { user } = useUserContext();
+  const { colors } = useTheme();
+  const [EditUser, setEditUser] = useState({
+    github: user.github_link,
+    facebook: user.facebook_link,
+    linkedin: user.linkedin_link,
+    bio: user.bio,
+  });
+
+  console.log(user);
+  const updateUser = async () => {
+    await firestore()
+      .collection("user")
+      .doc(auth().currentUser.uid)
+      .update({
+        github_link: EditUser.github,
+        facebook_link: EditUser.facebook,
+        linkedin_link: EditUser.linkedin,
+        bio: EditUser.bio,
+      })
+      .then((data) => {
+        showToast("Edited Successfully !");
+      });
+  };
+  return (
+    <>
+      <KeyboardAwareScrollView style={{ flex: 1 }}>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View>
+            <Header title="Edit Profile" navigation={navigation} />
+
+            <Image
+              source={{
+                uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+              }}
+              style={styles.image}
+            />
+
+            <View style={{ marginHorizontal: SIZE.width,marginTop:SIZE.width }}>
+            <View>
+                <Text
+                  style={{
+                    ...globalStyles.midText,
+                    marginLeft: SIZE.width,
+                    color: colors.text,
+                  }}
+                >
+                  Add Little About Yourself
+                </Text>
+                <TextInput
+                  placeholder="Add Bio"
+                  style={{ ...authStyles.input }}
+                  onChangeText={(txt) => setEditUser({ ...EditUser, bio: txt })}
+                  value={EditUser.bio}
+                />
+              </View>
+              <View>
+                <Text
+                  style={{
+                    ...globalStyles.midText,
+                    marginLeft: SIZE.width,
+                    color: colors.text,
+                  }}
+                >
+                  Add GitHub Account
+                </Text>
+                <TextInput
+                  placeholder="Your github"
+                  style={authStyles.input}
+                  onChangeText={(txt) =>
+                    setEditUser({ ...EditUser, github: txt })
+                  }
+                  value={EditUser.github}
+                />
+              </View>
+              <View>
+                <Text
+                  style={{
+                    ...globalStyles.midText,
+                    marginLeft: SIZE.width,
+                    color: colors.text,
+                  }}
+                >
+                  Add LinkedIn Account
+                </Text>
+                <TextInput
+                  placeholder="Your linkedin"
+                  style={authStyles.input}
+                  value={EditUser.linkedin}
+                  onChangeText={(txt) =>
+                    setEditUser({ ...EditUser, linkedin: txt })
+                  }
+                />
+              </View>
+              <View>
+                <Text
+                  style={{
+                    ...globalStyles.midText,
+                    marginLeft: SIZE.width,
+                    color: colors.text,
+                  }}
+                >
+                  Add Facebook Account
+                </Text>
+                <TextInput
+                  placeholder="Your facebook"
+                  style={authStyles.input}
+                  onChangeText={(txt) =>
+                    setEditUser({ ...EditUser, facebook: txt })
+                  }
+                  value={EditUser.facebook}
+                />
+              </View>
+      
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <TouchableOpacity
+                  style={{...globalStyles.btns, padding:16}}
+                  onPress={updateUser}
+                >
+                  <Text style={{ color: "white",fontSize:18 }}>Edit Profile</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.goBack()}
+                  style={{
+                    ...globalStyles.btns,
+                    marginLeft: 6,
+                    backgroundColor: COLORS.mainred,
+                    padding:16
+                  }}
+                >
+                  <Text style={{ color: "white" ,fontSize:18}}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
+    </>
   );
 };
 
@@ -153,5 +181,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderWidth: 4,
     borderColor: "#00000078",
+  },
+  container: {
+    flex: 1,
+  },
+  inner: {
+    padding: 14,
+    flex: 1,
   },
 });
