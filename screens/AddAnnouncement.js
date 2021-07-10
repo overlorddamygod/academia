@@ -1,7 +1,7 @@
 import auth from "@react-native-firebase/auth";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { Switch, Text, TextInput, View } from "react-native";
+import { Switch, Text, TextInput, View, Picker } from "react-native";
 import {
   Button,
   ChipsInput,
@@ -24,7 +24,8 @@ const AddAnnouncement = ({ navigation }) => {
     tag: "Exams",
     addToCalendar: false,
     sendNotification: false,
-    to: ["All", "Student"],
+    to: "All",
+    toSemester: "All",
   });
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -39,6 +40,7 @@ const AddAnnouncement = ({ navigation }) => {
 
     fetch(
       "https://academiacollege.azurewebsites.net/api/addevent?code=%2F6irg0JmuJqjGbXxEZvRUv7pwDOkqpM6hxCLsHS9AS6VXvOhJFcrwA%3D%3D",
+      // "http://192.168.100.4:7071/api/addEvent",
       {
         method: "POST",
         headers: {
@@ -53,7 +55,7 @@ const AddAnnouncement = ({ navigation }) => {
         setButtonDisabled(false);
         if (!res.error) {
           showToast("Succesfully added an announcement");
-          navigation.goBack();
+          // navigation.goBack();
         } else {
           showToast("Error adding an announcement");
         }
@@ -160,32 +162,131 @@ const AddAnnouncement = ({ navigation }) => {
             </View>
           </View>
 
-          <InputContainer
-            label="Tags"
+          <View
             style={{
+              flexDirection: "row",
               marginTop: -SIZE.height * 0.5,
             }}
           >
-            <CustomTextInput
-              placeholder="eg. Classes, Exams, Holiday, etc"
-              value={announcementData.tag}
-              onChangeText={(tag) => {
-                setAnnouncementData({
-                  ...announcementData,
-                  tag: tag,
-                });
-              }}
-            />
-          </InputContainer>
+            <View style={{ flex: 1 }}>
+              <InputContainer
+                label="Tag"
+                style={{
+                  paddingRight: SIZE.width / 5,
+                }}
+              >
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    borderColor: colors.border,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Picker
+                
+                    selectedValue={announcementData.tag}
+                    onValueChange={(itemValue, itemIndex) => {
+                      setAnnouncementData({
+                        ...announcementData,
+                        tag: itemValue,
+                      });
+                    }}
+                  >
+                    <Picker.Item label="Classes" value="Classes" />
+                    <Picker.Item label="Exams" value="Exams" />
+                    <Picker.Item label="Result" value="Result" />
+                    <Picker.Item label="Holiday" value="Holiday" />
+                    <Picker.Item label="Project" value="Project" />
+                  </Picker>
+                </View>
+              </InputContainer>
+            </View>
+            <View style={{ flex: 1 }}>
+              <InputContainer
+                label="To"
+                style={{
+                  paddingRight: SIZE.width / 5,
+                }}
+              >
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    borderColor: colors.border,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Picker
+                    selectedValue={announcementData.to}
+                    onValueChange={(itemValue, itemIndex) => {
+                      setAnnouncementData({
+                        ...announcementData,
+                        to: itemValue,
+                      });
+                    }}
+                  >
+                    <Picker.Item label="All" value="All" />
+                    <Picker.Item label="Students" value="Student" />
+                    <Picker.Item label="Teachers" value="Teacher" />
+                    {faculty.map((_faculty) => (
+                      <Picker.Item
+                        label={_faculty}
+                        value={_faculty}
+                        key={faculty}
+                      />
+                    ))}
+                  </Picker>
+                </View>
+              </InputContainer>
+            </View>
+          </View>
+
+          {faculty.includes(announcementData.to) && (
+            <InputContainer label="Semester">
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  borderColor: colors.border,
+                  justifyContent: "center",
+                }}
+              >
+                <Picker
+                  selectedValue={announcementData.toSemester}
+                  onValueChange={(itemValue, itemIndex) => {
+                    setAnnouncementData({
+                      ...announcementData,
+                      toSemester: itemValue,
+                    });
+                  }}
+                >
+                  <Picker.Item label="All" value="All" />
+                  {Array.from({ length: 8 }, (i, index) => `${index + 1}`).map(
+                    (semester) => (
+                      <Picker.Item
+                        label={semester}
+                        value={semester}
+                        key={semester}
+                      />
+                    )
+                  )}
+                </Picker>
+              </View>
+            </InputContainer>
+          )}
 
           <InputContainer
             label="Add to Calendar"
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
+              marginTop:SIZE.height*0.6,
             }}
           >
             <Switch
+              trackColor={{ false: "#767577", true: "#b89ce6" }}
+              thumbColor={true ? "#a077d4" : "#f4f3f4"}
               value={announcementData.addToCalendar}
               onValueChange={(val) =>
                 setAnnouncementData({
@@ -204,6 +305,8 @@ const AddAnnouncement = ({ navigation }) => {
             }}
           >
             <Switch
+             trackColor={{ false: "#767577", true: "#b89ce6" }}
+             thumbColor={true ? "#a077d4" : "#f4f3f4"}
               value={announcementData.sendNotification}
               onValueChange={(val) =>
                 setAnnouncementData({
@@ -214,24 +317,11 @@ const AddAnnouncement = ({ navigation }) => {
             />
           </InputContainer>
 
-          <InputContainer label="To">
-            <CustomChipsInput
-              tags={announcementData.to}
-              placeholder="eg. Teacher, CSIT etc"
-              onChangeTags={(tags) => {
-                setAnnouncementData({
-                  ...announcementData,
-                  to: tags,
-                });
-              }}
-            />
-          </InputContainer>
-
           <Button
             label="Add"
             backgroundColor="#FB616A"
             style={{
-              marginVertical: SIZE.height * 0.5,
+              marginVertical: SIZE.height * 0.45,
             }}
             onPress={onAddButtonPress}
             disabled={buttonDisabled}
@@ -252,7 +342,7 @@ const Label = ({ text }) => {
         fontWeight: "bold",
         fontSize: 16,
         color: colors.text,
-        marginBottom: 3,
+        marginBottom: SIZE.height / 20,
       }}
     >
       {text}
@@ -271,7 +361,7 @@ const CustomTextInput = ({ value, onChangeText, placeholder }) => {
         paddingHorizontal: SIZE.width * 0.5,
         borderRadius: 10,
         color: colors.text,
-        borderColor: "lightgray",
+        borderColor: colors.border,
         fontSize: SIZE.width * 0.9,
         height: SIZE.height * 1.25,
       }}
@@ -288,7 +378,7 @@ const InputContainer = ({ label, style = {}, children }) => {
   return (
     <View
       style={{
-        marginVertical: 5,
+        marginVertical: SIZE.height / 15,
         ...style,
       }}
     >
@@ -307,7 +397,7 @@ const CustomChipsInput = ({ tags, placeholder, onChangeTags }) => {
         borderWidth: 1,
         paddingHorizontal: SIZE.width * 0.5,
         borderRadius: 10,
-        borderColor: "lightgrey",
+        borderColor: colors.border,
         paddingVertical: SIZE.height * 0.15,
         // height: SIZE.height * 1.25,
         justifyContent: "center",
@@ -317,3 +407,5 @@ const CustomChipsInput = ({ tags, placeholder, onChangeTags }) => {
     />
   );
 };
+
+const faculty = ["Bsc CSIT", "BCA", "BBM", "BBS"];

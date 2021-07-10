@@ -14,7 +14,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import Header from "../components/Header";
 import { globalStyles, SIZE } from "../styles/globalStyle";
-
+import { Icons } from "./AboutCollege";
 const PersonDetail = ({ route, navigation }) => {
   const { colors } = useTheme();
   const { data } = route.params;
@@ -57,11 +57,13 @@ const PersonDetail = ({ route, navigation }) => {
             Email : {data.email}
           </Text>
         </View>
-        <ScrollView>
+        <ScrollView
+        showsVerticalScrollIndicator={false}
+        >
           <Animatable.View animation="fadeInUp">
             <View
               style={{
-                marginTop: 40,
+                marginTop: 20,
                 marginBottom: 10,
                 justifyContent: "center",
                 alignItems: "center",
@@ -119,7 +121,7 @@ const PersonDetail = ({ route, navigation }) => {
                 marginTop: 40,
               }}
             >
-              <AntDesign
+              {/* <AntDesign
                 //dummy link for now
                 onPress={() => Linking.openURL("https://facebook.com")}
                 name="facebook-square"
@@ -137,7 +139,10 @@ const PersonDetail = ({ route, navigation }) => {
                 name="gmail"
                 size={35}
                 color={colors.text}
-              />
+              /> */}
+                 <Icons icon="facebook" color="#2a51bf" link="https://www.facebook.com/academiacollege" />
+          <Icons icon="linkedin" color="#1c1a1b" link="https://www.linkedin.com"/>
+          <Icons icon="instagram" color="#e04189" link="https://www.instagram.com/academia.college/"/>
             </View>
           </Animatable.View>
         </ScrollView>
@@ -190,6 +195,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius:4,
     marginHorizontal: 3,
     height: 40,
     padding: 10,

@@ -13,12 +13,12 @@ import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
 import { getErrorMessage, showToast } from "../utils/error";
-
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 const Register = ({ navigation }) => {
-  const [username, setUsername] = useState("Test69");
-  const [email, setEmail] = useState("test69@gmail.com");
-  const [password1, setPassword1] = useState("test123");
-  const [password2, setPassword2] = useState("test123");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
   const [registering, setRegistering] = useState(false);
 
   const { register } = useUserContext();
@@ -64,6 +64,7 @@ const Register = ({ navigation }) => {
   };
 
   return (
+    <KeyboardAwareScrollView style={{flex:1}}>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1, backgroundColor: COLORS.main }}>
         <View style={authStyles.upper}>
@@ -131,6 +132,7 @@ const Register = ({ navigation }) => {
         </View>
       </View>
     </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 

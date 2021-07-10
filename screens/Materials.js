@@ -19,7 +19,7 @@ export default function Materials({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Your Materials" navigation={navigation} />
+      <Header title="Our Courses" navigation={navigation} />
       <View style={{ flex: 1, padding: 20 }}>
         <View>
           <Text
@@ -30,7 +30,7 @@ export default function Materials({ navigation }) {
               color: colors.text,
             }}
           >
-            Materials
+            Courses
           </Text>
           <Text
             style={{
@@ -40,7 +40,7 @@ export default function Materials({ navigation }) {
               color: colors.text,
             }}
           >
-            Review Your Materials
+            Review Your course
           </Text>
         </View>
         <View>

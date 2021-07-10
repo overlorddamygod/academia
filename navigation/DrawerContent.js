@@ -101,7 +101,7 @@ const DrawerContent = ({ navigation }) => {
           <View style={styles.menuDiv}>
             <DrawerMenu
               background="#525892"
-              title="Materials"
+              title="Courses"
               iconName="library-books"
               iconProvider="MaterialIcon"
               navigation={navigation}
@@ -119,15 +119,15 @@ const DrawerContent = ({ navigation }) => {
           <View style={styles.menuDiv}>
             <DrawerMenu
               background="#6066A1"
-              title="Events"
+              title="Materials"
               iconName="event"
               iconProvider="MaterialIcon"
               navigation={navigation}
-              screen="Announcements"
+              screen="Materials"
             />
             <DrawerMenu
               background="#757BBD"
-              title="About us"
+              title="College Info"
               iconName="box"
               iconProvider="Feather"
               navigation={navigation}
