@@ -88,6 +88,14 @@ const Chat = ({ navigation }) => {
               >
                 {getChatName(item, user.id)}
               </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "grey",
+                }}
+              >
+                {item.lastMessage || "Start a conversation"}
+              </Text>
             </View>
           </TouchableOpacity>
         )}

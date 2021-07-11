@@ -98,7 +98,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
     };
   }, [id]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!message) return;
     // firestore().collection("conversation").doc(id).collection("meesages").add({
     //   userId: user.id,
@@ -106,16 +106,25 @@ const IndividualChat = ({ navigation, route: { params } }) => {
     //   body: message,
     //   createdAt: Date.now(),
     // });
-    conversationRef.child("messages").push({
-      userId: user.id,
-      username: user.username,
-      body: message,
-      createdAt: Date.now(),
-    });
-    conversationRef.child(`status/${user.id}`).update({
-      typing: false,
-    });
-    setMessage("");
+    try {
+      const createdAt = Date.now();
+      const addMessage = await conversationRef.child("messages").push({
+        userId: user.id,
+        username: user.username,
+        body: message,
+        createdAt,
+      });
+      firestore().collection("conversation").doc(id).update({
+        lastMessage: message,
+        lastMessageAt: createdAt,
+      });
+      conversationRef.child(`status/${user.id}`).update({
+        typing: false,
+      });
+      setMessage("");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const startTyping = () => {
