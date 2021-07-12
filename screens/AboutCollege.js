@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import Header from "../components/Header";
 import { globalStyles, SIZE } from "../styles/globalStyle";
-
+import * as Animatable from "react-native-animatable";
 const AboutCollege = ({ navigation }) => {
   const { colors } = useTheme();
   return (
@@ -26,7 +26,7 @@ const AboutCollege = ({ navigation }) => {
           ></ImageBackground>
         </View>
 
-        <View
+        <Animatable.View animation="fadeInUp"
           style={{
             flex:1,
             width: SIZE.screenWidth,
@@ -77,7 +77,7 @@ const AboutCollege = ({ navigation }) => {
               Tribhuvan University.
             </Text>
           </View>
-        </View>
+        </Animatable.View>
 
       </ScrollView>
     </>

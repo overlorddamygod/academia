@@ -46,7 +46,7 @@ export default function Materials({ navigation }) {
         <View>
           <FlatList
             data={faculties}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             showVerticalScrollIndicator={false}
             renderItem={({ item, index }) => (
               <View

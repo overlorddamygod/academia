@@ -59,7 +59,7 @@ const DrawerTab = () => {
       drawerBackground: "#191b2a",
       dialogs: "#191b2a",
       midBox: "#212538",
-      searchDiv: "#50587a",
+      searchDiv: "#39405c",
     },
   };
 
