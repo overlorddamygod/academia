@@ -88,7 +88,11 @@ const Gallery = ({ navigation }) => {
 
   return (
     <>
-      <Header title="Academia Gallery" navigation={navigation} />
+      <Header
+        title="Academia Gallery"
+        navigation={navigation}
+        showSidebar={false}
+      />
       <GalleryRoute navigation={navigation} screen="photo" />
       <ScrollView
         refreshControl={

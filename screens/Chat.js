@@ -78,6 +78,13 @@ const Chat = ({ navigation }) => {
       />
 
       <FlatList
+        ListEmptyComponent={() => {
+          return (
+            <View style={{ alignItems: "center", marginTop: 50 }}>
+              <Text style={{ color: colors.text }}>No conversations</Text>
+            </View>
+          );
+        }}
         data={conversations}
         keyExtractor={(item) => item.docId}
         renderItem={({ item }) => (
@@ -120,6 +127,14 @@ const Chat = ({ navigation }) => {
                 }}
               >
                 {getChatName(item, user.id)}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "grey",
+                }}
+              >
+                {item.lastMessage || "Start a conversation"}
               </Text>
             </View>
           </TouchableOpacity></>

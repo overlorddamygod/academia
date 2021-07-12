@@ -13,7 +13,7 @@ import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
 import { getErrorMessage, showToast } from "../utils/error";
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 const Register = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -64,74 +64,74 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAwareScrollView style={{flex:1}}>
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={{ flex: 1, backgroundColor: COLORS.main }}>
-        <View style={authStyles.upper}>
-          <View style={{ alignItems: "center" }}>
-            <Text style={authStyles.maintext}>Academia</Text>
-            <Text style={authStyles.maintext}>International College</Text>
-            <View style={authStyles.line}></View>
+    <KeyboardAwareScrollView style={{ flex: 1, backgroundColor: "white" }}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ flex: 1, backgroundColor: COLORS.main }}>
+          <View style={authStyles.upper}>
+            <View style={{ alignItems: "center" }}>
+              <Text style={authStyles.maintext}>Academia</Text>
+              <Text style={authStyles.maintext}>International College</Text>
+              <View style={authStyles.line}></View>
+            </View>
+            <View style={{ marginTop: SIZE.height * 0.8 }}>
+              <Text style={authStyles.maintext}>Register</Text>
+            </View>
           </View>
-          <View style={{ marginTop: SIZE.height * 0.8 }}>
-            <Text style={authStyles.maintext}>Register</Text>
-          </View>
-        </View>
 
-        <View style={{ ...authStyles.lower, flex: 1 }}>
-          <View>
-            <TextInput
-              placeholder="Username"
-              style={authStyles.input}
-              onChangeText={setUsername}
-              value={username}
-            />
-            <TextInput
-              placeholder="Email"
-              style={authStyles.input}
-              onChangeText={setEmail}
-              value={email}
-            />
-            <TextInput
-              placeholder="Password"
-              autoCompleteType="password"
-              secureTextEntry={true}
-              style={authStyles.input}
-              onChangeText={setPassword1}
-              value={password1}
-            />
-            <TextInput
-              placeholder="Confirm Password"
-              autoCompleteType="password"
-              secureTextEntry={true}
-              style={authStyles.input}
-              onChangeText={setPassword2}
-              value={password2}
-            />
-          </View>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <TouchableOpacity style={authStyles.btn} onPress={initRegister}>
-              {registering ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text style={authStyles.text}>Register</Text>
-              )}
-            </TouchableOpacity>
-            <Text style={{ marginTop: SIZE.height / 8, fontSize: 18 }}>
-              Already have account?
-              <Text
-                style={{ color: "#666", fontWeight: "bold" }}
-                onPress={() => {
-                  navigation.navigate("Login");
-                }}
-              >
-                {` `}Login
+          <View style={{ ...authStyles.lower, flex: 1 }}>
+            <View>
+              <TextInput
+                placeholder="Username"
+                style={authStyles.input}
+                onChangeText={setUsername}
+                value={username}
+              />
+              <TextInput
+                placeholder="Email"
+                style={authStyles.input}
+                onChangeText={setEmail}
+                value={email}
+              />
+              <TextInput
+                placeholder="Password"
+                autoCompleteType="password"
+                secureTextEntry={true}
+                style={authStyles.input}
+                onChangeText={setPassword1}
+                value={password1}
+              />
+              <TextInput
+                placeholder="Confirm Password"
+                autoCompleteType="password"
+                secureTextEntry={true}
+                style={authStyles.input}
+                onChangeText={setPassword2}
+                value={password2}
+              />
+            </View>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <TouchableOpacity style={authStyles.btn} onPress={initRegister}>
+                {registering ? (
+                  <ActivityIndicator color="white" />
+                ) : (
+                  <Text style={authStyles.text}>Register</Text>
+                )}
+              </TouchableOpacity>
+              <Text style={{ marginTop: SIZE.height / 8, fontSize: 18 }}>
+                Already have account?
+                <Text
+                  style={{ color: "#666", fontWeight: "bold" }}
+                  onPress={() => {
+                    navigation.navigate("Login");
+                  }}
+                >
+                  {` `}Login
+                </Text>
               </Text>
-            </Text>
+            </View>
           </View>
         </View>
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
   );
 };

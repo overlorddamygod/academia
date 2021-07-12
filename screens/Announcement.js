@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
+  Linking,
   TouchableHighlight,
 } from "react-native";
 import Header from "../components/Header";
@@ -14,6 +15,7 @@ import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import { useCollectionLazy } from "../hooks/firestore";
 import COLORS, { tagColor } from "../styles/colors";
+import Hyperlink from "react-native-hyperlink";
 
 const AnnouncementScreen = ({ navigation }) => {
   const [selectedTag, setSelectedTag] = useState("All Items");
@@ -154,15 +156,22 @@ const Announcement = ({
         </Text>
 
         {showBody && data.body && (
-          <Text
-            style={{
-              color: colors.text,
-              fontSize: 16,
-              marginVertical: 8,
+          <Hyperlink
+            linkStyle={{ color: "#2980b9", textDecorationLine: "underline" }}
+            onPress={(url, text) => {
+              Linking.openURL(url);
             }}
           >
-            {data.body}
-          </Text>
+            <Text
+              style={{
+                color: colors.text,
+                fontSize: 16,
+                marginVertical: 8,
+              }}
+            >
+              {data.body}
+            </Text>
+          </Hyperlink>
         )}
 
         <Text style={{ color: "#ABABAB" }}>
