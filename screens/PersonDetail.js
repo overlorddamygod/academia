@@ -178,25 +178,7 @@ const PersonDetail = ({ route, navigation }) => {
                 marginTop: 40,
               }}
             >
-              {/* <AntDesign
-                //dummy link for now
-                onPress={() => Linking.openURL("https://facebook.com")}
-                name="facebook-square"
-                size={35}
-                color={colors.text}
-              />
-              <AntDesign
-                onPress={() => Linking.openURL("https://linkedin.com")}
-                name="linkedin-square"
-                size={35}
-                color="#777"
-              />
-              <MaterialCommunityIcons
-                onPress={() => Linking.openURL("https://gmail.com")}
-                name="gmail"
-                size={35}
-                color={colors.text}
-              /> */}
+              
               {!!data.facebook_link && (
                 <Icons
                   icon="facebook"

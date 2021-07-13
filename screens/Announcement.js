@@ -16,6 +16,7 @@ import { useTheme } from "@react-navigation/native";
 import { useCollectionLazy } from "../hooks/firestore";
 import COLORS, { tagColor } from "../styles/colors";
 import Hyperlink from "react-native-hyperlink";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const AnnouncementScreen = ({ navigation }) => {
   const [selectedTag, setSelectedTag] = useState("All Items");
