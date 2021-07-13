@@ -11,6 +11,7 @@ import DrawerContent from "./DrawerContent";
 import MainStack from "./Main";
 import {
   AnnounceStackScreen,
+  DownloadStackScreen,
   EditProfileScreen,
   GalleryStackScreen,
   HomeStackScreen,
@@ -81,6 +82,7 @@ const DrawerTab = () => {
         <Drawer.Screen name="EditProfile" component={EditProfileScreen} />
         <Drawer.Screen name="Subjects" component={SubjectStackScreen} />
         <Drawer.Screen name="AboutCollege" component={AboutCollege} />
+        <Drawer.Screen name="Downloads" component={DownloadStackScreen} />
         {/* <Drawer.Screen name="Login" component={Login} /> */}
         {/* <Drawer.Screen name="Register" component={Register} /> */}
         {/* <Drawer.Screen name="IndividualChat" component={IndividualChat} /> */}
