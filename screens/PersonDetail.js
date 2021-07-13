@@ -1,10 +1,11 @@
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import database from "@react-native-firebase/database";
+import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import {
   Image,
   ImageBackground,
-  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,13 +14,71 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import Header from "../components/Header";
+import { useUserContext } from "../providers/user";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { Icons } from "./AboutCollege";
+
 const PersonDetail = ({ route, navigation }) => {
   const { colors } = useTheme();
+  const { user } = useUserContext();
   const { data } = route.params;
   console.log(data);
   useEffect(() => {}, []);
+
+  const startChat = () => {
+    console.log([`${user.id}${data.id}`, `${data.id}${user.id}`]);
+    firestore()
+      .collection("conversation")
+      .where("chatId", "in", [`${user.id}${data.id}`, `${data.id}${user.id}`])
+      .get()
+      .then((a) => {
+        if (a.size > 0) {
+          const convoDoc = a.docs[0];
+          const convoData = convoDoc.data();
+          convoData.id = convoDoc.id;
+          navigation.navigate("IndividualChat", {
+            id: convoData.id,
+            name: getChatName(convoData, user.id),
+            conversation: convoData,
+          });
+        } else {
+          createNewConversation();
+        }
+      });
+  };
+
+  const createNewConversation = () => {
+    const newConvo = {
+      chatId: `${user.id}${data.id}`,
+      p: {},
+      participants: [`${user.id}`, `${data.id}`],
+    };
+    newConvo.p[`${user.id}`] = user.username;
+    newConvo.p[`${data.id}`] = data.username;
+    firestore()
+      .collection("conversation")
+      .add(newConvo)
+      .then((addedResult) => {
+        addedResult.get().then((getResult) => {
+          // const convoDoc = a.docs[0]
+          const convoData = getResult.data();
+          convoData.id = getResult.id;
+
+          const tempConvo = {};
+          tempConvo["1234"] = [];
+
+          database().ref(`/conversations/${convoData.id}`).push({
+            lol: 1,
+          });
+
+          navigation.navigate("IndividualChat", {
+            id: convoData.id,
+            name: getChatName(convoData, user.id),
+            conversation: convoData,
+          });
+        });
+      });
+  };
   return (
     <>
       <Header title={`${data.username}'s  Profile`} navigation={navigation} />
@@ -57,9 +116,7 @@ const PersonDetail = ({ route, navigation }) => {
             Email : {data.email}
           </Text>
         </View>
-        <ScrollView
-        showsVerticalScrollIndicator={false}
-        >
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Animatable.View animation="fadeInUp">
             <View
               style={{
@@ -70,7 +127,7 @@ const PersonDetail = ({ route, navigation }) => {
                 flexDirection: "row",
               }}
             >
-              <TouchableOpacity style={styles.msgbtn}>
+              <TouchableOpacity style={styles.msgbtn} onPress={startChat}>
                 <Text style={{ color: colors.text, fontSize: 16 }}>
                   Message
                 </Text>
@@ -121,28 +178,24 @@ const PersonDetail = ({ route, navigation }) => {
                 marginTop: 40,
               }}
             >
-              {/* <AntDesign
-                //dummy link for now
-                onPress={() => Linking.openURL("https://facebook.com")}
-                name="facebook-square"
-                size={35}
-                color={colors.text}
-              />
-              <AntDesign
-                onPress={() => Linking.openURL("https://linkedin.com")}
-                name="linkedin-square"
-                size={35}
-                color="#777"
-              />
-              <MaterialCommunityIcons
-                onPress={() => Linking.openURL("https://gmail.com")}
-                name="gmail"
-                size={35}
-                color={colors.text}
-              /> */}
-                 <Icons icon="facebook" color="#2a51bf" link="https://www.facebook.com/academiacollege" />
-          <Icons icon="linkedin" color="#1c1a1b" link="https://www.linkedin.com"/>
-          <Icons icon="instagram" color="#e04189" link="https://www.instagram.com/academia.college/"/>
+              
+              {!!data.facebook_link && (
+                <Icons
+                  icon="facebook"
+                  color="#2a51bf"
+                  link={data.facebook_link}
+                />
+              )}
+              {!!data.linkedin_link && (
+                <Icons
+                  icon="linkedin"
+                  color="#1c1a1b"
+                  link={data.linkedin_link}
+                />
+              )}
+              {!!data.github_link && (
+                <Icons icon="github" color="#1c1a1b" link={data.github_link} />
+              )}
             </View>
           </Animatable.View>
         </ScrollView>
@@ -195,10 +248,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius:4,
+    borderRadius: 4,
     marginHorizontal: 3,
     height: 40,
     padding: 10,
     marginTop: 5,
   },
 });
+
+const getChatName = (convo, userId) => {
+  return convo.group
+    ? convo.name
+    : convo.p[convo.participants.filter((id) => id != userId)[0]];
+};

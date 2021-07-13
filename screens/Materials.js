@@ -19,7 +19,7 @@ export default function Materials({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Our Courses" navigation={navigation} />
+      <Header title="Our Courses" navigation={navigation} showSidebar={false} />
       <View style={{ flex: 1, padding: 20 }}>
         <View>
           <Text
@@ -46,7 +46,7 @@ export default function Materials({ navigation }) {
         <View>
           <FlatList
             data={faculties}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             showVerticalScrollIndicator={false}
             renderItem={({ item, index }) => (
               <View

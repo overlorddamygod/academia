@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { globalStyles } from "../styles/globalStyle";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
+import { useCollectionLazy } from "../hooks/firestore";
+import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 
 const dummyLists = [
   { notifications: "Sandeep Maharjan Messaged You .", date: "20-3-23" },
@@ -15,33 +18,62 @@ const dummyLists = [
 const Notifications = ({ navigation }) => {
   const [lists, setLists] = useState(dummyLists);
   const { colors } = useTheme();
+
+  const query = firestore()
+    .collection("user")
+    .doc(auth().currentUser.uid)
+    .collection("notification");
+
+  const {
+    value: notifications,
+    loading,
+    error,
+    getMoreData,
+    onRefresh,
+    setQuery,
+  } = useCollectionLazy(query, "createdAt", "desc", 10);
   return (
     <>
-      <Header title="Notifications" navigation={navigation} />
+      <Header
+        title="Notifications"
+        navigation={navigation}
+        showBackMenu={false}
+      />
       <View>
-        <View style={{ marginTop: 50 }}>
+        <View style={{ marginTop: 10 }}>
           <FlatList
-            data={lists}
-            keyExtractor={(item) => item.date}
+            refreshing={loading}
+            onRefresh={onRefresh}
+            ListEmptyComponent={() => {
+              return (
+                <View style={{ alignItems: "center", marginTop: 50 }}>
+                  <Text style={{ color: colors.text }}>No notifications</Text>
+                </View>
+              );
+            }}
+            data={notifications}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View
                 style={{
                   marginHorizontal: 20,
-                  marginBottom: 10,
+                  marginVertical: 10,
                   backgroundColor: colors.card,
                   borderRadius: 8,
-                  padding: 17,
+                  paddingHorizontal: SIZE.width,
+                  paddingVertical: SIZE.height * 0.2,
                   flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                <View>
-                  <Ionicons
-                    name="notifications-circle"
-                    size={40}
-                    color={colors.text}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 20 }}>
+                <Ionicons
+                  name="notifications-circle"
+                  size={40}
+                  color={colors.text}
+                />
+                <View
+                  style={{ flex: 1, marginLeft: 20, justifyContent: "center" }}
+                >
                   <Text
                     style={{
                       color: colors.text,
@@ -51,10 +83,22 @@ const Notifications = ({ navigation }) => {
                       width: "99%",
                     }}
                   >
-                    {item.notifications}
+                    {item.title}
                   </Text>
+                  {!!item.body && (
+                    <Text
+                      style={{
+                        color: colors.text,
+                        fontSize: 15,
+                        marginVertical: 2,
+                        width: "99%",
+                      }}
+                    >
+                      {item.body}
+                    </Text>
+                  )}
                   <Text style={{ ...globalStyles.midText, color: "#888" }}>
-                    {item.date}
+                    {item.createdAt.toDate().toDateString()}
                   </Text>
                 </View>
               </View>

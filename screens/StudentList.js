@@ -75,7 +75,7 @@ const StudentList = ({ navigation }) => {
                 paddingHorizontal: 10,
                 borderRadius: 10,
                 color: colors.text,
-                borderColor: "lightgray",
+                borderColor: "#999",
                 fontSize: SIZE.width * 0.9,
               }}
               placeholder="Search"

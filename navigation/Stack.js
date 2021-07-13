@@ -4,6 +4,7 @@ import AboutCollege from "../screens/AboutCollege";
 import AnnouncementScreen from "../screens/Announcement";
 import CalendarScreen from "../screens/Calendar";
 import Chat from "../screens/Chat";
+import downloadLink from "../screens/downloadLink";
 import EditProfile from "../screens/EditProfile";
 import Gallery from "../screens/Gallery";
 import Home from "../screens/Home";
@@ -31,6 +32,7 @@ const SubjectStack = createStackNavigator();
 const VideoStack = createStackNavigator();
 const EditProfileStack = createStackNavigator();
 const AboutCollegeStack = createStackNavigator();
+const DownloadStack = createStackNavigator();
 
 export function HomeStackScreen() {
   return (
@@ -215,5 +217,16 @@ export function MaterialStackScreen() {
     >
       <MaterialStack.Screen name="Materials" component={Materials} />
     </MaterialStack.Navigator>
+  );
+}
+export function DownloadStackScreen() {
+  return (
+    <DownloadStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <DownloadStack.Screen name="Downloads" component={downloadLink} />
+    </DownloadStack.Navigator>
   );
 }

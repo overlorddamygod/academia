@@ -123,7 +123,7 @@ const DrawerContent = ({ navigation }) => {
               iconName="event"
               iconProvider="MaterialIcon"
               navigation={navigation}
-              screen="Materials"
+              screen="Downloads"
             />
             <DrawerMenu
               background="#757BBD"
