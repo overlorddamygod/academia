@@ -22,23 +22,16 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
     const loggedUser = auth().currentUser;
     if (loggedUser) {
       try {
-        setUser(loggedUser);
-        if (intializing) setInitializing(false);
-
         let userSnapshot = await firestore()
           .collection("user")
           .doc(loggedUser.uid)
           .get();
         const userData = userSnapshot.data();
 
-        // if (requestUserPermission()) {
-        //   const token = await getFcmToken();
-        //   userSnapshot.docs[0].ref.update({
-        //     token,
-        //   });
-        // }
-
         setUser({ ...user, ...userData });
+
+        if (intializing) setInitializing(false);
+
         messaging().subscribeToTopic("All");
         messaging().subscribeToTopic(`${userData.title}`);
 
@@ -51,14 +44,6 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
           );
         }
 
-        // auth()
-        //   .currentUser.getIdTokenResult()
-        //   .then((idTokenResult) => {
-        //     console.log("CLAIMS", idTokenResult.claims);
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
         if (requestUserPermission()) {
           const token = await getFcmToken();
 
