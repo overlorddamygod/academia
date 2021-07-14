@@ -1,10 +1,10 @@
 import { useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View ,Linking} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Header from "../components/Header";
 import { globalStyles, SIZE } from "../styles/globalStyle";
-
+import { AntDesign} from "@expo/vector-icons";
 const Subject = ({ route, navigation }) => {
   const { colors } = useTheme();
   const { sub, short } = route.params;
@@ -82,15 +82,27 @@ const Subject = ({ route, navigation }) => {
               >
                 {sub.firstHalf.sem}
               </Text>
+             
               {sub.firstHalf.subject.map((a,index) => (
-                <TouchableOpacity
+                <View
                   key={index}
-                  style={{ ...styles.cards, backgroundColor: colors.card }}
+                  style={{ ...styles.cards,
+                     backgroundColor: colors.card,
+                     flexDirection:'row',
+                     alignItems:'center',
+                     justifyContent:'space-between',
+                     paddingHorizontal:20
+                     }}
                 >
                   <Text style={{ color: colors.text, fontSize: 18 }}>
                     {a.name}
                   </Text>
-                </TouchableOpacity>
+                  { a.link&& <TouchableOpacity
+                  onPress={() =>  Linking.openURL(a.link)}
+                  >
+                  <AntDesign name="clouddownload" size={30} color={colors.text} />
+                  </TouchableOpacity>}
+                </View>
               ))}
             </View>
           )}

@@ -210,17 +210,16 @@ const Videos = ({ navigation }) => {
                 <Video
                   source={{ uri: video }}
                   style={styles.backgroundVideo}
-                  paused={index === true}
+                  
                   onEnd={onEnd}
                   onLoad={onLoad}
                   onLoadStart={onLoadStart}
                   onProgress={onProgress}
-                  paused={true}
+                  paused={currIndex === index ? true :false}
                   ref={videoPlayer}
-                  controls={true}
                   resizeMode={screenType}
                   onFullScreen={isFullScreen}
-                  onEnd={() => showToast("Video Ended")}
+                  // onEnd={() => showToast("Video Ended")}
                   poster="https://academiacollege.edu.np/img/landing.jpg"
                 />
 

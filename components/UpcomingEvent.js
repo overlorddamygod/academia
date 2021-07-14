@@ -13,7 +13,7 @@ import { useCollection } from "../hooks/firestore";
 import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 
-const UpcomingEvent = () => {
+const UpcomingEvent = ({navigation}) => {
   const { colors } = useTheme();
 
   const { user } = useUserContext();
@@ -42,9 +42,11 @@ const UpcomingEvent = () => {
           </Text>
         </View>
 
-        <View style={{ ...globalStyles.card, backgroundColor: colors.card }}>
+        <TouchableOpacity 
+        onPress={()=>{navigation.navigate('Announcements',{screen:'Announcements'})}}
+        style={{ ...globalStyles.card, backgroundColor: colors.card }}>
           <Text style={{ color: colors.text, fontSize: 16 }}>Show All</Text>
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={{ width: "100%", padding: SIZE.width * 0.7 }}>
         <FlatList

@@ -34,7 +34,7 @@ const DrawerTab = () => {
       card: "white",
       btn: "#583EFF",
       msgIcon: "black",
-      mainblue: "#473f97",
+      mainblue: "#014085",
       buttomtab: "#0E243F",
       border: "lightgray",
       upcoming: "#515a8a",
@@ -61,6 +61,7 @@ const DrawerTab = () => {
       dialogs: "#191b2a",
       midBox: "#212538",
       searchDiv: "#39405c",
+      
     },
   };
 

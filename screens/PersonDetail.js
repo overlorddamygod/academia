@@ -127,6 +127,9 @@ const PersonDetail = ({ route, navigation }) => {
           <Text style={{ lineHeight: 20, fontSize: 16, color: colors.text }}>
             Email : {data.email}
           </Text>
+         {data.title === "Student" && <Text style={{ lineHeight: 20, fontSize: 16, color: colors.text }}>
+            Faculty : {data.faculty}
+          </Text>}
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Animatable.View animation="fadeInUp">
@@ -163,21 +166,24 @@ const PersonDetail = ({ route, navigation }) => {
                 </TouchableOpacity>
               )}
             </View>
-            <View style={{ padding: 20 }}>
-              <TouchableOpacity activeOpacity={0.6} style={styles.msgbtn}>
+
+           {data.title ==="Student" && <View style={{ padding: 20 }}>
+              <TouchableOpacity
+              onPress={()=>{navigation.navigate('Materials',{screen:"Materials"})}}
+              activeOpacity={0.6} style={styles.msgbtn}>
                 <Text style={{ color: colors.text, fontSize: 16 }}>
-                  See 3rd Semester Syllabus
+                 SEE {data.faculty}  COURSE
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 activeOpacity={0.8}
                 style={{ ...styles.msgbtn, backgroundColor: "#757BBD" }}
               >
                 <Text style={{ color: "white", fontSize: 16 }}>
                   See 3rd Semester Course
                 </Text>
-              </TouchableOpacity>
-            </View>
+              </TouchableOpacity> */}
+            </View>}
           </Animatable.View>
           <Animatable.View animation="bounceIn" delay={200}>
             <View style={{ justifyContent: "center", alignItems: "center" }}>

@@ -9,6 +9,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  Alert,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -103,12 +104,10 @@ const Gallery = ({ navigation }) => {
         }
       >
         {/* shoudl be teacher to let only teacher to add photo */}
-        {user.title === "Student" && (
+        {user.admin && (
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 6,
+              marginLeft: SIZE.width,
             }}
           >
             <TouchableOpacity
@@ -118,6 +117,7 @@ const Gallery = ({ navigation }) => {
               }}
               onPress={() => setOption(true)}
             >
+              <Ionicons name="add" size={20} color='#fff' />
               <Text style={{ ...globalStyles.midText, color: "white" }}>
                 Add Image
               </Text>
@@ -207,9 +207,24 @@ const Gallery = ({ navigation }) => {
                     </TouchableOpacity>
 
                     {/* only teacher can delete post  */}
-                    {user.title === "Student" && (
+                    {user.admin && (
                       <TouchableOpacity
-                        onPress={() => deleteData(imageuri)}
+                        // onPress={() => deleteData(imageuri)}
+                        onPress={() => {
+                          Alert.alert(
+                            "Delete Image ",
+                            "Are you sure you want to delete this ?",
+                            [
+                              {
+                                text: "Cancel",
+                                onPress: () => console.log("Cancelled!"),
+                                style: "cancel",
+                              },
+                              { text: "OK", onPress: () =>  deleteData(imageuri) },
+                            ],
+                            { cancelable: true }
+                          );
+                        }}
                         style={styles.close}
                       >
                         <Ionicons name="trash" size={34} color="#ed8085" />

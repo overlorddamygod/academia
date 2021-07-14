@@ -77,7 +77,7 @@ const Home = ({ navigation }) => {
           </View>
 
           <View>
-            <UpcomingEvent />
+            <UpcomingEvent navigation={navigation} />
           </View>
 
           <View style={{ flex: 1 }}>

@@ -92,10 +92,11 @@ const StudentList = ({ navigation }) => {
                     setFaculty(itemValue)
                   }
                 >
-                  <Picker.Item label="Bsc CSIT" value="Bsc CSIT" />
-                  <Picker.Item label="BCA" value="BCA" />
-                  <Picker.Item label="BBM" value="BBM" />
-                  <Picker.Item label="BBS" value="BBS" />
+                  <Picker.Item color="#888" label="Bsc CSIT" value="Bsc CSIT" />
+                  <Picker.Item color="#888" label="BCA" value="BCA" />
+                  <Picker.Item color="#888" label="BBM" value="BBM" />
+                  <Picker.Item color="#888" label="BBS" value="BBS" />
+                  <Picker.Item color="#888" label="MBS" value="MBS" />
                 </Picker>
               </View>
               <View style={{ flex: 1 }}>
@@ -110,6 +111,7 @@ const StudentList = ({ navigation }) => {
                   {Array.from({ length: 8 }, (i, index) => `${index + 1}`).map(
                     (semester) => (
                       <Picker.Item
+                      color="#888"
                         label={semester}
                         value={semester}
                         key={semester}
