@@ -89,7 +89,11 @@ const PersonDetail = ({ route, navigation }) => {
 
   return (
     <>
-      <Header title={`${data.username}'s  Profile`} showSidebar={false} />
+      <Header
+        title={`${data.username}'s  Profile`}
+        showSidebar={false}
+        navigation={navigation}
+      />
 
       <View style={styles.top}>
         <ImageBackground

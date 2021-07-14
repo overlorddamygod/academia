@@ -20,12 +20,14 @@ import { CustomTextInput, InputContainer } from "../components/CustomInput";
 import COLORS from "../styles/colors";
 
 import { showToast } from "../utils/error";
+import { useUserContext } from "../providers/user";
 const downloadLink = ({ navigation }) => {
   const { colors } = useTheme();
   const [option, setoption] = useState(false);
   const query = firestore().collection("materials");
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
+  const { user } = useUserContext();
 
   const {
     value: downloads,
@@ -33,7 +35,7 @@ const downloadLink = ({ navigation }) => {
     error,
     getMoreData,
     onRefresh,
-    setQuery,
+    setValue,
   } = useCollectionLazy(query, "createdAt", "desc", 10);
 
   const addMaterial = () => {
@@ -48,8 +50,7 @@ const downloadLink = ({ navigation }) => {
           createdAt: new Date().toUTCString(),
         })
         .then((res) => {
-          console.log("success");
-          // setQuery({name,link,...downloads});
+          setValue([{ id: res.id, name, link }, ...downloads]);
           setoption(false);
           showToast("Added Successfully !");
         })
@@ -61,15 +62,18 @@ const downloadLink = ({ navigation }) => {
   };
   return (
     <View>
-      <Header title="Materials" navigation={navigation} showBackMenu={false} />
+      <Header title="Materials" navigation={navigation} showSidebar={false} />
       <View style={{ marginTop: 10 }}>
-        <TouchableOpacity
-          style={{ ...globalStyles.btns, marginHorizontal: SIZE.width }}
-          onPress={() => setoption((prev) => !prev)}
-        >
-          <Ionicons name="add" size={25} color="white" />
-          <Text style={{ color: "#fff" }}>Add Material</Text>
-        </TouchableOpacity>
+        {user.admin && (
+          <TouchableOpacity
+            style={{ ...globalStyles.btns, marginHorizontal: SIZE.width }}
+            onPress={() => setoption((prev) => !prev)}
+          >
+            <Ionicons name="add" size={25} color="white" />
+            <Text style={{ color: "#fff" }}>Add Material</Text>
+          </TouchableOpacity>
+        )}
+
         <FlatList
           data={downloads}
           refreshing={loading}

@@ -31,6 +31,8 @@ const UpcomingEvent = () => {
       .where("startingDate", ">=", new Date())
   );
 
+  // console.log("USER", user);
+
   return (
     <View>
       <View style={{ flexDirection: "row" }}>
@@ -88,7 +90,7 @@ const UpcomingEvent = () => {
                   color: "lightgray",
                 }}
               >
-                {item.createdAt.toDate().toLocaleDateString()}{" "}
+                {item.startingDate.toDate().toLocaleDateString()}{" "}
               </Text>
               <TouchableOpacity
                 activeOpacity={0.5}

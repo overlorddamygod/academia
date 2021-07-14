@@ -71,7 +71,7 @@ const useCollectionLazy = (
     getInitialData();
   };
 
-  return { value, loading, error, getMoreData, onRefresh, setQuery };
+  return { value, loading, error, getMoreData, onRefresh, setQuery, setValue };
 };
 
 const docsAddId = (data) => data.docs.map((d) => ({ id: d.id, ...d.data() }));
