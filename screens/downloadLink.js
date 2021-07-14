@@ -24,9 +24,8 @@ const downloadLink = ({ navigation }) => {
   const { colors } = useTheme();
   const [option, setoption] = useState(false);
   const query = firestore().collection("materials");
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
-  
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
 
   const {
     value: downloads,
@@ -37,25 +36,29 @@ const downloadLink = ({ navigation }) => {
     setQuery,
   } = useCollectionLazy(query, "createdAt", "desc", 10);
 
-  const addMaterial = ()=>{
-    if(name.lenth||link.length <1){
-      showToast("Field cannot be empty")
+  const addMaterial = () => {
+    if (name.lenth || link.length < 1) {
+      showToast("Field cannot be empty");
+    } else {
+      firestore()
+        .collection("materials")
+        .add({
+          name,
+          link,
+          createdAt: new Date().toUTCString(),
+        })
+        .then((res) => {
+          console.log("success");
+          // setQuery({name,link,...downloads});
+          setoption(false);
+          showToast("Added Successfully !");
+        })
+        .catch((err) => {
+          showToast("Failed to Add Materials !");
+          setoption(false);
+        });
     }
-    else{
-    firestore().collection('materials').add({
-      name,
-      link,
-      createdAt:new Date().toUTCString(),
-    }).then(res=>{
-      console.log('success');
-      setQuery({name,link,...downloads});
-      setoption(false);
-      showToast("Added Successfully !")
-    }).catch(err =>{
-      showToast("Failed to Add Materials !")
-      setoption(false)
-    })
-  }}
+  };
   return (
     <View>
       <Header title="Materials" navigation={navigation} showBackMenu={false} />
@@ -68,7 +71,6 @@ const downloadLink = ({ navigation }) => {
           <Text style={{ color: "#fff" }}>Add Material</Text>
         </TouchableOpacity>
         <FlatList
-       
           data={downloads}
           refreshing={loading}
           onRefresh={onRefresh}
@@ -140,53 +142,53 @@ const downloadLink = ({ navigation }) => {
                   color: colors.text,
                 }}
               >
-                Add Materials</Text>
-                <View style={{marginTop:SIZE.height}}>
-                  <InputContainer label="Name of material">
-                    <CustomTextInput
-                      placeholder="name"
-                      onChangeText={(txt) => {
-                        setName(txt)
-                      }}
-                      value={name}
-                      
-                    />
-                  </InputContainer>
-                </View>
-                <View style={{}}>
-                  <InputContainer label="Drive Link">
-                    <CustomTextInput
-                      placeholder="add link"
-                      value={link}
-                      onChangeText={(txt) => {
-                        setLink(txt)
-                      }}
-                    />
-                  </InputContainer>
-                </View>
-                <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Button
-              label="Add Material"
-              backgroundColor="#6765c2"
-              style={{
-                marginVertical: SIZE.height * 0.45,
-                marginRight: SIZE.width * 0.5,
-              }}
-              onPress={addMaterial}
-            />
-            <Button
-              label="Cancel"
-              backgroundColor={COLORS.mainred}
-              style={{
-                marginVertical: SIZE.height * 0.45,
-              }}
-              onPress={() => {
-                setoption(false);
-                setName('');
-                setLink('');
-              }}
-            />
-          </View>
+                Add Materials
+              </Text>
+              <View style={{ marginTop: SIZE.height }}>
+                <InputContainer label="Name of material">
+                  <CustomTextInput
+                    placeholder="name"
+                    onChangeText={(txt) => {
+                      setName(txt);
+                    }}
+                    value={name}
+                  />
+                </InputContainer>
+              </View>
+              <View style={{}}>
+                <InputContainer label="Drive Link">
+                  <CustomTextInput
+                    placeholder="add link"
+                    value={link}
+                    onChangeText={(txt) => {
+                      setLink(txt);
+                    }}
+                  />
+                </InputContainer>
+              </View>
+              <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <Button
+                  label="Add Material"
+                  backgroundColor="#6765c2"
+                  style={{
+                    marginVertical: SIZE.height * 0.45,
+                    marginRight: SIZE.width * 0.5,
+                  }}
+                  onPress={addMaterial}
+                />
+                <Button
+                  label="Cancel"
+                  backgroundColor={COLORS.mainred}
+                  style={{
+                    marginVertical: SIZE.height * 0.45,
+                  }}
+                  onPress={() => {
+                    setoption(false);
+                    setName("");
+                    setLink("");
+                  }}
+                />
+              </View>
             </View>
           </View>
         </Modal>

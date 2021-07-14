@@ -11,6 +11,7 @@ import Home from "../screens/Home";
 import Materials from "../screens/Materials";
 import Notifications from "../screens/Notifications";
 import PersonDetail from "../screens/PersonDetail";
+import SendNotification from "../screens/SendNotification";
 import Settings from "../screens/Settings";
 import StudentList from "../screens/StudentList";
 import Subject from "../screens/Subject";
@@ -122,6 +123,10 @@ export function PersonDetailStackScreen() {
       }}
     >
       <PersonDetailStack.Screen name="PersonDetail" component={PersonDetail} />
+      <PersonDetailStack.Screen
+        name="SendNotification"
+        component={SendNotification}
+      />
     </PersonDetailStack.Navigator>
   );
 }

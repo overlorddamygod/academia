@@ -92,7 +92,14 @@ const TeacherList = ({ navigation }) => {
           renderItem={({ item }) => (
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate("PersonDetail")}
+              onPress={() =>
+                navigation.navigate("PersonDetail", {
+                  screen: "PersonDetail",
+                  params: {
+                    data: item,
+                  },
+                })
+              }
             >
               <View style={{ flex: 1 }}>
                 <PeopleCard data={item} key={item.id} navigation={navigation} />

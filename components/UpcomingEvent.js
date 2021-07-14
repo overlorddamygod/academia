@@ -9,20 +9,34 @@ import {
   View,
 } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
+import { useCollection } from "../hooks/firestore";
+import firestore from "@react-native-firebase/firestore";
+import { useUserContext } from "../providers/user";
 
 const UpcomingEvent = () => {
   const { colors } = useTheme();
-  const [events, setEvents] = useState([
-    { name: "App Event", date: "May 12" },
-    { name: "Sports Event", date: "May 24" },
-    { name: "Dancer Event", date: "June 3" },
-  ]);
+
+  const { user } = useUserContext();
+
+  const to = ["All", user.title];
+  if (user.title == "Student") {
+    to.push(...[user.faculty, `${user.faculty} ${user.semester}`]);
+  }
+
+  const [events] = useCollection(
+    firestore()
+      .collection("announcementTemp1")
+      .where("addToCalendar", "==", true)
+      .where("to", "array-contains-any", to)
+      .where("startingDate", ">=", new Date())
+  );
+
   return (
     <View>
       <View style={{ flexDirection: "row" }}>
         <View style={{ ...globalStyles.card, backgroundColor: colors.card }}>
           <Text style={{ color: colors.text, fontSize: 16 }}>
-            Upcoming Event
+            Upcoming Events
           </Text>
         </View>
 
@@ -32,10 +46,22 @@ const UpcomingEvent = () => {
       </View>
       <View style={{ width: "100%", padding: SIZE.width * 0.7 }}>
         <FlatList
+          ListEmptyComponent={() => (
+            <View
+              style={{
+                borderWidth: 2,
+                width: SIZE.screenWidth * 0.9,
+              }}
+            >
+              <Text style={{ color: colors.text, textAlign: "center" }}>
+                No upcoming events
+              </Text>
+            </View>
+          )}
           horizontal={true}
           data={events}
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.date}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View
               style={{
@@ -45,8 +71,14 @@ const UpcomingEvent = () => {
               }}
             >
               <Ionicons name="american-football" size={34} color="white" />
-              <Text style={{ ...globalStyles.txt, fontSize: 20 }}>
-                {item.name}{" "}
+              <Text
+                style={{
+                  ...globalStyles.txt,
+                  fontSize: 20,
+                  // height: SIZE.he,
+                }}
+              >
+                {item.title}{" "}
               </Text>
               <Text
                 style={{
@@ -56,7 +88,7 @@ const UpcomingEvent = () => {
                   color: "lightgray",
                 }}
               >
-                {item.date}{" "}
+                {item.createdAt.toDate().toLocaleDateString()}{" "}
               </Text>
               <TouchableOpacity
                 activeOpacity={0.5}

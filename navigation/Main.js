@@ -25,10 +25,7 @@ function Main() {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
-      <MainStack.Screen
-        name="AddAnnouncement"
-        component={AddAnnouncement}
-      />
+      <MainStack.Screen name="AddAnnouncement" component={AddAnnouncement} />
       <MainStack.Screen
         name="Teacher"
         component={TeacherStackScreen}

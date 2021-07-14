@@ -159,16 +159,18 @@ const CalendarScreen = ({ navigation }) => {
             >
               Events
             </Text>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={{ borderWidth: 1, borderRadius: 5 }}
-              onPress={() => {
-                navigation.navigate("AddAnnouncement");
-                console.log("Add Event");
-              }}
-            >
-              <Feather name="plus" color={colors.text} size={35}></Feather>
-            </TouchableOpacity>
+            {user.admin && (
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={{ borderWidth: 1, borderRadius: 5 }}
+                onPress={() => {
+                  navigation.navigate("AddAnnouncement");
+                  console.log("Add Event");
+                }}
+              >
+                <Feather name="plus" color={colors.text} size={35}></Feather>
+              </TouchableOpacity>
+            )}
           </View>
 
           <FlatList

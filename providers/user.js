@@ -5,21 +5,11 @@ import database from "@react-native-firebase/database";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { showToast } from "../utils/error";
-import { getFcmToken } from "../notifications";
+import { getFcmToken, requestUserPermission } from "../notifications";
 
 const initialUser = {
   username: null,
   email: null,
-};
-
-const ROLE = {
-  NORMAL: 1,
-  ADMIN: 2,
-};
-
-const TITLE = {
-  STUDENT: "Student",
-  TEACHER: "Teacher",
 };
 
 const UserContext = createContext(initialUser);
@@ -42,10 +32,10 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
         const userData = userSnapshot.data();
 
         // if (requestUserPermission()) {
-        //   const token = await getFcmToken()
+        //   const token = await getFcmToken();
         //   userSnapshot.docs[0].ref.update({
-        //     token
-        //   })
+        //     token,
+        //   });
         // }
 
         setUser({ ...user, ...userData });
@@ -69,6 +59,14 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
         //   .catch((error) => {
         //     console.log(error);
         //   });
+        if (requestUserPermission()) {
+          const token = await getFcmToken();
+
+          database()
+            .ref(`/userDetails/${loggedUser.uid}/tokens`)
+            .child(token)
+            .set(true);
+        }
 
         // Change online status
         const onlineStatusRef = database().ref(`/status/${loggedUser.uid}`);
@@ -145,13 +143,19 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
   const logout = async () => {
     try {
+      if (requestUserPermission()) {
+        const token = await getFcmToken();
+
+        database()
+          .ref(`/userDetails/${auth().currentUser.uid}/tokens`)
+          .child(token)
+          .remove();
+      }
       messaging().deleteToken();
-      const token = await getFcmToken();
+      // const token = await getFcmToken();
 
       messaging().subscribeToTopic("All");
-      await firestore().collection("user").doc(user.id).update({
-        token: null,
-      });
+
       auth().signOut();
       GoogleSignin.signOut();
     } catch (err) {

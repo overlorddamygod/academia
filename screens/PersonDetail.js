@@ -79,9 +79,17 @@ const PersonDetail = ({ route, navigation }) => {
         });
       });
   };
+
+  const sendPersonalNotification = () => {
+    navigation.navigate("SendNotification", {
+      id: data.id,
+      username: data.username,
+    });
+  };
+
   return (
     <>
-      <Header title={`${data.username}'s  Profile`} navigation={navigation} />
+      <Header title={`${data.username}'s  Profile`} showSidebar={false} />
 
       <View style={styles.top}>
         <ImageBackground
@@ -138,6 +146,18 @@ const PersonDetail = ({ route, navigation }) => {
               <TouchableOpacity style={styles.msgbtn}>
                 <AntDesign name="user" size={22} color={colors.text} />
               </TouchableOpacity>
+              {user.admin && (
+                <TouchableOpacity
+                  style={styles.msgbtn}
+                  onPress={sendPersonalNotification}
+                >
+                  <AntDesign
+                    name="notification"
+                    size={22}
+                    color={colors.text}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
             <View style={{ padding: 20 }}>
               <TouchableOpacity activeOpacity={0.6} style={styles.msgbtn}>
@@ -178,7 +198,6 @@ const PersonDetail = ({ route, navigation }) => {
                 marginTop: 40,
               }}
             >
-              
               {!!data.facebook_link && (
                 <Icons
                   icon="facebook"
