@@ -10,7 +10,9 @@ import Gallery from "../screens/Gallery";
 import Home from "../screens/Home";
 import Materials from "../screens/Materials";
 import Notifications from "../screens/Notifications";
+import Onboard from "../screens/Onboarding";
 import PersonDetail from "../screens/PersonDetail";
+import SendNotification from "../screens/SendNotification";
 import Settings from "../screens/Settings";
 import StudentList from "../screens/StudentList";
 import Subject from "../screens/Subject";
@@ -33,7 +35,7 @@ const VideoStack = createStackNavigator();
 const EditProfileStack = createStackNavigator();
 const AboutCollegeStack = createStackNavigator();
 const DownloadStack = createStackNavigator();
-
+const OnboardStack = createStackNavigator();
 export function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
@@ -122,6 +124,10 @@ export function PersonDetailStackScreen() {
       }}
     >
       <PersonDetailStack.Screen name="PersonDetail" component={PersonDetail} />
+      <PersonDetailStack.Screen
+        name="SendNotification"
+        component={SendNotification}
+      />
     </PersonDetailStack.Navigator>
   );
 }
@@ -228,5 +234,16 @@ export function DownloadStackScreen() {
     >
       <DownloadStack.Screen name="Downloads" component={downloadLink} />
     </DownloadStack.Navigator>
+  );
+}
+export function OnboardStackScreen() {
+  return (
+    <OnboardStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <OnboardStack.Screen name="Onboard" component={Onboard} />
+    </OnboardStack.Navigator>
   );
 }

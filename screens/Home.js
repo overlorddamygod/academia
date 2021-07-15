@@ -11,8 +11,9 @@ import UpcomingEvent from "../components/UpcomingEvent";
 import { images } from "../styles/colors";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { QuickInfo } from "./AboutCollege";
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-
+import GestureRecognizer, {
+  swipeDirections,
+} from "react-native-swipe-gestures";
 
 const Home = ({ navigation }) => {
   const { colors } = useTheme();
@@ -76,13 +77,20 @@ const Home = ({ navigation }) => {
           </View>
 
           <View>
-            <UpcomingEvent />
+            <UpcomingEvent navigation={navigation} />
           </View>
 
           <View style={{ flex: 1 }}>
             <HomeNotice navigation={navigation} />
           </View>
-          <View style={{flex:1,marginBottom:20,justifyContent:'center',alignItems:'center'}}>
+          <View
+            style={{
+              flex: 1,
+              marginBottom: 20,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <QuickInfo />
           </View>
         </ScrollView>

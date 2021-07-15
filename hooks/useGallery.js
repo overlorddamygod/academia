@@ -14,6 +14,7 @@ const useGallery = (setData, setAllData) => {
       setAllData([]);
       res.items.forEach((itemsRef) => {
         itemsRef.getDownloadURL().then((downloadUrl) => {
+          console.log(downloadUrl);
           setAllData((prev) => [...prev, downloadUrl]);
           setLoading(false);
           setRefreshing(false);
@@ -21,7 +22,20 @@ const useGallery = (setData, setAllData) => {
       });
     });
   };
-
+  // const fetchRandom = (name) => {
+  //   const ref = storage().ref(`${name}`);
+  //   ref.list().then((res) => {
+  //     setAllData([]);
+  //     res.items.forEach((itemsRef) => {
+  //       itemsRef.getDownloadURL().then((downloadUrl) => {
+  //         console.log(downloadUrl);
+  //         setAllData((prev) => [...prev, downloadUrl]);
+  //         setLoading(false);
+  //         setRefreshing(false);
+  //       });
+  //     });
+  //   });
+  // };
   const uploadData = async (dataHead, data) => {
     const { uri } = data;
     const filename = `${dataHead}/` + uri.substring(uri.lastIndexOf("/") + 1);

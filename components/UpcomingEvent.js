@@ -1,41 +1,100 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
+import { useCollection } from "../hooks/firestore";
+import firestore from "@react-native-firebase/firestore";
+import { useUserContext } from "../providers/user";
 
-const UpcomingEvent = () => {
+
+const route = [
+  {name:'Find lists of subjects of your course.', screen:'Materials',btnName:"Courses"},
+  {name:'Find Materials for your learning', screen:'Downloads',btnName:"Materials"},
+  {name:'Check the Calendar for Upcoming news', screen:'Calendar',btnName:"Calendar"},
+  {name:'Learn More about Academia', screen:'AboutCollege',btnName:"About"},
+  {name:'Customize your Settings', screen:'Settings',btnName:"Settings"},
+]
+
+
+
+const UpcomingEvent = ({ navigation }) => {
+  const [routes, setRoutes] = useState(route);
+  const [randomRoute, setRandomRoute] = useState('');
   const { colors } = useTheme();
-  const [events, setEvents] = useState([
-    { name: "App Event", date: "May 12" },
-    { name: "Sports Event", date: "May 24" },
-    { name: "Dancer Event", date: "June 3" },
-  ]);
+  const { user } = useUserContext();
+
+  const to = ["All", user.title];
+  if (user.title == "Student") {
+    to.push(...[user.faculty, `${user.faculty} ${user.semester}`]);
+  }
+
+  const [events] = useCollection(
+    firestore()
+      .collection("announcementTemp1")
+      .where("addToCalendar", "==", true)
+      .where("to", "array-contains-any", to)
+      .where("startingDate", ">=", new Date())
+  );
+
+  useEffect(()=>{
+   setRandomRoute(routes[Math.floor(Math.random()*routes.length)])
+  },[])
+  
+  
+
   return (
     <View>
+         <View
+        style={{
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop:SIZE.width,
+        }}
+      >
+        <InfoCard randomRoute ={randomRoute} navigation={navigation}/>
+      </View>
       <View style={{ flexDirection: "row" }}>
         <View style={{ ...globalStyles.card, backgroundColor: colors.card }}>
           <Text style={{ color: colors.text, fontSize: 16 }}>
-            Upcoming Event
+            Upcoming Events
           </Text>
         </View>
 
-        <View style={{ ...globalStyles.card, backgroundColor: colors.card }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Announcements", { screen: "Announcements" });
+          }}
+          style={{ ...globalStyles.card, backgroundColor: colors.card }}
+        >
           <Text style={{ color: colors.text, fontSize: 16 }}>Show All</Text>
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={{ width: "100%", padding: SIZE.width * 0.7 }}>
         <FlatList
+          ListEmptyComponent={() => (
+            <View
+              style={{
+                width: SIZE.screenWidth * 0.9,
+              }}
+            >
+              <Text style={{ color: colors.text, textAlign: "center" }}>
+                No upcoming events
+              </Text>
+            </View>
+          )}
           horizontal={true}
           data={events}
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.date}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View
               style={{
@@ -45,8 +104,14 @@ const UpcomingEvent = () => {
               }}
             >
               <Ionicons name="american-football" size={34} color="white" />
-              <Text style={{ ...globalStyles.txt, fontSize: 20 }}>
-                {item.name}{" "}
+              <Text
+                style={{
+                  ...globalStyles.txt,
+                  fontSize: 20,
+                  // height: SIZE.he,
+                }}
+              >
+                {item.title}
               </Text>
               <Text
                 style={{
@@ -56,7 +121,7 @@ const UpcomingEvent = () => {
                   color: "lightgray",
                 }}
               >
-                {item.date}{" "}
+                {item.startingDate.toDate().toLocaleDateString()}
               </Text>
               <TouchableOpacity
                 activeOpacity={0.5}
@@ -78,6 +143,55 @@ const UpcomingEvent = () => {
           )}
         />
       </View>
+   
+    </View>
+  );
+};
+
+const InfoCard = ({randomRoute,navigation}) => {
+ const {name,screen,btnName} = randomRoute;
+  const { colors } = useTheme();
+  return (
+    <View style={{ ...styles.infocard, backgroundColor: colors.card }}>
+      <View style={{ padding: SIZE.width }}>
+        <Text
+          style={{
+            color: colors.text,
+            fontSize: SIZE.width * 1.3,
+            fontWeight: "bold",
+          }}
+        >
+          Welcome to
+        </Text>
+        <Text style={{ color: colors.text, fontSize: SIZE.width }}>
+          Academia,
+        </Text>
+        <Text
+          style={{
+            marginTop: SIZE.width*0.3,
+             color: colors.secondText,
+            fontSize: SIZE.width * 0.7,
+            width:'80%'
+          }}
+        >
+         {name}
+        </Text>
+        <TouchableOpacity
+        onPress={()=>{
+          navigation.navigate(`${screen}`,
+          {
+            screen:`${screen}`
+          })
+        }}
+        style={{...globalStyles.btns,
+          justifyContent:'space-around',
+          marginTop:6,
+          }}>
+          <Text style={{ color: "#fff" }}>{btnName}</Text>
+          <AntDesign name="arrowright" size={23} color="white" />
+        </TouchableOpacity>
+      </View>
+      <Image source={require("../images/future.png")} style={styles.image} />
     </View>
   );
 };
@@ -92,5 +206,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
+
+  },
+  infocard: {
+    // marginHorizontal: 6,
+    height: SIZE.screenHeight * 0.23,
+    width: SIZE.screenWidth * 0.9,
+    backgroundColor: "#f7f7f7",
+    borderRadius: SIZE.width,
+    flexDirection: "row",
+    paddingHorizontal:SIZE.width*0.8,
+    justifyContent: "space-around",
+  },
+  image: {
+    height: "100%",
+    width: SIZE.screenHeight * 0.2,
+    resizeMode: "cover",
+    zIndex: 2,
+    
   },
 });

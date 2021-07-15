@@ -79,9 +79,21 @@ const PersonDetail = ({ route, navigation }) => {
         });
       });
   };
+
+  const sendPersonalNotification = () => {
+    navigation.navigate("SendNotification", {
+      id: data.id,
+      username: data.username,
+    });
+  };
+
   return (
     <>
-      <Header title={`${data.username}'s  Profile`} navigation={navigation} />
+      <Header
+        title={`${data.username}'s  Profile`}
+        showSidebar={false}
+        navigation={navigation}
+      />
 
       <View style={styles.top}>
         <ImageBackground
@@ -97,63 +109,103 @@ const PersonDetail = ({ route, navigation }) => {
         </ImageBackground>
       </View>
       <View style={styles.bg}>
-        <View
-          style={{
-            position: "absolute",
-            top: 10,
-            left: SIZE.screenWidth * 0.4,
-          }}
-        >
+        <View style={{ marginTop: SIZE.height }}>
           <Text style={{ ...styles.name, color: colors.text }}>
             {data.username}
           </Text>
-        </View>
-        <View style={{ marginTop: SIZE.height }}>
-          <Text style={{ fontSize: 16, color: colors.text }}>
+          {data.title === "Student" && (
+            <Text
+              style={{
+                textAlign: "center",
+                lineHeight: 20,
+                fontWeight: "bold",
+                fontSize: 16,
+                color: colors.text,
+              }}
+            >
+              {data.faculty}
+            </Text>
+          )}
+          <Text
+            style={{
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: 16,
+              color: colors.text,
+            }}
+          >
             Semester : {data.semester}
           </Text>
-          <Text style={{ lineHeight: 20, fontSize: 16, color: colors.text }}>
-            Email : {data.email}
+
+          <Text
+            style={{
+              textAlign: "center",
+              lineHeight: 20,
+              fontWeight:'bold', 
+              fontSize: 18,
+              color: colors.text
+            }}
+          >
+            " {data.bio} "
           </Text>
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Animatable.View animation="fadeInUp">
             <View
               style={{
-                marginTop: 20,
+                marginTop: SIZE.width*0.6,
                 marginBottom: 10,
                 justifyContent: "center",
                 alignItems: "center",
                 flexDirection: "row",
               }}
             >
-              <TouchableOpacity style={styles.msgbtn} onPress={startChat}>
-                <Text style={{ color: colors.text, fontSize: 16 }}>
+              <TouchableOpacity 
+              activeOpacity={0.6}
+              style={{...styles.msgbtn,}} onPress={startChat}>
+                <Text
+                  style={{ color: "#7f8ee3", fontWeight: "bold", fontSize: 16 }}
+                >
                   Message
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.msgbtn}>
-                <AntDesign name="home" size={22} color={colors.text} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.msgbtn}>
-                <AntDesign name="user" size={22} color={colors.text} />
-              </TouchableOpacity>
+              {user.admin && (
+                <TouchableOpacity
+                  style={{...styles.msgbtn,backgroundColor:'#7f8ee3'}}
+                  onPress={sendPersonalNotification}
+                >
+                  <AntDesign
+                    name="notification"
+                    size={22}
+                    color="white"
+                  />
+                </TouchableOpacity>
+              )}
             </View>
-            <View style={{ padding: 20 }}>
-              <TouchableOpacity activeOpacity={0.6} style={styles.msgbtn}>
-                <Text style={{ color: colors.text, fontSize: 16 }}>
-                  See 3rd Semester Syllabus
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+
+            {data.title === "Student" && (
+              <View style={{ padding: 20 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Materials", { screen: "Materials" });
+                  }}
+                  activeOpacity={0.6}
+                  style={{ ...styles.msgbtn, borderColor: "#999" }}
+                >
+                  <Text style={{ color: colors.text, fontSize: 16 }}>
+                    SEE {data.faculty} COURSE
+                  </Text>
+                </TouchableOpacity>
+                {/* <TouchableOpacity
                 activeOpacity={0.8}
                 style={{ ...styles.msgbtn, backgroundColor: "#757BBD" }}
               >
                 <Text style={{ color: "white", fontSize: 16 }}>
                   See 3rd Semester Course
                 </Text>
-              </TouchableOpacity>
-            </View>
+              </TouchableOpacity> */}
+              </View>
+            )}
           </Animatable.View>
           <Animatable.View animation="bounceIn" delay={200}>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -178,7 +230,6 @@ const PersonDetail = ({ route, navigation }) => {
                 marginTop: 40,
               }}
             >
-              
               {!!data.facebook_link && (
                 <Icons
                   icon="facebook"
@@ -211,6 +262,9 @@ const styles = StyleSheet.create({
     height: "100%",
     flex: 1,
     padding: 20,
+    borderRadius:70,
+    
+ 
   },
   top: {
     // backgroundColor: "#757BBD",
@@ -219,24 +273,26 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     position: "relative",
     zIndex: 2,
+    
   },
 
   image: {
-    height: 100,
-    width: 100,
-    borderRadius: 50,
+    height: SIZE.screenHeight * 0.15,
+    width: SIZE.screenHeight * 0.15,
+    borderRadius: 59,
     resizeMode: "cover",
     position: "absolute",
-    top: 150,
-    left: 20,
+    top: SIZE.screenHeight * 0.2,
+    left: SIZE.screenWidth * 0.34,
     zIndex: 2,
     borderWidth: 4,
     borderColor: "#00000078",
   },
   name: {
-    fontSize: 22,
+    fontSize: 27,
     color: "#222",
-    fontWeight: "900",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   cover: {
     flex: 1,
@@ -244,14 +300,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   msgbtn: {
-    borderColor: "#999",
-    borderWidth: 1,
+    borderColor: "#6074e6",
+    borderWidth: 1.4,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 4,
+    borderRadius: SIZE.width * 1.3,
     marginHorizontal: 3,
     height: 40,
-    padding: 10,
+    padding: SIZE.width * 1.2,
     marginTop: 5,
   },
 });

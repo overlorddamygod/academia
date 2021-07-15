@@ -13,6 +13,7 @@ import {
   HomeStackScreen,
   ModalStackScreen,
   NotificationsStackScreen,
+  OnboardStackScreen,
 } from "./Stack";
 
 const Tabs = createBottomTabNavigator();
@@ -38,6 +39,7 @@ const BottomTab = (props) => {
         <Tabs.Screen
           name="Home"
           component={HomeStackScreen}
+          
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={focused ? styles.middleIcon : null}>
@@ -53,6 +55,7 @@ const BottomTab = (props) => {
         <Tabs.Screen
           name="Chat"
           component={ChatStackScreen}
+          // component={OnboardStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={focused ? styles.middleIcon : null}>

@@ -6,10 +6,12 @@ export const faculties = [
     year: {
       firstYear: {
         firstHalf: {
+          
           sem: "First Semester",
           subject: [
             {
               name: "Introduction to Information Technology",
+              link:"https://doc-0o-a4-docs.googleusercontent.com/docs/securesc/fs0bsf9mekebqg7btaavf9bb8c2fe813/8r76c2lpo368056m38gjb50uph3k7q45/1626288000000/14476502095893654586/16131378343637947177/13K2cpEHaOYJkLdHN_TuCM5KUyPFsiqEQ?e=media&authuser=0&nonce=8f8q95cfib0cm&user=16131378343637947177&hash=md4cu9aqn0j2ho0brk20pmhgqf3ipu8t",
             },
             {
               name: "C Programming",
@@ -26,6 +28,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Second Semester",
           subject: [
             {
@@ -46,6 +49,7 @@ export const faculties = [
       },
       secondYear: {
         firstHalf: {
+          link:"s",
           sem: "Third Semester",
           subject: [
             {
@@ -64,6 +68,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Fourth Semester",
           subject: [
             {
@@ -86,6 +91,7 @@ export const faculties = [
       },
       ThirdYear: {
         firstHalf: {
+          link:"",
           sem: "Fifth Semester",
           subject: [
             {
@@ -111,6 +117,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Sixth Semester",
           subject: [
             {
@@ -154,6 +161,7 @@ export const faculties = [
       },
       FourthYear: {
         firstHalf: {
+          link:"",
           sem: "Seventh Semester",
           subject: [
             {
@@ -193,6 +201,7 @@ export const faculties = [
         },
 
         secondHalf: {
+          link:"",
           sem: "Eighth Semester",
           subject: [
             {
@@ -254,6 +263,7 @@ export const faculties = [
     year: {
       firstYear: {
         firstHalf: {
+          link:"",
           sem: "First Semeseter",
           subject: [
             {
@@ -274,6 +284,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Second Semester",
           subject: [
             {
@@ -294,6 +305,7 @@ export const faculties = [
       },
       secondYear: {
         firstHalf: {
+          link:"",
           sem: "Third Semester",
           subject: [
             {
@@ -314,6 +326,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Fourth Semester",
           subject: [
             {
@@ -335,6 +348,7 @@ export const faculties = [
       },
       ThirdYear: {
         firstHalf: {
+          link:"",
           sem: "Fifth Semester",
           subject: [
             {
@@ -370,6 +384,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Sixth Semester",
           subject: [
             {
@@ -392,6 +407,7 @@ export const faculties = [
       },
       FourthYear: {
         firstHalf: {
+          link:"",
           sem: "Seventh Semester",
           subject: [
             {
@@ -413,6 +429,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Eighth Semester",
           subject: [
             {
@@ -450,6 +467,7 @@ export const faculties = [
     year: {
       firstYear: {
         firstHalf: {
+          link:"",
           sem: "First Semester",
           subject: [
             {
@@ -470,6 +488,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Second Semester",
           subject: [
             {
@@ -492,6 +511,7 @@ export const faculties = [
       },
       secondYear: {
         firstHalf: {
+          link:"",
           sem: "Third Semester",
           subject: [
             {
@@ -512,6 +532,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Fourth Semester",
           subject: [
             {
@@ -534,6 +555,7 @@ export const faculties = [
       },
       ThirdYear: {
         firstHalf: {
+          link:"",
           sem: "Fifth Semester",
           subject: [
             {
@@ -554,6 +576,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Sixth Semester",
           subject: [
             {
@@ -576,6 +599,7 @@ export const faculties = [
       },
       FourthYear: {
         firstHalf: {
+          link:"",
           sem: "Seventh Semester",
           subject: [
             {
@@ -596,6 +620,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Eighth Semester",
           subject: [
             {
@@ -625,6 +650,7 @@ export const faculties = [
     year: {
       firstYear: {
         firstHalf: {
+          link:"",
           sem: "First Year",
           subject: [
             {
@@ -648,6 +674,7 @@ export const faculties = [
       },
       secondYear: {
         firstHalf: {
+          link:"",
           sem: "Second Year",
           subject: [
             {
@@ -671,6 +698,7 @@ export const faculties = [
       },
       ThirdYear: {
         firstHalf: {
+          link:"",
           sem: "Third Year",
           subject: [
             {
@@ -694,6 +722,7 @@ export const faculties = [
       },
       FourthYear: {
         firstHalf: {
+          link:"",
           sem: "Fourth Year",
           subject: [
             {
@@ -727,6 +756,7 @@ export const faculties = [
     year: {
       firstYear: {
         firstHalf: {
+          link:"",
           sem: "First Semester",
           subject: [
             {
@@ -747,6 +777,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Second Semester",
           subject: [
             {
@@ -769,6 +800,7 @@ export const faculties = [
       },
       secondYear: {
         firstHalf: {
+          link:"",
           sem: "Third Semester",
           subject: [
             {
@@ -810,6 +842,7 @@ export const faculties = [
           ],
         },
         secondHalf: {
+          link:"",
           sem: "Fourth Semester",
           subject: [
             {

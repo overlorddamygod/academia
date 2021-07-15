@@ -39,7 +39,12 @@ const ForgotPassword = ({ navigation, route: { params } }) => {
       <View style={{ flex: 1, backgroundColor: COLORS.main }}>
         <View style={authStyles.upper}>
           <View style={{ alignItems: "center" }}>
-            <Text style={authStyles.maintext}>Academia </Text>
+          <View style={{flexDirection:'row'}}>
+              <Image source={require('../images/logo.png')}
+            style={{height:SIZE.screenWidth*0.1,width:SIZE.screenWidth*0.1}}
+            />
+              <Text style={{...authStyles.maintext,alignSelf:'flex-end'}}>cademia </Text>
+              </View>
             <Text style={authStyles.maintext}>International College</Text>
             <View style={authStyles.line}></View>
           </View>
@@ -57,6 +62,7 @@ const ForgotPassword = ({ navigation, route: { params } }) => {
               style={authStyles.input}
               onChangeText={setEmail}
               value={email}
+              placeholderTextColor="#666"
             />
           </View>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -64,7 +70,7 @@ const ForgotPassword = ({ navigation, route: { params } }) => {
               {loading ? (
                 <ActivityIndicator color="white" />
               ) : (
-                <Text style={authStyles.text}>Submit</Text>
+                <Text style={authStyles.text}>Send New  </Text>
               )}
             </TouchableOpacity>
           </View>

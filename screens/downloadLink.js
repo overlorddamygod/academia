@@ -7,26 +7,28 @@ import {
   Linking,
   Modal,
   StyleSheet,
+  Alert,
 } from "react-native";
-import { KeyboardAwareScrollView, Button } from "react-native-ui-lib";
+import { Button } from "react-native-ui-lib";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import firestore from "@react-native-firebase/firestore";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons ,AntDesign} from "@expo/vector-icons";
 import Header from "../components/Header";
 import { useTheme } from "@react-navigation/native";
 import { useCollectionLazy } from "../hooks/firestore";
-import { color } from "react-native-reanimated";
+
 import { CustomTextInput, InputContainer } from "../components/CustomInput";
 import COLORS from "../styles/colors";
 
 import { showToast } from "../utils/error";
+import { useUserContext } from "../providers/user";
 const downloadLink = ({ navigation }) => {
   const { colors } = useTheme();
   const [option, setoption] = useState(false);
   const query = firestore().collection("materials");
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
-  
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+  const { user } = useUserContext();
 
   const {
     value: downloads,
@@ -34,41 +36,66 @@ const downloadLink = ({ navigation }) => {
     error,
     getMoreData,
     onRefresh,
-    setQuery,
+    setValue,
   } = useCollectionLazy(query, "createdAt", "desc", 10);
 
-  const addMaterial = ()=>{
-    if(name.lenth||link.length <1){
-      showToast("Field cannot be empty")
+  function isURL(str) {
+    var res = str.match(
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+    );
+    return res !== null;
+  }
+  const addMaterial = () => {
+    if (!name || !link) {
+      showToast("Field cannot be empty");
+    } else if (!isURL(link)) {
+      showToast("Not valid URL");
+    } else {
+      firestore()
+        .collection("materials")
+        .add({
+          name,
+          link,
+          createdAt: new Date().toUTCString(),
+        })
+        .then((res) => {
+          setValue([{ id: res.id, name, link }, ...downloads]);
+          setoption(false);
+          setName("");
+          setLink("");
+          showToast("Added Successfully !");
+        })
+        .catch((err) => {
+          showToast("Failed to Add Materials !");
+          setoption(false);
+        });
     }
-    else{
-    firestore().collection('materials').add({
-      name,
-      link,
-      createdAt:new Date().toUTCString(),
-    }).then(res=>{
-      console.log('success');
-      setQuery({name,link,...downloads});
-      setoption(false);
-      showToast("Added Successfully !")
-    }).catch(err =>{
-      showToast("Failed to Add Materials !")
-      setoption(false)
-    })
-  }}
+  };
+  const deleteMaterial = async (id) => {
+    try {
+      firestore().collection("materials").doc(id).delete();
+      showToast("Material Deleted !");
+      setValue((prev) => prev.filter((a) => a.id !== id));
+    } catch (err) {
+      console.error(err);
+      showToast("Something went wrong !");
+    }
+  };
   return (
     <View>
-      <Header title="Materials" navigation={navigation} showBackMenu={false} />
+      <Header title="Materials" navigation={navigation} showSidebar={false} />
       <View style={{ marginTop: 10 }}>
-        <TouchableOpacity
-          style={{ ...globalStyles.btns, marginHorizontal: SIZE.width }}
-          onPress={() => setoption((prev) => !prev)}
-        >
-          <Ionicons name="add" size={25} color="white" />
-          <Text style={{ color: "#fff" }}>Add Material</Text>
-        </TouchableOpacity>
+        {user.admin && (
+          <TouchableOpacity
+            style={{ ...globalStyles.btns, marginHorizontal: SIZE.width }}
+            onPress={() => setoption((prev) => !prev)}
+          >
+            <Ionicons name="add" size={25} color="white" />
+            <Text style={{ color: "#fff" }}>Add Material</Text>
+          </TouchableOpacity>
+        )}
+
         <FlatList
-       
           data={downloads}
           refreshing={loading}
           onRefresh={onRefresh}
@@ -85,37 +112,61 @@ const downloadLink = ({ navigation }) => {
           }}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => Linking.openURL(`${item.link}`)}>
-              <View
-                style={{
-                  marginHorizontal: 20,
-                  marginVertical: 10,
-                  backgroundColor: colors.card,
-                  borderRadius: 8,
-                  paddingHorizontal: SIZE.width,
-                  paddingVertical: SIZE.height * 0.2,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons name="download" size={40} color={colors.text} />
-                <View
-                  style={{ flex: 1, marginLeft: 20, justifyContent: "center" }}
-                >
-                  <Text
-                    style={{
-                      color: colors.text,
-                      fontWeight: "bold",
-                      fontSize: 20,
-                      marginVertical: 2,
-                      width: "99%",
-                    }}
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginVertical: 10,
+                backgroundColor: colors.card,
+                borderRadius: 8,
+                paddingHorizontal: SIZE.width,
+                paddingVertical: SIZE.height * 0.2,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity onPress={() =>  Linking.openURL(
+                 item.link.includes('https')?item.link :`https://${item.link}`
+          )}
                   >
-                    {item.name}
-                  </Text>
-                </View>
+                <AntDesign name="clouddownload" size={40} color={colors.text} />
+              </TouchableOpacity>
+              <View
+                style={{ flex: 1, marginLeft: 20, justifyContent: "center" }}
+              >
+                <Text
+                  style={{
+                    color: colors.text,
+                    fontWeight: "bold",
+                    fontSize: 20,
+                    marginVertical: 2,
+                    width: "99%",
+                  }}
+                >
+                  {item.name}
+                </Text>
               </View>
-            </TouchableOpacity>
+              {user.admin && (
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert(
+                      "Delete Material ",
+                      "Are you sure you want to delete this ?",
+                      [
+                        {
+                          text: "Cancel",
+                          onPress: () => console.log("Cancelled!"),
+                          style: "cancel",
+                        },
+                        { text: "OK", onPress: () => deleteMaterial(item.id) },
+                      ],
+                      { cancelable: true }
+                    );
+                  }}
+                >
+                  <Ionicons name="trash" size={30} color="#e35462" />
+                </TouchableOpacity>
+              )}
+            </View>
           )}
         />
         <Modal
@@ -140,53 +191,53 @@ const downloadLink = ({ navigation }) => {
                   color: colors.text,
                 }}
               >
-                Add Materials</Text>
-                <View style={{marginTop:SIZE.height}}>
-                  <InputContainer label="Name of material">
-                    <CustomTextInput
-                      placeholder="name"
-                      onChangeText={(txt) => {
-                        setName(txt)
-                      }}
-                      value={name}
-                      
-                    />
-                  </InputContainer>
-                </View>
-                <View style={{}}>
-                  <InputContainer label="Drive Link">
-                    <CustomTextInput
-                      placeholder="add link"
-                      value={link}
-                      onChangeText={(txt) => {
-                        setLink(txt)
-                      }}
-                    />
-                  </InputContainer>
-                </View>
-                <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Button
-              label="Add Material"
-              backgroundColor="#6765c2"
-              style={{
-                marginVertical: SIZE.height * 0.45,
-                marginRight: SIZE.width * 0.5,
-              }}
-              onPress={addMaterial}
-            />
-            <Button
-              label="Cancel"
-              backgroundColor={COLORS.mainred}
-              style={{
-                marginVertical: SIZE.height * 0.45,
-              }}
-              onPress={() => {
-                setoption(false);
-                setName('');
-                setLink('');
-              }}
-            />
-          </View>
+                Add Materials
+              </Text>
+              <View style={{ marginTop: SIZE.height }}>
+                <InputContainer label="Name of material">
+                  <CustomTextInput
+                    placeholder="name"
+                    onChangeText={(txt) => {
+                      setName(txt);
+                    }}
+                    value={name}
+                  />
+                </InputContainer>
+              </View>
+              <View style={{}}>
+                <InputContainer label="Drive Link">
+                  <CustomTextInput
+                    placeholder="add link"
+                    value={link}
+                    onChangeText={(txt) => {
+                      setLink(txt);
+                    }}
+                  />
+                </InputContainer>
+              </View>
+              <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <Button
+                  label="Add Material"
+                  backgroundColor="#6765c2"
+                  style={{
+                    marginVertical: SIZE.height * 0.45,
+                    marginRight: SIZE.width * 0.5,
+                  }}
+                  onPress={addMaterial}
+                />
+                <Button
+                  label="Cancel"
+                  backgroundColor={COLORS.mainred}
+                  style={{
+                    marginVertical: SIZE.height * 0.45,
+                  }}
+                  onPress={() => {
+                    setoption(false);
+                    setName("");
+                    setLink("");
+                  }}
+                />
+              </View>
             </View>
           </View>
         </Modal>
