@@ -43,7 +43,7 @@ export default function Materials({ navigation }) {
             Review Your course
           </Text>
         </View>
-        <View>
+        <View style={{ flex: 1 }}>
           <FlatList
             data={faculties}
             keyExtractor={(item) => item.id.toString()}
@@ -148,10 +148,10 @@ const FacultyExpanded = ({ data, navigation }) => {
         <Year year="1st" yearItem={data.year.firstYear} />
         <Year year="2nd" yearItem={data.year.secondYear} />
 
-        {data.year.ThirdYear && data.year.FourthYear && (
+        {data.year.thirdYear && data.year.fourthYear && (
           <>
-            <Year year="3rd" yearItem={data.year.ThirdYear} />
-            <Year year="4th" yearItem={data.year.FourthYear} />
+            <Year year="3rd" yearItem={data.year.thirdYear} />
+            <Year year="4th" yearItem={data.year.fourthYear} />
           </>
         )}
       </View>
