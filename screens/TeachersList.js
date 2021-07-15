@@ -35,11 +35,15 @@ const TeacherList = ({ navigation }) => {
   return (
     <>
       {/* {loading && <Text>Loading ...</Text>} */}
-      <Header title="Teacher List" navigation={navigation} />
+      <Header
+        title="Teacher List"
+        navigation={navigation}
+        showSidebar={false}
+      />
       <View style={{ flex: 1 }}>
         <View>
           <View
-            style={{ backgroundColor: colors.background, height: SIZE.height }}
+            style={{ backgroundColor: colors.mainblue, height: SIZE.height }}
           ></View>
           <View
             style={{

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import { globalStyles, SIZE } from "../styles/globalStyle";
+import { View, Text, FlatList } from "react-native";
+import { globalStyles } from "../styles/globalStyle";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { useCollectionLazy } from "../hooks/firestore";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
+import CustomCard from "../components/CustomCard";
 
 const dummyLists = [
   { notifications: "Sandeep Maharjan Messaged You .", date: "20-3-23" },
@@ -32,6 +33,7 @@ const Notifications = ({ navigation }) => {
     onRefresh,
     setQuery,
   } = useCollectionLazy(query, "createdAt", "desc", 10);
+
   return (
     <>
       <Header
@@ -40,7 +42,7 @@ const Notifications = ({ navigation }) => {
         showBackMenu={false}
       />
       <View>
-        <View style={{ marginTop: 10 }}>
+        <View>
           <FlatList
             refreshing={loading}
             onRefresh={onRefresh}
@@ -54,18 +56,7 @@ const Notifications = ({ navigation }) => {
             data={notifications}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <View
-                style={{
-                  marginHorizontal: 20,
-                  marginVertical: 10,
-                  backgroundColor: colors.card,
-                  borderRadius: 8,
-                  paddingHorizontal: SIZE.width,
-                  paddingVertical: SIZE.height * 0.2,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
+              <CustomCard>
                 <Ionicons
                   name="notifications-circle"
                   size={40}
@@ -101,7 +92,7 @@ const Notifications = ({ navigation }) => {
                     {item.createdAt.toDate().toDateString()}
                   </Text>
                 </View>
-              </View>
+              </CustomCard>
             )}
           />
         </View>
@@ -111,5 +102,3 @@ const Notifications = ({ navigation }) => {
 };
 
 export default Notifications;
-
-const styles = StyleSheet.create({});

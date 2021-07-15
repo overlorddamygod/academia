@@ -42,7 +42,7 @@ const DrawerTab = () => {
       dialogs: "#202336",
       midBox: "#edf0f5",
       searchDiv: "white",
-      secondText:"#666",
+      secondText: "#666",
     },
   };
 
@@ -62,8 +62,7 @@ const DrawerTab = () => {
       dialogs: "#191b2a",
       midBox: "#212538",
       searchDiv: "#39405c",
-      secondText:"lightgray",
-      
+      secondText: "lightgray",
     },
   };
 
@@ -93,7 +92,6 @@ const DrawerTab = () => {
           name="PersonDetail"
           component={PersonDetailStackScreen}
         />
-       
       </Drawer.Navigator>
     </NavigationContainer>
   );

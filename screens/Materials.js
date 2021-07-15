@@ -20,29 +20,7 @@ export default function Materials({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <Header title="Our Courses" navigation={navigation} showSidebar={false} />
-      <View style={{ flex: 1, padding: 20 }}>
-        <View>
-          <Text
-            style={{
-              fontSize: 30,
-              color: "#333",
-              fontWeight: "bold",
-              color: colors.text,
-            }}
-          >
-            Courses
-          </Text>
-          <Text
-            style={{
-              ...globalStyles.midText,
-              fontWeight: "bold",
-              lineHeight: 30,
-              color: colors.text,
-            }}
-          >
-            Review Your course
-          </Text>
-        </View>
+      <View style={{ flex: 1 }}>
         <View>
           <FlatList
             data={faculties}
@@ -52,10 +30,11 @@ export default function Materials({ navigation }) {
               <View
                 key={item.id}
                 style={{
-                  borderWidth: 1,
+                  // borderWidth: 1,
                   borderColor: colors.border,
                   borderRadius: 6,
-                  marginVertical: 5,
+                  borderBottomWidth: 1,
+                  // marginVertical: 5,
                 }}
               >
                 <FacultyExpanded
@@ -148,10 +127,10 @@ const FacultyExpanded = ({ data, navigation }) => {
         <Year year="1st" yearItem={data.year.firstYear} />
         <Year year="2nd" yearItem={data.year.secondYear} />
 
-        {data.year.ThirdYear && data.year.FourthYear && (
+        {data.year.thirdYear && data.year.fourthYear && (
           <>
-            <Year year="3rd" yearItem={data.year.ThirdYear} />
-            <Year year="4th" yearItem={data.year.FourthYear} />
+            <Year year="3rd" yearItem={data.year.thirdYear} />
+            <Year year="4th" yearItem={data.year.fourthYear} />
           </>
         )}
       </View>

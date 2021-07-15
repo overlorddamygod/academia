@@ -1,10 +1,19 @@
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, Text, TouchableOpacity, View ,PanResponder} from "react-native";
+import {
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  PanResponder,
+} from "react-native";
+import { color } from "react-native-reanimated";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import { globalStyles, SIZE } from "../styles/globalStyle";
+import CustomCard from "../components/CustomCard";
 
 const Chat = ({ navigation }) => {
   const { user } = useUserContext();
@@ -31,9 +40,7 @@ const Chat = ({ navigation }) => {
     return unsubscribe;
   }, []);
   return (
-    
-    <View  style={{ backgroundColor: colors.background, flex: 1 }} >
-     
+    <View style={{ backgroundColor: colors.background, flex: 1 }}>
       <Header
         showBackMenu={false}
         title="Message People"
@@ -51,56 +58,45 @@ const Chat = ({ navigation }) => {
         data={conversations}
         keyExtractor={(item) => item.docId}
         renderItem={({ item }) => (
-          <>   
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={{
-              backgroundColor: colors.card,
-              marginHorizontal: SIZE.width,
-              marginVertical: SIZE.height * 0.2,
-              paddingHorizontal: SIZE.width * 1,
-              paddingVertical: SIZE.height * 0.3,
-              borderRadius: 10,
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-            onPress={() => {
-              navigation.navigate("IndividualChat", {
-                id: item.docId,
-                name: getChatName(item, user.id),
-                conversation: item,
-              });
-            }}
-          >   
-        
-            <View>
-              <Image
-                source={{
-                  uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
-                }}
-                style={globalStyles.smallavatar}
-              />
-            </View>
-            <View style={{ marginLeft: SIZE.width }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: colors.text,
-                }}
-              >
-                {getChatName(item, user.id)}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: "grey",
-                }}
-              >
-                {item.lastMessage || "Start a conversation"}
-              </Text>
-            </View>
-          </TouchableOpacity></>
+          <>
+            <CustomCard
+              onPress={() => {
+                navigation.navigate("IndividualChat", {
+                  id: item.docId,
+                  name: getChatName(item, user.id),
+                  conversation: item,
+                });
+              }}
+            >
+              <View>
+                <Image
+                  source={{
+                    uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+                  }}
+                  style={globalStyles.smallavatar}
+                />
+              </View>
+              <View style={{ marginLeft: SIZE.width }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: colors.text,
+                  }}
+                >
+                  {getChatName(item, user.id)}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: "grey",
+                  }}
+                >
+                  {item.lastMessage || "Start a conversation"}
+                </Text>
+              </View>
+            </CustomCard>
+          </>
         )}
       />
     </View>
