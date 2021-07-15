@@ -16,7 +16,6 @@ import {
   GalleryStackScreen,
   HomeStackScreen,
   MaterialStackScreen,
-  OnboardStackScreen,
   PersonDetailStackScreen,
   SettingStackScreen,
   SubjectStackScreen,
@@ -31,11 +30,11 @@ const DrawerTab = () => {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: "#edeef2",
+      background: "#F0F1F2",
       card: "white",
       btn: "#583EFF",
       msgIcon: "black",
-      mainblue: "#6765c2",
+      mainblue: "#403b80",
       buttomtab: "#0E243F",
       border: "lightgray",
       upcoming: "#515a8a",
@@ -43,6 +42,7 @@ const DrawerTab = () => {
       dialogs: "#202336",
       midBox: "#edf0f5",
       searchDiv: "white",
+      secondText:"#666",
     },
   };
 
@@ -62,6 +62,7 @@ const DrawerTab = () => {
       dialogs: "#191b2a",
       midBox: "#212538",
       searchDiv: "#39405c",
+      secondText:"lightgray",
       
     },
   };

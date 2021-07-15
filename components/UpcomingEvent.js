@@ -1,21 +1,34 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { useCollection } from "../hooks/firestore";
 import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 
-const UpcomingEvent = ({navigation}) => {
-  const { colors } = useTheme();
 
+const route = [
+  {name:'Find lists of subjects of your course.', screen:'Materials',btnName:"Courses"},
+  {name:'Find Materials for your learning', screen:'Downloads',btnName:"Materials"},
+  {name:'Check the Calendar for Upcoming news', screen:'Calendar',btnName:"Calendar"},
+  {name:'Learn More about Academia', screen:'AboutCollege',btnName:"About"},
+  {name:'Customize your Settings', screen:'Settings',btnName:"Settings"},
+]
+
+
+
+const UpcomingEvent = ({ navigation }) => {
+  const [routes, setRoutes] = useState(route);
+  const [randomRoute, setRandomRoute] = useState('');
+  const { colors } = useTheme();
   const { user } = useUserContext();
 
   const to = ["All", user.title];
@@ -31,10 +44,24 @@ const UpcomingEvent = ({navigation}) => {
       .where("startingDate", ">=", new Date())
   );
 
-  // console.log("USER", user);
+  useEffect(()=>{
+   setRandomRoute(routes[Math.floor(Math.random()*routes.length)])
+  },[])
+  
+  
 
   return (
     <View>
+         <View
+        style={{
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop:SIZE.width,
+        }}
+      >
+        <InfoCard randomRoute ={randomRoute} navigation={navigation}/>
+      </View>
       <View style={{ flexDirection: "row" }}>
         <View style={{ ...globalStyles.card, backgroundColor: colors.card }}>
           <Text style={{ color: colors.text, fontSize: 16 }}>
@@ -42,9 +69,12 @@ const UpcomingEvent = ({navigation}) => {
           </Text>
         </View>
 
-        <TouchableOpacity 
-        onPress={()=>{navigation.navigate('Announcements',{screen:'Announcements'})}}
-        style={{ ...globalStyles.card, backgroundColor: colors.card }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Announcements", { screen: "Announcements" });
+          }}
+          style={{ ...globalStyles.card, backgroundColor: colors.card }}
+        >
           <Text style={{ color: colors.text, fontSize: 16 }}>Show All</Text>
         </TouchableOpacity>
       </View>
@@ -53,7 +83,6 @@ const UpcomingEvent = ({navigation}) => {
           ListEmptyComponent={() => (
             <View
               style={{
-                borderWidth: 2,
                 width: SIZE.screenWidth * 0.9,
               }}
             >
@@ -82,7 +111,7 @@ const UpcomingEvent = ({navigation}) => {
                   // height: SIZE.he,
                 }}
               >
-                {item.title}{" "}
+                {item.title}
               </Text>
               <Text
                 style={{
@@ -92,7 +121,7 @@ const UpcomingEvent = ({navigation}) => {
                   color: "lightgray",
                 }}
               >
-                {item.startingDate.toDate().toLocaleDateString()}{" "}
+                {item.startingDate.toDate().toLocaleDateString()}
               </Text>
               <TouchableOpacity
                 activeOpacity={0.5}
@@ -114,6 +143,55 @@ const UpcomingEvent = ({navigation}) => {
           )}
         />
       </View>
+   
+    </View>
+  );
+};
+
+const InfoCard = ({randomRoute,navigation}) => {
+ const {name,screen,btnName} = randomRoute;
+  const { colors } = useTheme();
+  return (
+    <View style={{ ...styles.infocard, backgroundColor: colors.card }}>
+      <View style={{ padding: SIZE.width }}>
+        <Text
+          style={{
+            color: colors.text,
+            fontSize: SIZE.width * 1.3,
+            fontWeight: "bold",
+          }}
+        >
+          Welcome to
+        </Text>
+        <Text style={{ color: colors.text, fontSize: SIZE.width }}>
+          Academia,
+        </Text>
+        <Text
+          style={{
+            marginTop: SIZE.width*0.3,
+             color: colors.secondText,
+            fontSize: SIZE.width * 0.7,
+            width:'80%'
+          }}
+        >
+         {name}
+        </Text>
+        <TouchableOpacity
+        onPress={()=>{
+          navigation.navigate(`${screen}`,
+          {
+            screen:`${screen}`
+          })
+        }}
+        style={{...globalStyles.btns,
+          justifyContent:'space-around',
+          marginTop:6,
+          }}>
+          <Text style={{ color: "#fff" }}>{btnName}</Text>
+          <AntDesign name="arrowright" size={23} color="white" />
+        </TouchableOpacity>
+      </View>
+      <Image source={require("../images/future.png")} style={styles.image} />
     </View>
   );
 };
@@ -128,5 +206,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
+
+  },
+  infocard: {
+    // marginHorizontal: 6,
+    height: SIZE.screenHeight * 0.23,
+    width: SIZE.screenWidth * 0.9,
+    backgroundColor: "#f7f7f7",
+    borderRadius: SIZE.width,
+    flexDirection: "row",
+    paddingHorizontal:SIZE.width*0.8,
+    justifyContent: "space-around",
+  },
+  image: {
+    height: "100%",
+    width: SIZE.screenHeight * 0.2,
+    resizeMode: "cover",
+    zIndex: 2,
+    
   },
 });

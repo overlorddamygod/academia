@@ -1,6 +1,7 @@
 import React from 'react'
 import Onboarding from 'react-native-onboarding-swiper';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { SIZE } from '../styles/globalStyle';
 
 
 
@@ -60,19 +61,25 @@ const Onboard = ({navigation}) => {
         pages={[
           {
             backgroundColor: '#6765c2',
-            image: <Image source={require('../images/logo.png')} />,
+            image: <Image source={require('../images/logo.png')}
+            style={{height:SIZE.screenWidth*0.4,width:SIZE.screenWidth*0.4}}
+            />,
             title: 'Academia International College',
             subtitle: 'Best Institute In The Valley',
           },
           {
             backgroundColor: '#6765c2',
-            image: <Image source={require('../images/logo.png')} />,
+            image: <Image source={require('../images/welcome.png')}
+            style={{height:SIZE.screenWidth*0.6,width:SIZE.screenWidth*0.6}}
+            />,
             title: 'Be Creative',
             subtitle: 'Share Your Knowledge With Others',
           },
           {
             backgroundColor: '#6765c2',
-            image: <Image source={require('../images/logo.png')} />,
+            image: <Image source={require('../images/future.png')}
+            style={{height:SIZE.screenWidth*0.6,width:SIZE.screenWidth*0.6}}
+            />,
             title: 'Show The Future',
             subtitle: "Ride With Us In This Journey",
           },

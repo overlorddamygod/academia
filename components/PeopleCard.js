@@ -95,10 +95,10 @@ const PeopleCard = ({ data, navigation }) => {
         >
           {data.username}
         </Text>
-        <Text style={{ ...globalStyles.midText, color: "#888" }}>
+        <Text style={{ ...globalStyles.midText, color:colors.secondText }}>
           {data.email}
         </Text>
-        <Text style={{ ...globalStyles.midText, color: "#888" }}>
+        <Text style={{ ...globalStyles.midText, color:colors.secondText }}>
           Semester : {data.semester}
         </Text>
         <TouchableOpacity
@@ -106,7 +106,7 @@ const PeopleCard = ({ data, navigation }) => {
           style={styles.msgBtn}
           onPress={startChat}
         >
-          <Text style={{ color: "white" }}>Message</Text>
+          <Text style={{ color: "white" }}>essage</Text>
         </TouchableOpacity>
       </View>
     </View>
