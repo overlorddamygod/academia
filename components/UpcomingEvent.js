@@ -14,20 +14,33 @@ import { useCollection } from "../hooks/firestore";
 import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
 
-
 const route = [
-  {name:'Find lists of subjects of your course.', screen:'Materials',btnName:"Courses"},
-  {name:'Find Materials for your learning', screen:'Downloads',btnName:"Materials"},
-  {name:'Check the Calendar for Upcoming news', screen:'Calendar',btnName:"Calendar"},
-  {name:'Learn More about Academia', screen:'AboutCollege',btnName:"About"},
-  {name:'Customize your Settings', screen:'Settings',btnName:"Settings"},
-]
-
-
+  {
+    name: "Find lists of subjects of your course.",
+    screen: "Materials",
+    btnName: "Courses",
+  },
+  {
+    name: "Find Materials for your learning",
+    screen: "Downloads",
+    btnName: "Materials",
+  },
+  {
+    name: "Check the Calendar for Upcoming news",
+    screen: "Calendar",
+    btnName: "Calendar",
+  },
+  {
+    name: "Learn More about Academia",
+    screen: "AboutCollege",
+    btnName: "About",
+  },
+  { name: "Customize your Settings", screen: "Settings", btnName: "Settings" },
+];
 
 const UpcomingEvent = ({ navigation }) => {
   const [routes, setRoutes] = useState(route);
-  const [randomRoute, setRandomRoute] = useState('');
+  const [randomRoute, setRandomRoute] = useState("");
   const { colors } = useTheme();
   const { user } = useUserContext();
 
@@ -44,26 +57,30 @@ const UpcomingEvent = ({ navigation }) => {
       .where("startingDate", ">=", new Date())
   );
 
-  useEffect(()=>{
-   setRandomRoute(routes[Math.floor(Math.random()*routes.length)])
-  },[])
-  
-  
+  useEffect(() => {
+    setRandomRoute(routes[Math.floor(Math.random() * routes.length)]);
+  }, []);
 
   return (
     <View>
-         <View
+      <View
         style={{
           width: "100%",
           alignItems: "center",
           justifyContent: "center",
-          marginTop:SIZE.width,
+          marginTop: SIZE.width,
         }}
       >
-        <InfoCard randomRoute ={randomRoute} navigation={navigation}/>
+        <InfoCard randomRoute={randomRoute} navigation={navigation} />
       </View>
       <View style={{ flexDirection: "row" }}>
-        <View style={{ ...globalStyles.card, backgroundColor: colors.card }}>
+        <View
+          style={{
+            ...globalStyles.card,
+            backgroundColor: colors.card,
+            ...{ marginRight: SIZE.width * 0.8 },
+          }}
+        >
           <Text style={{ color: colors.text, fontSize: 16 }}>
             Upcoming Events
           </Text>
@@ -83,7 +100,9 @@ const UpcomingEvent = ({ navigation }) => {
           ListEmptyComponent={() => (
             <View
               style={{
-                width: SIZE.screenWidth * 0.9,
+                width: SIZE.screenWidth * 0.8,
+                height: SIZE.height,
+                justifyContent: "center",
               }}
             >
               <Text style={{ color: colors.text, textAlign: "center" }}>
@@ -143,17 +162,22 @@ const UpcomingEvent = ({ navigation }) => {
           )}
         />
       </View>
-   
     </View>
   );
 };
 
-const InfoCard = ({randomRoute,navigation}) => {
- const {name,screen,btnName} = randomRoute;
+const InfoCard = ({ randomRoute, navigation }) => {
+  const { name, screen, btnName } = randomRoute;
   const { colors } = useTheme();
   return (
-    <View style={{ ...styles.infocard, backgroundColor: colors.card }}>
-      <View style={{ padding: SIZE.width }}>
+    <View
+      style={{
+        ...styles.infocard,
+        // paddingHorizontal: SIZE.width * 0.89,
+        paddingVertical: SIZE.height * 0.3,
+      }}
+    >
+      <View style={{ flex: 1 }}>
         <Text
           style={{
             color: colors.text,
@@ -168,25 +192,26 @@ const InfoCard = ({randomRoute,navigation}) => {
         </Text>
         <Text
           style={{
-            marginTop: SIZE.width*0.3,
-             color: colors.secondText,
+            marginTop: SIZE.width * 0.3,
+            color: colors.secondText,
             fontSize: SIZE.width * 0.7,
-            width:'80%'
+            width: "80%",
           }}
         >
-         {name}
+          {name}
         </Text>
         <TouchableOpacity
-        onPress={()=>{
-          navigation.navigate(`${screen}`,
-          {
-            screen:`${screen}`
-          })
-        }}
-        style={{...globalStyles.btns,
-          justifyContent:'space-around',
-          marginTop:6,
-          }}>
+          onPress={() => {
+            navigation.navigate(`${screen}`, {
+              screen: `${screen}`,
+            });
+          }}
+          style={{
+            ...globalStyles.btns,
+            justifyContent: "space-around",
+            marginTop: 6,
+          }}
+        >
           <Text style={{ color: "#fff" }}>{btnName}</Text>
           <AntDesign name="arrowright" size={23} color="white" />
         </TouchableOpacity>
@@ -199,23 +224,22 @@ const InfoCard = ({randomRoute,navigation}) => {
 export default UpcomingEvent;
 const styles = StyleSheet.create({
   events: {
-    // padding: SIZE.width * 0.7,
+    padding: SIZE.width * 0.7,
     marginHorizontal: 6,
     height: SIZE.screenHeight * 0.23,
     width: SIZE.screenWidth * 0.4,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
-
   },
   infocard: {
     // marginHorizontal: 6,
-    height: SIZE.screenHeight * 0.23,
-    width: SIZE.screenWidth * 0.9,
+    // height: SIZE.screenHeight * 0.23,
+    // width: SIZE.screenWidth * 0.9,
     backgroundColor: "#f7f7f7",
     borderRadius: SIZE.width,
     flexDirection: "row",
-    paddingHorizontal:SIZE.width*0.8,
+    paddingHorizontal: SIZE.width * 0.8,
     justifyContent: "space-around",
   },
   image: {
@@ -223,6 +247,5 @@ const styles = StyleSheet.create({
     width: SIZE.screenHeight * 0.2,
     resizeMode: "cover",
     zIndex: 2,
-    
   },
 });

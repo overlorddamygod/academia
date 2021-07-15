@@ -71,8 +71,8 @@ const globalStyles = StyleSheet.create({
   card: {
     borderRadius: 5,
     padding: SIZE.width * 0.5,
-    marginLeft: SIZE.width * 0.7,
-    marginTop: SIZE.width * 0.7,
+    // marginLeft: SIZE.width * 0.7,
+    marginVertical: SIZE.width * 0.7,
   },
   btns: {
     width: SIZE.screenWidth * 0.3,

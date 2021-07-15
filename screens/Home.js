@@ -58,7 +58,7 @@ const Home = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingHorizontal: SIZE.width }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View>
             <View
