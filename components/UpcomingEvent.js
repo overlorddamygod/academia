@@ -63,13 +63,8 @@ const UpcomingEvent = ({ navigation }) => {
   }, []);
 
   return (
-<<<<<<< HEAD
-    <View>
-      {/* <View
-=======
     <View style={{ marginVertical: SIZE.height * 0.3 }}>
       <View
->>>>>>> refs/remotes/origin/main
         style={{
           width: "100%",
           alignItems: "center",
@@ -139,13 +134,8 @@ const UpcomingEvent = ({ navigation }) => {
               <Text
                 style={{
                   ...globalStyles.txt,
-<<<<<<< HEAD
-                  fontSize: SIZE.width*1.2,
-                  textAlign:'center'
-=======
                   fontSize: 20,
                   textAlign: "center",
->>>>>>> refs/remotes/origin/main
                   // height: SIZE.he,
                 }}
               >
