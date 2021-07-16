@@ -7,6 +7,7 @@ import { useTheme } from "@react-navigation/native";
 import { useCollectionLazy } from "../hooks/firestore";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
+import CustomFlatList from "../components/CustomFlatList";
 
 const dummyLists = [
   { notifications: "Sandeep Maharjan Messaged You .", date: "20-3-23" },
@@ -41,16 +42,10 @@ const Notifications = ({ navigation }) => {
       />
       <View>
         <View style={{ marginTop: 10 }}>
-          <FlatList
+          <CustomFlatList
             refreshing={loading}
             onRefresh={onRefresh}
-            ListEmptyComponent={() => {
-              return (
-                <View style={{ alignItems: "center", marginTop: 50 }}>
-                  <Text style={{ color: colors.text }}>No notifications</Text>
-                </View>
-              );
-            }}
+            ListEmptyComponentText={"No notifications"}
             data={notifications}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (

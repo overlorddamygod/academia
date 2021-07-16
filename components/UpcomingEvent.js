@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { useCollection } from "../hooks/firestore";
@@ -49,7 +50,7 @@ const UpcomingEvent = ({ navigation }) => {
     to.push(...[user.faculty, `${user.faculty} ${user.semester}`]);
   }
 
-  const [events] = useCollection(
+  const [events, loading] = useCollection(
     firestore()
       .collection("announcementTemp1")
       .where("addToCalendar", "==", true)
@@ -62,13 +63,17 @@ const UpcomingEvent = ({ navigation }) => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <View>
       {/* <View
+=======
+    <View style={{ marginVertical: SIZE.height * 0.3 }}>
+      <View
+>>>>>>> refs/remotes/origin/main
         style={{
           width: "100%",
           alignItems: "center",
           justifyContent: "center",
-          marginTop: SIZE.width,
         }}
       >
         <InfoCard randomRoute={randomRoute} navigation={navigation} />
@@ -95,7 +100,7 @@ const UpcomingEvent = ({ navigation }) => {
           <Text style={{ color: colors.text, fontSize: 16 }}>Show All</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ width: "100%", padding: SIZE.width * 0.7 }}>
+      <View style={{ width: "100%" }}>
         <FlatList
           ListEmptyComponent={() => (
             <View
@@ -105,9 +110,13 @@ const UpcomingEvent = ({ navigation }) => {
                 justifyContent: "center",
               }}
             >
-              <Text style={{ color: colors.text, textAlign: "center" }}>
-                No upcoming events
-              </Text>
+              {loading ? (
+                <ActivityIndicator color="blue" />
+              ) : (
+                <Text style={{ color: colors.text, textAlign: "center" }}>
+                  No upcoming events
+                </Text>
+              )}
             </View>
           )}
           horizontal={true}
@@ -130,8 +139,13 @@ const UpcomingEvent = ({ navigation }) => {
               <Text
                 style={{
                   ...globalStyles.txt,
+<<<<<<< HEAD
                   fontSize: SIZE.width*1.2,
                   textAlign:'center'
+=======
+                  fontSize: 20,
+                  textAlign: "center",
+>>>>>>> refs/remotes/origin/main
                   // height: SIZE.he,
                 }}
               >
@@ -178,7 +192,7 @@ export const InfoCard = ({ randomRoute, navigation }) => {
     <View
       style={{
         ...styles.infocard,
-       backgroundColor:colors.homeCard,
+        backgroundColor: colors.card,
         paddingVertical: SIZE.height * 0.3,
       }}
     >
@@ -230,7 +244,7 @@ export default UpcomingEvent;
 const styles = StyleSheet.create({
   events: {
     padding: SIZE.width * 0.7,
-    marginHorizontal: 6,
+    marginRight: 6,
     height: SIZE.screenHeight * 0.23,
     width: SIZE.screenWidth * 0.4,
     justifyContent: "center",
@@ -241,7 +255,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: 6,
     // height: SIZE.screenHeight * 0.23,
     // width: SIZE.screenWidth * 0.9,
-    backgroundColor: "#f7f7f7",
+    // backgroundColor: "#f7f7f7",
     borderRadius: SIZE.width,
     flexDirection: "row",
     paddingHorizontal: SIZE.width * 0.8,

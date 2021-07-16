@@ -95,12 +95,14 @@ const PeopleCard = ({ data, navigation }) => {
         >
           {data.username}
         </Text>
-        <Text style={{ ...globalStyles.midText, color:colors.secondText }}>
+        <Text style={{ ...globalStyles.midText, color: colors.secondText }}>
           {data.email}
         </Text>
-        <Text style={{ ...globalStyles.midText, color:colors.secondText }}>
-          Semester : {data.semester}
-        </Text>
+        {data.title == "Student" && (
+          <Text style={{ ...globalStyles.midText, color: colors.secondText }}>
+            Semester : {data.semester}
+          </Text>
+        )}
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.msgBtn}

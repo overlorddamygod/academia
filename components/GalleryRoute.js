@@ -2,6 +2,7 @@ import { useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SIZE } from "../styles/globalStyle";
+import CustomTab from "./CustomTab";
 
 const GalleryRoute = ({ navigation, screen }) => {
   const { colors } = useTheme();
@@ -9,71 +10,33 @@ const GalleryRoute = ({ navigation, screen }) => {
   return (
     <View
       style={{
+        backgroundColor: colors.mainblue,
+        paddingHorizontal: SIZE.width * 2,
         flexDirection: "row",
-        padding: SIZE.height * 0.2,
-        justifyContent: "center",
+        height: SIZE.height * 1.25,
+        boxSizing: "border-box",
       }}
     >
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={{
-          ...styles.top,
-          backgroundColor: route === "photo" ? "#FB616A" : null,
-        }}
+      <CustomTab
+        title={"Photo"}
+        selected={route === "photo"}
         onPress={() => {
           navigation.navigate("Gallery", {
             screen: "Gallery",
           });
         }}
-      >
-        <Text
-          style={{
-            fontSize: 17,
-            color: route != "photo" ? colors.text : "white",
-          }}
-        >
-          Photo
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={{
-          ...styles.top,
-          backgroundColor: route === "video" ? "#FB616A" : null,
-        }}
+      />
+      <CustomTab
+        title={"Video"}
+        selected={route == "video"}
         onPress={() => {
           navigation.navigate("Video", {
             screen: "Video",
           });
         }}
-      >
-        <Text
-          style={{
-            fontSize: 17,
-            color: route != "video" ? colors.text : "white",
-          }}
-        >
-          Video
-        </Text>
-      </TouchableOpacity>
+      />
     </View>
   );
 };
 
 export default GalleryRoute;
-
-const styles = StyleSheet.create({
-  cards: {
-    borderRadius: 5,
-    padding: SIZE.width * 1.2,
-    marginVertical: 5,
-  },
-  top: {
-    padding: 15,
-    width: SIZE.screenWidth * 0.45,
-    borderRadius: 4,
-    marginHorizontal: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

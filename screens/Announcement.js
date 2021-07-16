@@ -9,6 +9,7 @@ import {
   FlatList,
   Linking,
   TouchableHighlight,
+  ActivityIndicator,
 } from "react-native";
 import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
@@ -17,6 +18,7 @@ import { useCollectionLazy } from "../hooks/firestore";
 import COLORS, { tagColor } from "../styles/colors";
 import Hyperlink from "react-native-hyperlink";
 import { globalStyles, SIZE } from "../styles/globalStyle";
+import CustomFlatList from "../components/CustomFlatList";
 
 const AnnouncementScreen = ({ navigation }) => {
   const [selectedTag, setSelectedTag] = useState("All Items");
@@ -85,7 +87,7 @@ const AnnouncementScreen = ({ navigation }) => {
           </ScrollView>
         </View>
         <View style={{ marginTop: 30, flex: 1 }}>
-          <FlatList
+          <CustomFlatList
             refreshing={loading}
             onRefresh={onRefresh}
             onEndReached={getMoreData}
@@ -97,13 +99,7 @@ const AnnouncementScreen = ({ navigation }) => {
             )}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <Announcement data={item} />}
-            ListEmptyComponent={() => {
-              return (
-                <View style={{ alignItems: "center", marginTop: 50 }}>
-                  <Text style={{ color: colors.text }}>No announcements</Text>
-                </View>
-              );
-            }}
+            ListEmptyComponentText={"No announcements"}
           />
         </View>
       </View>
@@ -138,7 +134,7 @@ const Announcement = ({
         <View
           style={{
             alignSelf: "flex-start",
-            backgroundColor: tagColor[data.tag],
+            backgroundColor: tagColor[data.tag] || tagColor["Classes"],
             paddingHorizontal: 5,
             borderRadius: 6,
           }}
@@ -153,27 +149,28 @@ const Announcement = ({
             marginVertical: 8,
           }}
         >
-          {data.title}
+          {data.title || " "}
         </Text>
 
-        {showBody && data.body && (
-          <Hyperlink
-            linkStyle={{ color: "#2980b9", textDecorationLine: "underline" }}
-            onPress={(url, text) => {
-              Linking.openURL(url);
+        {/* {showBody && data.body && ( */}
+        <Hyperlink
+          linkStyle={{ color: "#2980b9", textDecorationLine: "underline" }}
+          onPress={(url, text) => {
+            Linking.openURL(url);
+          }}
+        >
+          <Text
+            style={{
+              color: colors.text,
+              fontSize: 16,
+              marginVertical: 8,
             }}
+            numberOfLines={showBody ? 0 : 1}
           >
-            <Text
-              style={{
-                color: colors.text,
-                fontSize: 16,
-                marginVertical: 8,
-              }}
-            >
-              {data.body}
-            </Text>
-          </Hyperlink>
-        )}
+            {data.body || " "}
+          </Text>
+        </Hyperlink>
+        {/* )} */}
 
         <Text style={{ color: "#ABABAB" }}>
           {data.createdAt.toDate().toLocaleDateString()}

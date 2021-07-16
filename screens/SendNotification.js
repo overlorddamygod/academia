@@ -125,7 +125,7 @@ const SendNotification = ({ navigation, route: { params } }) => {
           </InputContainer>
 
           <Button
-            label="Add"
+            label="Send"
             backgroundColor="#FB616A"
             style={{
               marginVertical: SIZE.height * 0.45,

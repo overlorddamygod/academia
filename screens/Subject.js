@@ -13,6 +13,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import Header from "../components/Header";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { AntDesign } from "@expo/vector-icons";
+import CustomTab from "../components/CustomTab";
+import CustomFlatList from "../components/CustomFlatList";
 
 const Subject = ({ route, navigation }) => {
   const { colors } = useTheme();
@@ -47,7 +49,7 @@ const Subject = ({ route, navigation }) => {
         </View>
       )}
       <View style={{ padding: 20, flex: 1 }}>
-        <FlatList
+        <CustomFlatList
           data={showFirst ? sub.firstHalf.subject : sub.secondHalf?.subject}
           keyExtractor={(item) => item.name}
           renderItem={({ item }) => <SubjectCard subject={item} />}
@@ -72,32 +74,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-
-const CustomTab = ({ title, selected, onPress }) => {
-  return (
-    <TouchableHighlight
-      activeOpacity={0.99}
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        borderBottomColor: "white",
-        borderBottomWidth: selected ? 3 : 0,
-      }}
-      underlayColor="#999"
-      onPress={onPress}
-    >
-      <Text
-        style={{
-          fontSize: 17,
-          color: "white",
-          textAlign: "center",
-        }}
-      >
-        {title}
-      </Text>
-    </TouchableHighlight>
-  );
-};
 
 const SubjectCard = ({ subject }) => {
   const { colors } = useTheme();

@@ -2,11 +2,18 @@ import { Feather } from "@expo/vector-icons";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Calendar } from "react-native-calendars";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import COLORS, { tagColor } from "../styles/colors";
+import CustomFlatList from "../components/CustomFlatList";
 
 const CalendarScreen = ({ navigation }) => {
   const todaysDate = new Date();
@@ -70,7 +77,7 @@ const CalendarScreen = ({ navigation }) => {
         setEvents(eventsCache[dateKey]);
         setRefreshing(false);
       });
-    setRefreshing(false);
+    // setRefreshing(false);
   };
 
   const formatYmd = (date) => date.toDate().toISOString().slice(0, 10);
@@ -102,7 +109,7 @@ const CalendarScreen = ({ navigation }) => {
                 const startingDate = e.startingDate;
                 if (e.range <= 0) {
                   acc[formatYmd(startingDate)] = {
-                    dotColor: tagColor[e.tag || "Holiday"],
+                    dotColor: tagColor[e.tag] || tagColor["Classes"],
                     marked: true,
                   };
                 } else {
@@ -110,7 +117,7 @@ const CalendarScreen = ({ navigation }) => {
                     acc[addDay(startingDate, i)] = {
                       startingDay: i == 0,
                       endingDay: i == e.range,
-                      color: tagColor[e.tag || "Holiday"],
+                      color: tagColor[e.tag] || tagColor["Classes"],
                     };
                   }
                 }
@@ -162,7 +169,11 @@ const CalendarScreen = ({ navigation }) => {
             {user.admin && (
               <TouchableOpacity
                 activeOpacity={0.5}
-                style={{ borderWidth: 1, borderRadius: 5 }}
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  borderColor: colors.text,
+                }}
                 onPress={() => {
                   navigation.navigate("AddAnnouncement");
                   console.log("Add Event");
@@ -173,19 +184,13 @@ const CalendarScreen = ({ navigation }) => {
             )}
           </View>
 
-          <FlatList
+          <CustomFlatList
             data={events}
             refreshing={refreshing}
             onRefresh={onRefresh}
             keyExtractor={(item) => `${item.id}`}
             renderItem={({ item }) => <CalendarEventListItem event={item} />}
-            ListEmptyComponent={() => (
-              <View style={{ alignItems: "center", marginTop: 50 }}>
-                <Text style={{ color: colors.text }}>
-                  No events for this month
-                </Text>
-              </View>
-            )}
+            ListEmptyComponentText={"No events for this month"}
           />
         </View>
       </View>
@@ -215,7 +220,7 @@ const CalendarEventListItem = ({ event }) => {
             marginRight: 10,
             borderRightWidth: 3,
             color: colors.text,
-            borderRightColor: tagColor[event.tag],
+            borderRightColor: tagColor[event.tag] || tagColor["Classes"],
           }}
         >
           {formatDate(event.startingDate.toDate().getDate())}
