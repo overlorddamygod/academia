@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
   Image,
-  ActivityIndicator,
 } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { useCollection } from "../hooks/firestore";
@@ -40,8 +39,6 @@ export const route = [
 ];
 
 const UpcomingEvent = ({ navigation }) => {
-  const [routes, setRoutes] = useState(route);
-  const [randomRoute, setRandomRoute] = useState("");
   const { colors } = useTheme();
   const { user } = useUserContext();
 
@@ -50,7 +47,7 @@ const UpcomingEvent = ({ navigation }) => {
     to.push(...[user.faculty, `${user.faculty} ${user.semester}`]);
   }
 
-  const [events, loading] = useCollection(
+  const [events] = useCollection(
     firestore()
       .collection("announcementTemp1")
       .where("addToCalendar", "==", true)
@@ -58,21 +55,9 @@ const UpcomingEvent = ({ navigation }) => {
       .where("startingDate", ">=", new Date())
   );
 
-  useEffect(() => {
-    setRandomRoute(routes[Math.floor(Math.random() * routes.length)]);
-  }, []);
-
   return (
-    <View style={{ marginVertical: SIZE.height * 0.3 }}>
-      <View
-        style={{
-          width: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <InfoCard randomRoute={randomRoute} navigation={navigation} />
-      </View> */}
+    <View>
+
       <View style={{ flexDirection: "row" }}>
         <View
           style={{
@@ -95,7 +80,7 @@ const UpcomingEvent = ({ navigation }) => {
           <Text style={{ color: colors.text, fontSize: 16 }}>Show All</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ width: "100%" }}>
+      <View style={{ width: "100%", padding: SIZE.width * 0.7 }}>
         <FlatList
           ListEmptyComponent={() => (
             <View
@@ -105,13 +90,9 @@ const UpcomingEvent = ({ navigation }) => {
                 justifyContent: "center",
               }}
             >
-              {loading ? (
-                <ActivityIndicator color="blue" />
-              ) : (
-                <Text style={{ color: colors.text, textAlign: "center" }}>
-                  No upcoming events
-                </Text>
-              )}
+              <Text style={{ color: colors.text, textAlign: "center" }}>
+                No upcoming events
+              </Text>
             </View>
           )}
           horizontal={true}
@@ -124,17 +105,23 @@ const UpcomingEvent = ({ navigation }) => {
                 ...globalStyles.shadow,
                 ...styles.events,
                 backgroundColor: colors.upcoming,
-                position:'relative'
+                position: "relative",
               }}
             >
-              <MaterialIcons name="event-available" 
-              size={34}
-              style={{position:"absolute",top:SIZE.width*0.3,right:SIZE.width*0.3}}
-               color="white" />
+              <MaterialIcons
+                name="event-available"
+                size={34}
+                style={{
+                  position: "absolute",
+                  top: SIZE.width * 0.3,
+                  right: SIZE.width * 0.3,
+                }}
+                color="white"
+              />
               <Text
                 style={{
                   ...globalStyles.txt,
-                  fontSize: 20,
+                  fontSize: SIZE.width * 1.2,
                   textAlign: "center",
                   // height: SIZE.he,
                 }}
@@ -182,7 +169,7 @@ export const InfoCard = ({ randomRoute, navigation }) => {
     <View
       style={{
         ...styles.infocard,
-        backgroundColor: colors.card,
+        backgroundColor: colors.homeCard,
         paddingVertical: SIZE.height * 0.3,
       }}
     >
@@ -234,7 +221,7 @@ export default UpcomingEvent;
 const styles = StyleSheet.create({
   events: {
     padding: SIZE.width * 0.7,
-    marginRight: 6,
+    marginHorizontal: 6,
     height: SIZE.screenHeight * 0.23,
     width: SIZE.screenWidth * 0.4,
     justifyContent: "center",
@@ -245,7 +232,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: 6,
     // height: SIZE.screenHeight * 0.23,
     // width: SIZE.screenWidth * 0.9,
-    // backgroundColor: "#f7f7f7",
+    backgroundColor: "#f7f7f7",
     borderRadius: SIZE.width,
     flexDirection: "row",
     paddingHorizontal: SIZE.width * 0.8,
@@ -255,6 +242,6 @@ const styles = StyleSheet.create({
     height: "100%",
     width: SIZE.screenHeight * 0.2,
     resizeMode: "cover",
-    zIndex: 2,
+
   },
 });

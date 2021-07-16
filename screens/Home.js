@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
 import { useTheme } from "@react-navigation/native";
 import React, { useContext, useState, useEffect } from "react";
@@ -11,9 +10,7 @@ import UpcomingEvent, { InfoCard } from "../components/UpcomingEvent";
 import { images } from "../styles/colors";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { QuickInfo } from "./AboutCollege";
-import GestureRecognizer, {
-  swipeDirections,
-} from "react-native-swipe-gestures";
+
 import { route } from "../components/UpcomingEvent";
 const Home = ({ navigation }) => {
   const { colors } = useTheme();
@@ -37,10 +34,10 @@ const Home = ({ navigation }) => {
             backgroundColor: colors.mainblue,
             borderBottomRightRadius: 36,
             height: SIZE.height * 2.7,
-            paddingTop:SIZE.width*0.3
+            paddingTop: SIZE.width * 0.3,
           }}
         >
-          <View>
+          
             <View>
               <Text
                 style={{
@@ -52,19 +49,26 @@ const Home = ({ navigation }) => {
                 It's {isDark ? "Dark" : "Light"} theme right ?
               </Text>
             </View>
-            <View style={{ alignItems: "center", marginTop: 5 }}>
+
+            <View
+              style={{
+                alignItems: "center",
+                marginTop: 5,
+              }}
+            >
               <View
                 style={{
                   width: "90%",
                   alignItems: "center",
                   justifyContent: "center",
-                  marginTop:SIZE.width*0.4
+                  marginTop: SIZE.width * 0.4,
+               
                 }}
               >
                 <InfoCard randomRoute={randomRoute} navigation={navigation} />
               </View>
             </View>
-          </View>
+          
         </View>
 
         <View

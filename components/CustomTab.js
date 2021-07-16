@@ -1,9 +1,9 @@
 import React from "react";
-import { TouchableHighlight, Text } from "react-native";
+import { TouchableOpacity, Text } from "react-native";
 
 const CustomTab = ({ title, selected, onPress }) => {
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       activeOpacity={0.99}
       style={{
         flex: 1,
@@ -23,7 +23,7 @@ const CustomTab = ({ title, selected, onPress }) => {
       >
         {title}
       </Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
