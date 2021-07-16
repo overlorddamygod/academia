@@ -1,25 +1,28 @@
 import { Ionicons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
 import { useTheme } from "@react-navigation/native";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import Header from "../components/Header";
 import HomeNotice from "../components/HomeNotice";
 import ImageCarousel from "../components/ImageCarousel";
 import { ThemeContext } from "../components/Theme";
-import UpcomingEvent from "../components/UpcomingEvent";
+import UpcomingEvent, { InfoCard } from "../components/UpcomingEvent";
 import { images } from "../styles/colors";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { QuickInfo } from "./AboutCollege";
 import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
-
+import { route } from "../components/UpcomingEvent";
 const Home = ({ navigation }) => {
   const { colors } = useTheme();
-
+  const [routes, setRoutes] = useState(route);
+  const [randomRoute, setRandomRoute] = useState("");
   const { isDark } = useContext(ThemeContext);
-
+  useEffect(() => {
+    setRandomRoute(routes[Math.floor(Math.random() * routes.length)]);
+  }, []);
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Header
@@ -28,38 +31,49 @@ const Home = ({ navigation }) => {
         justifyContent="flex-start"
         navigation={navigation}
       ></Header>
-      <View
-        style={{
-          backgroundColor: colors.mainblue,
-          borderBottomRightRadius: 36,
-        }}
-      >
-        <View style={styles.upper}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            backgroundColor: colors.mainblue,
+            borderBottomRightRadius: 36,
+            height: SIZE.height * 2.7,
+            paddingTop:SIZE.width*0.3
+          }}
+        >
           <View>
-            <Text
-              style={{
-                ...globalStyles.txt,
-                paddingLeft: SIZE.width,
-                marginTop: -SIZE.width / 1.8,
-              }}
-            >
-              It's {isDark ? "Dark" : "Light"} theme right ?
-            </Text>
-          </View>
-          <View style={{ padding: SIZE.width }}>
-            <View style={styles.searchbar}>
-              <Ionicons name="search" size={24} color="#777" />
-              <TextInput
-                style={{ color: "#000", flex: 1 }}
-                placeholder="Search"
-              />
+            <View>
+              <Text
+                style={{
+                  ...globalStyles.txt,
+                  paddingLeft: SIZE.width,
+                  marginTop: -SIZE.width / 1.8,
+                }}
+              >
+                It's {isDark ? "Dark" : "Light"} theme right ?
+              </Text>
+            </View>
+            <View style={{ alignItems: "center", marginTop: 5 }}>
+              <View
+                style={{
+                  width: "90%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop:SIZE.width*0.4
+                }}
+              >
+                <InfoCard randomRoute={randomRoute} navigation={navigation} />
+              </View>
             </View>
           </View>
         </View>
-      </View>
 
-      <View style={{ flex: 1, paddingHorizontal: SIZE.width }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            flex: 1,
+            marginTop: SIZE.height * 1.3,
+            paddingHorizontal: SIZE.width,
+          }}
+        >
           <View>
             <View
               style={{
@@ -93,8 +107,8 @@ const Home = ({ navigation }) => {
           >
             <QuickInfo />
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </View>
   );
 };

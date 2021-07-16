@@ -34,15 +34,16 @@ const DrawerTab = () => {
       card: "white",
       btn: "#583EFF",
       msgIcon: "black",
-      mainblue: "#403b80",
+      mainblue: "#6765c2",
       buttomtab: "#0E243F",
       border: "lightgray",
-      upcoming: "#515a8a",
+      upcoming: "#22284a",
       drawerBackground: "#414567",
       dialogs: "#202336",
       midBox: "#edf0f5",
       searchDiv: "white",
       secondText:"#666",
+      homeCard:"#fff",
     },
   };
 
@@ -63,6 +64,7 @@ const DrawerTab = () => {
       midBox: "#212538",
       searchDiv: "#39405c",
       secondText:"lightgray",
+      homeCard:'#262a42',
       
     },
   };

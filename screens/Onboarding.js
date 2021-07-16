@@ -65,7 +65,7 @@ const Onboard = ({navigation}) => {
             style={{height:SIZE.screenWidth*0.4,width:SIZE.screenWidth*0.4}}
             />,
             title: 'Academia International College',
-            subtitle: 'Best Institute In The Valley',
+            subtitle: 'Excellence in the academic development ',
           },
           {
             backgroundColor: '#6765c2',

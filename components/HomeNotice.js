@@ -1,6 +1,6 @@
 import { useTheme } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View,Linking } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 const HomeNotice = ({ navigation }) => {
   const { colors } = useTheme();
@@ -23,7 +23,7 @@ const HomeNotice = ({ navigation }) => {
                 color: colors.text,
               }}
             >
-              Proud of
+               Mission | Vision
             </Text>
             <Text
               style={{
@@ -33,11 +33,26 @@ const HomeNotice = ({ navigation }) => {
                 color: colors.text,
               }}
             >
-              Academia is proud of
+              Reputable and creditable college
+            </Text>
+            <Text
+              style={{
+                ...globalStyles.midText,
+                color: colors.text,
+                marginTop: 5,
+              }}
+            >
+            We are proud of 
             </Text>
           </View>
-          <TouchableOpacity style={styles.btn}>
-            <Text style={{ color: "white", fontSize: 16 }}>Achievements</Text>
+          <TouchableOpacity 
+          onPress={
+            ()=>{
+              navigation.navigate('AboutCollege',{screen:'AboutCollege'})
+            }
+          }
+          style={styles.btn}>
+            <Text style={{ color: "white", fontSize: 16 }}>Learn More</Text>
           </TouchableOpacity>
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -68,14 +83,7 @@ const HomeNotice = ({ navigation }) => {
           </View>
         </View>
       </View>
-      {/* <TouchableOpacity
-        onPress={() => navigation.navigate("Announcements")}
-        style={{ marginTop: SIZE.height * 0.4 }}
-      >
-        <Text style={{ ...styles.btnText, color: colors.text }}>
-          See All Pages
-        </Text>
-      </TouchableOpacity> */}
+
     </View>
   );
 };

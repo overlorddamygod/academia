@@ -261,10 +261,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     flex: 1,
-    padding: 20,
-    borderRadius:70,
-    
- 
+    padding: SIZE.height,
   },
   top: {
     // backgroundColor: "#757BBD",
@@ -279,14 +276,14 @@ const styles = StyleSheet.create({
   image: {
     height: SIZE.screenHeight * 0.15,
     width: SIZE.screenHeight * 0.15,
-    borderRadius: 59,
+    borderRadius: SIZE.width,
     resizeMode: "cover",
     position: "absolute",
     top: SIZE.screenHeight * 0.2,
     left: SIZE.screenWidth * 0.34,
     zIndex: 2,
-    borderWidth: 4,
-    borderColor: "#00000078",
+    borderWidth: 2,
+    borderColor:'lightgray',
   },
   name: {
     fontSize: 27,

@@ -106,7 +106,7 @@ const PeopleCard = ({ data, navigation }) => {
           style={styles.msgBtn}
           onPress={startChat}
         >
-          <Text style={{ color: "white" }}>essage</Text>
+          <Text style={{ color: "white" }}>Message</Text>
         </TouchableOpacity>
       </View>
     </View>
