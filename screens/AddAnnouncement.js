@@ -31,6 +31,10 @@ const AddAnnouncement = ({ navigation }) => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const onAddButtonPress = async () => {
+    if (!announcementData.title) {
+      showToast("Title is required");
+      return;
+    }
     setButtonDisabled(true);
     const idToken = await auth().currentUser.getIdToken();
 
@@ -132,6 +136,7 @@ const AddAnnouncement = ({ navigation }) => {
                     setAnnouncementData({
                       ...announcementData,
                       startingDate: date,
+                      endingDate: date,
                     });
                   }}
                 />

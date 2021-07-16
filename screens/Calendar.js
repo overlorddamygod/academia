@@ -102,7 +102,7 @@ const CalendarScreen = ({ navigation }) => {
                 const startingDate = e.startingDate;
                 if (e.range <= 0) {
                   acc[formatYmd(startingDate)] = {
-                    dotColor: tagColor[e.tag || "Holiday"],
+                    dotColor: tagColor[e.tag] || tagColor["Classes"],
                     marked: true,
                   };
                 } else {
@@ -110,7 +110,7 @@ const CalendarScreen = ({ navigation }) => {
                     acc[addDay(startingDate, i)] = {
                       startingDay: i == 0,
                       endingDay: i == e.range,
-                      color: tagColor[e.tag || "Holiday"],
+                      color: tagColor[e.tag] || tagColor["Classes"],
                     };
                   }
                 }
@@ -162,7 +162,11 @@ const CalendarScreen = ({ navigation }) => {
             {user.admin && (
               <TouchableOpacity
                 activeOpacity={0.5}
-                style={{ borderWidth: 1, borderRadius: 5 }}
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  borderColor: colors.text,
+                }}
                 onPress={() => {
                   navigation.navigate("AddAnnouncement");
                   console.log("Add Event");
@@ -182,7 +186,7 @@ const CalendarScreen = ({ navigation }) => {
             ListEmptyComponent={() => (
               <View style={{ alignItems: "center", marginTop: 50 }}>
                 <Text style={{ color: colors.text }}>
-                  No events for this month
+                  {!refreshing ? "No events for this month" : " "}
                 </Text>
               </View>
             )}
@@ -215,7 +219,7 @@ const CalendarEventListItem = ({ event }) => {
             marginRight: 10,
             borderRightWidth: 3,
             color: colors.text,
-            borderRightColor: tagColor[event.tag],
+            borderRightColor: tagColor[event.tag] || tagColor["Classes"],
           }}
         >
           {formatDate(event.startingDate.toDate().getDate())}

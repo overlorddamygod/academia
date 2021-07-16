@@ -138,7 +138,7 @@ const Announcement = ({
         <View
           style={{
             alignSelf: "flex-start",
-            backgroundColor: tagColor[data.tag],
+            backgroundColor: tagColor[data.tag] || tagColor["Classes"],
             paddingHorizontal: 5,
             borderRadius: 6,
           }}
