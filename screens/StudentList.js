@@ -14,6 +14,7 @@ import PeopleCard from "../components/PeopleCard";
 import { useCollectionLazy } from "../hooks/firestore";
 import { useUserContext } from "../providers/user";
 import { globalStyles, SIZE } from "../styles/globalStyle";
+import CustomFlatList from "../components/CustomFlatList";
 
 const StudentList = ({ navigation }) => {
   const { user } = useUserContext();
@@ -111,7 +112,7 @@ const StudentList = ({ navigation }) => {
                   {Array.from({ length: 8 }, (i, index) => `${index + 1}`).map(
                     (semester) => (
                       <Picker.Item
-                      color="#888"
+                        color="#888"
                         label={semester}
                         value={semester}
                         key={semester}
@@ -124,18 +125,12 @@ const StudentList = ({ navigation }) => {
           </View>
         </View>
 
-        <FlatList
+        <CustomFlatList
           refreshing={loading}
           onRefresh={onRefresh}
           onEndReached={getMoreData}
           onEndReachedThreshold={0.1}
-          ListEmptyComponent={() => {
-            return (
-              <View style={{ alignItems: "center", marginTop: 50 }}>
-                <Text style={{ color: colors.text }}>No students found</Text>
-              </View>
-            );
-          }}
+          ListEmptyComponentText={"No students found"}
           data={students.filter(
             (student) =>
               student.username.match(new RegExp(searchTerm, "i")) ||

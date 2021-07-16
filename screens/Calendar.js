@@ -2,11 +2,18 @@ import { Feather } from "@expo/vector-icons";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Calendar } from "react-native-calendars";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import COLORS, { tagColor } from "../styles/colors";
+import CustomFlatList from "../components/CustomFlatList";
 
 const CalendarScreen = ({ navigation }) => {
   const todaysDate = new Date();
@@ -70,7 +77,7 @@ const CalendarScreen = ({ navigation }) => {
         setEvents(eventsCache[dateKey]);
         setRefreshing(false);
       });
-    setRefreshing(false);
+    // setRefreshing(false);
   };
 
   const formatYmd = (date) => date.toDate().toISOString().slice(0, 10);
@@ -177,19 +184,13 @@ const CalendarScreen = ({ navigation }) => {
             )}
           </View>
 
-          <FlatList
+          <CustomFlatList
             data={events}
             refreshing={refreshing}
             onRefresh={onRefresh}
             keyExtractor={(item) => `${item.id}`}
             renderItem={({ item }) => <CalendarEventListItem event={item} />}
-            ListEmptyComponent={() => (
-              <View style={{ alignItems: "center", marginTop: 50 }}>
-                <Text style={{ color: colors.text }}>
-                  {!refreshing ? "No events for this month" : " "}
-                </Text>
-              </View>
-            )}
+            ListEmptyComponentText={"No events for this month"}
           />
         </View>
       </View>

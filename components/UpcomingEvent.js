@@ -178,7 +178,7 @@ const InfoCard = ({ randomRoute, navigation }) => {
     <View
       style={{
         ...styles.infocard,
-        // paddingHorizontal: SIZE.width * 0.89,
+        backgroundColor: colors.card,
         paddingVertical: SIZE.height * 0.3,
       }}
     >
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: 6,
     // height: SIZE.screenHeight * 0.23,
     // width: SIZE.screenWidth * 0.9,
-    backgroundColor: "#f7f7f7",
+    // backgroundColor: "#f7f7f7",
     borderRadius: SIZE.width,
     flexDirection: "row",
     paddingHorizontal: SIZE.width * 0.8,

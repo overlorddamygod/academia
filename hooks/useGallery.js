@@ -1,6 +1,7 @@
 import storage from "@react-native-firebase/storage";
 import { useState } from "react";
 import { showToast } from "../utils/error";
+
 const useGallery = (setData, setAllData) => {
   const [option, setOption] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -22,20 +23,7 @@ const useGallery = (setData, setAllData) => {
       });
     });
   };
-  // const fetchRandom = (name) => {
-  //   const ref = storage().ref(`${name}`);
-  //   ref.list().then((res) => {
-  //     setAllData([]);
-  //     res.items.forEach((itemsRef) => {
-  //       itemsRef.getDownloadURL().then((downloadUrl) => {
-  //         console.log(downloadUrl);
-  //         setAllData((prev) => [...prev, downloadUrl]);
-  //         setLoading(false);
-  //         setRefreshing(false);
-  //       });
-  //     });
-  //   });
-  // };
+
   const uploadData = async (dataHead, data) => {
     const { uri } = data;
     const filename = `${dataHead}/` + uri.substring(uri.lastIndexOf("/") + 1);

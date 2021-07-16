@@ -13,6 +13,7 @@ import PeopleCard from "../components/PeopleCard";
 import { useCollectionLazy } from "../hooks/firestore";
 import { useUserContext } from "../providers/user";
 import { globalStyles, SIZE } from "../styles/globalStyle";
+import CustomFlatList from "../components/CustomFlatList";
 
 const TeacherList = ({ navigation }) => {
   const { user } = useUserContext();
@@ -71,18 +72,12 @@ const TeacherList = ({ navigation }) => {
           </View>
         </View>
 
-        <FlatList
+        <CustomFlatList
           refreshing={loading}
           onRefresh={onRefresh}
           onEndReached={getMoreData}
           onEndReachedThreshold={0.1}
-          ListEmptyComponent={() => {
-            return (
-              <View style={{ alignItems: "center", marginTop: 50 }}>
-                <Text style={{ color: colors.text }}>No teachers found</Text>
-              </View>
-            );
-          }}
+          ListEmptyComponentText={"No teachers found"}
           data={teachers.filter(
             (teachers) =>
               teachers.username.match(new RegExp(searchTerm, "i")) ||
