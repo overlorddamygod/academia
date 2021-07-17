@@ -21,13 +21,13 @@ const ForgotPassword = ({ navigation, route: { params } }) => {
   const [loading, setLoading] = useState(false);
 
   const submit = async () => {
-    if (!email) {
+    if (!email.trim()) {
       showToast("Email address not provided");
       return;
     }
     setLoading(true);
     try {
-      const result = await auth().sendPasswordResetEmail(email);
+      const result = await auth().sendPasswordResetEmail(email.trim());
       showToast("Password reset link sent to your email address");
       setLoading(false);
     } catch (err) {
@@ -80,7 +80,7 @@ const ForgotPassword = ({ navigation, route: { params } }) => {
               {loading ? (
                 <ActivityIndicator color="white" />
               ) : (
-                <Text style={authStyles.text}>Send New </Text>
+                <Text style={authStyles.text}>Reset Password</Text>
               )}
             </TouchableOpacity>
           </View>

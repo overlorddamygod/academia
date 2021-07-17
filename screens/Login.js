@@ -115,7 +115,8 @@ const Login = ({ navigation }) => {
                     color: "#666",
                     fontWeight: "bold",
                     textAlign: "right",
-                    padding: SIZE.height / 4,
+                    paddingRight: SIZE.height / 4,
+                    marginBottom: 2,
                   }}
                 >
                   Forgot Password ?
@@ -136,11 +137,14 @@ const Login = ({ navigation }) => {
                     <Text
                       style={{ ...authStyles.text, marginLeft: SIZE.width }}
                     >
-                      Sign In With Email{" "}
+                      Sign In{" "}
                     </Text>
                   </>
                 )}
               </TouchableOpacity>
+              <Text style={{ marginTop: SIZE.height * 0.4 }}>
+                Linked your google account ?
+              </Text>
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={{

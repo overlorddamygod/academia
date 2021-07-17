@@ -13,6 +13,7 @@ import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import CustomFlatList from "../components/CustomFlatList";
+import moment from "moment";
 
 const Chat = ({ navigation }) => {
   const { user } = useUserContext();
@@ -83,7 +84,7 @@ const Chat = ({ navigation }) => {
                   style={globalStyles.smallavatar}
                 />
               </View>
-              <View style={{ marginLeft: SIZE.width }}>
+              <View style={{ marginLeft: SIZE.width, flex: 1 }}>
                 <Text
                   style={{
                     fontSize: 20,
@@ -93,14 +94,32 @@ const Chat = ({ navigation }) => {
                 >
                   {getChatName(item, user.id).username}
                 </Text>
-                <Text
+                <View
                   style={{
-                    fontSize: 15,
-                    color: "grey",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
-                  {item.lastMessage || "Start a conversation"}
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: "grey",
+                    }}
+                  >
+                    {item.lastMessage || "Start a conversation"}
+                  </Text>
+                  {!!item.lastMessageAt && (
+                    <Text
+                      style={{
+                        fontSize: 10,
+                        color: "grey",
+                      }}
+                    >
+                      {moment(item.lastMessageAt).fromNow() || " "}
+                    </Text>
+                  )}
+                </View>
               </View>
             </TouchableOpacity>
           </>

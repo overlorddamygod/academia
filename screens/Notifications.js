@@ -41,13 +41,13 @@ const Notifications = ({ navigation }) => {
     setQuery,
   } = useCollectionLazy(query, "createdAt", "desc", 10);
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <Header
         title="Notifications"
         navigation={navigation}
         showBackMenu={false}
       />
-      <View>
+      <View style={{ flex: 1 }}>
         <View style={{ marginTop: 10 }}>
           <CustomFlatList
             refreshing={loading}
@@ -59,7 +59,7 @@ const Notifications = ({ navigation }) => {
           />
         </View>
       </View>
-    </>
+    </View>
   );
 };
 

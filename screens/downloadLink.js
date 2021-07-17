@@ -12,7 +12,7 @@ import {
 import { Button } from "react-native-ui-lib";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import firestore from "@react-native-firebase/firestore";
-import { Ionicons ,AntDesign} from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import Header from "../components/Header";
 import { useTheme } from "@react-navigation/native";
 import { useCollectionLazy } from "../hooks/firestore";
@@ -37,7 +37,7 @@ const downloadLink = ({ navigation }) => {
     getMoreData,
     onRefresh,
     setValue,
-  } = useCollectionLazy(query, "createdAt", "desc", 10);
+  } = useCollectionLazy(query, "createdAt", "desc", 5);
 
   function isURL(str) {
     var res = str.match(
@@ -82,7 +82,7 @@ const downloadLink = ({ navigation }) => {
     }
   };
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Header title="Materials" navigation={navigation} showSidebar={false} />
       <View style={{ marginTop: 10 }}>
         {user.admin && (
@@ -124,10 +124,15 @@ const downloadLink = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <TouchableOpacity onPress={() =>  Linking.openURL(
-                 item.link.includes('https')?item.link :`https://${item.link}`
-          )}
-                  >
+              <TouchableOpacity
+                onPress={() =>
+                  Linking.openURL(
+                    item.link.includes("https")
+                      ? item.link
+                      : `https://${item.link}`
+                  )
+                }
+              >
                 <AntDesign name="clouddownload" size={40} color={colors.text} />
               </TouchableOpacity>
               <View
