@@ -47,7 +47,8 @@
     "react-native-ui-lib": "^5.26.0",
     "react-native-unimodules": "~0.13.3",
     "react-native-video": "^5.1.1",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "react-native-webview": "^11.6.5"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

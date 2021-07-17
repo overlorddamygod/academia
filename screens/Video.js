@@ -16,6 +16,18 @@ import useGallery from "../hooks/useGallery";
 import COLORS from "../styles/colors";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { showToast } from "../utils/error";
+import { WebView } from "react-native-webview";
+
+const videoLinks = [
+  "https://www.youtube.com/embed/EQMVuQvat-c",
+  "https://www.youtube.com/embed/o6cCTwLTPbM",
+  "https://www.youtube.com/embed/K4TiqJRfVJ4",
+  "https://www.youtube.com/embed/UB_XB_VIj6A",
+  "https://www.youtube.com/embed/VcFgE3xablo",
+  "https://www.youtube.com/embed/FllfavYZVyg",
+  "https://www.youtube.com/embed/TIPepqphlg0",
+  "https://www.youtube.com/embed/JZG3sNywrzA",
+];
 
 const Videos = ({ navigation }) => {
   const videoPlayer = useRef(null);
@@ -117,21 +129,45 @@ const Videos = ({ navigation }) => {
     });
   };
   console.log(allVideos);
+  console.log(SIZE.screenWidth, SIZE.screenWidth * 0.5625);
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <Header title="Academia Video" navigation={navigation} />
-      {/* {loading && <ActivityIndicator color="#f44"/>} */}
-      {!video && (
-        <>
-          <GalleryRoute navigation={navigation} screen="video" />
+      <GalleryRoute navigation={navigation} screen="video" />
 
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={globalStyles.btns}
-            onPress={openGallery}
-          >
-            <Text style={{ color: "white" }}>Add Video</Text>
-          </TouchableOpacity>
+      {/* <TouchableOpacity
+  activeOpacity={0.7}
+  style={globalStyles.btns}
+  onPress={openGallery}
+>
+  <Text style={{ color: "white" }}>Add Video</Text>
+</TouchableOpacity> */}
+      <ScrollView style={{ height: 1000, backgroundColor: "yellow" }}>
+        {/* <View style={{ backgroundColor: "red", flex: 1 }}> */}
+        {videoLinks.map((link, index) => (
+          <WebView
+            style={{ height: SIZE.screenWidth * 0.5625 }}
+            key={index}
+            source={{
+              html: `<iframe
+          width="100%"
+        height="100%"
+        src="${link}"
+        title="YouTube video player"
+        frameborder="0"
+        allowFullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      ></iframe>`,
+            }}
+          />
+        ))}
+        {/* </View> */}
+      </ScrollView>
+
+      {/* {loading && <ActivityIndicator color="#f44"/>} */}
+      {/* {!video && (
+        <>
+
         </>
       )}
       {video && (
@@ -210,12 +246,11 @@ const Videos = ({ navigation }) => {
                 <Video
                   source={{ uri: video }}
                   style={styles.backgroundVideo}
-                  
                   onEnd={onEnd}
                   onLoad={onLoad}
                   onLoadStart={onLoadStart}
                   onProgress={onProgress}
-                  paused={currIndex === index ? true :false}
+                  paused={currIndex === index ? true : false}
                   ref={videoPlayer}
                   resizeMode={screenType}
                   onFullScreen={isFullScreen}
@@ -240,8 +275,8 @@ const Videos = ({ navigation }) => {
             ))}
           </View>
         )}
-      </ScrollView>
-    </>
+      </ScrollView> */}
+    </View>
   );
 };
 
