@@ -138,7 +138,10 @@ const UpcomingEvent = ({ navigation }) => {
               >
                 {item.startingDate.toDate().toLocaleDateString()}
               </Text>
-              {/* <TouchableOpacity
+              <TouchableOpacity
+              onPress={
+                ()=>navigation.navigate("Announcements", { screen: "Announcements" })
+              }
                 activeOpacity={0.5}
                 style={{
                   backgroundColor: "#8d81db",
@@ -151,9 +154,9 @@ const UpcomingEvent = ({ navigation }) => {
                 <Text
                   style={{ fontSize: 17, color: "white", textAlign: "center" }}
                 >
-                  Join
+                  All
                 </Text>
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -197,6 +200,7 @@ export const InfoCard = ({ randomRoute, navigation }) => {
           {name}
         </Text>
         <TouchableOpacity
+        activeOpacity={0.7}
           onPress={() => {
             navigation.navigate(`${screen}`, {
               screen: `${screen}`,

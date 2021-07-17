@@ -37,7 +37,6 @@ const Home = ({ navigation }) => {
             paddingTop: SIZE.width * 0.3,
           }}
         >
-          
             <View>
               <Text
                 style={{
@@ -49,8 +48,8 @@ const Home = ({ navigation }) => {
                 It's {isDark ? "Dark" : "Light"} theme right ?
               </Text>
             </View>
-
-            <View
+        </View>
+        <View
               style={{
                 alignItems: "center",
                 marginTop: 5,
@@ -61,20 +60,17 @@ const Home = ({ navigation }) => {
                   width: "90%",
                   alignItems: "center",
                   justifyContent: "center",
-                  marginTop: SIZE.width * 0.4,
+                  marginTop: -SIZE.width * 3.3,
                
                 }}
               >
                 <InfoCard randomRoute={randomRoute} navigation={navigation} />
               </View>
             </View>
-          
-        </View>
-
         <View
           style={{
             flex: 1,
-            marginTop: SIZE.height * 1.3,
+            marginTop: -SIZE.height * 0.1,
             paddingHorizontal: SIZE.width,
           }}
         >
