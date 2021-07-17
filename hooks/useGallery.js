@@ -33,7 +33,7 @@ const useGallery = (setData, setAllData) => {
     try {
       await task;
     } catch (e) {
-      console.error(e);
+      // console.error(e);
     }
     setUploading(false);
     showToast("Image was successfully Uploaded !");

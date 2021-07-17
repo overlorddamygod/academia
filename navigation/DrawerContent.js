@@ -16,15 +16,6 @@ const DrawerContent = ({ navigation }) => {
     navigation.closeDrawer();
   };
 
-  const googleData = auth().currentUser.providerData.filter(
-    (provider) => provider.providerId == "google.com"
-  );
-
-  let googlePhotoUrl =
-    googleData.length > 0
-      ? googleData[0].photoURL
-      : "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png";
-
   return (
     <View style={{ flex: 1, backgroundColor: colors.drawerBackground }}>
       <View
@@ -68,7 +59,9 @@ const DrawerContent = ({ navigation }) => {
           </View>
           <Image
             source={{
-              uri: googlePhotoUrl,
+              uri:
+                user.photoUrl ||
+                "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
             }}
             style={styles.avatar}
           />
@@ -170,7 +163,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     resizeMode: "cover",
     position: "absolute",
-    bottom: -SIZE.height * 1,
+    bottom: -SIZE.height * 1.5,
     left: SIZE.width * 4,
   },
   menuDiv: {

@@ -1,15 +1,27 @@
 import database from "@react-native-firebase/database";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
-import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useUserContext } from "../providers/user";
 import { globalStyles } from "../styles/globalStyle";
+import { showToast } from "../utils/error";
 
 const PeopleCard = ({ data, navigation }) => {
   const { user } = useUserContext();
   const { colors } = useTheme();
+  const [startingChat, setStartingChat] = useState(false);
+
+  console.log(data);
   const startChat = () => {
+    setStartingChat(true);
     console.log([`${user.id}${data.id}`, `${data.id}${user.id}`]);
     firestore()
       .collection("conversation")
@@ -20,14 +32,20 @@ const PeopleCard = ({ data, navigation }) => {
           const convoDoc = a.docs[0];
           const convoData = convoDoc.data();
           convoData.id = convoDoc.id;
+          setStartingChat(false);
           navigation.navigate("IndividualChat", {
             id: convoData.id,
-            name: getChatName(convoData, user.id),
+            name: getChatName(convoData, user.id).username,
+            photoUrl: getChatName(convoData, user.id).photoUrl,
             conversation: convoData,
           });
         } else {
           createNewConversation();
         }
+      })
+      .catch((err) => {
+        showToast("An error occured");
+        setStartingChat(false);
       });
   };
 
@@ -37,8 +55,18 @@ const PeopleCard = ({ data, navigation }) => {
       p: {},
       participants: [`${user.id}`, `${data.id}`],
     };
-    newConvo.p[`${user.id}`] = user.username;
-    newConvo.p[`${data.id}`] = data.username;
+    newConvo.p[`${user.id}`] = {
+      username: user.username,
+      photoUrl:
+        user.photoUrl ||
+        "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+    };
+    newConvo.p[`${data.id}`] = {
+      username: data.username,
+      photoUrl:
+        data.photoUrl ||
+        "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+    };
     firestore()
       .collection("conversation")
       .add(newConvo)
@@ -57,10 +85,16 @@ const PeopleCard = ({ data, navigation }) => {
 
           navigation.navigate("IndividualChat", {
             id: convoData.id,
-            name: getChatName(convoData, user.id),
+            name: getChatName(convoData, user.id).username,
+            photoUrl: getChatName(convoData, user.id.photoUrl),
             conversation: convoData,
           });
+          setStartingChat(false);
         });
+      })
+      .catch((err) => {
+        showToast("An error occured");
+        setStartingChat(false);
       });
   };
 
@@ -79,7 +113,9 @@ const PeopleCard = ({ data, navigation }) => {
       <View>
         <Image
           source={{
-            uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+            uri:
+              data.photoUrl ||
+              "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
           }}
           style={styles.avatar}
         />
@@ -95,7 +131,10 @@ const PeopleCard = ({ data, navigation }) => {
         >
           {data.username}
         </Text>
-        <Text style={{ ...globalStyles.midText, color: colors.secondText }}>
+        <Text
+          style={{ ...globalStyles.midText, color: colors.secondText }}
+          numberOfLines={2}
+        >
           {data.email}
         </Text>
         {data.title == "Student" && (
@@ -108,7 +147,11 @@ const PeopleCard = ({ data, navigation }) => {
           style={styles.msgBtn}
           onPress={startChat}
         >
-          <Text style={{ color: "white" }}>Message</Text>
+          {startingChat ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text style={{ color: "white" }}>Message</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>

@@ -192,6 +192,7 @@ const AddAnnouncement = ({ navigation }) => {
                       });
                     }}
                   >
+                    <Picker.Item label="Notice" value="Notice" />
                     <Picker.Item label="Classes" value="Classes" />
                     <Picker.Item label="Exams" value="Exams" />
                     <Picker.Item label="Result" value="Result" />

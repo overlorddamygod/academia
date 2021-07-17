@@ -51,8 +51,10 @@ const Home = ({ navigation }) => {
         </View>
         <View
               style={{
+                width: "90%",
                 alignItems: "center",
-                marginTop: 5,
+                justifyContent: "center",
+                marginTop: SIZE.width * 0.4,
               }}
             >
               <View

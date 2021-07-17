@@ -28,7 +28,7 @@ const ThemeProvider = ({ children }) => {
           setIsDark(COLOR[value]);
         }
       } catch (e) {
-        console.error(e);
+        // console.error(e);
       }
     }
     getColorMode();

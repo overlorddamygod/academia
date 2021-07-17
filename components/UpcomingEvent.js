@@ -57,7 +57,6 @@ const UpcomingEvent = ({ navigation }) => {
 
   return (
     <View>
-
       <View style={{ flexDirection: "row" }}>
         <View
           style={{
@@ -80,7 +79,7 @@ const UpcomingEvent = ({ navigation }) => {
           <Text style={{ color: colors.text, fontSize: 16 }}>Show All</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ width: "100%", padding: SIZE.width * 0.7 }}>
+      <View style={{ width: "100%" }}>
         <FlatList
           ListEmptyComponent={() => (
             <View
@@ -121,7 +120,7 @@ const UpcomingEvent = ({ navigation }) => {
               <Text
                 style={{
                   ...globalStyles.txt,
-                  fontSize: SIZE.width * 1.2,
+                  fontSize: SIZE.width * 1.1,
                   textAlign: "center",
                   // height: SIZE.he,
                 }}
@@ -131,8 +130,8 @@ const UpcomingEvent = ({ navigation }) => {
               <Text
                 style={{
                   ...globalStyles.txt,
-                  fontSize: 17,
-                  // marginTop: 5,
+                  fontSize: 15,
+                  marginTop: 3,
                   color: "lightgray",
                 }}
               >
@@ -225,8 +224,8 @@ export default UpcomingEvent;
 const styles = StyleSheet.create({
   events: {
     padding: SIZE.width * 0.7,
-    marginHorizontal: 6,
-    height: SIZE.screenHeight * 0.23,
+    marginRight: 6,
+    height: SIZE.height * 4.1,
     width: SIZE.screenWidth * 0.4,
     justifyContent: "center",
     alignItems: "center",
@@ -246,6 +245,5 @@ const styles = StyleSheet.create({
     height: "100%",
     width: SIZE.screenHeight * 0.2,
     resizeMode: "cover",
-
   },
 });

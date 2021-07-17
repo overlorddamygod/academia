@@ -2,8 +2,9 @@ import { AntDesign } from "@expo/vector-icons";
 import database from "@react-native-firebase/database";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   ImageBackground,
   ScrollView,
@@ -17,16 +18,19 @@ import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { Icons } from "./AboutCollege";
+import { showToast } from "../utils/error";
 
 const PersonDetail = ({ route, navigation }) => {
   const { colors } = useTheme();
   const { user } = useUserContext();
+  const [startingChat, setStartingChat] = useState(false);
 
   const { data } = route.params;
   console.log(data);
   useEffect(() => {}, []);
 
   const startChat = () => {
+    setStartingChat(true);
     console.log([`${user.id}${data.id}`, `${data.id}${user.id}`]);
     firestore()
       .collection("conversation")
@@ -37,14 +41,20 @@ const PersonDetail = ({ route, navigation }) => {
           const convoDoc = a.docs[0];
           const convoData = convoDoc.data();
           convoData.id = convoDoc.id;
+          setStartingChat(false);
           navigation.navigate("IndividualChat", {
             id: convoData.id,
-            name: getChatName(convoData, user.id),
+            name: getChatName(convoData, user.id).username,
+            photoUrl: getChatName(convoData, user.id).photoUrl,
             conversation: convoData,
           });
         } else {
           createNewConversation();
         }
+      })
+      .catch((err) => {
+        showToast("An error occured");
+        setStartingChat(false);
       });
   };
 
@@ -54,8 +64,18 @@ const PersonDetail = ({ route, navigation }) => {
       p: {},
       participants: [`${user.id}`, `${data.id}`],
     };
-    newConvo.p[`${user.id}`] = user.username;
-    newConvo.p[`${data.id}`] = data.username;
+    newConvo.p[`${user.id}`] = {
+      username: user.username,
+      photoUrl:
+        user.photoUrl ||
+        "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+    };
+    newConvo.p[`${data.id}`] = {
+      username: data.username,
+      photoUrl:
+        data.photoUrl ||
+        "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+    };
     firestore()
       .collection("conversation")
       .add(newConvo)
@@ -74,10 +94,16 @@ const PersonDetail = ({ route, navigation }) => {
 
           navigation.navigate("IndividualChat", {
             id: convoData.id,
-            name: getChatName(convoData, user.id),
+            name: getChatName(convoData, user.id).username,
+            photoUrl: getChatName(convoData, user.id).photoUrl,
             conversation: convoData,
           });
+          setStartingChat(false);
         });
+      })
+      .catch((err) => {
+        showToast("An error occured");
+        setStartingChat(false);
       });
   };
 
@@ -103,7 +129,9 @@ const PersonDetail = ({ route, navigation }) => {
         >
           <Image
             source={{
-              uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+              uri:
+                data.photoUrl ||
+                "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
             }}
             style={styles.image}
           />
@@ -115,36 +143,38 @@ const PersonDetail = ({ route, navigation }) => {
             {data.username}
           </Text>
           {data.title === "Student" && (
-            <Text
-              style={{
-                textAlign: "center",
-                lineHeight: 20,
-                fontWeight: "bold",
-                fontSize: 16,
-                color: colors.text,
-              }}
-            >
-              {data.faculty}
-            </Text>
+            <>
+              <Text
+                style={{
+                  textAlign: "center",
+                  lineHeight: 20,
+                  fontWeight: "bold",
+                  fontSize: 16,
+                  color: colors.text,
+                }}
+              >
+                {data.faculty}
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  fontSize: 16,
+                  color: colors.text,
+                }}
+              >
+                Semester : {data.semester}
+              </Text>
+            </>
           )}
-          <Text
-            style={{
-              fontWeight: "bold",
-              textAlign: "center",
-              fontSize: 16,
-              color: colors.text,
-            }}
-          >
-            Semester : {data.semester}
-          </Text>
 
           <Text
             style={{
               textAlign: "center",
               lineHeight: 20,
-              fontWeight:'bold', 
-              fontSize: 18,
-              color: colors.text
+              fontWeight: "bold",
+              fontSize: 19,
+              color: "grey",
             }}
           >
             " {data.bio} "
@@ -154,32 +184,38 @@ const PersonDetail = ({ route, navigation }) => {
           <Animatable.View animation="fadeInUp">
             <View
               style={{
-                marginTop: SIZE.width*0.6,
+                marginTop: SIZE.width * 0.6,
                 marginBottom: 10,
                 justifyContent: "center",
                 alignItems: "center",
                 flexDirection: "row",
               }}
             >
-              <TouchableOpacity 
-              activeOpacity={0.6}
-              style={{...styles.msgbtn,}} onPress={startChat}>
-                <Text
-                  style={{ color: "#7f8ee3", fontWeight: "bold", fontSize: 16 }}
-                >
-                  Message
-                </Text>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                style={{ ...styles.msgbtn }}
+                onPress={startChat}
+              >
+                {startingChat ? (
+                  <ActivityIndicator color="#7f8ee3" />
+                ) : (
+                  <Text
+                    style={{
+                      color: "#7f8ee3",
+                      fontWeight: "bold",
+                      fontSize: 16,
+                    }}
+                  >
+                    Message
+                  </Text>
+                )}
               </TouchableOpacity>
               {user.admin && (
                 <TouchableOpacity
-                  style={{...styles.msgbtn,backgroundColor:'#7f8ee3'}}
+                  style={{ ...styles.msgbtn, backgroundColor: "#7f8ee3" }}
                   onPress={sendPersonalNotification}
                 >
-                  <AntDesign
-                    name="notification"
-                    size={22}
-                    color="white"
-                  />
+                  <AntDesign name="notification" size={22} color="white" />
                 </TouchableOpacity>
               )}
             </View>
@@ -271,7 +307,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     position: "relative",
     zIndex: 2,
-    
   },
 
   image: {
@@ -284,7 +319,7 @@ const styles = StyleSheet.create({
     left: SIZE.screenWidth * 0.34,
     zIndex: 2,
     borderWidth: 2,
-    borderColor:'lightgray',
+    borderColor: "lightgray",
   },
   name: {
     fontSize: 27,
