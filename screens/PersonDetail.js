@@ -168,7 +168,7 @@ const PersonDetail = ({ route, navigation }) => {
             </>
           )}
 
-          {data.bio && (
+          {!!data.bio && (
             <Text
               style={{
                 textAlign: "center",
