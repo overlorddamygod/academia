@@ -168,17 +168,19 @@ const PersonDetail = ({ route, navigation }) => {
             </>
           )}
 
-          <Text
-            style={{
-              textAlign: "center",
-              lineHeight: 20,
-              fontWeight: "bold",
-              fontSize: 19,
-              color: "grey",
-            }}
-          >
-            " {data.bio} "
-          </Text>
+          {data.bio && (
+            <Text
+              style={{
+                textAlign: "center",
+                lineHeight: 20,
+                fontWeight: "bold",
+                fontSize: 19,
+                color: "grey",
+              }}
+            >
+              " {data.bio} "
+            </Text>
+          )}
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Animatable.View animation="fadeInUp">
