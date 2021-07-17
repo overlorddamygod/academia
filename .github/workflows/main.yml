@@ -39,7 +39,7 @@ jobs:
           npm install
       - name: Build Android Release
         run: |
-          npm run release
+          cd android &&./gradlew bundleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
