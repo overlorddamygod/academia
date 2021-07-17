@@ -48,7 +48,7 @@ const useCollectionLazy = (
     } catch (err) {
       setLoading(false);
       setError(err);
-      console.error(err);
+      // console.error(err);
     }
   };
 
@@ -63,7 +63,7 @@ const useCollectionLazy = (
       setValue((prevValue) => [...prevValue, ...docsAddId(data)]);
     } catch (err) {
       setError(err);
-      console.error(err);
+      // console.error(err);
     }
   };
 

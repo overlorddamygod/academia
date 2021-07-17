@@ -140,11 +140,11 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
       // const token = await getFcmToken();
 
       messaging().subscribeToTopic("All");
-
+      showToast("Logged out successfully");
       auth().signOut();
       GoogleSignin.signOut();
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   };
 
@@ -162,7 +162,6 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
       GoogleSignin.signOut();
       showToast("Successfully linked your google account");
     } catch (err) {
-      console.error(err);
       GoogleSignin.signOut();
 
       if (err.code == "auth/unknown") showToast("User has already been linked");

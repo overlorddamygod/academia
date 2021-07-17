@@ -37,38 +37,35 @@ const Home = ({ navigation }) => {
             paddingTop: SIZE.width * 0.3,
           }}
         >
-          
-            <View>
-              <Text
-                style={{
-                  ...globalStyles.txt,
-                  paddingLeft: SIZE.width,
-                  marginTop: -SIZE.width / 1.8,
-                }}
-              >
-                It's {isDark ? "Dark" : "Light"} theme right ?
-              </Text>
-            </View>
-
-            <View
+          <View>
+            <Text
               style={{
-                alignItems: "center",
-                marginTop: 5,
+                ...globalStyles.txt,
+                paddingLeft: SIZE.width,
+                marginTop: -SIZE.width / 1.8,
               }}
             >
-              <View
-                style={{
-                  width: "90%",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: SIZE.width * 0.4,
-               
-                }}
-              >
-                <InfoCard randomRoute={randomRoute} navigation={navigation} />
-              </View>
+              It's {isDark ? "Dark" : "Light"} theme right ?
+            </Text>
+          </View>
+
+          <View
+            style={{
+              alignItems: "center",
+              marginTop: 5,
+            }}
+          >
+            <View
+              style={{
+                width: "90%",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: SIZE.width * 0.4,
+              }}
+            >
+              <InfoCard randomRoute={randomRoute} navigation={navigation} />
             </View>
-          
+          </View>
         </View>
 
         <View

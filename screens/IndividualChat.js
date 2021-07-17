@@ -11,15 +11,16 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 import Hyperlink from "react-native-hyperlink";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
-import { SIZE } from "../styles/globalStyle";
+import { SIZE, globalStyles } from "../styles/globalStyle";
 
 const IndividualChat = ({ navigation, route: { params } }) => {
-  const { id, name, conversation } = params;
+  const { id, name, photoUrl, conversation } = params;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -123,7 +124,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
       });
       setMessage("");
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   };
 
@@ -193,6 +194,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
                 }}
                 seen={status ? status.seen : false}
                 me={user.id == item.userId}
+                photoUrl={user.id == item.userId ? user.photoUrl : photoUrl}
               />
             )}
           />
@@ -208,16 +210,24 @@ const IndividualChat = ({ navigation, route: { params } }) => {
         >
           <View
             style={{
-              width: SIZE.width * 2,
-              height: SIZE.width * 2,
               justifyContent: "center",
-              backgroundColor: "black",
               borderRadius: 30,
             }}
           >
-            <Text style={{ textAlign: "center", color: COLORS.white }}>
-              {name[0]}
-            </Text>
+            <Image
+              source={{
+                uri:
+                  photoUrl ||
+                  "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+              }}
+              style={{
+                ...globalStyles.smallavatar,
+                ...{
+                  height: 50,
+                  width: 50,
+                },
+              }}
+            />
           </View>
           <Text style={{ color: colors.text }}> {name + " "}is typing...</Text>
         </View>
@@ -270,22 +280,30 @@ const IndividualChat = ({ navigation, route: { params } }) => {
 
 export default IndividualChat;
 
-const ChatMessage = ({ message, me, deleteMessage, seen }) => {
+const ChatMessage = ({ message, me, deleteMessage, seen, photoUrl }) => {
   const { colors } = useTheme();
   const messageItems = [
     <View
       key={`${message.id}1`}
       style={{
-        width: SIZE.width * 2.25,
-        height: SIZE.height * 1.1,
         justifyContent: "center",
-        backgroundColor: colors.msgIcon,
         borderRadius: 30,
       }}
     >
-      <Text style={{ textAlign: "center", color: COLORS.white }}>
-        {message.username[0]}
-      </Text>
+      <Image
+        source={{
+          uri:
+            photoUrl ||
+            "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+        }}
+        style={{
+          ...globalStyles.smallavatar,
+          ...{
+            height: 50,
+            width: 50,
+          },
+        }}
+      />
     </View>,
     <TouchableOpacity
       key={`${message.id}2`}

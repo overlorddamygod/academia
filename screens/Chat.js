@@ -67,7 +67,8 @@ const Chat = ({ navigation }) => {
               onPress={() => {
                 navigation.navigate("IndividualChat", {
                   id: item.docId,
-                  name: getChatName(item, user.id),
+                  name: getChatName(item, user.id).username,
+                  photoUrl: getChatName(item, user.id).photoUrl,
                   conversation: item,
                 });
               }}
@@ -75,7 +76,9 @@ const Chat = ({ navigation }) => {
               <View>
                 <Image
                   source={{
-                    uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+                    uri:
+                      getChatName(item, user.id).photoUrl ||
+                      "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
                   }}
                   style={globalStyles.smallavatar}
                 />
@@ -88,7 +91,7 @@ const Chat = ({ navigation }) => {
                     color: colors.text,
                   }}
                 >
-                  {getChatName(item, user.id)}
+                  {getChatName(item, user.id).username}
                 </Text>
                 <Text
                   style={{

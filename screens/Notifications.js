@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,6 +15,7 @@ import { useCollectionLazy } from "../hooks/firestore";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import CustomFlatList from "../components/CustomFlatList";
+import Hyperlink from "react-native-hyperlink";
 
 const dummyLists = [
   { notifications: "Sandeep Maharjan Messaged You .", date: "20-3-23" },
@@ -18,7 +26,6 @@ const dummyLists = [
 
 const Notifications = ({ navigation }) => {
   const [lists, setLists] = useState(dummyLists);
-  const { colors } = useTheme();
 
   const query = firestore()
     .collection("user")
@@ -48,56 +55,7 @@ const Notifications = ({ navigation }) => {
             ListEmptyComponentText={"No notifications"}
             data={notifications}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <View
-                style={{
-                  marginHorizontal: 20,
-                  marginVertical: 10,
-                  backgroundColor: colors.card,
-                  borderRadius: 8,
-                  paddingHorizontal: SIZE.width,
-                  paddingVertical: SIZE.height * 0.2,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons
-                  name="notifications-circle"
-                  size={40}
-                  color={colors.text}
-                />
-                <View
-                  style={{ flex: 1, marginLeft: 20, justifyContent: "center" }}
-                >
-                  <Text
-                    style={{
-                      color: colors.text,
-                      fontWeight: "bold",
-                      fontSize: 20,
-                      marginVertical: 2,
-                      width: "99%",
-                    }}
-                  >
-                    {item.title}
-                  </Text>
-                  {!!item.body && (
-                    <Text
-                      style={{
-                        color: colors.text,
-                        fontSize: 15,
-                        marginVertical: 2,
-                        width: "99%",
-                      }}
-                    >
-                      {item.body}
-                    </Text>
-                  )}
-                  <Text style={{ ...globalStyles.midText, color: "#888" }}>
-                    {item.createdAt.toDate().toDateString()}
-                  </Text>
-                </View>
-              </View>
-            )}
+            renderItem={({ item }) => <NotificationCard item={item} />}
           />
         </View>
       </View>
@@ -107,4 +65,62 @@ const Notifications = ({ navigation }) => {
 
 export default Notifications;
 
-const styles = StyleSheet.create({});
+const NotificationCard = ({ item }) => {
+  const { colors } = useTheme();
+  const [showBody, setShowBody] = useState(false);
+
+  return (
+    <TouchableOpacity
+      style={{
+        marginHorizontal: 20,
+        marginVertical: 10,
+        backgroundColor: colors.card,
+        borderRadius: 8,
+        paddingHorizontal: SIZE.width,
+        paddingVertical: SIZE.height * 0.2,
+        flexDirection: "row",
+        alignItems: "center",
+      }}
+      activeOpacity={0.5}
+      onPress={() => setShowBody(!showBody)}
+    >
+      <Ionicons name="notifications-circle" size={40} color={colors.text} />
+      <View style={{ flex: 1, marginLeft: 20, justifyContent: "center" }}>
+        <Text
+          style={{
+            color: colors.text,
+            fontWeight: "bold",
+            fontSize: 18,
+            marginVertical: 2,
+            width: "99%",
+          }}
+        >
+          {item.title}
+        </Text>
+        {!!item.body && (
+          <Hyperlink
+            linkStyle={{ color: "#2980b9", textDecorationLine: "underline" }}
+            onPress={(url, text) => {
+              Linking.openURL(url);
+            }}
+          >
+            <Text
+              style={{
+                color: colors.text,
+                fontSize: 15,
+                marginVertical: 2,
+                width: "99%",
+              }}
+              numberOfLines={showBody ? 0 : 1}
+            >
+              {item.body}
+            </Text>
+          </Hyperlink>
+        )}
+        <Text style={{ ...globalStyles.midText, color: "#888" }}>
+          {item.createdAt.toDate().toDateString()}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
