@@ -23,7 +23,7 @@ const Subject = ({ route, navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title={short} navigation={navigation} />
+      <Header title={short} navigation={navigation} showSidebar={false} />
       {sub.firstHalf.sem && (
         <View
           style={{

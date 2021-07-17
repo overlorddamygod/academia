@@ -132,7 +132,11 @@ const Videos = ({ navigation }) => {
   console.log(SIZE.screenWidth, SIZE.screenWidth * 0.5625);
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Academia Video" navigation={navigation} />
+      <Header
+        title="Academia Video"
+        navigation={navigation}
+        showSidebar={false}
+      />
       <GalleryRoute navigation={navigation} screen="video" />
 
       {/* <TouchableOpacity

@@ -22,7 +22,6 @@ const PeopleCard = ({ data, navigation }) => {
   console.log(data);
   const startChat = () => {
     setStartingChat(true);
-    console.log([`${user.id}${data.id}`, `${data.id}${user.id}`]);
     firestore()
       .collection("conversation")
       .where("chatId", "in", [`${user.id}${data.id}`, `${data.id}${user.id}`])
@@ -120,7 +119,7 @@ const PeopleCard = ({ data, navigation }) => {
           style={styles.avatar}
         />
       </View>
-      <View style={{ marginLeft: 20 }}>
+      <View style={{ marginLeft: 20, flex: 1 }}>
         <Text
           style={{
             color: colors.text,

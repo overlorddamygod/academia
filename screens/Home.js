@@ -20,6 +20,12 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     setRandomRoute(routes[Math.floor(Math.random() * routes.length)]);
   }, []);
+
+  let shuffledImages = images
+    .map((a) => ({ sort: Math.random(), value: a }))
+    .sort((a, b) => a.sort - b.sort)
+    .map((a) => a.value);
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Header
@@ -37,38 +43,37 @@ const Home = ({ navigation }) => {
             paddingTop: SIZE.width * 0.3,
           }}
         >
-            <View>
-              <Text
-                style={{
-                  ...globalStyles.txt,
-                  paddingLeft: SIZE.width,
-                  marginTop: -SIZE.width / 1.8,
-                }}
-              >
-                It's {isDark ? "Dark" : "Light"} theme right ?
-              </Text>
-            </View>
-        </View>
-        <View
+          <View>
+            <Text
               style={{
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: SIZE.width * 0.4,
+                ...globalStyles.txt,
+                paddingLeft: SIZE.width,
+                marginTop: -SIZE.width / 1.8,
               }}
             >
-              <View
-                style={{
-                  width: "90%",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: -SIZE.width * 3.3,
-               
-                }}
-              >
-                <InfoCard randomRoute={randomRoute} navigation={navigation} />
-              </View>
-            </View>
+              It's {isDark ? "Dark" : "Light"} theme right ?
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: SIZE.width * 0.4,
+          }}
+        >
+          <View
+            style={{
+              width: "90%",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: -SIZE.width * 3.3,
+            }}
+          >
+            <InfoCard randomRoute={randomRoute} navigation={navigation} />
+          </View>
+        </View>
         <View
           style={{
             flex: 1,
@@ -89,7 +94,7 @@ const Home = ({ navigation }) => {
                 Recent Photos
               </Text>
             </View>
-            <ImageCarousel images={images} />
+            <ImageCarousel images={shuffledImages} />
           </View>
 
           <View>
@@ -116,15 +121,3 @@ const Home = ({ navigation }) => {
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  searchbar: {
-    flexDirection: "row",
-    height: SIZE.height * 1.2,
-    paddingLeft: SIZE.height * 0.5,
-    fontSize: SIZE.height * 0.5,
-    backgroundColor: "white",
-    borderRadius: 24,
-    alignItems: "center",
-  },
-});

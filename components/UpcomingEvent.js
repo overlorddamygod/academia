@@ -109,7 +109,7 @@ const UpcomingEvent = ({ navigation }) => {
             >
               <MaterialIcons
                 name="event-available"
-                size={34}
+                size={20}
                 style={{
                   position: "absolute",
                   top: SIZE.width * 0.3,
@@ -120,10 +120,10 @@ const UpcomingEvent = ({ navigation }) => {
               <Text
                 style={{
                   ...globalStyles.txt,
-                  fontSize: SIZE.width * 1.1,
+                  fontSize: SIZE.width * 1.05,
                   textAlign: "center",
-                  // height: SIZE.he,
                 }}
+                numberOfLines={2}
               >
                 {item.title}
               </Text>
@@ -138,20 +138,22 @@ const UpcomingEvent = ({ navigation }) => {
                 {item.startingDate.toDate().toLocaleDateString()}
               </Text>
               <TouchableOpacity
-              onPress={
-                ()=>navigation.navigate("Announcements", { screen: "Announcements" })
-              }
+                onPress={() =>
+                  navigation.navigate("Announcements", {
+                    screen: "Announcements",
+                  })
+                }
                 activeOpacity={0.5}
                 style={{
                   backgroundColor: "#8d81db",
                   padding: 8,
-                  marginTop: SIZE.height * 0.25,
+                  marginVertical: SIZE.height * 0.25,
                   width: SIZE.screenWidth * 0.2,
                   borderRadius: 5,
                 }}
               >
                 <Text
-                  style={{ fontSize: 17, color: "white", textAlign: "center" }}
+                  style={{ fontSize: 14, color: "white", textAlign: "center" }}
                 >
                   All
                 </Text>
@@ -199,7 +201,7 @@ export const InfoCard = ({ randomRoute, navigation }) => {
           {name}
         </Text>
         <TouchableOpacity
-        activeOpacity={0.7}
+          activeOpacity={0.7}
           onPress={() => {
             navigation.navigate(`${screen}`, {
               screen: `${screen}`,

@@ -159,7 +159,7 @@ export default DrawerContent;
 const styles = StyleSheet.create({
   avatar: {
     height: SIZE.height * 2.5,
-    width: SIZE.width * 5,
+    width: SIZE.height * 2.5,
     borderRadius: 50,
     resizeMode: "cover",
     position: "absolute",
