@@ -64,8 +64,8 @@ const Onboard = ({navigation}) => {
             image: <Image source={require('../images/logo.png')}
             style={{height:SIZE.screenWidth*0.4,width:SIZE.screenWidth*0.4}}
             />,
-            title: 'Academia International College',
-            subtitle: 'Best Institute In The Valley',
+            title: "Academia Int'l College",
+            subtitle: 'Excellence in the academic development ',
           },
           {
             backgroundColor: '#6765c2',

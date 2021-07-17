@@ -45,7 +45,7 @@ const TeacherList = ({ navigation }) => {
           <View
             style={{
               marginTop: -SIZE.height,
-              backgroundColor: colors.searchDiv,
+              backgroundColor: colors.homeCard,
               marginVertical: SIZE.height / 3,
               marginHorizontal: SIZE.width,
               borderRadius: 10,

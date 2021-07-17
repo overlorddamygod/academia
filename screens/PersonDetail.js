@@ -21,6 +21,7 @@ import { Icons } from "./AboutCollege";
 const PersonDetail = ({ route, navigation }) => {
   const { colors } = useTheme();
   const { user } = useUserContext();
+
   const { data } = route.params;
   console.log(data);
   useEffect(() => {}, []);
@@ -114,38 +115,36 @@ const PersonDetail = ({ route, navigation }) => {
             {data.username}
           </Text>
           {data.title === "Student" && (
-            <>
-              <Text
-                style={{
-                  textAlign: "center",
-                  lineHeight: 20,
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  color: colors.text,
-                }}
-              >
-                {data.faculty}
-              </Text>
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  fontSize: 16,
-                  color: colors.text,
-                }}
-              >
-                Semester : {data.semester}
-              </Text>
-            </>
+            <Text
+              style={{
+                textAlign: "center",
+                lineHeight: 20,
+                fontWeight: "bold",
+                fontSize: 16,
+                color: colors.text,
+              }}
+            >
+              {data.faculty}
+            </Text>
           )}
+          <Text
+            style={{
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: 16,
+              color: colors.text,
+            }}
+          >
+            Semester : {data.semester}
+          </Text>
 
           <Text
             style={{
               textAlign: "center",
               lineHeight: 20,
-              fontWeight: "bold",
+              fontWeight:'bold', 
               fontSize: 18,
-              color: colors.text,
+              color: colors.text
             }}
           >
             " {data.bio} "
@@ -155,18 +154,16 @@ const PersonDetail = ({ route, navigation }) => {
           <Animatable.View animation="fadeInUp">
             <View
               style={{
-                marginTop: SIZE.width * 0.6,
+                marginTop: SIZE.width*0.6,
                 marginBottom: 10,
                 justifyContent: "center",
                 alignItems: "center",
                 flexDirection: "row",
               }}
             >
-              <TouchableOpacity
-                activeOpacity={0.6}
-                style={{ ...styles.msgbtn }}
-                onPress={startChat}
-              >
+              <TouchableOpacity 
+              activeOpacity={0.6}
+              style={{...styles.msgbtn,}} onPress={startChat}>
                 <Text
                   style={{ color: "#7f8ee3", fontWeight: "bold", fontSize: 16 }}
                 >
@@ -175,10 +172,14 @@ const PersonDetail = ({ route, navigation }) => {
               </TouchableOpacity>
               {user.admin && (
                 <TouchableOpacity
-                  style={{ ...styles.msgbtn, backgroundColor: "#7f8ee3" }}
+                  style={{...styles.msgbtn,backgroundColor:'#7f8ee3'}}
                   onPress={sendPersonalNotification}
                 >
-                  <AntDesign name="notification" size={22} color="white" />
+                  <AntDesign
+                    name="notification"
+                    size={22}
+                    color="white"
+                  />
                 </TouchableOpacity>
               )}
             </View>
@@ -261,8 +262,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     flex: 1,
-    padding: 20,
-    borderRadius: 70,
+    padding: SIZE.height,
   },
   top: {
     // backgroundColor: "#757BBD",
@@ -271,19 +271,20 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     position: "relative",
     zIndex: 2,
+    
   },
 
   image: {
     height: SIZE.screenHeight * 0.15,
     width: SIZE.screenHeight * 0.15,
-    borderRadius: 59,
+    borderRadius: SIZE.width,
     resizeMode: "cover",
     position: "absolute",
     top: SIZE.screenHeight * 0.2,
     left: SIZE.screenWidth * 0.34,
     zIndex: 2,
-    borderWidth: 4,
-    borderColor: "#00000078",
+    borderWidth: 2,
+    borderColor:'lightgray',
   },
   name: {
     fontSize: 27,
