@@ -25,7 +25,7 @@ const Login = ({ navigation }) => {
   const { login, loginWithGoogle } = useUserContext();
 
   const initLogin = async () => {
-    if (!email) {
+    if (!email.trim()) {
       showToast("Please enter your email");
       return;
     }
@@ -35,7 +35,7 @@ const Login = ({ navigation }) => {
     }
     setLoading(true);
     try {
-      const result = await login(email, password);
+      const result = await login(email.trim(), password);
       showToast("Succesfully signed in");
       setLoading(false);
     } catch (err) {
@@ -89,7 +89,9 @@ const Login = ({ navigation }) => {
                 autoCompleteType="email"
                 keyboardType="email-address"
                 style={authStyles.input}
-                onChangeText={setEmail}
+                onChangeText={(text) => {
+                  setEmail(text);
+                }}
                 value={email}
                 placeholderTextColor="#666"
               />
@@ -177,6 +179,7 @@ const Login = ({ navigation }) => {
                     navigation.navigate("Register");
                   }}
                 >
+                  {" "}
                   Register
                 </Text>
               </Text>

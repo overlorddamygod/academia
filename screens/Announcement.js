@@ -47,11 +47,7 @@ const AnnouncementScreen = ({ navigation }) => {
 
   return (
     <>
-      <Header
-        title="Announcement"
-        navigation={navigation}
-        showSidebar={false}
-      />
+      <Header title="Notices" navigation={navigation} showSidebar={false} />
       <View style={{ flex: 1 }}>
         <View
           style={{
@@ -116,7 +112,7 @@ const Announcement = ({
 
   const [showBody, setShowBody] = useState(false);
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       style={{
         marginHorizontal: 20,
         marginBottom: 10,
@@ -176,7 +172,7 @@ const Announcement = ({
           {data.createdAt.toDate().toLocaleDateString()}
         </Text>
       </>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 

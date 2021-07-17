@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,Image
+  View,
+  Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useUserContext } from "../providers/user";
@@ -25,11 +26,11 @@ const Register = ({ navigation }) => {
   const { register } = useUserContext();
 
   const initRegister = async () => {
-    if (!username) {
+    if (!username.trim()) {
       showToast("Please enter your username");
       return;
     }
-    if (!email) {
+    if (!email.trim()) {
       showToast("Please enter your email");
       return;
     }
@@ -43,7 +44,11 @@ const Register = ({ navigation }) => {
     }
     setRegistering(true);
     try {
-      let registerResult = await register(username, email, password1);
+      let registerResult = await register(
+        username.trim(),
+        email.trim(),
+        password1
+      );
       const res = await registerResult.json();
       if (!res.error) {
         showToast("Successfully signed up. Please log in");
@@ -70,11 +75,17 @@ const Register = ({ navigation }) => {
         <View style={{ flex: 1, backgroundColor: COLORS.main }}>
           <View style={authStyles.upper}>
             <View style={{ alignItems: "center" }}>
-            <View style={{flexDirection:'row'}}>
-              <Image source={require('../images/logo.png')}
-            style={{height:SIZE.screenWidth*0.1,width:SIZE.screenWidth*0.1}}
-            />
-              <Text style={{...authStyles.maintext,alignSelf:'flex-end'}}>cademia </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Image
+                  source={require("../images/logo.png")}
+                  style={{
+                    height: SIZE.screenWidth * 0.1,
+                    width: SIZE.screenWidth * 0.1,
+                  }}
+                />
+                <Text style={{ ...authStyles.maintext, alignSelf: "flex-end" }}>
+                  cademia{" "}
+                </Text>
               </View>
               <Text style={authStyles.maintext}>International College</Text>
               <View style={authStyles.line}></View>
@@ -89,13 +100,17 @@ const Register = ({ navigation }) => {
               <TextInput
                 placeholder="Username"
                 style={authStyles.input}
-                onChangeText={setUsername}
+                onChangeText={(text) => {
+                  setUsername(text.trim());
+                }}
                 value={username}
               />
               <TextInput
                 placeholder="Email"
                 style={authStyles.input}
-                onChangeText={setEmail}
+                onChangeText={(text) => {
+                  setEmail(text.trim());
+                }}
                 value={email}
               />
               <TextInput
@@ -116,24 +131,38 @@ const Register = ({ navigation }) => {
               />
             </View>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <TouchableOpacity style={{...authStyles.btn,flexDirection:'row'}} onPress={initRegister}>
+              <TouchableOpacity
+                style={{ ...authStyles.btn, flexDirection: "row" }}
+                onPress={initRegister}
+              >
                 {registering ? (
                   <ActivityIndicator color="white" />
                 ) : (
                   <>
-                  <AntDesign name="login" size={23} color="white" />
-                  <Text style={{...authStyles.text,marginLeft:SIZE.width}}>Register</Text>
+                    <AntDesign name="login" size={23} color="white" />
+                    <Text
+                      style={{ ...authStyles.text, marginLeft: SIZE.width }}
+                    >
+                      Register
+                    </Text>
                   </>
                 )}
               </TouchableOpacity>
-              <Text style={{color:"#444", marginTop: SIZE.height / 8, fontSize: 18 }}>
+              <Text
+                style={{
+                  color: "#444",
+                  marginTop: SIZE.height / 8,
+                  fontSize: 18,
+                }}
+              >
                 Already have account?
                 <Text
-                  style={{ color:"#222", fontWeight: "bold" }}
+                  style={{ color: "#222", fontWeight: "bold" }}
                   onPress={() => {
                     navigation.navigate("Login");
                   }}
                 >
+                  {" "}
                   Login
                 </Text>
               </Text>

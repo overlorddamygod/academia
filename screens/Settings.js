@@ -114,7 +114,7 @@ export default function Settings({ navigation }) {
                 Tap to Read
               </Text>
             </View>
-            <AntDesign name="bulb1" size={24} color="black" />
+            <AntDesign name="bulb1" size={24} color={colors.text} />
           </TouchableOpacity>
           <Text
             style={{

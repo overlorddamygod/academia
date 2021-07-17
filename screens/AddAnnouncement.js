@@ -75,11 +75,7 @@ const AddAnnouncement = ({ navigation }) => {
         backgroundColor: colors.mainblue,
       }}
     >
-      <Header
-        title="Add Announcement"
-        navigation={navigation}
-        showSidebar={false}
-      />
+      <Header title="New Notice" navigation={navigation} showSidebar={false} />
       <View
         style={{
           backgroundColor: colors.background,

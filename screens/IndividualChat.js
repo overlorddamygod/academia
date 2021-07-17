@@ -18,6 +18,7 @@ import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
 import { SIZE, globalStyles } from "../styles/globalStyle";
+import moment from "moment";
 
 const IndividualChat = ({ navigation, route: { params } }) => {
   const { id, name, photoUrl, conversation } = params;
@@ -223,8 +224,8 @@ const IndividualChat = ({ navigation, route: { params } }) => {
               style={{
                 ...globalStyles.smallavatar,
                 ...{
-                  height: 50,
-                  width: 50,
+                  height: 40,
+                  width: 40,
                 },
               }}
             />
@@ -281,7 +282,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
 export default IndividualChat;
 
 const ChatMessage = ({ message, me, deleteMessage, seen, photoUrl }) => {
-  const { colors } = useTheme();
+  const { colors, dark } = useTheme();
   const messageItems = [
     <View
       key={`${message.id}1`}
@@ -299,8 +300,8 @@ const ChatMessage = ({ message, me, deleteMessage, seen, photoUrl }) => {
         style={{
           ...globalStyles.smallavatar,
           ...{
-            height: 50,
-            width: 50,
+            height: 40,
+            width: 40,
           },
         }}
       />
@@ -313,7 +314,7 @@ const ChatMessage = ({ message, me, deleteMessage, seen, photoUrl }) => {
       }}
       style={{
         marginHorizontal: SIZE.width / 2,
-        backgroundColor: message.deleted ? "red" : me ? "#F8F8F9" : "#EBF4FF",
+        backgroundColor: dark ? colors.mainblue : me ? "#F8F8F9" : "#EBF4FF",
         maxWidth: SIZE.screenWidth * 0.6,
         paddingHorizontal: SIZE.width * 0.6,
         paddingVertical: SIZE.height / 2.6,
@@ -332,7 +333,7 @@ const ChatMessage = ({ message, me, deleteMessage, seen, photoUrl }) => {
             Linking.openURL(url);
           }}
         >
-          <Text style={{ color: COLORS.black, fontSize: 15 }}>
+          <Text style={{ color: colors.text, fontSize: 15 }}>
             {message.body}
           </Text>
         </Hyperlink>
@@ -341,7 +342,7 @@ const ChatMessage = ({ message, me, deleteMessage, seen, photoUrl }) => {
     <View key={`${message.id}3`}>
       {/* <Moment date={message.createdAt}><Text></Text></Moment> */}
       <Text style={{ fontSize: 10, color: colors.text }}>
-        {new Date(message.createdAt).toLocaleString()}
+        {moment(new Date(message.createdAt)).fromNow()}
       </Text>
       {me && message.createdAt == seen && (
         <Text style={{ fontSize: 12, color: colors.text }}>Seen</Text>
