@@ -73,6 +73,8 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   };
 
   useEffect(() => {
+    messaging().subscribeToTopic("All");
+
     const unsubscribeAuth = auth().onAuthStateChanged(UserChange);
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       console.log("Message handled in the background!", remoteMessage);
@@ -137,7 +139,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
           .remove();
       }
       messaging().deleteToken();
-      // const token = await getFcmToken();
+      const token = await getFcmToken();
 
       messaging().subscribeToTopic("All");
       showToast("Logged out successfully");

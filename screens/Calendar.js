@@ -185,7 +185,7 @@ const CalendarScreen = ({ navigation }) => {
           </View>
 
           <CustomFlatList
-            data={events}
+            data={eventsCache[`${date.year}-${date.month}`]}
             refreshing={refreshing}
             onRefresh={onRefresh}
             keyExtractor={(item) => `${item.id}`}
