@@ -152,25 +152,25 @@ const Announcement = ({
           {data.title || " "}
         </Text>
 
-        {/* {showBody && data.body && ( */}
-        <Hyperlink
-          linkStyle={{ color: "#2980b9", textDecorationLine: "underline" }}
-          onPress={(url, text) => {
-            Linking.openURL(url);
-          }}
-        >
-          <Text
-            style={{
-              color: colors.text,
-              fontSize: 16,
-              marginVertical: 8,
+        {!!data.body && (
+          <Hyperlink
+            linkStyle={{ color: "#2980b9", textDecorationLine: "underline" }}
+            onPress={(url, text) => {
+              Linking.openURL(url);
             }}
-            numberOfLines={showBody ? 0 : 1}
           >
-            {data.body || " "}
-          </Text>
-        </Hyperlink>
-        {/* )} */}
+            <Text
+              style={{
+                color: colors.text,
+                fontSize: 16,
+                marginVertical: 8,
+              }}
+              numberOfLines={showBody ? 0 : 1}
+            >
+              {data.body || " "}
+            </Text>
+          </Hyperlink>
+        )}
 
         <Text style={{ color: "#ABABAB" }}>
           {data.createdAt.toDate().toLocaleDateString()}
