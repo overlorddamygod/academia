@@ -101,7 +101,7 @@ const Register = ({ navigation }) => {
                 placeholder="Username"
                 style={authStyles.input}
                 onChangeText={(text) => {
-                  setUsername(text.trim());
+                  setUsername(text);
                 }}
                 value={username}
               />
@@ -109,7 +109,7 @@ const Register = ({ navigation }) => {
                 placeholder="Email"
                 style={authStyles.input}
                 onChangeText={(text) => {
-                  setEmail(text.trim());
+                  setEmail(text);
                 }}
                 value={email}
               />

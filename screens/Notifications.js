@@ -111,7 +111,7 @@ const NotificationCard = ({ item }) => {
                 marginVertical: 2,
                 width: "99%",
               }}
-              numberOfLines={showBody ? 0 : 1}
+              numberOfLines={showBody ? 0 : 2}
             >
               {item.body}
             </Text>

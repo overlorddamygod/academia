@@ -89,9 +89,7 @@ const Login = ({ navigation }) => {
                 autoCompleteType="email"
                 keyboardType="email-address"
                 style={authStyles.input}
-                onChangeText={(text) => {
-                  setEmail(text);
-                }}
+                onChangeText={setEmail}
                 value={email}
                 placeholderTextColor="#666"
               />

@@ -66,7 +66,7 @@ const UpcomingEvent = ({ navigation }) => {
           }}
         >
           <Text style={{ color: colors.text, fontSize: 16 }}>
-            Ongoing Events
+            Upcoming Events
           </Text>
         </View>
 
