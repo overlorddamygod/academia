@@ -110,6 +110,7 @@ const IndividualChat = ({ navigation, route: { params } }) => {
     // });
     try {
       const createdAt = Date.now();
+      setMessage("");
       const addMessage = await conversationRef.child("messages").push({
         userId: user.id,
         username: user.username,
@@ -123,7 +124,6 @@ const IndividualChat = ({ navigation, route: { params } }) => {
       conversationRef.child(`status/${user.id}`).update({
         typing: false,
       });
-      setMessage("");
     } catch (err) {
       // console.error(err);
     }

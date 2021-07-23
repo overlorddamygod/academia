@@ -56,7 +56,11 @@ const UpcomingEvent = ({ navigation }) => {
   );
 
   return (
-    <View>
+    <View
+      style={{
+        marginBottom: SIZE.width * 0.7,
+      }}
+    >
       <View style={{ flexDirection: "row" }}>
         <View
           style={{
@@ -105,6 +109,7 @@ const UpcomingEvent = ({ navigation }) => {
                 ...styles.events,
                 backgroundColor: colors.upcoming,
                 position: "relative",
+                justifyContent: "space-between",
               }}
             >
               <MaterialIcons
@@ -117,26 +122,34 @@ const UpcomingEvent = ({ navigation }) => {
                 }}
                 color="white"
               />
-              <Text
+              <View
                 style={{
-                  ...globalStyles.txt,
-                  fontSize: SIZE.width * 1.05,
-                  textAlign: "center",
-                }}
-                numberOfLines={2}
-              >
-                {item.title}
-              </Text>
-              <Text
-                style={{
-                  ...globalStyles.txt,
-                  fontSize: 15,
-                  marginTop: 3,
-                  color: "lightgray",
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                {item.startingDate.toDate().toLocaleDateString()}
-              </Text>
+                <Text
+                  style={{
+                    ...globalStyles.txt,
+                    fontSize: SIZE.width * 1.05,
+                    textAlign: "center",
+                  }}
+                  numberOfLines={2}
+                >
+                  {item.title}
+                </Text>
+                <Text
+                  style={{
+                    ...globalStyles.txt,
+                    fontSize: 15,
+                    marginTop: 3,
+                    color: "lightgray",
+                  }}
+                >
+                  {item.startingDate.toDate().toLocaleDateString()}
+                </Text>
+              </View>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate("Announcements", {
@@ -147,7 +160,6 @@ const UpcomingEvent = ({ navigation }) => {
                 style={{
                   backgroundColor: "#8d81db",
                   padding: 8,
-                  marginVertical: SIZE.height * 0.25,
                   width: SIZE.screenWidth * 0.2,
                   borderRadius: 5,
                 }}
@@ -227,7 +239,7 @@ const styles = StyleSheet.create({
   events: {
     padding: SIZE.width * 0.7,
     marginRight: 6,
-    height: SIZE.height * 4.1,
+    height: SIZE.height * 4.5,
     width: SIZE.screenWidth * 0.4,
     justifyContent: "center",
     alignItems: "center",

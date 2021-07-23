@@ -16,6 +16,8 @@ import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
 import { getErrorMessage, showToast } from "../utils/error";
+import CustomPasswordInput from "../components/CustomPasswordInput.js";
+
 const Register = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -113,19 +115,11 @@ const Register = ({ navigation }) => {
                 }}
                 value={email}
               />
-              <TextInput
-                placeholder="Password"
-                autoCompleteType="password"
-                secureTextEntry={true}
-                style={authStyles.input}
+              <CustomPasswordInput
                 onChangeText={setPassword1}
                 value={password1}
               />
-              <TextInput
-                placeholder="Confirm Password"
-                autoCompleteType="password"
-                secureTextEntry={true}
-                style={authStyles.input}
+              <CustomPasswordInput
                 onChangeText={setPassword2}
                 value={password2}
               />

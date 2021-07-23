@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -16,6 +16,7 @@ import { authStyles } from "../styles/authStyle";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
 import { getErrorMessage, showToast } from "../utils/error";
+import CustomPasswordInput from "../components/CustomPasswordInput.js";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -93,16 +94,11 @@ const Login = ({ navigation }) => {
                 value={email}
                 placeholderTextColor="#666"
               />
-
-              <TextInput
-                placeholder="Password"
-                autoCompleteType="password"
-                secureTextEntry={true}
-                style={authStyles.input}
+              <CustomPasswordInput
                 onChangeText={setPassword}
                 value={password}
-                placeholderTextColor="#666"
               />
+
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("ForgotPassword", {

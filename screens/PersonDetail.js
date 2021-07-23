@@ -1,5 +1,6 @@
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import database from "@react-native-firebase/database";
+import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
@@ -114,6 +115,36 @@ const PersonDetail = ({ route, navigation }) => {
     });
   };
 
+  const setAdmin = async () => {
+    const idToken = await auth().currentUser.getIdToken();
+    fetch(
+      "https://academiacollege.azurewebsites.net/api/setrole?code=XrgGsmrM0eyACHoiNHGlcubdFV7LCqfaLrLMBe8LpULYERXMO6DEqg%3D%3D",
+      // "http://192.168.100.4:7071/api/setrole",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          authorization: idToken,
+        },
+        body: JSON.stringify({
+          id: data.id,
+          admin: true,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        if (!res.error) {
+          showToast("Succesfully made an admin");
+        } else {
+          showToast("Error assigning role");
+        }
+      })
+      .catch((err) => {
+        showToast("Error assigning role");
+      });
+  };
+
   return (
     <>
       <Header
@@ -213,12 +244,26 @@ const PersonDetail = ({ route, navigation }) => {
                 )}
               </TouchableOpacity>
               {user.admin && (
-                <TouchableOpacity
-                  style={{ ...styles.msgbtn, backgroundColor: "#7f8ee3" }}
-                  onPress={sendPersonalNotification}
-                >
-                  <AntDesign name="notification" size={22} color="white" />
-                </TouchableOpacity>
+                <>
+                  <TouchableOpacity
+                    style={{ ...styles.msgbtn, backgroundColor: "#7f8ee3" }}
+                    onPress={sendPersonalNotification}
+                  >
+                    <AntDesign name="notification" size={22} color="white" />
+                  </TouchableOpacity>
+                  {!data.admin && (
+                    <TouchableOpacity
+                      style={{ ...styles.msgbtn, backgroundColor: "#7f8ee3" }}
+                      onPress={setAdmin}
+                    >
+                      <MaterialIcons
+                        name="accessibility"
+                        size={22}
+                        color="white"
+                      />
+                    </TouchableOpacity>
+                  )}
+                </>
               )}
             </View>
 

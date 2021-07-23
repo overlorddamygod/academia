@@ -55,6 +55,7 @@ const Chat = ({ navigation }) => {
                 paddingVertical: SIZE.height * 0.3,
                 borderRadius: 10,
                 flexDirection: "row",
+                flex: 1,
                 alignItems: "center",
               }}
               onPress={() => {
@@ -91,13 +92,16 @@ const Chat = ({ navigation }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
+                    flex: 1,
                   }}
                 >
                   <Text
                     style={{
                       fontSize: 15,
                       color: "grey",
+                      width: SIZE.width * 8,
                     }}
+                    numberOfLines={1}
                   >
                     {item.lastMessage || "Start a conversation"}
                   </Text>
