@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "@react-navigation/native";
-import { useCollectionLazy } from "../hooks/firestore";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-import CustomFlatList from "../components/CustomFlatList";
+import { useTheme } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Linking, Text, TouchableOpacity, View } from "react-native";
 import Hyperlink from "react-native-hyperlink";
+import CustomFlatList from "../components/CustomFlatList";
+import Header from "../components/Header";
+import { useCollectionLazy } from "../hooks/firestore";
 import { useUserContext } from "../providers/user";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const Notifications = ({ navigation }) => {
   const { clearNotificationCount } = useUserContext();

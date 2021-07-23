@@ -2,23 +2,23 @@ import { Feather } from "@expo/vector-icons";
 import database from "@react-native-firebase/database";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
+import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
+  Image,
   Linking,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Image,
 } from "react-native";
 import Hyperlink from "react-native-hyperlink";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
-import { SIZE, globalStyles } from "../styles/globalStyle";
-import moment from "moment";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 const IndividualChat = ({ navigation, route: { params } }) => {
   const { id, name, photoUrl, conversation } = params;

@@ -1,20 +1,12 @@
+import { AntDesign } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Linking,
-  FlatList,
-  TouchableHighlight,
-} from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Header from "../components/Header";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import { AntDesign } from "@expo/vector-icons";
-import CustomTab from "../components/CustomTab";
 import CustomFlatList from "../components/CustomFlatList";
+import CustomTab from "../components/CustomTab";
+import Header from "../components/Header";
+import { SIZE } from "../styles/globalStyle";
 
 const Subject = ({ route, navigation }) => {
   const { colors } = useTheme();

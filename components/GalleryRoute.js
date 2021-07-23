@@ -1,6 +1,6 @@
 import { useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { SIZE } from "../styles/globalStyle";
 import CustomTab from "./CustomTab";
 

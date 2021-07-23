@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
+import firestore from "@react-native-firebase/firestore";
+import { useTheme } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
-  View,
-  Text,
+  Alert,
   FlatList,
-  TouchableOpacity,
   Linking,
   Modal,
   StyleSheet,
-  Alert,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { Button } from "react-native-ui-lib";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import firestore from "@react-native-firebase/firestore";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
-import Header from "../components/Header";
-import { useTheme } from "@react-navigation/native";
-import { useCollectionLazy } from "../hooks/firestore";
-
 import { CustomTextInput, InputContainer } from "../components/CustomInput";
-import COLORS from "../styles/colors";
-
-import { showToast } from "../utils/error";
+import Header from "../components/Header";
+import { useCollectionLazy } from "../hooks/firestore";
 import { useUserContext } from "../providers/user";
+import COLORS from "../styles/colors";
+import { globalStyles, SIZE } from "../styles/globalStyle";
+import { showToast } from "../utils/error";
+
 const downloadLink = ({ navigation }) => {
   const { colors } = useTheme();
   const [option, setoption] = useState(false);

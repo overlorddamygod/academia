@@ -1,20 +1,13 @@
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Picker,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Picker, Text, TextInput, TouchableOpacity, View } from "react-native";
+import CustomFlatList from "../components/CustomFlatList";
 import Header from "../components/Header";
 import PeopleCard from "../components/PeopleCard";
 import { useCollectionLazy } from "../hooks/firestore";
 import { useUserContext } from "../providers/user";
 import { globalStyles, SIZE } from "../styles/globalStyle";
-import CustomFlatList from "../components/CustomFlatList";
 
 const StudentList = ({ navigation }) => {
   const { user } = useUserContext();

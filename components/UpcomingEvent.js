@@ -1,18 +1,18 @@
-import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   FlatList,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Image,
 } from "react-native";
-import { globalStyles, SIZE } from "../styles/globalStyle";
 import { useCollection } from "../hooks/firestore";
-import firestore from "@react-native-firebase/firestore";
 import { useUserContext } from "../providers/user";
+import { globalStyles, SIZE } from "../styles/globalStyle";
 
 export const route = [
   {

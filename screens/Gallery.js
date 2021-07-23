@@ -3,13 +3,13 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Image,
   Modal,
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
-  Alert,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -117,7 +117,7 @@ const Gallery = ({ navigation }) => {
               }}
               onPress={() => setOption(true)}
             >
-              <Ionicons name="add" size={20} color='#fff' />
+              <Ionicons name="add" size={20} color="#fff" />
               <Text style={{ ...globalStyles.midText, color: "white" }}>
                 Add Image
               </Text>
@@ -220,7 +220,10 @@ const Gallery = ({ navigation }) => {
                                 onPress: () => console.log("Cancelled!"),
                                 style: "cancel",
                               },
-                              { text: "OK", onPress: () =>  deleteData(imageuri) },
+                              {
+                                text: "OK",
+                                onPress: () => deleteData(imageuri),
+                              },
                             ],
                             { cancelable: true }
                           );

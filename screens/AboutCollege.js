@@ -10,9 +10,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 import Header from "../components/Header";
 import { globalStyles, SIZE } from "../styles/globalStyle";
-import * as Animatable from "react-native-animatable";
+
 const AboutCollege = ({ navigation }) => {
   const { colors } = useTheme();
   return (
@@ -30,7 +31,8 @@ const AboutCollege = ({ navigation }) => {
           ></ImageBackground>
         </View>
 
-        <Animatable.View animation="fadeInUp"
+        <Animatable.View
+          animation="fadeInUp"
           style={{
             flex: 1,
             width: SIZE.screenWidth,
@@ -82,7 +84,6 @@ const AboutCollege = ({ navigation }) => {
             </Text>
           </View>
         </Animatable.View>
-
       </ScrollView>
     </>
   );

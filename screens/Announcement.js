@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  ScrollView,
-  StatusBar,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-  Linking,
-  TouchableHighlight,
-  ActivityIndicator,
-} from "react-native";
-import Header from "../components/Header";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
+import React, { useState } from "react";
+import {
+  Linking,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Hyperlink from "react-native-hyperlink";
+import CustomFlatList from "../components/CustomFlatList";
+import Header from "../components/Header";
 import { useCollectionLazy } from "../hooks/firestore";
 import COLORS, { tagColor } from "../styles/colors";
-import Hyperlink from "react-native-hyperlink";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import CustomFlatList from "../components/CustomFlatList";
 
 const AnnouncementScreen = ({ navigation }) => {
   const [selectedTag, setSelectedTag] = useState("All Items");

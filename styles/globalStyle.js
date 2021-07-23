@@ -9,8 +9,6 @@ const SIZE = {
   screenHeight: height,
 };
 
-console.log(SIZE);
-
 const globalStyles = StyleSheet.create({
   container: {
     flex: 1,

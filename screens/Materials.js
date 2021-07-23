@@ -14,7 +14,6 @@ import { faculties } from "../components/SubjectList";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 
 export default function Materials({ navigation }) {
-  const [myIndex, setMyIndex] = useState(null);
   const { colors } = useTheme();
 
   return (

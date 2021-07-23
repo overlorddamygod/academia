@@ -1,17 +1,16 @@
 import auth from "@react-native-firebase/auth";
 import { useTheme } from "@react-navigation/native";
-import React, { useContext, useState, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
 import Header from "../components/Header";
 import HomeNotice from "../components/HomeNotice";
 import ImageCarousel from "../components/ImageCarousel";
 import { ThemeContext } from "../components/Theme";
-import UpcomingEvent, { InfoCard } from "../components/UpcomingEvent";
+import UpcomingEvent, { InfoCard, route } from "../components/UpcomingEvent";
 import { images } from "../styles/colors";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { QuickInfo } from "./AboutCollege";
 
-import { route } from "../components/UpcomingEvent";
 const Home = ({ navigation }) => {
   const { colors } = useTheme();
   const [routes, setRoutes] = useState(route);

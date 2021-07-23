@@ -3,13 +3,13 @@ import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { KeyboardAwareScrollView, Button } from "react-native-ui-lib";
+import { Button, KeyboardAwareScrollView } from "react-native-ui-lib";
 import { CustomTextInput, InputContainer } from "../components/CustomInput";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
+import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
 import { showToast } from "../utils/error";
-import COLORS from "../styles/colors";
 
 const EditProfile = ({ navigation }) => {
   const { user } = useUserContext();

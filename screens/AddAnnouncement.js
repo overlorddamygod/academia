@@ -1,16 +1,16 @@
 import auth from "@react-native-firebase/auth";
 import { useTheme } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { Switch, Text, TextInput, View, Picker } from "react-native";
+import React, { useState } from "react";
+import { Picker, Switch, View } from "react-native";
 import {
   Button,
   DateTimePicker,
   KeyboardAwareScrollView,
 } from "react-native-ui-lib";
+import { CustomTextInput, InputContainer } from "../components/CustomInput";
 import Header from "../components/Header";
 import { SIZE } from "../styles/globalStyle";
 import { showToast } from "../utils/error";
-import { InputContainer, CustomTextInput } from "../components/CustomInput";
 
 const AddAnnouncement = ({ navigation }) => {
   const todaysDate = new Date();

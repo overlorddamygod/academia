@@ -2,18 +2,12 @@ import { Feather } from "@expo/vector-icons";
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-calendars";
+import CustomFlatList from "../components/CustomFlatList";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import COLORS, { tagColor } from "../styles/colors";
-import CustomFlatList from "../components/CustomFlatList";
 
 const CalendarScreen = ({ navigation }) => {
   const todaysDate = new Date();

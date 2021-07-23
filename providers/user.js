@@ -1,12 +1,12 @@
 import auth from "@react-native-firebase/auth";
+import database from "@react-native-firebase/database";
 import firestore from "@react-native-firebase/firestore";
 import messaging from "@react-native-firebase/messaging";
-import database from "@react-native-firebase/database";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { showToast } from "../utils/error";
-import { getFcmToken, requestUserPermission } from "../notifications";
 import { ActivityIndicator, View } from "react-native";
+import { getFcmToken, requestUserPermission } from "../notifications";
+import { showToast } from "../utils/error";
 
 const initialUser = {
   username: null,

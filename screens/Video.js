@@ -1,24 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { launchImageLibrary } from "react-native-image-picker";
-import MediaControls, { PLAYER_STATES } from "react-native-media-controls";
-import Video from "react-native-video";
+import { useTheme } from "@react-navigation/native";
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { WebView } from "react-native-webview";
 import GalleryRoute from "../components/GalleryRoute";
 import Header from "../components/Header";
-import useGallery from "../hooks/useGallery";
-import COLORS from "../styles/colors";
-import { globalStyles, SIZE } from "../styles/globalStyle";
-import { showToast } from "../utils/error";
-import { useTheme } from "@react-navigation/native";
-
-import { WebView } from "react-native-webview";
+import { SIZE } from "../styles/globalStyle";
 
 const videoLinks = [
   "https://www.youtube.com/embed/EQMVuQvat-c",

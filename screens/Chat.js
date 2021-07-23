@@ -1,19 +1,12 @@
 import firestore from "@react-native-firebase/firestore";
 import { useTheme } from "@react-navigation/native";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-  PanResponder,
-} from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import CustomFlatList from "../components/CustomFlatList";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import { globalStyles, SIZE } from "../styles/globalStyle";
-import CustomFlatList from "../components/CustomFlatList";
-import moment from "moment";
 
 const Chat = ({ navigation }) => {
   const { user } = useUserContext();

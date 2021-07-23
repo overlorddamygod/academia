@@ -17,8 +17,8 @@ import * as Animatable from "react-native-animatable";
 import Header from "../components/Header";
 import { useUserContext } from "../providers/user";
 import { globalStyles, SIZE } from "../styles/globalStyle";
-import { Icons } from "./AboutCollege";
 import { showToast } from "../utils/error";
+import { Icons } from "./AboutCollege";
 
 const PersonDetail = ({ route, navigation }) => {
   const { colors } = useTheme();

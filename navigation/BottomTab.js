@@ -2,8 +2,9 @@ import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Dialog } from "react-native-ui-lib";
+import { useUserContext } from "../providers/user";
 import ConnectModal from "../screens/ConnectModal";
 import COLORS from "../styles/colors";
 import { SIZE } from "../styles/globalStyle";
@@ -14,7 +15,6 @@ import {
   ModalStackScreen,
   NotificationsStackScreen,
 } from "./Stack";
-import { useUserContext } from "../providers/user";
 
 const Tabs = createBottomTabNavigator();
 

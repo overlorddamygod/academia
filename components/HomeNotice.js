@@ -1,7 +1,8 @@
 import { useTheme } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View,Linking } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { globalStyles, SIZE } from "../styles/globalStyle";
+
 const HomeNotice = ({ navigation }) => {
   const { colors } = useTheme();
 
@@ -23,7 +24,7 @@ const HomeNotice = ({ navigation }) => {
                 color: colors.text,
               }}
             >
-               Mission | Vision
+              Mission | Vision
             </Text>
             <Text
               style={{
@@ -42,16 +43,15 @@ const HomeNotice = ({ navigation }) => {
                 marginTop: 5,
               }}
             >
-            We are proud of 
+              We are proud of
             </Text>
           </View>
-          <TouchableOpacity 
-          onPress={
-            ()=>{
-              navigation.navigate('AboutCollege',{screen:'AboutCollege'})
-            }
-          }
-          style={styles.btn}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AboutCollege", { screen: "AboutCollege" });
+            }}
+            style={styles.btn}
+          >
             <Text style={{ color: "white", fontSize: 16 }}>Learn More</Text>
           </TouchableOpacity>
         </View>
@@ -72,9 +72,7 @@ const HomeNotice = ({ navigation }) => {
               }}
             >
               <Text style={{ ...styles.midNum, color: colors.text }}>5</Text>
-              <Text style={{ fontSize: 16, color: colors.text }}>
-                Courses
-              </Text>
+              <Text style={{ fontSize: 16, color: colors.text }}>Courses</Text>
             </View>
             <View>
               <Text style={{ ...styles.midNum, color: colors.text }}>16+</Text>
@@ -83,7 +81,6 @@ const HomeNotice = ({ navigation }) => {
           </View>
         </View>
       </View>
-
     </View>
   );
 };

@@ -1,11 +1,11 @@
-import React from "react";
 import {
   CardStyleInterpolators,
   createStackNavigator,
 } from "@react-navigation/stack";
-import BottomTab from "./BottomTab";
-import IndividualChat from "../screens/IndividualChat";
+import React from "react";
 import AddAnnouncement from "../screens/AddAnnouncement";
+import IndividualChat from "../screens/IndividualChat";
+import BottomTab from "./BottomTab";
 import { StudentStackScreen, TeacherStackScreen } from "./Stack";
 
 const MainStack = createStackNavigator();

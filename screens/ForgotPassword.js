@@ -1,19 +1,18 @@
+import auth from "@react-native-firebase/auth";
 import React, { useState } from "react";
 import {
-  View,
+  ActivityIndicator,
+  Image,
+  Keyboard,
   Text,
   TextInput,
-  Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard,
-  ActivityIndicator,
+  View,
 } from "react-native";
 import { authStyles } from "../styles/authStyle";
-import { SIZE } from "../styles/globalStyle";
 import COLORS from "../styles/colors";
-import { useUserContext } from "../providers/user";
-import auth from "@react-native-firebase/auth";
+import { SIZE } from "../styles/globalStyle";
 import { getErrorMessage, showToast } from "../utils/error";
 
 const ForgotPassword = ({ navigation, route: { params } }) => {

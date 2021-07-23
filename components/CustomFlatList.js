@@ -1,6 +1,6 @@
-import React from "react";
-import { FlatList, View, Text, ActivityIndicator } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import React from "react";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 const CustomFlatList = ({
   data,

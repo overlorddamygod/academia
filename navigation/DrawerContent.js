@@ -1,4 +1,3 @@
-import auth from "@react-native-firebase/auth";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
 import { useTheme } from "@react-navigation/native";
 import React from "react";
