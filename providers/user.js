@@ -6,6 +6,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { showToast } from "../utils/error";
 import { getFcmToken, requestUserPermission } from "../notifications";
+import { ActivityIndicator, View } from "react-native";
 
 const initialUser = {
   username: null,
@@ -107,7 +108,19 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
     };
   }, []);
 
-  if (intializing) return null;
+  if (intializing)
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#6765c2",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator color="white" size={"large"} />
+      </View>
+    );
 
   const register = async (username, email, password) => {
     if (!username || !email || !password) return;

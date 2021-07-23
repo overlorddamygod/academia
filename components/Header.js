@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Feather } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
@@ -16,6 +16,8 @@ const Header = ({
   justifyContent,
   showSidebar = true,
   showBackMenu = true,
+  showStatus = false,
+  online = false,
 }) => {
   const { colors } = useTheme();
   return (
@@ -38,7 +40,20 @@ const Header = ({
             <Ionicons name="arrow-back-outline" size={32} color="white" />
           </TouchableOpacity>
         )}
-        <Text style={styles.text}>{title}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={styles.text}>{title}</Text>
+          {showStatus && (
+            <View
+              style={{
+                marginLeft: SIZE.width * 0.5,
+                height: SIZE.width * 0.75,
+                width: SIZE.width * 0.75,
+                borderRadius: 50,
+                backgroundColor: online ? "darkgreen" : "grey",
+              }}
+            />
+          )}
+        </View>
         {showSidebar && (
           <TouchableOpacity
             onPress={() => navigation.openDrawer()}

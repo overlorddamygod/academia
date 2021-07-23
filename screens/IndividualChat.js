@@ -156,7 +156,9 @@ const IndividualChat = ({ navigation, route: { params } }) => {
   return (
     <View style={{ backgroundColor: colors.background, flex: 1 }}>
       <Header
-        title={name + `${online ? " On" : ""}`}
+        title={name}
+        showStatus={true}
+        online={online}
         navigation={navigation}
         showSidebar={false}
         showBackMenu

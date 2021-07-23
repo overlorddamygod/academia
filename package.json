@@ -35,7 +35,6 @@
     "react-native": "~0.63.4",
     "react-native-calendars": "^1.1263.0",
     "react-native-gesture-handler": "~1.10.2",
-    "react-native-google-signin": "^2.1.1",
     "react-native-hyperlink": "0.0.19",
     "react-native-image-picker": "^4.0.4",
     "react-native-image-resizer": "^1.4.5",
