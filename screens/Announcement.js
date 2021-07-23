@@ -87,7 +87,6 @@ const AnnouncementScreen = ({ navigation }) => {
             refreshing={loading}
             onRefresh={onRefresh}
             onEndReached={getMoreData}
-            onEndReachedThreshold={0.1}
             data={announcements.filter((announcement) =>
               selectedTag == "All Items"
                 ? "true"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,16 +16,10 @@ import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import CustomFlatList from "../components/CustomFlatList";
 import Hyperlink from "react-native-hyperlink";
-
-const dummyLists = [
-  { notifications: "Sandeep Maharjan Messaged You .", date: "20-3-23" },
-  { notifications: "Academia Posted Event", date: "20-1-1" },
-  { notifications: "Result is Updated", date: "20-1-18" },
-  { notifications: "Academia Posted Compotetition", date: "20-1-7" },
-];
+import { useUserContext } from "../providers/user";
 
 const Notifications = ({ navigation }) => {
-  const [lists, setLists] = useState(dummyLists);
+  const { clearNotificationCount } = useUserContext();
 
   const query = firestore()
     .collection("user")
@@ -35,11 +29,17 @@ const Notifications = ({ navigation }) => {
   const {
     value: notifications,
     loading,
-    error,
     getMoreData,
     onRefresh,
-    setQuery,
+    error,
   } = useCollectionLazy(query, "createdAt", "desc", 10);
+
+  useEffect(() => {
+    if (!loading && !error) {
+      clearNotificationCount();
+    }
+  }, [loading, error]);
+
   return (
     <View style={{ flex: 1 }}>
       <Header
@@ -53,6 +53,7 @@ const Notifications = ({ navigation }) => {
             refreshing={loading}
             onRefresh={onRefresh}
             ListEmptyComponentText={"No notifications"}
+            onEndReached={getMoreData}
             data={notifications}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <NotificationCard item={item} />}

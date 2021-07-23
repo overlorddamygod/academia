@@ -19,7 +19,6 @@ const PeopleCard = ({ data, navigation }) => {
   const { colors } = useTheme();
   const [startingChat, setStartingChat] = useState(false);
 
-  console.log(data);
   const startChat = () => {
     setStartingChat(true);
     firestore()

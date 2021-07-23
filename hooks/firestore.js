@@ -53,7 +53,6 @@ const useCollectionLazy = (
   };
 
   const getMoreData = async () => {
-    console.log("GETTING MORE DATA");
     try {
       const data = await query
         .orderBy(orderBy, direction)

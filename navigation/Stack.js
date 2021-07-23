@@ -143,7 +143,7 @@ export function TeacherStackScreen() {
   );
 }
 
-export function NotificationsStackScreen() {
+export function NotificationsStackScreen({ navigation }) {
   return (
     <NotificationsStack.Navigator
       screenOptions={{

@@ -1,8 +1,8 @@
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@react-navigation/native";
-import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { Dialog } from "react-native-ui-lib";
 import ConnectModal from "../screens/ConnectModal";
 import COLORS from "../styles/colors";
@@ -13,14 +13,20 @@ import {
   HomeStackScreen,
   ModalStackScreen,
   NotificationsStackScreen,
-  OnboardStackScreen,
 } from "./Stack";
+import { useUserContext } from "../providers/user";
 
 const Tabs = createBottomTabNavigator();
 
 const BottomTab = (props) => {
   const [showDialog, setShowDialog] = useState(false);
   const { colors } = useTheme();
+  const { notificationCount, fetchNotificationCount } = useUserContext();
+
+  useEffect(() => {
+    fetchNotificationCount();
+  }, []);
+
   return (
     <>
       <Tabs.Navigator
@@ -39,7 +45,6 @@ const BottomTab = (props) => {
         <Tabs.Screen
           name="Home"
           component={HomeStackScreen}
-          
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={focused ? styles.middleIcon : null}>
@@ -71,6 +76,11 @@ const BottomTab = (props) => {
         <Tabs.Screen
           name="ConnectModal"
           component={ModalStackScreen}
+          listeners={{
+            tabPress: (e) => {
+              e.preventDefault();
+            },
+          }}
           options={{
             tabBarIcon: ({ focused }) => (
               <TouchableOpacity
@@ -114,19 +124,42 @@ const BottomTab = (props) => {
             ),
           }}
         />
+
         <Tabs.Screen
           name="Notifications"
           component={NotificationsStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={focused ? styles.middleIcon : null}>
-                <Ionicons
-                  name="notifications-outline"
-                  size={focused ? 29 : 24}
-                  color={"white"}
-                />
+              <View style={focused ? styles.middleIcon : {}}>
+                <View style={{ position: "relative" }}>
+                  <Ionicons
+                    name="notifications-outline"
+                    size={focused ? 29 : 24}
+                    color={"white"}
+                  />
+                  {notificationCount > 0 && (
+                    <View
+                      style={{
+                        position: "absolute",
+                        right: -SIZE.width * 0.5,
+                        top: -SIZE.width * 0.5,
+                        width: SIZE.width,
+                        flex: 1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: 20,
+                        backgroundColor: "red",
+                      }}
+                    >
+                      <Text style={{ color: "white", fontSize: 11 }}>
+                        {notificationCount}
+                      </Text>
+                    </View>
+                  )}
+                </View>
               </View>
             ),
+            // tabBarBadge: notificationCount,
           }}
         />
       </Tabs.Navigator>

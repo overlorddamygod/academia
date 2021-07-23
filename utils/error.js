@@ -21,7 +21,7 @@ const showToast = (errorMessage, duration, position) => {
   ToastAndroid.showWithGravity(
     errorMessage,
     duration || ToastAndroid.LONG,
-    position || ToastAndroid.CENTER
+    position || ToastAndroid.BOTTOM
   );
 };
 

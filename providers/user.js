@@ -16,6 +16,7 @@ const UserContext = createContext(initialUser);
 
 const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
   const [user, setUser] = useState(null);
+  const [notificationCount, setNotificationCount] = useState(0);
   const [intializing, setInitializing] = useState(true);
 
   const UserChange = async (u) => {
@@ -113,6 +114,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
     return fetch(
       "https://academiacollege.azurewebsites.net/api/signup?code=XatmuqcfTTFvHRhCLtHAWU6M1CFii1Jvtn8TH4hTmFOXTS3Ux85M0A%3D%3D",
+      // "http://192.168.100.4:7071/api/signup",
       {
         method: "POST",
         body: JSON.stringify({
@@ -196,6 +198,30 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
     }
   };
 
+  const fetchNotificationCount = () => {
+    const onSnapshot = (snapshot) => {
+      const value = snapshot.val();
+      if (value) {
+        setNotificationCount(value);
+      }
+    };
+
+    const notificationRef = database().ref(
+      `userDetails/${user.id}/notification`
+    );
+
+    notificationRef.once("value", onSnapshot);
+  };
+
+  const clearNotificationCount = () => {
+    if (notificationCount > 0) {
+      database().ref(`userDetails/${user.id}`).update({
+        notification: 0,
+      });
+      setNotificationCount(0);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -206,6 +232,9 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
         setUser: setUser,
         linkWithGoogle,
         loginWithGoogle,
+        notificationCount,
+        fetchNotificationCount,
+        clearNotificationCount,
       }}
     >
       {user ? <SignedInScreen /> : <SignedOutScreen />}

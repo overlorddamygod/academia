@@ -15,7 +15,6 @@ const useGallery = (setData, setAllData) => {
       setAllData([]);
       res.items.forEach((itemsRef) => {
         itemsRef.getDownloadURL().then((downloadUrl) => {
-          console.log(downloadUrl);
           setAllData((prev) => [...prev, downloadUrl]);
           setLoading(false);
           setRefreshing(false);

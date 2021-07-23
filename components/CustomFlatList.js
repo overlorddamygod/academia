@@ -8,6 +8,8 @@ const CustomFlatList = ({
   onRefresh,
   keyExtractor,
   renderItem,
+  onEndReached,
+  onEndReachedThreshold = 0.1,
   ListEmptyComponentText = " ",
   spinnerColor = "red",
 }) => {
@@ -28,6 +30,8 @@ const CustomFlatList = ({
       onRefresh={onRefresh}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={onEndReachedThreshold}
       ListEmptyComponent={() => (
         <View style={{ alignItems: "center", marginTop: 50 }}>
           <Text style={{ color: colors.text }}>{ListEmptyComponentText}</Text>
