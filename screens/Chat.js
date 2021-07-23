@@ -32,7 +32,6 @@ const Chat = ({ navigation }) => {
         setConversations(
           querySnapshot.docs.map((d) => ({ docId: d.id, ...d.data() }))
         );
-        console.log(conversations);
       },
       (error) => console.error(error)
     );
@@ -49,7 +48,7 @@ const Chat = ({ navigation }) => {
 
       <CustomFlatList
         ListEmptyComponentText={"No conversations"}
-        data={conversations}
+        data={conversations.sort((a, b) => b.lastMessageAt - a.lastMessageAt)}
         keyExtractor={(item) => item.docId}
         renderItem={({ item }) => (
           <>
