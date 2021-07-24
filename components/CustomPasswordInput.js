@@ -40,7 +40,15 @@ const CustomPasswordInput = ({ value, onChangeText }) => {
         value={value}
         placeholderTextColor="#666"
       />
-      <TouchableOpacity onPress={toggleShowPassword}>
+      <TouchableOpacity
+        onPress={toggleShowPassword}
+        style={{
+          width: "10%",
+          height: "70%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Ionicons name={showPassword ? "eye-off" : "eye"} size={25} />
       </TouchableOpacity>
     </View>

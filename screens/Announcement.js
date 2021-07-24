@@ -35,6 +35,7 @@ const AnnouncementScreen = ({ navigation }) => {
   const items = [
     "All Items",
     "Exams",
+    "Notice",
     "Classes",
     "Holiday",
     "Result",
@@ -72,6 +73,7 @@ const AnnouncementScreen = ({ navigation }) => {
                   onPress={(item) => {
                     setSelectedTag(item);
                   }}
+                  color={tagColor[itemName]}
                   key={i}
                 />
               );
@@ -171,8 +173,8 @@ const Announcement = ({
   );
 };
 
-const Item = ({ name, active, onPress }) => {
-  const { colors } = useTheme();
+const Item = ({ name, active, onPress, color }) => {
+  const { colors, dark } = useTheme();
   return (
     <TouchableOpacity
       style={{ alignItems: "center", textAlign: "center", marginRight: 15 }}
@@ -190,7 +192,13 @@ const Item = ({ name, active, onPress }) => {
         {name}
       </Text>
       {active && (
-        <View style={{ width: 10, height: 3, backgroundColor: "black" }}></View>
+        <View
+          style={{
+            width: 10,
+            height: 3,
+            backgroundColor: color || (dark ? "white" : "black"),
+          }}
+        ></View>
       )}
     </TouchableOpacity>
   );

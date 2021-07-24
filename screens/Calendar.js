@@ -50,8 +50,8 @@ const CalendarScreen = ({ navigation }) => {
       to.push(...[user.faculty, `${user.faculty} ${user.semester}`]);
     }
 
-    console.log(to);
-    console.log(start, end);
+    // console.log(to);
+    // console.log(start, end);
     firestore()
       .collection("announcementTemp1")
       .where("addToCalendar", "==", true)
@@ -124,7 +124,7 @@ const CalendarScreen = ({ navigation }) => {
             setDate(time);
           }}
           onMonthChange={(time) => {
-            console.log("MONTH CHANGED");
+            // console.log("MONTH CHANGED");
             setDate(time);
             getEventsForMonth(time.year, time.month);
           }}
@@ -170,7 +170,7 @@ const CalendarScreen = ({ navigation }) => {
                 }}
                 onPress={() => {
                   navigation.navigate("AddAnnouncement");
-                  console.log("Add Event");
+                  // console.log("Add Event");
                 }}
               >
                 <Feather name="plus" color={colors.text} size={35}></Feather>
@@ -220,7 +220,10 @@ const CalendarEventListItem = ({ event }) => {
           {formatDate(event.startingDate.toDate().getDate())}
         </Text>
 
-        <Text style={{ fontSize: 16, flex: 1, color: colors.text }}>
+        <Text
+          style={{ fontSize: 16, flex: 1, color: colors.text }}
+          numberOfLines={2}
+        >
           {event.title}
         </Text>
       </View>

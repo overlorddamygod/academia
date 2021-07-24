@@ -58,9 +58,7 @@ const DrawerContent = ({ navigation }) => {
           </View>
           <Image
             source={{
-              uri:
-                user.photoUrl ||
-                "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+              uri: user.photoUrl || "https://i.ibb.co/fQNrT54/male.png",
             }}
             style={styles.avatar}
           />

@@ -21,7 +21,6 @@ const EditProfile = ({ navigation }) => {
     bio: user.bio,
   });
 
-  console.log(user);
   const updateUser = async () => {
     try {
       await firestore().collection("user").doc(auth().currentUser.uid).update({
@@ -62,7 +61,7 @@ const EditProfile = ({ navigation }) => {
         <KeyboardAwareScrollView>
           <Image
             source={{
-              uri: "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+              uri: user.photoUrl || "https://i.ibb.co/fQNrT54/male.png",
             }}
             style={styles.image}
           />
@@ -80,7 +79,7 @@ const EditProfile = ({ navigation }) => {
           </InputContainer>
           <InputContainer label="Github link">
             <CustomTextInput
-              placeholder=""
+              placeholder="https://github.com/{username}"
               value={editUser.github}
               onChangeText={(text) => {
                 setEditUser({
@@ -92,7 +91,7 @@ const EditProfile = ({ navigation }) => {
           </InputContainer>
           <InputContainer label="Linkedin link">
             <CustomTextInput
-              placeholder=""
+              placeholder="https://linkedin.com/in/{username}"
               value={editUser.linkedin}
               onChangeText={(text) => {
                 setEditUser({
@@ -104,7 +103,7 @@ const EditProfile = ({ navigation }) => {
           </InputContainer>
           <InputContainer label="Facebook link">
             <CustomTextInput
-              placeholder=""
+              placeholder="https://facebook.com/{username}"
               value={editUser.facebook}
               onChangeText={(text) => {
                 setEditUser({

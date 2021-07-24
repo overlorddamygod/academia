@@ -43,83 +43,84 @@ const Chat = ({ navigation }) => {
         ListEmptyComponentText={"No conversations"}
         data={conversations.sort((a, b) => b.lastMessageAt - a.lastMessageAt)}
         keyExtractor={(item) => item.docId}
-        renderItem={({ item }) => (
-          <>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={{
-                backgroundColor: colors.card,
-                marginHorizontal: SIZE.width,
-                marginVertical: SIZE.height * 0.2,
-                paddingHorizontal: SIZE.width * 1,
-                paddingVertical: SIZE.height * 0.3,
-                borderRadius: 10,
-                flexDirection: "row",
-                flex: 1,
-                alignItems: "center",
-              }}
-              onPress={() => {
-                navigation.navigate("IndividualChat", {
-                  id: item.docId,
-                  name: getChatName(item, user.id).username,
-                  photoUrl: getChatName(item, user.id).photoUrl,
-                  conversation: item,
-                });
-              }}
-            >
-              <View>
-                <Image
-                  source={{
-                    uri:
-                      getChatName(item, user.id).photoUrl ||
-                      "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
-                  }}
-                  style={globalStyles.smallavatar}
-                />
-              </View>
-              <View style={{ marginLeft: SIZE.width, flex: 1 }}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "bold",
-                    color: colors.text,
-                  }}
-                >
-                  {getChatName(item, user.id).username}
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flex: 1,
-                  }}
-                >
+        renderItem={({ item }) => {
+          const chat = getChatName(item, user.id);
+          return (
+            <>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={{
+                  backgroundColor: colors.card,
+                  marginHorizontal: SIZE.width,
+                  marginVertical: SIZE.height * 0.2,
+                  paddingHorizontal: SIZE.width * 1,
+                  paddingVertical: SIZE.height * 0.3,
+                  borderRadius: 10,
+                  flexDirection: "row",
+                  flex: 1,
+                  alignItems: "center",
+                }}
+                onPress={() => {
+                  navigation.navigate("IndividualChat", {
+                    id: item.docId,
+                    name: chat.username,
+                    photoUrl: chat.photoUrl,
+                    conversation: item,
+                  });
+                }}
+              >
+                <View>
+                  <Image
+                    source={{
+                      uri: chat.photoUrl || "https://i.ibb.co/fQNrT54/male.png",
+                    }}
+                    style={globalStyles.smallavatar}
+                  />
+                </View>
+                <View style={{ marginLeft: SIZE.width, flex: 1 }}>
                   <Text
                     style={{
-                      fontSize: 15,
-                      color: "grey",
-                      width: SIZE.width * 8,
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: colors.text,
                     }}
-                    numberOfLines={1}
                   >
-                    {item.lastMessage || "Start a conversation"}
+                    {chat.username}
                   </Text>
-                  {!!item.lastMessageAt && (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      flex: 1,
+                    }}
+                  >
                     <Text
                       style={{
-                        fontSize: 10,
+                        fontSize: 15,
                         color: "grey",
+                        width: "60%",
                       }}
+                      numberOfLines={1}
                     >
-                      {moment(item.lastMessageAt).fromNow() || " "}
+                      {item.lastMessage || "Start a conversation"}
                     </Text>
-                  )}
+                    {!!item.lastMessageAt && (
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          color: "grey",
+                        }}
+                      >
+                        {moment(item.lastMessageAt).fromNow() || " "}
+                      </Text>
+                    )}
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          </>
-        )}
+              </TouchableOpacity>
+            </>
+          );
+        }}
       />
     </View>
   );

@@ -64,7 +64,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
           .remove()
           .then(() => console.log("OFFLINE"));
       } catch (err) {
-        console.log("ERRORR", err);
+        // console.log("ERRORR", err);
         setUser(null);
       }
     }
@@ -79,7 +79,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
     const unsubscribeAuth = auth().onAuthStateChanged(UserChange);
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.log("Message handled in the background!", remoteMessage);
+      // console.log("Message handled in the background!", remoteMessage);
       if (remoteMessage.data.logout) {
         auth().signOut();
       }
@@ -87,10 +87,10 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
     const unsubscribeOnMessage = messaging().onMessage(
       async (remoteMessage) => {
-        console.log(
-          "A new FCM message arrived!",
-          JSON.stringify(remoteMessage)
-        );
+        // console.log(
+        //   "A new FCM message arrived!",
+        //   JSON.stringify(remoteMessage)
+        // );
         if (remoteMessage.data.logout) {
           auth().signOut();
         }
@@ -206,7 +206,7 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
         GoogleSignin.signOut();
       }
     } catch (err) {
-      showToast("Error signing in");
+      showToast(err.message || "Error signing in");
       GoogleSignin.signOut();
     }
   };

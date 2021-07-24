@@ -84,7 +84,7 @@ const NotificationCard = ({ item }) => {
           style={{
             color: colors.text,
             fontWeight: "bold",
-            fontSize: 18,
+            fontSize: 16,
             marginVertical: 2,
             width: "99%",
           }}

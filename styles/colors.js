@@ -13,6 +13,8 @@ const tagColor = {
   Classes: "#EBA52A",
   Holiday: "#9336E7",
   Result: "#6C9A8B",
+  Notice: "#007991",
+  Project: "#7161EF",
 };
 export default COLORS;
 export { tagColor };

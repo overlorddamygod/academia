@@ -44,7 +44,7 @@ const SendNotification = ({ navigation, route: { params } }) => {
       .then((res) => res.json())
       .then((res) => {
         setButtonDisabled(false);
-        console.log(res);
+        // console.log(res);
         if (!res.error) {
           showToast("Succesfully sent notification");
           // navigation.goBack();
@@ -56,7 +56,7 @@ const SendNotification = ({ navigation, route: { params } }) => {
         setButtonDisabled(false);
         showToast("Error sending notification");
 
-        console.log(err);
+        // console.log(err);
       });
   };
 

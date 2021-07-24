@@ -55,15 +55,11 @@ const PeopleCard = ({ data, navigation }) => {
     };
     newConvo.p[`${user.id}`] = {
       username: user.username,
-      photoUrl:
-        user.photoUrl ||
-        "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+      photoUrl: user.photoUrl || "https://i.ibb.co/fQNrT54/male.png",
     };
     newConvo.p[`${data.id}`] = {
       username: data.username,
-      photoUrl:
-        data.photoUrl ||
-        "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+      photoUrl: data.photoUrl || "https://i.ibb.co/fQNrT54/male.png",
     };
     firestore()
       .collection("conversation")
@@ -111,9 +107,7 @@ const PeopleCard = ({ data, navigation }) => {
       <View>
         <Image
           source={{
-            uri:
-              data.photoUrl ||
-              "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+            uri: data.photoUrl || "https://i.ibb.co/fQNrT54/male.png",
           }}
           style={styles.avatar}
         />

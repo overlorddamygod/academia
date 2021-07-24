@@ -27,12 +27,11 @@ const PersonDetail = ({ route, navigation }) => {
   const [startingChat, setStartingChat] = useState(false);
 
   const { data } = route.params;
-  console.log(data);
   useEffect(() => {}, []);
 
   const startChat = () => {
     setStartingChat(true);
-    console.log([`${user.id}${data.id}`, `${data.id}${user.id}`]);
+    // console.log([`${user.id}${data.id}`, `${data.id}${user.id}`]);
     firestore()
       .collection("conversation")
       .where("chatId", "in", [`${user.id}${data.id}`, `${data.id}${user.id}`])
@@ -67,15 +66,11 @@ const PersonDetail = ({ route, navigation }) => {
     };
     newConvo.p[`${user.id}`] = {
       username: user.username,
-      photoUrl:
-        user.photoUrl ||
-        "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+      photoUrl: user.photoUrl || "https://i.ibb.co/fQNrT54/male.png",
     };
     newConvo.p[`${data.id}`] = {
       username: data.username,
-      photoUrl:
-        data.photoUrl ||
-        "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+      photoUrl: data.photoUrl || "https://i.ibb.co/fQNrT54/male.png",
     };
     firestore()
       .collection("conversation")
@@ -160,9 +155,7 @@ const PersonDetail = ({ route, navigation }) => {
         >
           <Image
             source={{
-              uri:
-                data.photoUrl ||
-                "https://i.pinimg.com/originals/fe/17/83/fe178353c9de5f85fc9f798bc99f4b19.png",
+              uri: data.photoUrl || "https://i.ibb.co/fQNrT54/male.png",
             }}
             style={styles.image}
           />

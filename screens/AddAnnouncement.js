@@ -63,8 +63,6 @@ const AddAnnouncement = ({ navigation }) => {
       .catch((err) => {
         setButtonDisabled(false);
         showToast("Error adding an announcement");
-
-        console.log(err);
       });
   };
 
