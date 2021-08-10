@@ -87,6 +87,33 @@ const PersonDetail = ({ route, navigation }) => {
           database().ref(`/conversations/${convoData.id}`).push({
             lol: 1,
           });
+          fetch(
+            "https://academiacollege.azurewebsites.net/api/sendindividualnotification?code=qxnyM10tLAadiG3Vsu7QW75q4FUUOY%2FJExkDdsX1WpupHpaIINl8kg%3D%3D",
+            // "http://192.168.100.4:7071/api/sendindividualnotification",
+            {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                // authorization: idToken,
+              },
+              body: JSON.stringify({
+                title: `${data.username} has started a conversation with you.`,
+                body: "Have a chat",
+                to: data.id,
+              }),
+            }
+          )
+            .then((res) => res.json())
+            .then((res) => {
+              if (!res.error) {
+                // showToast("Added Successfully !");
+              } else {
+                // showToast("Error Occured");
+              }
+            })
+            .catch((err) => {
+              // showToast("Error Occured");
+            });
 
           navigation.navigate("IndividualChat", {
             id: convoData.id,

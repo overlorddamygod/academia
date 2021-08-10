@@ -20,6 +20,7 @@ import { useUserContext } from "../providers/user";
 import COLORS from "../styles/colors";
 import { globalStyles, SIZE } from "../styles/globalStyle";
 import { showToast } from "../utils/error";
+import auth from "@react-native-firebase/auth";
 
 const downloadLink = ({ navigation }) => {
   const { colors } = useTheme();
@@ -44,12 +45,14 @@ const downloadLink = ({ navigation }) => {
     );
     return res !== null;
   }
-  const addMaterial = () => {
+  const addMaterial = async () => {
     if (!name || !link) {
       showToast("Field cannot be empty");
     } else if (!isURL(link)) {
       showToast("Not valid URL");
     } else {
+      const idToken = await auth().currentUser.getIdToken();
+
       firestore()
         .collection("materials")
         .add({
@@ -62,7 +65,34 @@ const downloadLink = ({ navigation }) => {
           setoption(false);
           setName("");
           setLink("");
-          showToast("Added Successfully !");
+          fetch(
+            "https://academiacollege.azurewebsites.net/api/notification?code=bC%2FqgjpLzCI1ZvG%2FeuBa2LP4%2F4YymNDEUyPmsE39vu5LiL0QauW6Ow%3D%3D",
+            // "http://192.168.100.4:7071/api/notification",
+            {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                authorization: idToken,
+              },
+              body: JSON.stringify({
+                title: "New material",
+                body: name,
+                to: "Teacher",
+                addToDb: false,
+              }),
+            }
+          )
+            .then((res) => res.json())
+            .then((res) => {
+              if (!res.error) {
+                showToast("Added Successfully !");
+              } else {
+                showToast("Failed to Add Materials !");
+              }
+            })
+            .catch((err) => {
+              showToast("Failed to Add Materials !");
+            });
         })
         .catch((err) => {
           showToast("Failed to Add Materials !");

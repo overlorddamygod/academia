@@ -145,18 +145,26 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
 
   const logout = async () => {
     try {
-      if (requestUserPermission()) {
-        const token = await getFcmToken();
+      let token = await getFcmToken();
 
-        database()
-          .ref(`/userDetails/${auth().currentUser.uid}/tokens`)
-          .child(token)
-          .remove();
-      }
+      database()
+        .ref(`/userDetails/${auth().currentUser.uid}/tokens`)
+        .child(token)
+        .remove();
+
+      const onlineStatusRef = database().ref(
+        `/status/${auth().currentUser.uid}`
+      );
+
+      onlineStatusRef.remove();
+
       messaging().deleteToken();
-      const token = await getFcmToken();
 
+      if (requestUserPermission()) {
+        token = await getFcmToken();
+      }
       messaging().subscribeToTopic("All");
+
       showToast("Logged out successfully");
       auth().signOut();
       GoogleSignin.signOut();
