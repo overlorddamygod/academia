@@ -130,6 +130,10 @@ const UserProvider = ({ SignedInScreen, SignedOutScreen }) => {
       // "http://192.168.100.4:7071/api/signup",
       {
         method: "POST",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          key: "+KbPeShVmYq3t6w9z$C&F)H@McQfTjWn",
+        },
         body: JSON.stringify({
           username,
           email,
