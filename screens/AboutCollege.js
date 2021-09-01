@@ -123,7 +123,7 @@ export const QuickInfo = () => {
           backgroundColor: "lightgray",
         }}
       ></View>
-      <Info icon="phone" data="01-23567" />
+      <Info icon="phone" data="01-5543037" />
       <Info icon="map-marker" data="Gwarkhu , Lalitpur" />
       <Info icon="code" data="academiacollege.edu.np" />
       <View
