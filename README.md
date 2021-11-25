@@ -1,12 +1,4 @@
 
-<h1 align="center">Academia Mobile App </h1>
-
-<h2 align="center"> Official Academia Mobile Application </h2>
-
-<h5 align="center">
-  This is the winning product of Mobile App Competition held by <a href="https://www.academiacollege.edu.np"> Academia International College</a></h5>
-<h5 align="center">Students are welcome to contribute to this project 🤗</h5>
-
 
 
 ### Installation
